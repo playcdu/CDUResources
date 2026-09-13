@@ -52,5 +52,5 @@ for key, skin in skins.items():
 payload = json.dumps(screens, separators=(",", ":"), ensure_ascii=True).replace("</", "<\\/")
 template = (ROOT / "tools/control-explorer.template.html").read_text(encoding="utf-8")
 out = ARTIST_ROOT / "CONTROL-EXPLORER.html"
-out.write_text(template.replace("/*__MENU_DATA__*/", payload), encoding="utf-8")
+out.write_text(template.replace("/*__MENU_DATA__*/", payload), encoding="utf-8", newline="\n")
 print(f"Built offline control explorer: {len(screens)} screens, {out.stat().st_size} bytes")

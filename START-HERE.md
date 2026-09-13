@@ -6,6 +6,8 @@ This is original sample artwork for 50 audited screens plus six generic chest te
 
 For the Windows setup, Aseprite export, local preview and commit loop, start with [ARTIST-WORKFLOW.md](docs/ARTIST-WORKFLOW.md).
 
+Fresh repository downloads include [CONTROL-EXPLORER.html](CONTROL-EXPLORER.html) for inspecting actions and [LAYOUT-EDITOR.html](LAYOUT-EDITOR.html) for positioning controls and item displays. Extract the download and double-click either file; no setup is needed just to use these included browser tools. Guide PNGs, contact sheets and illustrations mentioned below come with the artist-kit ZIP or are generated locally by **Build Pack.cmd**.
+
 ## Files to edit
 
 `pack-source/assets/quasar_gui/textures/menu/<skin_key>.png` contains one independent replaceable background for every skin. Button states live in `textures/buttons/<skin>/<button>/<state>.png`; outside decorative layers live in `textures/frames/`. Read [PAINTED-BUTTONS.md](docs/PAINTED-BUTTONS.md) for their editable layout contract. `manifests/skins.json` maps keys to filenames, codepoints and the native slots that must stay transparent. `manifests/menu-coverage.json` gives every audited screen's slot roles; `manifests/control-map.json` adds detailed triggers, effects and conditional states for the functional controls. `manifests/layouts.json` is the geometry authority. Do not invent painted click targets.

@@ -49,7 +49,7 @@ The generated `manifests/artist-exports.json` records SHA-256 hashes of each sou
 
 ## Optional alignment helper
 
-Double-click **Open Layout Helper.cmd**, or open the generated `LAYOUT-EDITOR.html` directly. It embeds the current manifests and images and works offline with no network calls or account. Rebuild the helper after repository updates.
+Open the included `LAYOUT-EDITOR.html` directly; no Python setup is needed for the committed copy. After setup, **Open Layout Helper.cmd** regenerates it from your local sources before opening it. `CONTROL-EXPLORER.html` is the separate read-only guide to controls and actions. Both HTML tools embed their manifests and images and work offline with no network calls or account. Builds refresh them; commit the regenerated copies with artwork and layout changes so fresh downloads stay current.
 
 - Pick a screen, then an existing audited action or information binding. The original ID, callback source slot, role, content source identities and decorative frame geometry are locked.
 - Move its rectangle, or choose **Redraw** and drag between native slots. Complete 18-pixel rectangles only: overlap, protected content and off-grid hit regions are rejected. Player inventory stays protected.
@@ -88,6 +88,7 @@ Review the changed art, layout and receipts. Use your Git client, or:
 ```powershell
 git status --short
 git add artwork pack-source manifests tools docs "Setup Artist Tools.cmd" "Build Pack.cmd" "Open Layout Helper.cmd"
+git add CONTROL-EXPLORER.html LAYOUT-EDITOR.html
 git commit -m "Update GUI artwork and layouts"
 git push origin main
 ```
