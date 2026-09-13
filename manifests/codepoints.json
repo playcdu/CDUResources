@@ -1,0 +1,250 @@
+{
+  "font": "quasar_gui:menu",
+  "privateUseOnly": true,
+  "art": {
+    "auction_house": {
+      "codepoint": "U+E100",
+      "asset": "assets/quasar_gui/textures/menu/auction_house.png"
+    },
+    "auction_search": {
+      "codepoint": "U+E101",
+      "asset": "assets/quasar_gui/textures/menu/auction_search.png"
+    },
+    "auction_mine": {
+      "codepoint": "U+E102",
+      "asset": "assets/quasar_gui/textures/menu/auction_mine.png"
+    },
+    "auction_watchlist": {
+      "codepoint": "U+E103",
+      "asset": "assets/quasar_gui/textures/menu/auction_watchlist.png"
+    },
+    "auction_confirm": {
+      "codepoint": "U+E104",
+      "asset": "assets/quasar_gui/textures/menu/auction_confirm.png"
+    },
+    "auction_duration": {
+      "codepoint": "U+E105",
+      "asset": "assets/quasar_gui/textures/menu/auction_duration.png"
+    },
+    "admin_shop_categories": {
+      "codepoint": "U+E106",
+      "asset": "assets/quasar_gui/textures/menu/admin_shop_categories.png"
+    },
+    "admin_shop_listings": {
+      "codepoint": "U+E107",
+      "asset": "assets/quasar_gui/textures/menu/admin_shop_listings.png"
+    },
+    "admin_shop_search": {
+      "codepoint": "U+E108",
+      "asset": "assets/quasar_gui/textures/menu/admin_shop_search.png"
+    },
+    "admin_shop_configured": {
+      "codepoint": "U+E109",
+      "asset": "assets/quasar_gui/textures/menu/admin_shop_configured.png"
+    },
+    "chest_shop": {
+      "codepoint": "U+E10A",
+      "asset": "assets/quasar_gui/textures/menu/chest_shop.png"
+    },
+    "chest_shop_owner": {
+      "codepoint": "U+E10B",
+      "asset": "assets/quasar_gui/textures/menu/chest_shop_owner.png"
+    },
+    "chest_shop_listing_enabled": {
+      "codepoint": "U+E10C",
+      "asset": "assets/quasar_gui/textures/menu/chest_shop_listing_enabled.png"
+    },
+    "chest_shop_listing_disabled": {
+      "codepoint": "U+E10D",
+      "asset": "assets/quasar_gui/textures/menu/chest_shop_listing_disabled.png"
+    },
+    "chest_shop_buy": {
+      "codepoint": "U+E10E",
+      "asset": "assets/quasar_gui/textures/menu/chest_shop_buy.png"
+    },
+    "chest_shop_sell": {
+      "codepoint": "U+E10F",
+      "asset": "assets/quasar_gui/textures/menu/chest_shop_sell.png"
+    },
+    "chest_shop_settings": {
+      "codepoint": "U+E110",
+      "asset": "assets/quasar_gui/textures/menu/chest_shop_settings.png"
+    },
+    "chest_shop_upgrade": {
+      "codepoint": "U+E111",
+      "asset": "assets/quasar_gui/textures/menu/chest_shop_upgrade.png"
+    },
+    "chest_shop_upgrade_confirm": {
+      "codepoint": "U+E112",
+      "asset": "assets/quasar_gui/textures/menu/chest_shop_upgrade_confirm.png"
+    },
+    "chest_shop_upgrade_disabled": {
+      "codepoint": "U+E113",
+      "asset": "assets/quasar_gui/textures/menu/chest_shop_upgrade_disabled.png"
+    },
+    "chest_shop_ads": {
+      "codepoint": "U+E114",
+      "asset": "assets/quasar_gui/textures/menu/chest_shop_ads.png"
+    },
+    "chest_shop_search": {
+      "codepoint": "U+E115",
+      "asset": "assets/quasar_gui/textures/menu/chest_shop_search.png"
+    },
+    "economy_hub": {
+      "codepoint": "U+E116",
+      "asset": "assets/quasar_gui/textures/menu/economy_hub.png"
+    },
+    "economy_log": {
+      "codepoint": "U+E117",
+      "asset": "assets/quasar_gui/textures/menu/economy_log.png"
+    },
+    "trade_idle": {
+      "codepoint": "U+E118",
+      "asset": "assets/quasar_gui/textures/menu/trade_idle.png"
+    },
+    "trade_self_ready": {
+      "codepoint": "U+E119",
+      "asset": "assets/quasar_gui/textures/menu/trade_self_ready.png"
+    },
+    "trade_other_ready": {
+      "codepoint": "U+E11A",
+      "asset": "assets/quasar_gui/textures/menu/trade_other_ready.png"
+    },
+    "trade_both_ready": {
+      "codepoint": "U+E11B",
+      "asset": "assets/quasar_gui/textures/menu/trade_both_ready.png"
+    },
+    "trade_money": {
+      "codepoint": "U+E11C",
+      "asset": "assets/quasar_gui/textures/menu/trade_money.png"
+    },
+    "ticket_valid": {
+      "codepoint": "U+E11D",
+      "asset": "assets/quasar_gui/textures/menu/ticket_valid.png"
+    },
+    "ticket_invalid": {
+      "codepoint": "U+E11E",
+      "asset": "assets/quasar_gui/textures/menu/ticket_invalid.png"
+    },
+    "prefixes_1": {
+      "codepoint": "U+E11F",
+      "asset": "assets/quasar_gui/textures/menu/prefixes_1.png"
+    },
+    "prefixes_2": {
+      "codepoint": "U+E120",
+      "asset": "assets/quasar_gui/textures/menu/prefixes_2.png"
+    },
+    "prefixes_3": {
+      "codepoint": "U+E121",
+      "asset": "assets/quasar_gui/textures/menu/prefixes_3.png"
+    },
+    "prefixes_4": {
+      "codepoint": "U+E122",
+      "asset": "assets/quasar_gui/textures/menu/prefixes_4.png"
+    },
+    "prefixes_5": {
+      "codepoint": "U+E123",
+      "asset": "assets/quasar_gui/textures/menu/prefixes_5.png"
+    },
+    "prefixes_6": {
+      "codepoint": "U+E124",
+      "asset": "assets/quasar_gui/textures/menu/prefixes_6.png"
+    },
+    "guild_bank_select_1": {
+      "codepoint": "U+E125",
+      "asset": "assets/quasar_gui/textures/menu/guild_bank_select_1.png"
+    },
+    "guild_bank_select_3": {
+      "codepoint": "U+E126",
+      "asset": "assets/quasar_gui/textures/menu/guild_bank_select_3.png"
+    },
+    "guild_bank_1": {
+      "codepoint": "U+E127",
+      "asset": "assets/quasar_gui/textures/menu/guild_bank_1.png"
+    },
+    "guild_bank_2": {
+      "codepoint": "U+E128",
+      "asset": "assets/quasar_gui/textures/menu/guild_bank_2.png"
+    },
+    "guild_bank_3": {
+      "codepoint": "U+E129",
+      "asset": "assets/quasar_gui/textures/menu/guild_bank_3.png"
+    },
+    "guild_bank_4": {
+      "codepoint": "U+E12A",
+      "asset": "assets/quasar_gui/textures/menu/guild_bank_4.png"
+    },
+    "guild_bank_5": {
+      "codepoint": "U+E12B",
+      "asset": "assets/quasar_gui/textures/menu/guild_bank_5.png"
+    },
+    "guild_bank_6": {
+      "codepoint": "U+E12C",
+      "asset": "assets/quasar_gui/textures/menu/guild_bank_6.png"
+    },
+    "invsee_online": {
+      "codepoint": "U+E12D",
+      "asset": "assets/quasar_gui/textures/menu/invsee_online.png"
+    },
+    "invsee_offline": {
+      "codepoint": "U+E12E",
+      "asset": "assets/quasar_gui/textures/menu/invsee_offline.png"
+    },
+    "trashcan": {
+      "codepoint": "U+E12F",
+      "asset": "assets/quasar_gui/textures/menu/trashcan.png"
+    },
+    "ender_chest": {
+      "codepoint": "U+E130",
+      "asset": "assets/quasar_gui/textures/menu/ender_chest.png"
+    },
+    "crafting": {
+      "codepoint": "U+E131",
+      "asset": "assets/quasar_gui/textures/menu/crafting.png"
+    },
+    "template_chest_1": {
+      "codepoint": "U+E180",
+      "asset": "assets/quasar_gui/textures/menu/template_chest_1.png"
+    },
+    "template_chest_2": {
+      "codepoint": "U+E181",
+      "asset": "assets/quasar_gui/textures/menu/template_chest_2.png"
+    },
+    "template_chest_3": {
+      "codepoint": "U+E182",
+      "asset": "assets/quasar_gui/textures/menu/template_chest_3.png"
+    },
+    "template_chest_4": {
+      "codepoint": "U+E183",
+      "asset": "assets/quasar_gui/textures/menu/template_chest_4.png"
+    },
+    "template_chest_5": {
+      "codepoint": "U+E184",
+      "asset": "assets/quasar_gui/textures/menu/template_chest_5.png"
+    },
+    "template_chest_6": {
+      "codepoint": "U+E185",
+      "asset": "assets/quasar_gui/textures/menu/template_chest_6.png"
+    }
+  },
+  "space": {
+    "U+F000": 1,
+    "U+F001": 2,
+    "U+F002": 4,
+    "U+F003": 8,
+    "U+F004": 16,
+    "U+F005": 32,
+    "U+F006": 64,
+    "U+F007": 128,
+    "U+F008": 256,
+    "U+F009": -1,
+    "U+F00A": -2,
+    "U+F00B": -4,
+    "U+F00C": -8,
+    "U+F00D": -16,
+    "U+F00E": -32,
+    "U+F00F": -64,
+    "U+F010": -128,
+    "U+F011": -256
+  }
+}

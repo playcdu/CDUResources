@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "status": "design_in_progress",
+  "description": "Planned redesigned GUI interaction layouts; existing skins remain the audited foundation until implemented mappings are added.",
+  "foundationLayouts": "layouts.json",
+  "auditedActions": "control-map.json",
+  "requirements": {
+    "realServerHitTargets": true,
+    "nonEmptyProtectedControlCarriers": true,
+    "explicitDisabledAndSelectedStates": true,
+    "preserveGameplayMeaning": true,
+    "fontBitmapMcmetaAnimationSupported": false,
+    "frameMechanism": "to_be_implemented_with_static_fallback"
+  },
+  "screens": {}
+}

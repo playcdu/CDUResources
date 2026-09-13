@@ -1,0 +1,10 @@
+{
+  "pack": {
+    "pack_format": 15,
+    "supported_formats": [
+      9,
+      34
+    ],
+    "description": "Quasar GUI starter - optional menu artwork (1.19.2 / 1.20.1 / 1.21.1; visual QA pending)"
+  }
+}

@@ -1,0 +1,2695 @@
+{
+  "schema_version": 1,
+  "server_targets": [
+    "1.19",
+    "1.20.1",
+    "1.21"
+  ],
+  "excluded_by_user": [
+    "1.16.5",
+    "1.18.2",
+    "1.12"
+  ],
+  "audit_scope": "Every Java file in common/fabric/forge on retained branches: GUI constructors, providers, open calls, title calls and transitions.",
+  "fallback": "Original title, items, filler stacks and callbacks. No item model overrides. Custom presentation only after current pack load; enabling deferred to next safe new GUI. Known loss restores title/fillers using same server container without close/recreate.",
+  "source_only_limitations": [
+    "In-game render and click matrix not run; library source audit is not an interaction test.",
+    "Configured admin-shop pages use arbitrary operator-authored slots: four independent layout families; dynamic individual pages share configured family by default.",
+    "Original overflow/pagination behaviors retained; this presentation patch does not change transaction logic."
+  ],
+  "automated_evidence": {
+    "source_regression": "evidence/menu-source/results.json",
+    "shared_presentation_contract": "evidence/menu-boundary/results.json",
+    "production_title_composition": "evidence/title-composition/results.json",
+    "limitations": "These automated checks are not in-game rendering or transaction tests."
+  },
+  "screens": [
+    {
+      "skin_key": "auction_house",
+      "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "0-44": "Listing icons: purchase confirmation; owner take-back; moderator disable; expired/inactive recovery. Original click-type and cooldown checks.",
+        "45": "Previous page when available",
+        "46": "Balance (read only)",
+        "47": "My listings or shift-right take all back",
+        "48": "Search command help and close",
+        "49": "Close",
+        "50": "Sell command help and close",
+        "51": "Watchlist or command help",
+        "52": "Notification preference toggle and refresh",
+        "53": "Next page when available"
+      },
+      "states": [
+        "all listings",
+        "empty/full page",
+        "first/middle/last page",
+        "buyer/owner/moderator",
+        "active/expired/disabled listing",
+        "notifications enabled/disabled"
+      ],
+      "dynamic_content": "Page number, items/counts, seller, expiry, price, balance, notification and ownership state remain original title/items/lore.",
+      "asset_path": "assets/quasar_gui/textures/menu/auction_house.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            223,
+            255,
+            295
+          ],
+          "constructor_count": 3
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            223,
+            255,
+            295
+          ],
+          "constructor_count": 3
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            225,
+            257,
+            297
+          ],
+          "constructor_count": 3
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "auction_search",
+      "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "0-44": "Listing icons: purchase confirmation; owner take-back; moderator disable; expired/inactive recovery. Original click-type and cooldown checks.",
+        "45": "Previous page when available",
+        "46": "Balance (read only)",
+        "47": "My listings or shift-right take all back",
+        "48": "Search command help and close",
+        "49": "Close",
+        "50": "Sell command help and close",
+        "51": "Watchlist or command help",
+        "52": "Notification preference toggle and refresh",
+        "53": "Next page when available"
+      },
+      "states": [
+        "query results",
+        "empty/full page",
+        "first/middle/last page",
+        "buyer/owner/moderator",
+        "active/expired/disabled listing",
+        "notifications enabled/disabled"
+      ],
+      "dynamic_content": "Page number, items/counts, seller, expiry, price, balance, notification and ownership state remain original title/items/lore.",
+      "asset_path": "assets/quasar_gui/textures/menu/auction_search.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            223,
+            255,
+            295
+          ],
+          "constructor_count": 3
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            223,
+            255,
+            295
+          ],
+          "constructor_count": 3
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            225,
+            257,
+            297
+          ],
+          "constructor_count": 3
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "auction_mine",
+      "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "0-44": "Listing icons: purchase confirmation; owner take-back; moderator disable; expired/inactive recovery. Original click-type and cooldown checks.",
+        "45": "Previous page when available",
+        "46": "Balance (read only)",
+        "47": "My listings or shift-right take all back",
+        "48": "Search command help and close",
+        "49": "Close",
+        "50": "Sell command help and close",
+        "51": "Watchlist or command help",
+        "52": "Notification preference toggle and refresh",
+        "53": "Next page when available"
+      },
+      "states": [
+        "own listings",
+        "empty/full page",
+        "first/middle/last page",
+        "buyer/owner/moderator",
+        "active/expired/disabled listing",
+        "notifications enabled/disabled"
+      ],
+      "dynamic_content": "Page number, items/counts, seller, expiry, price, balance, notification and ownership state remain original title/items/lore.",
+      "asset_path": "assets/quasar_gui/textures/menu/auction_mine.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            223,
+            255,
+            295
+          ],
+          "constructor_count": 3
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            223,
+            255,
+            295
+          ],
+          "constructor_count": 3
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            225,
+            257,
+            297
+          ],
+          "constructor_count": 3
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "auction_watchlist",
+      "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+      "entry_point": "watchlist",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "0-44": "Watched items: remove watch, refresh or close when empty",
+        "53": "Close"
+      },
+      "states": [
+        "nonempty list",
+        "last entry removed closes"
+      ],
+      "dynamic_content": "Item names and watchlist counts; original list is limited to first 45, no pagination exists.",
+      "asset_path": "assets/quasar_gui/textures/menu/auction_watchlist.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            223,
+            255,
+            295
+          ],
+          "constructor_count": 3
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            223,
+            255,
+            295
+          ],
+          "constructor_count": 3
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            225,
+            257,
+            297
+          ],
+          "constructor_count": 3
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "auction_confirm",
+      "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+      "entry_point": "buy",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "20": "Listing preview",
+        "24": "Confirm purchase using existing atomic transaction",
+        "53": "Close"
+      },
+      "states": [
+        "valid purchase",
+        "insufficient balance",
+        "invalidated listing"
+      ],
+      "dynamic_content": "Item, quantity, seller, expiry and price in unchanged preview lore.",
+      "asset_path": "assets/quasar_gui/textures/menu/auction_confirm.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            223,
+            255,
+            295
+          ],
+          "constructor_count": 3
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            223,
+            255,
+            295
+          ],
+          "constructor_count": 3
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "title_lines": [
+            225,
+            257,
+            297
+          ],
+          "constructor_count": 3
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "auction_duration",
+      "source": "common/src/main/java/anar4732/quasar/sgui/AHSelectTimeToSellSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "8": "Close",
+        "11-15": "Listing duration choices: 1,3,7,12,15 days in enum order; original fee/click callback"
+      },
+      "states": [
+        "each listing duration"
+      ],
+      "dynamic_content": "Duration, fee and sell command parameters in original items/lore.",
+      "asset_path": "assets/quasar_gui/textures/menu/auction_duration.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AHSelectTimeToSellSGui.java",
+          "title_lines": [
+            52
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AHSelectTimeToSellSGui.java",
+          "title_lines": [
+            52
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AHSelectTimeToSellSGui.java",
+          "title_lines": [
+            52
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "admin_shop_categories",
+      "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "configured top slots 0-53": "Original ASPage entries at configured e.slot; page navigation, buy/sell, tickets and informational entries retain own callback and gates.",
+        "0-44 in search": "Search results buy/sell and ticket entries",
+        "45": "Previous search page",
+        "48": "Search help and close",
+        "49": "Close",
+        "50": "Admin add-item help, operators only",
+        "53": "Next search page"
+      },
+      "states": [
+        "main category page",
+        "configured arbitrary positions",
+        "operator/normal player",
+        "buy/sell disabled",
+        "banned item",
+        "invalid ticket/entry"
+      ],
+      "dynamic_content": "All configured names/lore, counts, prices, page descriptions and existing callbacks. Arbitrary page entries cannot be predicted: every slot has an item-safe transparency window.",
+      "asset_path": "assets/quasar_gui/textures/menu/admin_shop_categories.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "title_lines": [
+            104
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "title_lines": [
+            104
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "title_lines": [
+            105
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "admin_shop_listings",
+      "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "configured top slots 0-53": "Original ASPage entries at configured e.slot; page navigation, buy/sell, tickets and informational entries retain own callback and gates.",
+        "0-44 in search": "Search results buy/sell and ticket entries",
+        "45": "Previous search page",
+        "48": "Search help and close",
+        "49": "Close",
+        "50": "Admin add-item help, operators only",
+        "53": "Next search page"
+      },
+      "states": [
+        "page containing only listings/tickets",
+        "configured arbitrary positions",
+        "operator/normal player",
+        "buy/sell disabled",
+        "banned item",
+        "invalid ticket/entry"
+      ],
+      "dynamic_content": "All configured names/lore, counts, prices, page descriptions and existing callbacks. Arbitrary page entries cannot be predicted: every slot has an item-safe transparency window.",
+      "asset_path": "assets/quasar_gui/textures/menu/admin_shop_listings.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "title_lines": [
+            104
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "title_lines": [
+            104
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "title_lines": [
+            105
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "admin_shop_search",
+      "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "configured top slots 0-53": "Original ASPage entries at configured e.slot; page navigation, buy/sell, tickets and informational entries retain own callback and gates.",
+        "0-44 in search": "Search results buy/sell and ticket entries",
+        "45": "Previous search page",
+        "48": "Search help and close",
+        "49": "Close",
+        "50": "Admin add-item help, operators only",
+        "53": "Next search page"
+      },
+      "states": [
+        "search result pages",
+        "configured arbitrary positions",
+        "operator/normal player",
+        "buy/sell disabled",
+        "banned item",
+        "invalid ticket/entry"
+      ],
+      "dynamic_content": "All configured names/lore, counts, prices, page descriptions and existing callbacks. Arbitrary page entries cannot be predicted: every slot has an item-safe transparency window.",
+      "asset_path": "assets/quasar_gui/textures/menu/admin_shop_search.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "title_lines": [
+            104
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "title_lines": [
+            104
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "title_lines": [
+            105
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "admin_shop_configured",
+      "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "configured top slots 0-53": "Original ASPage entries at configured e.slot; page navigation, buy/sell, tickets and informational entries retain own callback and gates.",
+        "0-44 in search": "Search results buy/sell and ticket entries",
+        "45": "Previous search page",
+        "48": "Search help and close",
+        "49": "Close",
+        "50": "Admin add-item help, operators only",
+        "53": "Next search page"
+      },
+      "states": [
+        "arbitrary mixed/info/category page",
+        "configured arbitrary positions",
+        "operator/normal player",
+        "buy/sell disabled",
+        "banned item",
+        "invalid ticket/entry"
+      ],
+      "dynamic_content": "All configured names/lore, counts, prices, page descriptions and existing callbacks. Arbitrary page entries cannot be predicted: every slot has an item-safe transparency window.",
+      "asset_path": "assets/quasar_gui/textures/menu/admin_shop_configured.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "title_lines": [
+            104
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "title_lines": [
+            104
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "title_lines": [
+            105
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "chest_shop",
+      "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "available slots except 8,17,26": "Listings added into first unused slot: buy/sell or listing settings according to original permissions",
+        "8": "Close",
+        "17": "Balance",
+        "26": "Owner settings / visitor search help"
+      },
+      "states": [
+        "visitor/moderator",
+        "normal/premium tier",
+        "stock empty/available",
+        "entry disabled",
+        "shop container broken (message only)"
+      ],
+      "dynamic_content": "Tier title, item counts/prices/stock and lore unchanged.",
+      "asset_path": "assets/quasar_gui/textures/menu/chest_shop.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            174,
+            307,
+            383,
+            421,
+            487,
+            583
+          ],
+          "constructor_count": 6
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "chest_shop_owner",
+      "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "available slots except 8,17,26": "Listings added into first unused slot: buy/sell or listing settings according to original permissions",
+        "8": "Close",
+        "17": "Balance",
+        "26": "Owner settings / visitor search help"
+      },
+      "states": [
+        "owner",
+        "normal/premium tier",
+        "stock empty/available",
+        "entry disabled",
+        "shop container broken (message only)"
+      ],
+      "dynamic_content": "Tier title, item counts/prices/stock and lore unchanged.",
+      "asset_path": "assets/quasar_gui/textures/menu/chest_shop_owner.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            174,
+            307,
+            383,
+            421,
+            487,
+            583
+          ],
+          "constructor_count": 6
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "chest_shop_listing_enabled",
+      "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+      "entry_point": "listingOptions",
+      "container_type": "GENERIC_9x5",
+      "rows": 5,
+      "slot_roles": {
+        "8": "Back to shop",
+        "19": "Sales statistics",
+        "20": "Stock read only",
+        "22": "Quantity display",
+        "13,31": "Increase/decrease quantity",
+        "23": "Toggle selling",
+        "14,32": "Increase/decrease sale price when enabled",
+        "24": "Toggle buying",
+        "15,33": "Increase/decrease buy price when enabled",
+        "25": "Enable/disable listing"
+      },
+      "states": [
+        "enabled",
+        "buy/sell enabled/disabled",
+        "ticket buying prohibited",
+        "no sales yet",
+        "out of stock"
+      ],
+      "dynamic_content": "Live quantity, prices, stock, statistics. Value buttons retain 1/10/100/1000 click increments and bounds.",
+      "asset_path": "assets/quasar_gui/textures/menu/chest_shop_listing_enabled.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            174,
+            307,
+            383,
+            421,
+            487,
+            583
+          ],
+          "constructor_count": 6
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "chest_shop_listing_disabled",
+      "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+      "entry_point": "listingOptions",
+      "container_type": "GENERIC_9x5",
+      "rows": 5,
+      "slot_roles": {
+        "8": "Back to shop",
+        "19": "Sales statistics",
+        "20": "Stock read only",
+        "22": "Quantity display",
+        "13,31": "Increase/decrease quantity",
+        "23": "Toggle selling",
+        "14,32": "Increase/decrease sale price when enabled",
+        "24": "Toggle buying",
+        "15,33": "Increase/decrease buy price when enabled",
+        "25": "Enable/disable listing"
+      },
+      "states": [
+        "disabled",
+        "buy/sell enabled/disabled",
+        "ticket buying prohibited",
+        "no sales yet",
+        "out of stock"
+      ],
+      "dynamic_content": "Live quantity, prices, stock, statistics. Value buttons retain 1/10/100/1000 click increments and bounds.",
+      "asset_path": "assets/quasar_gui/textures/menu/chest_shop_listing_disabled.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            174,
+            307,
+            383,
+            421,
+            487,
+            583
+          ],
+          "constructor_count": 6
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "chest_shop_buy",
+      "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+      "entry_point": "buy",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "8": "Back",
+        "10": "Custom amount purchase/sale when amount selectable",
+        "1,19": "Increase/decrease custom amount",
+        "12-15": "Preset amount purchase/sale: quarter/third/half/all, compacted according to availability"
+      },
+      "states": [
+        "one/multiple/zero available",
+        "affordable/unaffordable",
+        "space available/full"
+      ],
+      "dynamic_content": "Original amount, total item count, price, balance/stock/space, action hints in items/lore; unavailable choices are not drawn as clickable controls.",
+      "asset_path": "assets/quasar_gui/textures/menu/chest_shop_buy.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            174,
+            307,
+            383,
+            421,
+            487,
+            583
+          ],
+          "constructor_count": 6
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "chest_shop_sell",
+      "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+      "entry_point": "sell",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "8": "Back",
+        "10": "Custom amount purchase/sale when amount selectable",
+        "1,19": "Increase/decrease custom amount",
+        "12-15": "Preset amount purchase/sale: quarter/third/half/all, compacted according to availability"
+      },
+      "states": [
+        "one/multiple/zero available",
+        "affordable/unaffordable",
+        "space available/full"
+      ],
+      "dynamic_content": "Original amount, total item count, price, balance/stock/space, action hints in items/lore; unavailable choices are not drawn as clickable controls.",
+      "asset_path": "assets/quasar_gui/textures/menu/chest_shop_sell.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            174,
+            307,
+            383,
+            421,
+            487,
+            583
+          ],
+          "constructor_count": 6
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "chest_shop_settings",
+      "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+      "entry_point": "shopOptions",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "8": "Back",
+        "10": "Statistics",
+        "12": "Upgrade screen",
+        "13": "Rename command suggestion then close",
+        "14": "Refresh listings then close"
+      },
+      "states": [
+        "normal/premium tier",
+        "no sales/sales"
+      ],
+      "dynamic_content": "Statistics, subscription renewal, names remain original items/lore.",
+      "asset_path": "assets/quasar_gui/textures/menu/chest_shop_settings.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            174,
+            307,
+            383,
+            421,
+            487,
+            583
+          ],
+          "constructor_count": 6
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "chest_shop_upgrade",
+      "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+      "entry_point": "upgradeOptions",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "8": "Back",
+        "10": "Bid display or premium requirement",
+        "1,19": "Increase/decrease bid for premium tier",
+        "12-14": "Select/deselect tier; selected tier glints",
+        "16": "Apply tier/bid iff changed and affordable; disabled visible item otherwise"
+      },
+      "states": [
+        "unchanged tier/bid",
+        "normal/premium",
+        "bid increase/decrease",
+        "tier upgrade/downgrade"
+      ],
+      "dynamic_content": "Selected tier, fees, subscription, bid and available balance; existing item states/callbacks authoritative.",
+      "asset_path": "assets/quasar_gui/textures/menu/chest_shop_upgrade.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            174,
+            307,
+            383,
+            421,
+            487,
+            583
+          ],
+          "constructor_count": 6
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "chest_shop_upgrade_confirm",
+      "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+      "entry_point": "upgradeOptions",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "8": "Back",
+        "10": "Bid display or premium requirement",
+        "1,19": "Increase/decrease bid for premium tier",
+        "12-14": "Select/deselect tier; selected tier glints",
+        "16": "Apply tier/bid iff changed and affordable; disabled visible item otherwise"
+      },
+      "states": [
+        "changed and affordable",
+        "normal/premium",
+        "bid increase/decrease",
+        "tier upgrade/downgrade"
+      ],
+      "dynamic_content": "Selected tier, fees, subscription, bid and available balance; existing item states/callbacks authoritative.",
+      "asset_path": "assets/quasar_gui/textures/menu/chest_shop_upgrade_confirm.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            174,
+            307,
+            383,
+            421,
+            487,
+            583
+          ],
+          "constructor_count": 6
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "chest_shop_upgrade_disabled",
+      "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+      "entry_point": "upgradeOptions",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "8": "Back",
+        "10": "Bid display or premium requirement",
+        "1,19": "Increase/decrease bid for premium tier",
+        "12-14": "Select/deselect tier; selected tier glints",
+        "16": "Apply tier/bid iff changed and affordable; disabled visible item otherwise"
+      },
+      "states": [
+        "changed and unaffordable",
+        "normal/premium",
+        "bid increase/decrease",
+        "tier upgrade/downgrade"
+      ],
+      "dynamic_content": "Selected tier, fees, subscription, bid and available balance; existing item states/callbacks authoritative.",
+      "asset_path": "assets/quasar_gui/textures/menu/chest_shop_upgrade_disabled.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            162,
+            295,
+            371,
+            409,
+            475,
+            571
+          ],
+          "constructor_count": 6
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "title_lines": [
+            174,
+            307,
+            383,
+            421,
+            487,
+            583
+          ],
+          "constructor_count": 6
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "chest_shop_ads",
+      "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "0-44": "Listing display; teleport/remote access callbacks according to tier",
+        "45": "Previous page",
+        "46": "Balance",
+        "48": "Search help then close",
+        "49": "Close",
+        "50": "Create shop instructions, read only",
+        "53": "Next page"
+      },
+      "states": [
+        "advertisements",
+        "first/middle/last page",
+        "advertised/teleport/remote tier",
+        "unavailable item filtered"
+      ],
+      "dynamic_content": "Page, item name/quantity/prices/shop/stock and tier action lore remain live.",
+      "asset_path": "assets/quasar_gui/textures/menu/chest_shop_ads.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
+          "title_lines": [
+            100
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
+          "title_lines": [
+            100
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
+          "title_lines": [
+            101
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "chest_shop_search",
+      "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "0-44": "Listing display; teleport/remote access callbacks according to tier",
+        "45": "Previous page",
+        "46": "Balance",
+        "48": "Search help then close",
+        "49": "Close",
+        "50": "Create shop instructions, read only",
+        "53": "Next page"
+      },
+      "states": [
+        "query results",
+        "first/middle/last page",
+        "advertised/teleport/remote tier",
+        "unavailable item filtered"
+      ],
+      "dynamic_content": "Page, item name/quantity/prices/shop/stock and tier action lore remain live.",
+      "asset_path": "assets/quasar_gui/textures/menu/chest_shop_search.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
+          "title_lines": [
+            100
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
+          "title_lines": [
+            100
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
+          "title_lines": [
+            101
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "economy_hub",
+      "source": "common/src/main/java/anar4732/quasar/sgui/EcoHubSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "8": "Close",
+        "10": "Balance and salary display",
+        "11": "Auction house",
+        "12": "Admin shop",
+        "13": "Chest shop advertisements",
+        "14": "Economy log",
+        "15": "Balance visibility toggle",
+        "16": "Top balance rank, private/ranked/unranked read-only display"
+      },
+      "states": [
+        "public/private balance",
+        "ranked/unranked"
+      ],
+      "dynamic_content": "Balance, salary, privacy and top rank remain in original slots/lore.",
+      "asset_path": "assets/quasar_gui/textures/menu/economy_hub.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/EcoHubSGui.java",
+          "title_lines": [
+            109
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/EcoHubSGui.java",
+          "title_lines": [
+            109
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/EcoHubSGui.java",
+          "title_lines": [
+            109
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "economy_log",
+      "source": "common/src/main/java/anar4732/quasar/sgui/EcoLogSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "0-44": "Read-only economy history entries",
+        "45": "Previous Redis stream page",
+        "49": "Close",
+        "53": "Next Redis stream page"
+      },
+      "states": [
+        "first/middle/last page",
+        "all original EconomyLog action variants",
+        "empty/error gives message only"
+      ],
+      "dynamic_content": "Amounts, item names/counts, counterpart and timestamp remain dynamic items/lore.",
+      "asset_path": "assets/quasar_gui/textures/menu/economy_log.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/EcoLogSGui.java",
+          "title_lines": [
+            151
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/EcoLogSGui.java",
+          "title_lines": [
+            151
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/EcoLogSGui.java",
+          "title_lines": [
+            163
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "trade_idle",
+      "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "0-3,9-12,18-21,27-30,36-39": "Offer slots redirected to viewer TradeBank with original graylist/blacklist restrictions",
+        "5-8,14-17,23-26,32-35,41-44": "Other offer slots redirected through InmutableSlot",
+        "13": "Toggle readiness/apply if both ready, original callback",
+        "47": "Edit offered money",
+        "52": "Other offered money if positive",
+        "4,22,31,40,49,45,46,48,50,51,53": "Protected decorative separator/panels; themed empty VirtualSlots"
+      },
+      "states": [
+        "neither ready",
+        "local/network trade",
+        "offer updated",
+        "disconnect/cancel"
+      ],
+      "dynamic_content": "Counterparty title, money and readiness item/lore. Per-viewer presentation; storage, callbacks, readiness logic and tick listening remain unchanged.",
+      "asset_path": "assets/quasar_gui/textures/menu/trade_idle.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "trade_self_ready",
+      "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "0-3,9-12,18-21,27-30,36-39": "Offer slots redirected to viewer TradeBank with original graylist/blacklist restrictions",
+        "5-8,14-17,23-26,32-35,41-44": "Other offer slots redirected through InmutableSlot",
+        "13": "Toggle readiness/apply if both ready, original callback",
+        "47": "Edit offered money",
+        "52": "Other offered money if positive",
+        "4,22,31,40,49,45,46,48,50,51,53": "Protected decorative separator/panels; themed empty VirtualSlots"
+      },
+      "states": [
+        "viewer ready",
+        "local/network trade",
+        "offer updated",
+        "disconnect/cancel"
+      ],
+      "dynamic_content": "Counterparty title, money and readiness item/lore. Per-viewer presentation; storage, callbacks, readiness logic and tick listening remain unchanged.",
+      "asset_path": "assets/quasar_gui/textures/menu/trade_self_ready.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "trade_other_ready",
+      "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "0-3,9-12,18-21,27-30,36-39": "Offer slots redirected to viewer TradeBank with original graylist/blacklist restrictions",
+        "5-8,14-17,23-26,32-35,41-44": "Other offer slots redirected through InmutableSlot",
+        "13": "Toggle readiness/apply if both ready, original callback",
+        "47": "Edit offered money",
+        "52": "Other offered money if positive",
+        "4,22,31,40,49,45,46,48,50,51,53": "Protected decorative separator/panels; themed empty VirtualSlots"
+      },
+      "states": [
+        "other ready",
+        "local/network trade",
+        "offer updated",
+        "disconnect/cancel"
+      ],
+      "dynamic_content": "Counterparty title, money and readiness item/lore. Per-viewer presentation; storage, callbacks, readiness logic and tick listening remain unchanged.",
+      "asset_path": "assets/quasar_gui/textures/menu/trade_other_ready.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "trade_both_ready",
+      "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "0-3,9-12,18-21,27-30,36-39": "Offer slots redirected to viewer TradeBank with original graylist/blacklist restrictions",
+        "5-8,14-17,23-26,32-35,41-44": "Other offer slots redirected through InmutableSlot",
+        "13": "Toggle readiness/apply if both ready, original callback",
+        "47": "Edit offered money",
+        "52": "Other offered money if positive",
+        "4,22,31,40,49,45,46,48,50,51,53": "Protected decorative separator/panels; themed empty VirtualSlots"
+      },
+      "states": [
+        "both ready",
+        "local/network trade",
+        "offer updated",
+        "disconnect/cancel"
+      ],
+      "dynamic_content": "Counterparty title, money and readiness item/lore. Per-viewer presentation; storage, callbacks, readiness logic and tick listening remain unchanged.",
+      "asset_path": "assets/quasar_gui/textures/menu/trade_both_ready.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "trade_money",
+      "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+      "entry_point": "moneyChangeGUI",
+      "container_type": "GENERIC_3x3",
+      "rows": 3,
+      "slot_roles": {
+        "1": "Increase amount",
+        "4": "Money, balance and confirm/return callback",
+        "7": "Decrease amount"
+      },
+      "states": [
+        "zero/positive offered money",
+        "min/max bounds"
+      ],
+      "dynamic_content": "Offered money and balance in live center item/lore. Standard original title retained; themed title is a fixed-width artwork glyph composition to avoid centered alignment depending on client font settings. Full original title is available through /quasargui title.",
+      "asset_path": "assets/quasar_gui/textures/menu/trade_money.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "title_lines": [
+            164,
+            194
+          ],
+          "constructor_count": 2
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "ticket_valid",
+      "source": "common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "22": "Ticket preview",
+        "29": "Cancel",
+        "33": "Confirm redemption only when valid",
+        "0-8,9,17,18,26,27,35,36,44,45-53": "Protected decorative border: themed empty VirtualSlots"
+      },
+      "states": [
+        "valid",
+        "rank/prefix/other ticket"
+      ],
+      "dynamic_content": "Ticket benefits, rank/prefix and duration remain original item/lore; validation and event logging unchanged.",
+      "asset_path": "assets/quasar_gui/textures/menu/ticket_valid.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
+          "title_lines": [
+            68
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
+          "title_lines": [
+            68
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
+          "title_lines": [
+            68
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "ticket_invalid",
+      "source": "common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "22": "Ticket preview",
+        "29": "Cancel",
+        "33": "Confirm redemption only when valid",
+        "0-8,9,17,18,26,27,35,36,44,45-53": "Protected decorative border: themed empty VirtualSlots"
+      },
+      "states": [
+        "invalid",
+        "rank/prefix/other ticket"
+      ],
+      "dynamic_content": "Ticket benefits, rank/prefix and duration remain original item/lore; validation and event logging unchanged.",
+      "asset_path": "assets/quasar_gui/textures/menu/ticket_invalid.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
+          "title_lines": [
+            68
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
+          "title_lines": [
+            68
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
+          "title_lines": [
+            68
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "prefixes_1",
+      "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x1",
+      "rows": 1,
+      "slot_roles": {
+        "sequential prefix slots": "Select prefix, close, save and publish existing name update",
+        "player inventory": "Original includePlayerInventorySlots=true: protected, may also host overflow prefix display as upstream allows"
+      },
+      "states": [
+        "selection",
+        "more than 54 prefixes uses original overflow behavior"
+      ],
+      "dynamic_content": "Prefix formatted text remains item name; original empty/single-prefix cases send message only.",
+      "asset_path": "assets/quasar_gui/textures/menu/prefixes_1.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "prefixes_2",
+      "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x2",
+      "rows": 2,
+      "slot_roles": {
+        "sequential prefix slots": "Select prefix, close, save and publish existing name update",
+        "player inventory": "Original includePlayerInventorySlots=true: protected, may also host overflow prefix display as upstream allows"
+      },
+      "states": [
+        "selection",
+        "more than 54 prefixes uses original overflow behavior"
+      ],
+      "dynamic_content": "Prefix formatted text remains item name; original empty/single-prefix cases send message only.",
+      "asset_path": "assets/quasar_gui/textures/menu/prefixes_2.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "prefixes_3",
+      "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "sequential prefix slots": "Select prefix, close, save and publish existing name update",
+        "player inventory": "Original includePlayerInventorySlots=true: protected, may also host overflow prefix display as upstream allows"
+      },
+      "states": [
+        "selection",
+        "more than 54 prefixes uses original overflow behavior"
+      ],
+      "dynamic_content": "Prefix formatted text remains item name; original empty/single-prefix cases send message only.",
+      "asset_path": "assets/quasar_gui/textures/menu/prefixes_3.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "prefixes_4",
+      "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x4",
+      "rows": 4,
+      "slot_roles": {
+        "sequential prefix slots": "Select prefix, close, save and publish existing name update",
+        "player inventory": "Original includePlayerInventorySlots=true: protected, may also host overflow prefix display as upstream allows"
+      },
+      "states": [
+        "selection",
+        "more than 54 prefixes uses original overflow behavior"
+      ],
+      "dynamic_content": "Prefix formatted text remains item name; original empty/single-prefix cases send message only.",
+      "asset_path": "assets/quasar_gui/textures/menu/prefixes_4.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "prefixes_5",
+      "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x5",
+      "rows": 5,
+      "slot_roles": {
+        "sequential prefix slots": "Select prefix, close, save and publish existing name update",
+        "player inventory": "Original includePlayerInventorySlots=true: protected, may also host overflow prefix display as upstream allows"
+      },
+      "states": [
+        "selection",
+        "more than 54 prefixes uses original overflow behavior"
+      ],
+      "dynamic_content": "Prefix formatted text remains item name; original empty/single-prefix cases send message only.",
+      "asset_path": "assets/quasar_gui/textures/menu/prefixes_5.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "prefixes_6",
+      "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "sequential prefix slots": "Select prefix, close, save and publish existing name update",
+        "player inventory": "Original includePlayerInventorySlots=true: protected, may also host overflow prefix display as upstream allows"
+      },
+      "states": [
+        "selection",
+        "more than 54 prefixes uses original overflow behavior"
+      ],
+      "dynamic_content": "Prefix formatted text remains item name; original empty/single-prefix cases send message only.",
+      "asset_path": "assets/quasar_gui/textures/menu/prefixes_6.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/PrefixesSGui.java",
+          "title_lines": [
+            44
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "guild_bank_select_1",
+      "source": "common/src/main/java/anar4732/quasar/sgui/GBankSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x1",
+      "rows": 1,
+      "slot_roles": {
+        "sequential slots": "Page item/count; opens GBankManager with original page and permission handling"
+      },
+      "states": [
+        "page selection"
+      ],
+      "dynamic_content": "Page numbers remain native item counts/names.",
+      "asset_path": "assets/quasar_gui/textures/menu/guild_bank_select_1.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/GBankSGui.java",
+          "title_lines": [
+            22
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/GBankSGui.java",
+          "title_lines": [
+            22
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/GBankSGui.java",
+          "title_lines": [
+            22
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "guild_bank_select_3",
+      "source": "common/src/main/java/anar4732/quasar/sgui/GBankSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "sequential slots": "Page item/count; opens GBankManager with original page and permission handling"
+      },
+      "states": [
+        "page selection"
+      ],
+      "dynamic_content": "Page numbers remain native item counts/names.",
+      "asset_path": "assets/quasar_gui/textures/menu/guild_bank_select_3.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/GBankSGui.java",
+          "title_lines": [
+            22
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/GBankSGui.java",
+          "title_lines": [
+            22
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/GBankSGui.java",
+          "title_lines": [
+            22
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "guild_bank_1",
+      "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+      "entry_point": "openContainer",
+      "container_type": "GENERIC_9x1",
+      "rows": 1,
+      "slot_roles": {
+        "all top slots": "Actual shared JedisContainer storage; native ChestMenu click/shift/drag handling",
+        "player inventory": "Real player inventory and hotbar"
+      },
+      "states": [
+        "empty/full",
+        "local shared viewers",
+        "remote lock refusal",
+        "force unlock"
+      ],
+      "dynamic_content": "Configured bank title and all real stored items. Existing startOpen/stopOpen load/save/locks retained.",
+      "asset_path": "assets/quasar_gui/textures/menu/guild_bank_1.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "guild_bank_2",
+      "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+      "entry_point": "openContainer",
+      "container_type": "GENERIC_9x2",
+      "rows": 2,
+      "slot_roles": {
+        "all top slots": "Actual shared JedisContainer storage; native ChestMenu click/shift/drag handling",
+        "player inventory": "Real player inventory and hotbar"
+      },
+      "states": [
+        "empty/full",
+        "local shared viewers",
+        "remote lock refusal",
+        "force unlock"
+      ],
+      "dynamic_content": "Configured bank title and all real stored items. Existing startOpen/stopOpen load/save/locks retained.",
+      "asset_path": "assets/quasar_gui/textures/menu/guild_bank_2.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "guild_bank_3",
+      "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+      "entry_point": "openContainer",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "all top slots": "Actual shared JedisContainer storage; native ChestMenu click/shift/drag handling",
+        "player inventory": "Real player inventory and hotbar"
+      },
+      "states": [
+        "empty/full",
+        "local shared viewers",
+        "remote lock refusal",
+        "force unlock"
+      ],
+      "dynamic_content": "Configured bank title and all real stored items. Existing startOpen/stopOpen load/save/locks retained.",
+      "asset_path": "assets/quasar_gui/textures/menu/guild_bank_3.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "guild_bank_4",
+      "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+      "entry_point": "openContainer",
+      "container_type": "GENERIC_9x4",
+      "rows": 4,
+      "slot_roles": {
+        "all top slots": "Actual shared JedisContainer storage; native ChestMenu click/shift/drag handling",
+        "player inventory": "Real player inventory and hotbar"
+      },
+      "states": [
+        "empty/full",
+        "local shared viewers",
+        "remote lock refusal",
+        "force unlock"
+      ],
+      "dynamic_content": "Configured bank title and all real stored items. Existing startOpen/stopOpen load/save/locks retained.",
+      "asset_path": "assets/quasar_gui/textures/menu/guild_bank_4.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "guild_bank_5",
+      "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+      "entry_point": "openContainer",
+      "container_type": "GENERIC_9x5",
+      "rows": 5,
+      "slot_roles": {
+        "all top slots": "Actual shared JedisContainer storage; native ChestMenu click/shift/drag handling",
+        "player inventory": "Real player inventory and hotbar"
+      },
+      "states": [
+        "empty/full",
+        "local shared viewers",
+        "remote lock refusal",
+        "force unlock"
+      ],
+      "dynamic_content": "Configured bank title and all real stored items. Existing startOpen/stopOpen load/save/locks retained.",
+      "asset_path": "assets/quasar_gui/textures/menu/guild_bank_5.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "guild_bank_6",
+      "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+      "entry_point": "openContainer",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "all top slots": "Actual shared JedisContainer storage; native ChestMenu click/shift/drag handling",
+        "player inventory": "Real player inventory and hotbar"
+      },
+      "states": [
+        "empty/full",
+        "local shared viewers",
+        "remote lock refusal",
+        "force unlock"
+      ],
+      "dynamic_content": "Configured bank title and all real stored items. Existing startOpen/stopOpen load/save/locks retained.",
+      "asset_path": "assets/quasar_gui/textures/menu/guild_bank_6.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/features/gbank/GBankManager.java",
+          "title_lines": [
+            66
+          ],
+          "constructor_count": 0
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "invsee_online",
+      "source": "common/src/main/java/anar4732/quasar/sgui/InvSeeSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "sequential nonempty slots": "Left-click copy; online shift-right removes original target stack; no new authority"
+      },
+      "states": [
+        "online",
+        "empty/full",
+        "extra platform slots online"
+      ],
+      "dynamic_content": "Inspected inventory items and original copy/remove hints; same permissions at caller.",
+      "asset_path": "assets/quasar_gui/textures/menu/invsee_online.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/InvSeeSGui.java",
+          "title_lines": [
+            65
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/InvSeeSGui.java",
+          "title_lines": [
+            65
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/InvSeeSGui.java",
+          "title_lines": [
+            65
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "invsee_offline",
+      "source": "common/src/main/java/anar4732/quasar/sgui/InvSeeSGui.java",
+      "entry_point": "open",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "sequential nonempty slots": "Left-click copy; online shift-right removes original target stack; no new authority"
+      },
+      "states": [
+        "offline",
+        "empty/full",
+        "extra platform slots online"
+      ],
+      "dynamic_content": "Inspected inventory items and original copy/remove hints; same permissions at caller.",
+      "asset_path": "assets/quasar_gui/textures/menu/invsee_offline.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/InvSeeSGui.java",
+          "title_lines": [
+            65
+          ],
+          "constructor_count": 1
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/InvSeeSGui.java",
+          "title_lines": [
+            65
+          ],
+          "constructor_count": 1
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/sgui/InvSeeSGui.java",
+          "title_lines": [
+            65
+          ],
+          "constructor_count": 1
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "trashcan",
+      "source": "common/src/main/java/anar4732/quasar/command/QPerkCommands.java",
+      "entry_point": "trashcan",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "all top slots": "Original temporary storage/disposal container",
+        "player inventory": "Real inventory/hotbar"
+      },
+      "states": [
+        "empty/full"
+      ],
+      "dynamic_content": "Original native item stacks and original title.",
+      "asset_path": "assets/quasar_gui/textures/menu/trashcan.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/command/QPerkCommands.java",
+          "title_lines": [
+            452,
+            583,
+            596
+          ],
+          "constructor_count": 0
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/command/QPerkCommands.java",
+          "title_lines": [
+            454,
+            585,
+            598
+          ],
+          "constructor_count": 0
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/command/QPerkCommands.java",
+          "title_lines": [
+            481,
+            612,
+            625
+          ],
+          "constructor_count": 0
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "ender_chest",
+      "source": "common/src/main/java/anar4732/quasar/command/QPerkCommands.java",
+      "entry_point": "enderchest",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "all top slots": "Viewer ender chest storage",
+        "player inventory": "Real inventory/hotbar"
+      },
+      "states": [
+        "empty/full"
+      ],
+      "dynamic_content": "Original real ender chest stacks and title.",
+      "asset_path": "assets/quasar_gui/textures/menu/ender_chest.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/command/QPerkCommands.java",
+          "title_lines": [
+            452,
+            583,
+            596
+          ],
+          "constructor_count": 0
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/command/QPerkCommands.java",
+          "title_lines": [
+            454,
+            585,
+            598
+          ],
+          "constructor_count": 0
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/command/QPerkCommands.java",
+          "title_lines": [
+            481,
+            612,
+            625
+          ],
+          "constructor_count": 0
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    },
+    {
+      "skin_key": "crafting",
+      "source": "common/src/main/java/anar4732/quasar/command/QPerkCommands.java",
+      "entry_point": "crafting",
+      "container_type": "CRAFTING",
+      "rows": 3,
+      "slot_roles": {
+        "0": "Native crafting result",
+        "1-9": "Native 3x3 ingredients",
+        "10-45": "Real player inventory/hotbar"
+      },
+      "states": [
+        "recipe/no recipe",
+        "recipe book open/closed",
+        "recipe placement and result shift-click"
+      ],
+      "dynamic_content": "Original crafting behavior and title; recipe book/arrow/progress safe regions in geometry manifest.",
+      "asset_path": "assets/quasar_gui/textures/menu/crafting.png",
+      "implementation_status": "implemented-source",
+      "build_status": "Fabric remapJar passed on all three retained versions; Forge/NeoForge blocked by missing local ServerGUI dependency",
+      "visual_status": "untested-no-native-client-control",
+      "interaction_status": "untested-no-live-server-fixture",
+      "source_evidence": {
+        "1.19": {
+          "source": "common/src/main/java/anar4732/quasar/command/QPerkCommands.java",
+          "title_lines": [
+            452,
+            583,
+            596
+          ],
+          "constructor_count": 0
+        },
+        "1.20.1": {
+          "source": "common/src/main/java/anar4732/quasar/command/QPerkCommands.java",
+          "title_lines": [
+            454,
+            585,
+            598
+          ],
+          "constructor_count": 0
+        },
+        "1.21": {
+          "source": "common/src/main/java/anar4732/quasar/command/QPerkCommands.java",
+          "title_lines": [
+            481,
+            612,
+            625
+          ],
+          "constructor_count": 0
+        }
+      },
+      "automated_behavior_status": "source callback/redirect comparison and presentation contract tests passed; live transactions untested"
+    }
+  ],
+  "final_build_results": {
+    "1.19.2": {
+      "Fabric": "built-remapJar",
+      "Forge": "blocked-missing-local-ServerGUI"
+    },
+    "1.20.1": {
+      "Fabric": "built-remapJar",
+      "Forge": "blocked-missing-local-ServerGUI"
+    },
+    "1.21.1": {
+      "Fabric": "built-remapJar",
+      "NeoForge": "blocked-missing-local-ServerGUI"
+    }
+  },
+  "verification_report": "docs/VERIFICATION.md"
+}

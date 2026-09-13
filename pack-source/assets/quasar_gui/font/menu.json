@@ -1,0 +1,531 @@
+{
+  "providers": [
+    {
+      "type": "space",
+      "advances": {
+        "\uf000": 1,
+        "\uf001": 2,
+        "\uf002": 4,
+        "\uf003": 8,
+        "\uf004": 16,
+        "\uf005": 32,
+        "\uf006": 64,
+        "\uf007": 128,
+        "\uf008": 256,
+        "\uf009": -1,
+        "\uf00a": -2,
+        "\uf00b": -4,
+        "\uf00c": -8,
+        "\uf00d": -16,
+        "\uf00e": -32,
+        "\uf00f": -64,
+        "\uf010": -128,
+        "\uf011": -256
+      }
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/auction_house.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue100"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/auction_search.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue101"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/auction_mine.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue102"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/auction_watchlist.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue103"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/auction_confirm.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue104"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/auction_duration.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue105"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/admin_shop_categories.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue106"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/admin_shop_listings.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue107"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/admin_shop_search.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue108"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/admin_shop_configured.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue109"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/chest_shop.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue10a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/chest_shop_owner.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue10b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/chest_shop_listing_enabled.png",
+      "ascent": 13,
+      "height": 204,
+      "chars": [
+        "\ue10c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/chest_shop_listing_disabled.png",
+      "ascent": 13,
+      "height": 204,
+      "chars": [
+        "\ue10d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/chest_shop_buy.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue10e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/chest_shop_sell.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue10f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/chest_shop_settings.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue110"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/chest_shop_upgrade.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue111"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/chest_shop_upgrade_confirm.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue112"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/chest_shop_upgrade_disabled.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue113"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/chest_shop_ads.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue114"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/chest_shop_search.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue115"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/economy_hub.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue116"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/economy_log.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue117"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/trade_idle.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue118"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/trade_self_ready.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue119"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/trade_other_ready.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue11a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/trade_both_ready.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue11b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/trade_money.png",
+      "ascent": 13,
+      "height": 166,
+      "chars": [
+        "\ue11c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/ticket_valid.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue11d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/ticket_invalid.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue11e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/prefixes_1.png",
+      "ascent": 13,
+      "height": 132,
+      "chars": [
+        "\ue11f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/prefixes_2.png",
+      "ascent": 13,
+      "height": 150,
+      "chars": [
+        "\ue120"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/prefixes_3.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue121"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/prefixes_4.png",
+      "ascent": 13,
+      "height": 186,
+      "chars": [
+        "\ue122"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/prefixes_5.png",
+      "ascent": 13,
+      "height": 204,
+      "chars": [
+        "\ue123"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/prefixes_6.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue124"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/guild_bank_select_1.png",
+      "ascent": 13,
+      "height": 132,
+      "chars": [
+        "\ue125"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/guild_bank_select_3.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue126"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/guild_bank_1.png",
+      "ascent": 13,
+      "height": 132,
+      "chars": [
+        "\ue127"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/guild_bank_2.png",
+      "ascent": 13,
+      "height": 150,
+      "chars": [
+        "\ue128"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/guild_bank_3.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue129"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/guild_bank_4.png",
+      "ascent": 13,
+      "height": 186,
+      "chars": [
+        "\ue12a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/guild_bank_5.png",
+      "ascent": 13,
+      "height": 204,
+      "chars": [
+        "\ue12b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/guild_bank_6.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue12c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/invsee_online.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue12d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/invsee_offline.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue12e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/trashcan.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue12f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/ender_chest.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue130"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/crafting.png",
+      "ascent": 13,
+      "height": 166,
+      "chars": [
+        "\ue131"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/template_chest_1.png",
+      "ascent": 13,
+      "height": 132,
+      "chars": [
+        "\ue180"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/template_chest_2.png",
+      "ascent": 13,
+      "height": 150,
+      "chars": [
+        "\ue181"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/template_chest_3.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue182"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/template_chest_4.png",
+      "ascent": 13,
+      "height": 186,
+      "chars": [
+        "\ue183"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/template_chest_5.png",
+      "ascent": 13,
+      "height": 204,
+      "chars": [
+        "\ue184"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/template_chest_6.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue185"
+      ]
+    }
+  ]
+}

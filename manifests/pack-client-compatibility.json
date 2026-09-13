@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "oneSharedZip": "deliverables/quasar-gui.zip",
+  "packFormat": 15,
+  "supportedFormats": [9, 34],
+  "overlaysUsed": false,
+  "itemModelsUsed": false,
+  "vanillaAssetsOverridden": false,
+  "notes": "The range is metadata intent; only the listed released clients were code-audited. No continuous-version rendering claim. Pack compatibility does not bridge protocols.",
+  "clients": [
+    {"version": "1.19.2", "resourceFormat": 9, "serverTargetInScope": true, "fontProviderCodecs": "passed-released-client-code", "metadataParser": "passed-released-client-code", "geometry": "reviewed-released-bytecode", "expectedWarning": "newer-pack: client ignores supported_formats and sees pack_format15", "actualPackLoad": "untested", "actualRendering": "untested", "actualInteraction": "untested"},
+    {"version": "1.20.1", "resourceFormat": 15, "serverTargetInScope": true, "fontProviderCodecs": "passed-released-client-code", "metadataParser": "passed-released-client-code", "geometry": "reviewed-released-bytecode", "expectedWarning": "none: pack_format15 matches", "actualPackLoad": "untested", "actualRendering": "untested", "actualInteraction": "untested"},
+    {"version": "1.21.1", "resourceFormat": 34, "serverTargetInScope": true, "fontProviderCodecs": "passed-released-client-code", "metadataParser": "passed-released-client-code", "geometry": "reviewed-released-bytecode", "expectedWarning": "none: supported_formats9..34 includes34", "actualPackLoad": "untested", "actualRendering": "untested", "actualInteraction": "untested"},
+    {"version": "26.2", "resourceFormat": [88, 0], "serverTargetInScope": false, "fontProviderCodecs": "bytecode-only-not-executed", "metadataParser": "passed-released-PackFormat-codec", "geometry": "untested", "expectedWarning": "older-pack: resourceformat88.0 outside9..34", "actualPackLoad": "untested", "actualRendering": "untested", "actualInteraction": "untested", "declaredSupported": false}
+  ],
+  "excludedByUser": ["1.12", "1.16.5", "1.18.2"],
+  "notClaimed": ["1.13-1.18", "all intermediate releases", "26.2 rendering"],
+  "attemptedMetadata": [
+    {"pack_format": 9, "supported_formats": [9, 34], "26.2Result": "rejected: multi-version pack_format must be at least15"},
+    {"pack_format": 15, "supported_formats": [9, 34], "26.2Result": "accepted effective range9.0..34.0", "selected": true},
+    {"pack_format": 15, "supported_formats": [9, 34], "min_format": 9, "max_format": 34, "26.2Result": "accepted effective range9.0..34.*", "selected": false}
+  ],
+  "evidence": ["evidence/target-client-codecs.txt", "evidence/26.2-metadata-codec.txt", "evidence/client-code/README.md", "evidence/pack-tests/test-results.json", "evidence/artist-kit-roundtrip.json"]
+}

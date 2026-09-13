@@ -1,0 +1,4454 @@
+{
+  "schema_version": 1,
+  "purpose": "Exact production controls plus explicitly proposed harmless preview behavior.",
+  "audit_basis": "Direct callback inspection of retained 1.21 source; retained 1.19/1.20.1 preserve the same numeric slot layouts. Source references are to the 1.21 canonical audited worktree.",
+  "slot_numbering": "Zero-based native top-container index. Each control acts only through native slots, not painted pixels.",
+  "preview_status": "InventoryDebug implements immutable left-click teaching fixtures and original-action explanations. Representative routes and conditional controls have been independently reviewed against this map. Implemented scope is listed below; preview_proposal fields describe intended demonstrations and must not be read as a claim that every branch is simulated. No live Quasar interaction testing is claimed.",
+  "preview_implementation": {
+    "source": "../InventoryDebug/quasar-preview/src/main/java/com/playcdu/invdebug",
+    "implemented_navigation": [
+      "Economy hub destinations",
+      "Auction pages, selected listing confirmation, captured origin/page return, owner-list and watchlist entry",
+      "Chest-shop buyer amount screen, owner settings, listing-editor Back, upgrade selection/deselection and representative apply return",
+      "Configured admin category to example listing page",
+      "Qualifying remote chest-shop advertisement to shop fixture",
+      "Local trade own-ready toggle, other-ready completion/close, money-editor return",
+      "Valid ticket confirm/close and cancel; invalid confirm absent"
+    ],
+    "implemented_example_values": [
+      "Auction page (1..3)",
+      "Notification and privacy flags, including private rank display",
+      "Listing enabled/buying/selling flags with conditional price arrows",
+      "Quantity and selected lot amount (fixture bound1..64)",
+      "Offered money (fixture bound0..1000), using actual left-click +/-10 step"
+    ],
+    "explanatory_only": [
+      "Actual purchase/sale/recovery effects, stock or balance mutation",
+      "Numeric listing-price changes",
+      "Complete tier/bid/fee/affordability calculations",
+      "Permission and cross-server service integration",
+      "Non-left original click variants, including right-click sale and shift-right ownership actions",
+      "Other catalog controls without an explicit modeled transition"
+    ],
+    "interaction_boundary": "Only native PICKUP button0 dispatches preview actions. Right/shift/drag/swap/drop/clone/double-click and all real item movement are suppressed. Fresh sample stacks remain locked; the immutable model has no Quasar, inventory, economy, teleport or rank APIs.",
+    "test_limit": "Source review and automated fixture checks are not in-game rendering, real pack-response or production transaction tests."
+  },
+  "artwork_rules": [
+    "Preserve transparent liveSlots windows for icons, counts and hover feedback.",
+    "Use fixed action legends on permanently empty protected space; dynamic prices/counts/state remain native item/name/lore.",
+    "A bitmap border/label does not enlarge the native slot hitbox.",
+    "Conditional controls must not be represented as always-enabled solely by paint.",
+    "Configured admin pages, storage and dense listing grids retain all potential item windows."
+  ],
+  "screens": [
+    {
+      "skin_key": "auction_house",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "Listing",
+          "native_item": "actual listing ItemStack",
+          "trigger": "Buyer: click; moderator: LEFT; owner: SHIFT_RIGHT to recover active listing, click to recover expired/inactive listing.",
+          "real_effect": "Buyer/moderator opens auction_confirm. Owner recovery changes stock and refreshes same key/page. Moderator SHIFT_RIGHT disables and refreshes.",
+          "preview_proposal": "Use a named example listing with Count/Seller/Expires/Price lore. Buyer click opens confirm with saved origin key/page. Simulate owner/moderator effects only in explicit fixture states.",
+          "condition": "Listing is present and actor/status guards allow the documented action.",
+          "target": "auction_confirm or same key/page",
+          "native_lore": [
+            "Count: <actual count>",
+            "Seller: <seller>",
+            "Expires: <remaining duration>",
+            "Price: <formatted currency>"
+          ]
+        },
+        {
+          "slots": [
+            45
+          ],
+          "label": "Previous Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open same entries/key at page - 1.",
+          "preview_proposal": "Decrement fixture page; omit on first page.",
+          "condition": "page > 0",
+          "target": "same key"
+        },
+        {
+          "slots": [
+            46
+          ],
+          "label": "Balance",
+          "native_item": "minecraft:gold_ingot",
+          "trigger": "none",
+          "real_effect": "Display current balance.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            47
+          ],
+          "label": "My Listings",
+          "native_item": "minecraft:chest",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter. SHIFT_RIGHT has distinct recovery behavior.",
+          "real_effect": "Open owned listings at page 0; SHIFT_RIGHT closes and takes all back. With no listings, closes with sell-command help.",
+          "preview_proposal": "Click opens auction_mine fixture; recovery can show a simulated result and close, without inventory changes.",
+          "condition": "Not already an all-owned entries list; an empty entries list also satisfies allMatch and suppresses this control.",
+          "target": "auction_mine or close"
+        },
+        {
+          "slots": [
+            48
+          ],
+          "label": "Search",
+          "native_item": "minecraft:compass",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/ah search <query>' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            49
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            50
+          ],
+          "label": "Sell Item",
+          "native_item": "minecraft:emerald",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/ah sell <price> [count]' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            51
+          ],
+          "label": "My Watchlist",
+          "native_item": "minecraft:observer",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open watchlist if nonempty; otherwise print /ah watch <item> guidance and close.",
+          "preview_proposal": "Open a nonempty watchlist fixture; keep empty-watchlist branch as help+close.",
+          "condition": "always",
+          "target": "auction_watchlist or close"
+        },
+        {
+          "slots": [
+            52
+          ],
+          "label": "Auction House Notifications",
+          "native_item": "minecraft:bell",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle persistent notification preference and reopen same entries/key/page.",
+          "preview_proposal": "Toggle fixture enabled/disabled lore and refresh same preview key/page; do not change real preference.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Next Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open same entries/key at page + 1.",
+          "preview_proposal": "Increment fixture page; omit on last page.",
+          "condition": "entries.size > (page + 1) * 45",
+          "target": "same key"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "start_line": 57,
+          "end_line": 226
+        }
+      ],
+      "notes": []
+    },
+    {
+      "skin_key": "auction_search",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "Listing",
+          "native_item": "actual listing ItemStack",
+          "trigger": "Buyer: click; moderator: LEFT; owner: SHIFT_RIGHT to recover active listing, click to recover expired/inactive listing.",
+          "real_effect": "Buyer/moderator opens auction_confirm. Owner recovery changes stock and refreshes same key/page. Moderator SHIFT_RIGHT disables and refreshes.",
+          "preview_proposal": "Use a named example listing with Count/Seller/Expires/Price lore. Buyer click opens confirm with saved origin key/page. Simulate owner/moderator effects only in explicit fixture states.",
+          "condition": "Listing is present and actor/status guards allow the documented action.",
+          "target": "auction_confirm or same key/page",
+          "native_lore": [
+            "Count: <actual count>",
+            "Seller: <seller>",
+            "Expires: <remaining duration>",
+            "Price: <formatted currency>"
+          ]
+        },
+        {
+          "slots": [
+            45
+          ],
+          "label": "Previous Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open same entries/key at page - 1.",
+          "preview_proposal": "Decrement fixture page; omit on first page.",
+          "condition": "page > 0",
+          "target": "same key"
+        },
+        {
+          "slots": [
+            46
+          ],
+          "label": "Balance",
+          "native_item": "minecraft:gold_ingot",
+          "trigger": "none",
+          "real_effect": "Display current balance.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            47
+          ],
+          "label": "My Listings",
+          "native_item": "minecraft:chest",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter. SHIFT_RIGHT has distinct recovery behavior.",
+          "real_effect": "Open owned listings at page 0; SHIFT_RIGHT closes and takes all back. With no listings, closes with sell-command help.",
+          "preview_proposal": "Click opens auction_mine fixture; recovery can show a simulated result and close, without inventory changes.",
+          "condition": "Not already an all-owned entries list; an empty entries list also satisfies allMatch and suppresses this control.",
+          "target": "auction_mine or close"
+        },
+        {
+          "slots": [
+            48
+          ],
+          "label": "Search",
+          "native_item": "minecraft:compass",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/ah search <query>' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            49
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            50
+          ],
+          "label": "Sell Item",
+          "native_item": "minecraft:emerald",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/ah sell <price> [count]' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            51
+          ],
+          "label": "My Watchlist",
+          "native_item": "minecraft:observer",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open watchlist if nonempty; otherwise print /ah watch <item> guidance and close.",
+          "preview_proposal": "Open a nonempty watchlist fixture; keep empty-watchlist branch as help+close.",
+          "condition": "always",
+          "target": "auction_watchlist or close"
+        },
+        {
+          "slots": [
+            52
+          ],
+          "label": "Auction House Notifications",
+          "native_item": "minecraft:bell",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle persistent notification preference and reopen same entries/key/page.",
+          "preview_proposal": "Toggle fixture enabled/disabled lore and refresh same preview key/page; do not change real preference.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Next Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open same entries/key at page + 1.",
+          "preview_proposal": "Increment fixture page; omit on last page.",
+          "condition": "entries.size > (page + 1) * 45",
+          "target": "same key"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "start_line": 57,
+          "end_line": 226
+        }
+      ],
+      "notes": []
+    },
+    {
+      "skin_key": "auction_mine",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "Listing",
+          "native_item": "actual listing ItemStack",
+          "trigger": "Buyer: click; moderator: LEFT; owner: SHIFT_RIGHT to recover active listing, click to recover expired/inactive listing.",
+          "real_effect": "Buyer/moderator opens auction_confirm. Owner recovery changes stock and refreshes same key/page. Moderator SHIFT_RIGHT disables and refreshes.",
+          "preview_proposal": "Use a named example listing with Count/Seller/Expires/Price lore. Buyer click opens confirm with saved origin key/page. Simulate owner/moderator effects only in explicit fixture states.",
+          "condition": "Listing is present and actor/status guards allow the documented action.",
+          "target": "auction_confirm or same key/page",
+          "native_lore": [
+            "Count: <actual count>",
+            "Seller: <seller>",
+            "Expires: <remaining duration>",
+            "Price: <formatted currency>"
+          ]
+        },
+        {
+          "slots": [
+            45
+          ],
+          "label": "Previous Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open same entries/key at page - 1.",
+          "preview_proposal": "Decrement fixture page; omit on first page.",
+          "condition": "page > 0",
+          "target": "same key"
+        },
+        {
+          "slots": [
+            46
+          ],
+          "label": "Balance",
+          "native_item": "minecraft:gold_ingot",
+          "trigger": "none",
+          "real_effect": "Display current balance.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            47
+          ],
+          "label": "My Listings",
+          "native_item": "minecraft:chest",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter. SHIFT_RIGHT has distinct recovery behavior.",
+          "real_effect": "Open owned listings at page 0; SHIFT_RIGHT closes and takes all back. With no listings, closes with sell-command help.",
+          "preview_proposal": "Click opens auction_mine fixture; recovery can show a simulated result and close, without inventory changes.",
+          "condition": "Not already an all-owned entries list; an empty entries list also satisfies allMatch and suppresses this control.",
+          "target": "auction_mine or close"
+        },
+        {
+          "slots": [
+            48
+          ],
+          "label": "Search",
+          "native_item": "minecraft:compass",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/ah search <query>' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            49
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            50
+          ],
+          "label": "Sell Item",
+          "native_item": "minecraft:emerald",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/ah sell <price> [count]' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            51
+          ],
+          "label": "My Watchlist",
+          "native_item": "minecraft:observer",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open watchlist if nonempty; otherwise print /ah watch <item> guidance and close.",
+          "preview_proposal": "Open a nonempty watchlist fixture; keep empty-watchlist branch as help+close.",
+          "condition": "always",
+          "target": "auction_watchlist or close"
+        },
+        {
+          "slots": [
+            52
+          ],
+          "label": "Auction House Notifications",
+          "native_item": "minecraft:bell",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle persistent notification preference and reopen same entries/key/page.",
+          "preview_proposal": "Toggle fixture enabled/disabled lore and refresh same preview key/page; do not change real preference.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Next Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open same entries/key at page + 1.",
+          "preview_proposal": "Increment fixture page; omit on last page.",
+          "condition": "entries.size > (page + 1) * 45",
+          "target": "same key"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "start_line": 57,
+          "end_line": 226
+        }
+      ],
+      "notes": []
+    },
+    {
+      "skin_key": "auction_confirm",
+      "live_slots_union": [
+        20,
+        24,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            20
+          ],
+          "label": "Selected listing",
+          "native_item": "actual listing ItemStack (shown count 1)",
+          "trigger": "none",
+          "real_effect": "Display selected item, actual count/seller/expiry/price in lore.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            24
+          ],
+          "label": "Confirm Purchase",
+          "native_item": "minecraft:lime_dye",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Check cooldown, attempt purchase, then reopen captured origin entries/key/page even if purchase fails.",
+          "preview_proposal": "Report simulated purchase then return to saved origin key/page; no currency/items change.",
+          "condition": "always",
+          "target": "captured auction_house / auction_search / auction_mine"
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close; no return-to-list callback.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "start_line": 279,
+          "end_line": 298
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "start_line": 301,
+          "end_line": 354
+        }
+      ],
+      "notes": [
+        "No separate Cancel or Back button exists. Do not paint or simulate one.",
+        "An overlay may say REVIEW PURCHASE and CONFIRM / CLOSE, while item20 retains all live facts."
+      ]
+    },
+    {
+      "skin_key": "auction_watchlist",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "Watched item",
+          "native_item": "actual watched item",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Remove watched item; refresh watchlist or close when last item is removed.",
+          "preview_proposal": "Remove from fixture watchlist; refresh or close when empty.",
+          "condition": "always",
+          "native_lore": [
+            "Click to Stop watching"
+          ]
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "start_line": 229,
+          "end_line": 258
+        }
+      ],
+      "notes": [
+        "At most 45 entries; no pagination or Back button."
+      ]
+    },
+    {
+      "skin_key": "auction_duration",
+      "live_slots_union": [
+        8,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "controls": [
+        {
+          "slots": [
+            8
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close without listing.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            11
+          ],
+          "label": "1 Day",
+          "native_item": "minecraft:clock",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close, then call sellOnAH with 1 days / 1% fee and captured command arguments.",
+          "preview_proposal": "Show simulated listing duration 1 days / 1% fee then close; do not sell an item.",
+          "condition": "always",
+          "native_lore": [
+            "Listing Duration: 1 Days",
+            "Listing Fee: 1%"
+          ]
+        },
+        {
+          "slots": [
+            12
+          ],
+          "label": "3 Days",
+          "native_item": "minecraft:clock",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close, then call sellOnAH with 3 days / 5% fee and captured command arguments.",
+          "preview_proposal": "Show simulated listing duration 3 days / 5% fee then close; do not sell an item.",
+          "condition": "always",
+          "native_lore": [
+            "Listing Duration: 3 Days",
+            "Listing Fee: 5%"
+          ]
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "7 Days",
+          "native_item": "minecraft:clock",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close, then call sellOnAH with 7 days / 15% fee and captured command arguments.",
+          "preview_proposal": "Show simulated listing duration 7 days / 15% fee then close; do not sell an item.",
+          "condition": "always",
+          "native_lore": [
+            "Listing Duration: 7 Days",
+            "Listing Fee: 15%"
+          ]
+        },
+        {
+          "slots": [
+            14
+          ],
+          "label": "12 Days",
+          "native_item": "minecraft:clock",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close, then call sellOnAH with 12 days / 20% fee and captured command arguments.",
+          "preview_proposal": "Show simulated listing duration 12 days / 20% fee then close; do not sell an item.",
+          "condition": "always",
+          "native_lore": [
+            "Listing Duration: 12 Days",
+            "Listing Fee: 20%"
+          ]
+        },
+        {
+          "slots": [
+            15
+          ],
+          "label": "15 Days",
+          "native_item": "minecraft:clock",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close, then call sellOnAH with 15 days / 30% fee and captured command arguments.",
+          "preview_proposal": "Show simulated listing duration 15 days / 30% fee then close; do not sell an item.",
+          "condition": "always",
+          "native_lore": [
+            "Listing Duration: 15 Days",
+            "Listing Fee: 30%"
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AHSelectTimeToSellSGui.java",
+          "start_line": 19,
+          "end_line": 53
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/storage/shop/QAHData.java",
+          "start_line": 95,
+          "end_line": 109
+        }
+      ],
+      "notes": []
+    },
+    {
+      "skin_key": "admin_shop_categories",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53
+          ],
+          "label": "Configured entry / search result",
+          "native_item": "operator-configured ItemStack",
+          "trigger": "Page entry: any callback click. Listing: LEFT buy / RIGHT sell. Ticket: LEFT buy. Info: none.",
+          "real_effect": "Page entry opens referenced page; listing and ticket purchases execute immediately without confirmation; info displays only.",
+          "preview_proposal": "Use explicitly named fixture category links and info entries. A demo Blocks category at slot11 may open a fixture listings page; label that placement as example configuration. Buy/sell shows simulation feedback and stays on page.",
+          "condition": "Configured e.slot, or search results sequential 0..44. Fixed controls later overwrite 48/49 and operator50.",
+          "target": "configured destination page family or same page",
+          "native_lore": [
+            "Listing: Left-Click to buy for <buyPrice>",
+            "Listing: Right-Click to sell for <sellPrice>",
+            "Page: configured description"
+          ]
+        },
+        {
+          "slots": [
+            45
+          ],
+          "label": "Previous Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Previous search result page.",
+          "preview_proposal": "Previous fixture search page.",
+          "condition": "Search only and pageNumber > 0",
+          "target": "admin_shop_search"
+        },
+        {
+          "slots": [
+            48
+          ],
+          "label": "Search",
+          "native_item": "minecraft:compass",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/shop search <query>' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            49
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            50
+          ],
+          "label": "Add Item",
+          "native_item": "minecraft:emerald",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print README configuration guidance and close; does not open an editor.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "permission level 2"
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Next Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Next search result page.",
+          "preview_proposal": "Next fixture search page.",
+          "condition": "Search only and more than (pageNumber+1)*45 results",
+          "target": "admin_shop_search"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "start_line": 35,
+          "end_line": 106
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "start_line": 109,
+          "end_line": 208
+        }
+      ],
+      "notes": [
+        "There is no built-in admin-shop settings, price editor, details screen, confirmation, or Back control.",
+        "A configured page link may serve as Back, at an arbitrary configured slot. The generic artwork cannot claim it always exists.",
+        "The main page always selects admin_shop_categories even when it contains listings. Secondary listing/ticket-only pages select admin_shop_listings; mixed pages select admin_shop_configured.",
+        "All configured slots remain transparent; never paint fixed category or Buy/Sell labels over arbitrary entry slots."
+      ]
+    },
+    {
+      "skin_key": "admin_shop_listings",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53
+          ],
+          "label": "Configured entry / search result",
+          "native_item": "operator-configured ItemStack",
+          "trigger": "Page entry: any callback click. Listing: LEFT buy / RIGHT sell. Ticket: LEFT buy. Info: none.",
+          "real_effect": "Page entry opens referenced page; listing and ticket purchases execute immediately without confirmation; info displays only.",
+          "preview_proposal": "Use explicitly named fixture category links and info entries. A demo Blocks category at slot11 may open a fixture listings page; label that placement as example configuration. Buy/sell shows simulation feedback and stays on page.",
+          "condition": "Configured e.slot, or search results sequential 0..44. Fixed controls later overwrite 48/49 and operator50.",
+          "target": "configured destination page family or same page",
+          "native_lore": [
+            "Listing: Left-Click to buy for <buyPrice>",
+            "Listing: Right-Click to sell for <sellPrice>",
+            "Page: configured description"
+          ]
+        },
+        {
+          "slots": [
+            45
+          ],
+          "label": "Previous Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Previous search result page.",
+          "preview_proposal": "Previous fixture search page.",
+          "condition": "Search only and pageNumber > 0",
+          "target": "admin_shop_search"
+        },
+        {
+          "slots": [
+            48
+          ],
+          "label": "Search",
+          "native_item": "minecraft:compass",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/shop search <query>' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            49
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            50
+          ],
+          "label": "Add Item",
+          "native_item": "minecraft:emerald",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print README configuration guidance and close; does not open an editor.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "permission level 2"
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Next Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Next search result page.",
+          "preview_proposal": "Next fixture search page.",
+          "condition": "Search only and more than (pageNumber+1)*45 results",
+          "target": "admin_shop_search"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "start_line": 35,
+          "end_line": 106
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "start_line": 109,
+          "end_line": 208
+        }
+      ],
+      "notes": [
+        "There is no built-in admin-shop settings, price editor, details screen, confirmation, or Back control.",
+        "A configured page link may serve as Back, at an arbitrary configured slot. The generic artwork cannot claim it always exists.",
+        "The main page always selects admin_shop_categories even when it contains listings. Secondary listing/ticket-only pages select admin_shop_listings; mixed pages select admin_shop_configured.",
+        "All configured slots remain transparent; never paint fixed category or Buy/Sell labels over arbitrary entry slots."
+      ]
+    },
+    {
+      "skin_key": "admin_shop_configured",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53
+          ],
+          "label": "Configured entry / search result",
+          "native_item": "operator-configured ItemStack",
+          "trigger": "Page entry: any callback click. Listing: LEFT buy / RIGHT sell. Ticket: LEFT buy. Info: none.",
+          "real_effect": "Page entry opens referenced page; listing and ticket purchases execute immediately without confirmation; info displays only.",
+          "preview_proposal": "Use explicitly named fixture category links and info entries. A demo Blocks category at slot11 may open a fixture listings page; label that placement as example configuration. Buy/sell shows simulation feedback and stays on page.",
+          "condition": "Configured e.slot, or search results sequential 0..44. Fixed controls later overwrite 48/49 and operator50.",
+          "target": "configured destination page family or same page",
+          "native_lore": [
+            "Listing: Left-Click to buy for <buyPrice>",
+            "Listing: Right-Click to sell for <sellPrice>",
+            "Page: configured description"
+          ]
+        },
+        {
+          "slots": [
+            45
+          ],
+          "label": "Previous Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Previous search result page.",
+          "preview_proposal": "Previous fixture search page.",
+          "condition": "Search only and pageNumber > 0",
+          "target": "admin_shop_search"
+        },
+        {
+          "slots": [
+            48
+          ],
+          "label": "Search",
+          "native_item": "minecraft:compass",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/shop search <query>' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            49
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            50
+          ],
+          "label": "Add Item",
+          "native_item": "minecraft:emerald",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print README configuration guidance and close; does not open an editor.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "permission level 2"
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Next Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Next search result page.",
+          "preview_proposal": "Next fixture search page.",
+          "condition": "Search only and more than (pageNumber+1)*45 results",
+          "target": "admin_shop_search"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "start_line": 35,
+          "end_line": 106
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "start_line": 109,
+          "end_line": 208
+        }
+      ],
+      "notes": [
+        "There is no built-in admin-shop settings, price editor, details screen, confirmation, or Back control.",
+        "A configured page link may serve as Back, at an arbitrary configured slot. The generic artwork cannot claim it always exists.",
+        "The main page always selects admin_shop_categories even when it contains listings. Secondary listing/ticket-only pages select admin_shop_listings; mixed pages select admin_shop_configured.",
+        "All configured slots remain transparent; never paint fixed category or Buy/Sell labels over arbitrary entry slots."
+      ]
+    },
+    {
+      "skin_key": "admin_shop_search",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53
+          ],
+          "label": "Configured entry / search result",
+          "native_item": "operator-configured ItemStack",
+          "trigger": "Page entry: any callback click. Listing: LEFT buy / RIGHT sell. Ticket: LEFT buy. Info: none.",
+          "real_effect": "Page entry opens referenced page; listing and ticket purchases execute immediately without confirmation; info displays only.",
+          "preview_proposal": "Use explicitly named fixture category links and info entries. A demo Blocks category at slot11 may open a fixture listings page; label that placement as example configuration. Buy/sell shows simulation feedback and stays on page.",
+          "condition": "Configured e.slot, or search results sequential 0..44. Fixed controls later overwrite 48/49 and operator50.",
+          "target": "configured destination page family or same page",
+          "native_lore": [
+            "Listing: Left-Click to buy for <buyPrice>",
+            "Listing: Right-Click to sell for <sellPrice>",
+            "Page: configured description"
+          ]
+        },
+        {
+          "slots": [
+            45
+          ],
+          "label": "Previous Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Previous search result page.",
+          "preview_proposal": "Previous fixture search page.",
+          "condition": "Search only and pageNumber > 0",
+          "target": "admin_shop_search"
+        },
+        {
+          "slots": [
+            48
+          ],
+          "label": "Search",
+          "native_item": "minecraft:compass",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/shop search <query>' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            49
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            50
+          ],
+          "label": "Add Item",
+          "native_item": "minecraft:emerald",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print README configuration guidance and close; does not open an editor.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "permission level 2"
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Next Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Next search result page.",
+          "preview_proposal": "Next fixture search page.",
+          "condition": "Search only and more than (pageNumber+1)*45 results",
+          "target": "admin_shop_search"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "start_line": 35,
+          "end_line": 106
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "start_line": 109,
+          "end_line": 208
+        }
+      ],
+      "notes": [
+        "There is no built-in admin-shop settings, price editor, details screen, confirmation, or Back control.",
+        "A configured page link may serve as Back, at an arbitrary configured slot. The generic artwork cannot claim it always exists.",
+        "The main page always selects admin_shop_categories even when it contains listings. Secondary listing/ticket-only pages select admin_shop_listings; mixed pages select admin_shop_configured.",
+        "All configured slots remain transparent; never paint fixed category or Buy/Sell labels over arbitrary entry slots."
+      ]
+    },
+    {
+      "skin_key": "chest_shop",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26
+          ],
+          "label": "Listing",
+          "native_item": "actual listing ItemStack",
+          "trigger": "LEFT buy; RIGHT sell; SHIFT_RIGHT owner/moderator options.",
+          "real_effect": "LEFT opens chest_shop_buy if selling enabled and stock sufficient. RIGHT opens chest_shop_sell if buying enabled. Owner/moderator SHIFT_RIGHT opens listing options. Disabled listing click opens options for owner/moderator.",
+          "preview_proposal": "Use example Oak Logs with truthful Buy Price, Sell Price, Stock lore. Route LEFT/RIGHT/SHIFT_RIGHT to matching fixture keys; do not transact.",
+          "condition": "Sequential free slots, skipping fixed controls8/17/26; source visibility/ownership/stock guards.",
+          "target": "chest_shop_buy / chest_shop_sell / chest_shop_listing_enabled / chest_shop_listing_disabled"
+        },
+        {
+          "slots": [
+            8
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            17
+          ],
+          "label": "Balance",
+          "native_item": "minecraft:gold_ingot",
+          "trigger": "none",
+          "real_effect": "Display live balance.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            26
+          ],
+          "label": "Shop Options",
+          "native_item": "minecraft:comparator",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open shop options.",
+          "preview_proposal": "Open owner settings fixture.",
+          "condition": "owner",
+          "target": "chest_shop_settings"
+        },
+        {
+          "slots": [
+            26
+          ],
+          "label": "Search",
+          "native_item": "minecraft:compass",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/cs search <query>' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "not owner"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 52,
+          "end_line": 175
+        }
+      ],
+      "notes": [
+        "The initial item click selects a buy/sell amount screen; the next amount-item click executes the transaction.",
+        "chest_shop_owner is selected only for the owner. Moderators who are not owner retain chest_shop, but can still open listing options using SHIFT_RIGHT."
+      ]
+    },
+    {
+      "skin_key": "chest_shop_owner",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26
+          ],
+          "label": "Listing",
+          "native_item": "actual listing ItemStack",
+          "trigger": "LEFT buy; RIGHT sell; SHIFT_RIGHT owner/moderator options.",
+          "real_effect": "LEFT opens chest_shop_buy if selling enabled and stock sufficient. RIGHT opens chest_shop_sell if buying enabled. Owner/moderator SHIFT_RIGHT opens listing options. Disabled listing click opens options for owner/moderator.",
+          "preview_proposal": "Use example Oak Logs with truthful Buy Price, Sell Price, Stock lore. Route LEFT/RIGHT/SHIFT_RIGHT to matching fixture keys; do not transact.",
+          "condition": "Sequential free slots, skipping fixed controls8/17/26; source visibility/ownership/stock guards.",
+          "target": "chest_shop_buy / chest_shop_sell / chest_shop_listing_enabled / chest_shop_listing_disabled"
+        },
+        {
+          "slots": [
+            8
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            17
+          ],
+          "label": "Balance",
+          "native_item": "minecraft:gold_ingot",
+          "trigger": "none",
+          "real_effect": "Display live balance.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            26
+          ],
+          "label": "Shop Options",
+          "native_item": "minecraft:comparator",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open shop options.",
+          "preview_proposal": "Open owner settings fixture.",
+          "condition": "owner",
+          "target": "chest_shop_settings"
+        },
+        {
+          "slots": [
+            26
+          ],
+          "label": "Search",
+          "native_item": "minecraft:compass",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/cs search <query>' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "not owner"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 52,
+          "end_line": 175
+        }
+      ],
+      "notes": [
+        "The initial item click selects a buy/sell amount screen; the next amount-item click executes the transaction.",
+        "chest_shop_owner is selected only for the owner. Moderators who are not owner retain chest_shop, but can still open listing options using SHIFT_RIGHT."
+      ]
+    },
+    {
+      "skin_key": "chest_shop_listing_enabled",
+      "live_slots_union": [
+        8,
+        13,
+        14,
+        15,
+        19,
+        20,
+        22,
+        23,
+        24,
+        25,
+        31,
+        32,
+        33
+      ],
+      "controls": [
+        {
+          "slots": [
+            8
+          ],
+          "label": "Back",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Return to the same chest shop main screen.",
+          "preview_proposal": "Return to saved chest-shop fixture.",
+          "condition": "always",
+          "target": "chest_shop_owner or chest_shop"
+        },
+        {
+          "slots": [
+            19
+          ],
+          "label": "Stats",
+          "native_item": "minecraft:oak_sign",
+          "trigger": "none",
+          "real_effect": "Display total sold/bought or No sales yet.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            20
+          ],
+          "label": "Stock",
+          "native_item": "minecraft:chest",
+          "trigger": "none",
+          "real_effect": "Display stock in linked container or OUT OF STOCK.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            22
+          ],
+          "label": "Quantity",
+          "native_item": "minecraft:apple",
+          "trigger": "none",
+          "real_effect": "Display quantity per transaction (count and name).",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "Increase quantity",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Add selected step, clamp, then save quantity and reopen same listing options (range1..10000).",
+          "preview_proposal": "Increase fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            31
+          ],
+          "label": "Decrease quantity",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Subtract selected step, clamp, then save quantity and reopen same listing options (range1..10000).",
+          "preview_proposal": "Decrease fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            23
+          ],
+          "label": "Sell Price / Selling DISABLED",
+          "native_item": "minecraft:gold_ingot or minecraft:red_dye",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle shop selling: enabled price becomes -1; disabled becomes1. Save/reopen. This is the price customers PAY the shop.",
+          "preview_proposal": "Toggle fixture shop-selling flag; name/lore reflect customer buy price. Refresh arrows according to enabled state.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            14
+          ],
+          "label": "Increase sell price",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Add selected step, clamp, then save shop sell price and reopen (range1..Integer.MAX_VALUE).",
+          "preview_proposal": "Increase fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "shop selling enabled"
+        },
+        {
+          "slots": [
+            32
+          ],
+          "label": "Decrease sell price",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Subtract selected step, clamp, then save shop sell price and reopen (range1..Integer.MAX_VALUE).",
+          "preview_proposal": "Decrease fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "shop selling enabled"
+        },
+        {
+          "slots": [
+            24
+          ],
+          "label": "Buy Price / Buying DISABLED",
+          "native_item": "minecraft:gold_ingot or minecraft:red_dye",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle shop buying: enabled price becomes -1; disabled becomes1. Save/reopen. This is the price customers RECEIVE from the shop.",
+          "preview_proposal": "Toggle fixture shop-buying flag; name/lore reflect customer sell price. Refresh arrows according to enabled state.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            15
+          ],
+          "label": "Increase buy price",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Add selected step, clamp, then save shop buy price and reopen (range1..Integer.MAX_VALUE).",
+          "preview_proposal": "Increase fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "shop buying enabled"
+        },
+        {
+          "slots": [
+            33
+          ],
+          "label": "Decrease buy price",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Subtract selected step, clamp, then save shop buy price and reopen (range1..Integer.MAX_VALUE).",
+          "preview_proposal": "Decrease fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "shop buying enabled"
+        },
+        {
+          "slots": [
+            25
+          ],
+          "label": "Disable / Enable",
+          "native_item": "minecraft:red_dye or minecraft:lime_dye",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle listing enabled state, save, reopen appropriate key.",
+          "preview_proposal": "Toggle fixture listing enabled state and switch key.",
+          "condition": "always",
+          "target": "chest_shop_listing_disabled or chest_shop_listing_enabled"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 178,
+          "end_line": 347
+        }
+      ],
+      "notes": [
+        "Owner/moderator only; no generic listing-item details panel at slot21.",
+        "Tickets cannot be bought by the shop: opening options forces ticket buyPrice=-1. Preserve this exception in ticket fixtures.",
+        "Price/quantity changes save immediately; Back is navigation, not cancel/discard."
+      ]
+    },
+    {
+      "skin_key": "chest_shop_listing_disabled",
+      "live_slots_union": [
+        8,
+        13,
+        14,
+        15,
+        19,
+        20,
+        22,
+        23,
+        24,
+        25,
+        31,
+        32,
+        33
+      ],
+      "controls": [
+        {
+          "slots": [
+            8
+          ],
+          "label": "Back",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Return to the same chest shop main screen.",
+          "preview_proposal": "Return to saved chest-shop fixture.",
+          "condition": "always",
+          "target": "chest_shop_owner or chest_shop"
+        },
+        {
+          "slots": [
+            19
+          ],
+          "label": "Stats",
+          "native_item": "minecraft:oak_sign",
+          "trigger": "none",
+          "real_effect": "Display total sold/bought or No sales yet.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            20
+          ],
+          "label": "Stock",
+          "native_item": "minecraft:chest",
+          "trigger": "none",
+          "real_effect": "Display stock in linked container or OUT OF STOCK.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            22
+          ],
+          "label": "Quantity",
+          "native_item": "minecraft:apple",
+          "trigger": "none",
+          "real_effect": "Display quantity per transaction (count and name).",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "Increase quantity",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Add selected step, clamp, then save quantity and reopen same listing options (range1..10000).",
+          "preview_proposal": "Increase fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            31
+          ],
+          "label": "Decrease quantity",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Subtract selected step, clamp, then save quantity and reopen same listing options (range1..10000).",
+          "preview_proposal": "Decrease fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            23
+          ],
+          "label": "Sell Price / Selling DISABLED",
+          "native_item": "minecraft:gold_ingot or minecraft:red_dye",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle shop selling: enabled price becomes -1; disabled becomes1. Save/reopen. This is the price customers PAY the shop.",
+          "preview_proposal": "Toggle fixture shop-selling flag; name/lore reflect customer buy price. Refresh arrows according to enabled state.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            14
+          ],
+          "label": "Increase sell price",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Add selected step, clamp, then save shop sell price and reopen (range1..Integer.MAX_VALUE).",
+          "preview_proposal": "Increase fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "shop selling enabled"
+        },
+        {
+          "slots": [
+            32
+          ],
+          "label": "Decrease sell price",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Subtract selected step, clamp, then save shop sell price and reopen (range1..Integer.MAX_VALUE).",
+          "preview_proposal": "Decrease fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "shop selling enabled"
+        },
+        {
+          "slots": [
+            24
+          ],
+          "label": "Buy Price / Buying DISABLED",
+          "native_item": "minecraft:gold_ingot or minecraft:red_dye",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle shop buying: enabled price becomes -1; disabled becomes1. Save/reopen. This is the price customers RECEIVE from the shop.",
+          "preview_proposal": "Toggle fixture shop-buying flag; name/lore reflect customer sell price. Refresh arrows according to enabled state.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            15
+          ],
+          "label": "Increase buy price",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Add selected step, clamp, then save shop buy price and reopen (range1..Integer.MAX_VALUE).",
+          "preview_proposal": "Increase fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "shop buying enabled"
+        },
+        {
+          "slots": [
+            33
+          ],
+          "label": "Decrease buy price",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Subtract selected step, clamp, then save shop buy price and reopen (range1..Integer.MAX_VALUE).",
+          "preview_proposal": "Decrease fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "shop buying enabled"
+        },
+        {
+          "slots": [
+            25
+          ],
+          "label": "Disable / Enable",
+          "native_item": "minecraft:red_dye or minecraft:lime_dye",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle listing enabled state, save, reopen appropriate key.",
+          "preview_proposal": "Toggle fixture listing enabled state and switch key.",
+          "condition": "always",
+          "target": "chest_shop_listing_disabled or chest_shop_listing_enabled"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 178,
+          "end_line": 347
+        }
+      ],
+      "notes": [
+        "Owner/moderator only; no generic listing-item details panel at slot21.",
+        "Tickets cannot be bought by the shop: opening options forces ticket buyPrice=-1. Preserve this exception in ticket fixtures.",
+        "Price/quantity changes save immediately; Back is navigation, not cancel/discard."
+      ]
+    },
+    {
+      "skin_key": "chest_shop_buy",
+      "live_slots_union": [
+        1,
+        8,
+        10,
+        12,
+        13,
+        14,
+        15,
+        19
+      ],
+      "controls": [
+        {
+          "slots": [
+            8
+          ],
+          "label": "Back",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Return to chest shop main screen.",
+          "preview_proposal": "Return to saved chest-shop fixture.",
+          "condition": "always",
+          "target": "chest_shop or chest_shop_owner"
+        },
+        {
+          "slots": [
+            10
+          ],
+          "label": "Buy <selected item count>",
+          "native_item": "actual listing ItemStack",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Attempt transaction for selected number of lots. Buy refreshes current amount screen unless remaining stock is below one lot, then returns to main shop. Sell refreshes sell screen.",
+          "preview_proposal": "Show simulated result; stay on correct fixture screen with updated sample stock/items. No real items or balance change.",
+          "condition": "maxAmount > 1; affordability and item/stock checks determine callback availability"
+        },
+        {
+          "slots": [
+            1
+          ],
+          "label": "Increase lot count",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Add selected step, clamp, then reopen amount screen; changes selected amount only, not transaction (range1..maxAmount).",
+          "preview_proposal": "Increase fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "maxAmount > 1"
+        },
+        {
+          "slots": [
+            19
+          ],
+          "label": "Decrease lot count",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Subtract selected step, clamp, then reopen amount screen; changes selected amount only, not transaction (range1..maxAmount).",
+          "preview_proposal": "Decrease fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "maxAmount > 1"
+        },
+        {
+          "slots": [
+            12,
+            13,
+            14,
+            15
+          ],
+          "label": "Buy <preset item count>",
+          "native_item": "actual listing ItemStack",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Preset callbacks execute transaction directly. Starting at12, append floor(max/4) if max>=16, floor(max/3) if max>=9, floor(max/2) if max>=4, then max (sell uses at least1).",
+          "preview_proposal": "Compute the same packed preset slots from fixture max lots. Sample max16 produces slots12=4lots,13=5lots,14=8lots,15=16lots. Use actual item icon, name and Cost/Earnings lore.",
+          "condition": "Only appended slots exist. Each transaction item can be read-only when unaffordable or insufficient items/stock."
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 313,
+          "end_line": 423
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 588,
+          "end_line": 638
+        }
+      ],
+      "notes": [
+        "Do not paint fixed fraction labels at12..15: lower available amounts shift the final/max control left.",
+        "There is no additional generic confirm button. The item named Buy N / Sell N IS the transaction control."
+      ]
+    },
+    {
+      "skin_key": "chest_shop_sell",
+      "live_slots_union": [
+        1,
+        8,
+        10,
+        12,
+        13,
+        14,
+        15,
+        19
+      ],
+      "controls": [
+        {
+          "slots": [
+            8
+          ],
+          "label": "Back",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Return to chest shop main screen.",
+          "preview_proposal": "Return to saved chest-shop fixture.",
+          "condition": "always",
+          "target": "chest_shop or chest_shop_owner"
+        },
+        {
+          "slots": [
+            10
+          ],
+          "label": "Sell <selected item count>",
+          "native_item": "actual listing ItemStack",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Attempt transaction for selected number of lots. Buy refreshes current amount screen unless remaining stock is below one lot, then returns to main shop. Sell refreshes sell screen.",
+          "preview_proposal": "Show simulated result; stay on correct fixture screen with updated sample stock/items. No real items or balance change.",
+          "condition": "maxAmount > 1; affordability and item/stock checks determine callback availability"
+        },
+        {
+          "slots": [
+            1
+          ],
+          "label": "Increase lot count",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Add selected step, clamp, then reopen amount screen; changes selected amount only, not transaction (range1..maxAmount).",
+          "preview_proposal": "Increase fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "maxAmount > 1"
+        },
+        {
+          "slots": [
+            19
+          ],
+          "label": "Decrease lot count",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Subtract selected step, clamp, then reopen amount screen; changes selected amount only, not transaction (range1..maxAmount).",
+          "preview_proposal": "Decrease fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "maxAmount > 1"
+        },
+        {
+          "slots": [
+            12,
+            13,
+            14,
+            15
+          ],
+          "label": "Sell <preset item count>",
+          "native_item": "actual listing ItemStack",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Preset callbacks execute transaction directly. Starting at12, append floor(max/4) if max>=16, floor(max/3) if max>=9, floor(max/2) if max>=4, then max (sell uses at least1).",
+          "preview_proposal": "Compute the same packed preset slots from fixture max lots. Sample max16 produces slots12=4lots,13=5lots,14=8lots,15=16lots. Use actual item icon, name and Cost/Earnings lore.",
+          "condition": "Only appended slots exist. Each transaction item can be read-only when unaffordable or insufficient items/stock."
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 313,
+          "end_line": 423
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 588,
+          "end_line": 638
+        }
+      ],
+      "notes": [
+        "Do not paint fixed fraction labels at12..15: lower available amounts shift the final/max control left.",
+        "There is no additional generic confirm button. The item named Buy N / Sell N IS the transaction control."
+      ]
+    },
+    {
+      "skin_key": "chest_shop_settings",
+      "live_slots_union": [
+        8,
+        10,
+        12,
+        13,
+        14
+      ],
+      "controls": [
+        {
+          "slots": [
+            8
+          ],
+          "label": "Back",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open chest shop main.",
+          "preview_proposal": "Open owner shop fixture.",
+          "condition": "always",
+          "target": "chest_shop_owner"
+        },
+        {
+          "slots": [
+            10
+          ],
+          "label": "Stats",
+          "native_item": "minecraft:oak_sign",
+          "trigger": "none",
+          "real_effect": "Display total sold/bought across listings.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            12
+          ],
+          "label": "Premium Tier <n>",
+          "native_item": "minecraft:diamond",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open upgrade screen with current tier/bid.",
+          "preview_proposal": "Open unchanged upgrade fixture.",
+          "condition": "always",
+          "target": "chest_shop_upgrade"
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "Rename Shop",
+          "native_item": "minecraft:anvil",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Send clickable chat suggestion /cs setName <shopId> and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            14
+          ],
+          "label": "Refresh Listings",
+          "native_item": "minecraft:clock",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Sync listings from linked container, report count, close. May remove listings with no items.",
+          "preview_proposal": "Report simulated refresh and close; no real listing mutation.",
+          "condition": "always"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 425,
+          "end_line": 488
+        }
+      ],
+      "notes": []
+    },
+    {
+      "skin_key": "chest_shop_upgrade",
+      "live_slots_union": [
+        1,
+        8,
+        10,
+        12,
+        13,
+        14,
+        16,
+        19
+      ],
+      "controls": [
+        {
+          "slots": [
+            8
+          ],
+          "label": "Back",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Return to shop options without applying pending tier/bid.",
+          "preview_proposal": "Discard pending fixture selection and return to settings.",
+          "condition": "always",
+          "target": "chest_shop_settings"
+        },
+        {
+          "slots": [
+            10
+          ],
+          "label": "Bid / Premium tier required",
+          "native_item": "minecraft:emerald",
+          "trigger": "none",
+          "real_effect": "Display selected monthly bid and balance; base tier reports bidding unavailable.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            1
+          ],
+          "label": "Increase bid",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Add selected step, clamp, then reopen with pending bid only (range0..balance).",
+          "preview_proposal": "Increase fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "selected tier > 0"
+        },
+        {
+          "slots": [
+            19
+          ],
+          "label": "Decrease bid",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Subtract selected step, clamp, then reopen with pending bid only (range0..balance).",
+          "preview_proposal": "Decrease fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "selected tier > 0"
+        },
+        {
+          "slots": [
+            12
+          ],
+          "label": "TIER 1",
+          "native_item": "minecraft:iron_block",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Select tier; clicking selected tier resets to normal tier0. Reopen with pending selection; no payment yet.",
+          "preview_proposal": "Change fixture selected tier and glow; recalculate pending/affordable variant and confirm lore.",
+          "condition": "always",
+          "target": "chest_shop_upgrade / chest_shop_upgrade_confirm / chest_shop_upgrade_disabled"
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "TIER 2",
+          "native_item": "minecraft:gold_block",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Select tier; clicking selected tier resets to normal tier0. Reopen with pending selection; no payment yet.",
+          "preview_proposal": "Change fixture selected tier and glow; recalculate pending/affordable variant and confirm lore.",
+          "condition": "always",
+          "target": "chest_shop_upgrade / chest_shop_upgrade_confirm / chest_shop_upgrade_disabled"
+        },
+        {
+          "slots": [
+            14
+          ],
+          "label": "TIER 3",
+          "native_item": "minecraft:diamond_block",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Select tier; clicking selected tier resets to normal tier0. Reopen with pending selection; no payment yet.",
+          "preview_proposal": "Change fixture selected tier and glow; recalculate pending/affordable variant and confirm lore.",
+          "condition": "always",
+          "target": "chest_shop_upgrade / chest_shop_upgrade_confirm / chest_shop_upgrade_disabled"
+        },
+        {
+          "slots": [
+            16
+          ],
+          "label": "Confirm",
+          "native_item": "minecraft:lime_dye",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Apply selected tier/bid and return to shop options, only when balance covers calculated fee.",
+          "preview_proposal": "Show simulated application and return to settings fixture. In unaffordable variant display red name/lore with no callback.",
+          "condition": "Only present if tier or bid differs. No callback when unaffordable.",
+          "target": "chest_shop_settings"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 491,
+          "end_line": 584
+        }
+      ],
+      "notes": [
+        "upgrade: no pending changes, no16. upgrade_confirm: pending and affordable. upgrade_disabled: pending but unaffordable;16 exists but is read-only.",
+        "Native lore carries one-time fee, subscription fee, monthly bid, tier description and total cost. Never hardcode live prices into bitmap."
+      ]
+    },
+    {
+      "skin_key": "chest_shop_upgrade_confirm",
+      "live_slots_union": [
+        1,
+        8,
+        10,
+        12,
+        13,
+        14,
+        16,
+        19
+      ],
+      "controls": [
+        {
+          "slots": [
+            8
+          ],
+          "label": "Back",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Return to shop options without applying pending tier/bid.",
+          "preview_proposal": "Discard pending fixture selection and return to settings.",
+          "condition": "always",
+          "target": "chest_shop_settings"
+        },
+        {
+          "slots": [
+            10
+          ],
+          "label": "Bid / Premium tier required",
+          "native_item": "minecraft:emerald",
+          "trigger": "none",
+          "real_effect": "Display selected monthly bid and balance; base tier reports bidding unavailable.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            1
+          ],
+          "label": "Increase bid",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Add selected step, clamp, then reopen with pending bid only (range0..balance).",
+          "preview_proposal": "Increase fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "selected tier > 0"
+        },
+        {
+          "slots": [
+            19
+          ],
+          "label": "Decrease bid",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Subtract selected step, clamp, then reopen with pending bid only (range0..balance).",
+          "preview_proposal": "Decrease fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "selected tier > 0"
+        },
+        {
+          "slots": [
+            12
+          ],
+          "label": "TIER 1",
+          "native_item": "minecraft:iron_block",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Select tier; clicking selected tier resets to normal tier0. Reopen with pending selection; no payment yet.",
+          "preview_proposal": "Change fixture selected tier and glow; recalculate pending/affordable variant and confirm lore.",
+          "condition": "always",
+          "target": "chest_shop_upgrade / chest_shop_upgrade_confirm / chest_shop_upgrade_disabled"
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "TIER 2",
+          "native_item": "minecraft:gold_block",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Select tier; clicking selected tier resets to normal tier0. Reopen with pending selection; no payment yet.",
+          "preview_proposal": "Change fixture selected tier and glow; recalculate pending/affordable variant and confirm lore.",
+          "condition": "always",
+          "target": "chest_shop_upgrade / chest_shop_upgrade_confirm / chest_shop_upgrade_disabled"
+        },
+        {
+          "slots": [
+            14
+          ],
+          "label": "TIER 3",
+          "native_item": "minecraft:diamond_block",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Select tier; clicking selected tier resets to normal tier0. Reopen with pending selection; no payment yet.",
+          "preview_proposal": "Change fixture selected tier and glow; recalculate pending/affordable variant and confirm lore.",
+          "condition": "always",
+          "target": "chest_shop_upgrade / chest_shop_upgrade_confirm / chest_shop_upgrade_disabled"
+        },
+        {
+          "slots": [
+            16
+          ],
+          "label": "Confirm",
+          "native_item": "minecraft:lime_dye",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Apply selected tier/bid and return to shop options, only when balance covers calculated fee.",
+          "preview_proposal": "Show simulated application and return to settings fixture. In unaffordable variant display red name/lore with no callback.",
+          "condition": "Only present if tier or bid differs. No callback when unaffordable.",
+          "target": "chest_shop_settings"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 491,
+          "end_line": 584
+        }
+      ],
+      "notes": [
+        "upgrade: no pending changes, no16. upgrade_confirm: pending and affordable. upgrade_disabled: pending but unaffordable;16 exists but is read-only.",
+        "Native lore carries one-time fee, subscription fee, monthly bid, tier description and total cost. Never hardcode live prices into bitmap."
+      ]
+    },
+    {
+      "skin_key": "chest_shop_upgrade_disabled",
+      "live_slots_union": [
+        1,
+        8,
+        10,
+        12,
+        13,
+        14,
+        16,
+        19
+      ],
+      "controls": [
+        {
+          "slots": [
+            8
+          ],
+          "label": "Back",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Return to shop options without applying pending tier/bid.",
+          "preview_proposal": "Discard pending fixture selection and return to settings.",
+          "condition": "always",
+          "target": "chest_shop_settings"
+        },
+        {
+          "slots": [
+            10
+          ],
+          "label": "Bid / Premium tier required",
+          "native_item": "minecraft:emerald",
+          "trigger": "none",
+          "real_effect": "Display selected monthly bid and balance; base tier reports bidding unavailable.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            1
+          ],
+          "label": "Increase bid",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Add selected step, clamp, then reopen with pending bid only (range0..balance).",
+          "preview_proposal": "Increase fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "selected tier > 0"
+        },
+        {
+          "slots": [
+            19
+          ],
+          "label": "Decrease bid",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Subtract selected step, clamp, then reopen with pending bid only (range0..balance).",
+          "preview_proposal": "Decrease fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "selected tier > 0"
+        },
+        {
+          "slots": [
+            12
+          ],
+          "label": "TIER 1",
+          "native_item": "minecraft:iron_block",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Select tier; clicking selected tier resets to normal tier0. Reopen with pending selection; no payment yet.",
+          "preview_proposal": "Change fixture selected tier and glow; recalculate pending/affordable variant and confirm lore.",
+          "condition": "always",
+          "target": "chest_shop_upgrade / chest_shop_upgrade_confirm / chest_shop_upgrade_disabled"
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "TIER 2",
+          "native_item": "minecraft:gold_block",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Select tier; clicking selected tier resets to normal tier0. Reopen with pending selection; no payment yet.",
+          "preview_proposal": "Change fixture selected tier and glow; recalculate pending/affordable variant and confirm lore.",
+          "condition": "always",
+          "target": "chest_shop_upgrade / chest_shop_upgrade_confirm / chest_shop_upgrade_disabled"
+        },
+        {
+          "slots": [
+            14
+          ],
+          "label": "TIER 3",
+          "native_item": "minecraft:diamond_block",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Select tier; clicking selected tier resets to normal tier0. Reopen with pending selection; no payment yet.",
+          "preview_proposal": "Change fixture selected tier and glow; recalculate pending/affordable variant and confirm lore.",
+          "condition": "always",
+          "target": "chest_shop_upgrade / chest_shop_upgrade_confirm / chest_shop_upgrade_disabled"
+        },
+        {
+          "slots": [
+            16
+          ],
+          "label": "Confirm",
+          "native_item": "minecraft:lime_dye",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Apply selected tier/bid and return to shop options, only when balance covers calculated fee.",
+          "preview_proposal": "Show simulated application and return to settings fixture. In unaffordable variant display red name/lore with no callback.",
+          "condition": "Only present if tier or bid differs. No callback when unaffordable.",
+          "target": "chest_shop_settings"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 491,
+          "end_line": 584
+        }
+      ],
+      "notes": [
+        "upgrade: no pending changes, no16. upgrade_confirm: pending and affordable. upgrade_disabled: pending but unaffordable;16 exists but is read-only.",
+        "Native lore carries one-time fee, subscription fee, monthly bid, tier description and total cost. Never hardcode live prices into bitmap."
+      ]
+    },
+    {
+      "skin_key": "chest_shop_ads",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "Remote chest-shop listing",
+          "native_item": "actual listing ItemStack",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Tier3 and same dimension: open remote shop (lore says Right-click, callback accepts any). Else operator or tier2+: teleport and close. Otherwise read-only advertisement.",
+          "preview_proposal": "Use explicit same-dimension tier3 example to open chest_shop fixture; for teleport branch report simulated teleport and close; low tier read-only.",
+          "condition": "Visible valid listing; premium/permission/dimension rules.",
+          "target": "chest_shop or close"
+        },
+        {
+          "slots": [
+            45
+          ],
+          "label": "Previous Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Previous page of same entries/key.",
+          "preview_proposal": "Previous fixture page.",
+          "condition": "page>0",
+          "target": "same key"
+        },
+        {
+          "slots": [
+            46
+          ],
+          "label": "Balance",
+          "native_item": "minecraft:gold_ingot",
+          "trigger": "none",
+          "real_effect": "Display balance.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            48
+          ],
+          "label": "Search",
+          "native_item": "minecraft:compass",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/cs search <query>' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            49
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            50
+          ],
+          "label": "Create Your Chest Shop",
+          "native_item": "minecraft:emerald",
+          "trigger": "none",
+          "real_effect": "Display sign-template instructions; NO callback.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Next Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Next page of same entries/key.",
+          "preview_proposal": "Next fixture page.",
+          "condition": "more than (page+1)*45 entries",
+          "target": "same key"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
+          "start_line": 47,
+          "end_line": 162
+        }
+      ],
+      "notes": []
+    },
+    {
+      "skin_key": "chest_shop_search",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "Remote chest-shop listing",
+          "native_item": "actual listing ItemStack",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Tier3 and same dimension: open remote shop (lore says Right-click, callback accepts any). Else operator or tier2+: teleport and close. Otherwise read-only advertisement.",
+          "preview_proposal": "Use explicit same-dimension tier3 example to open chest_shop fixture; for teleport branch report simulated teleport and close; low tier read-only.",
+          "condition": "Visible valid listing; premium/permission/dimension rules.",
+          "target": "chest_shop or close"
+        },
+        {
+          "slots": [
+            45
+          ],
+          "label": "Previous Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Previous page of same entries/key.",
+          "preview_proposal": "Previous fixture page.",
+          "condition": "page>0",
+          "target": "same key"
+        },
+        {
+          "slots": [
+            46
+          ],
+          "label": "Balance",
+          "native_item": "minecraft:gold_ingot",
+          "trigger": "none",
+          "real_effect": "Display balance.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            48
+          ],
+          "label": "Search",
+          "native_item": "minecraft:compass",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Print '/cs search <query>' guidance and close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            49
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            50
+          ],
+          "label": "Create Your Chest Shop",
+          "native_item": "minecraft:emerald",
+          "trigger": "none",
+          "real_effect": "Display sign-template instructions; NO callback.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Next Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Next page of same entries/key.",
+          "preview_proposal": "Next fixture page.",
+          "condition": "more than (page+1)*45 entries",
+          "target": "same key"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
+          "start_line": 47,
+          "end_line": 162
+        }
+      ],
+      "notes": []
+    },
+    {
+      "skin_key": "economy_hub",
+      "live_slots_union": [
+        8,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "controls": [
+        {
+          "slots": [
+            8
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            10
+          ],
+          "label": "Balance",
+          "native_item": "minecraft:gold_ingot",
+          "trigger": "none",
+          "real_effect": "Display balance, salary/15min and /eco pay guidance.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            11
+          ],
+          "label": "Auction House",
+          "native_item": "minecraft:name_tag",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open auction_house.",
+          "preview_proposal": "Open corresponding fixture.",
+          "condition": "always",
+          "target": "auction_house"
+        },
+        {
+          "slots": [
+            12
+          ],
+          "label": "Admin Shop",
+          "native_item": "minecraft:ender_chest",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open admin_shop_categories.",
+          "preview_proposal": "Open corresponding fixture.",
+          "condition": "always",
+          "target": "admin_shop_categories"
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "Chest Shops",
+          "native_item": "minecraft:chest",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open chest_shop_ads.",
+          "preview_proposal": "Open corresponding fixture.",
+          "condition": "always",
+          "target": "chest_shop_ads"
+        },
+        {
+          "slots": [
+            14
+          ],
+          "label": "Economy Log",
+          "native_item": "minecraft:book",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open economy_log.",
+          "preview_proposal": "Open corresponding fixture.",
+          "condition": "always",
+          "target": "economy_log"
+        },
+        {
+          "slots": [
+            15
+          ],
+          "label": "Balance Privacy: Public / Private",
+          "native_item": "minecraft:lime_concrete or minecraft:red_concrete",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Persist privacy toggle and reopen hub.",
+          "preview_proposal": "Toggle fixture privacy and update slot16 rank/privacy lore; do not change player data.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            16
+          ],
+          "label": "Your Top Balance Rank",
+          "native_item": "minecraft:player_head",
+          "trigger": "none",
+          "real_effect": "Display Private / rank / Unranked and related command guidance; no ranking screen callback.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/EcoHubSGui.java",
+          "start_line": 20,
+          "end_line": 110
+        }
+      ],
+      "notes": []
+    },
+    {
+      "skin_key": "trade_idle",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44,
+        47,
+        52
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            9,
+            10,
+            11,
+            12,
+            18,
+            19,
+            20,
+            21,
+            27,
+            28,
+            29,
+            30,
+            36,
+            37,
+            38,
+            39
+          ],
+          "label": "You Will Give",
+          "native_item": "real trade-bank items",
+          "trigger": "native item movement",
+          "real_effect": "Writable offered item slots with existing graylist/blacklist checks; item change resets readiness.",
+          "preview_proposal": "Show locked example offer items. Do not emulate real ownership transfer or allow player item extraction/insertion.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            5,
+            6,
+            7,
+            8,
+            14,
+            15,
+            16,
+            17,
+            23,
+            24,
+            25,
+            26,
+            32,
+            33,
+            34,
+            35,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "You Will Receive",
+          "native_item": "other player trade-bank items",
+          "trigger": "none; immutable slots",
+          "real_effect": "Read-only incoming items.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "Trade / ready status",
+          "native_item": "minecraft:paper (neither), minecraft:orange_dye (one), minecraft:green_dye (both)",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle own ready. Local trade applies immediately if both become ready, otherwise reopens both views. Remote trade toggles ACTIVE/READY, sends update and refreshes.",
+          "preview_proposal": "idle -> self_ready; self_ready -> idle. other_ready click represents completing the trade: report simulated completion and close, rather than invent a durable confirm stage. A directly selected both_ready fixture toggles own readiness off -> other_ready; both_ready is not a promised long-lived production step.",
+          "condition": "always",
+          "target": "readiness state or applied trade",
+          "native_lore": [
+            "Both players must be Ready to complete the trade.",
+            "Click to toggle your ready status.",
+            "<other player> is READY when applicable.",
+            "You are READY / NOT READY."
+          ]
+        },
+        {
+          "slots": [
+            47
+          ],
+          "label": "Your Offered Money",
+          "native_item": "minecraft:emerald",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open trade_money when balance>0; otherwise show no-money message and remain.",
+          "preview_proposal": "Open money fixture preserving offered amount; blocked no-money example stays.",
+          "condition": "always",
+          "target": "trade_money"
+        },
+        {
+          "slots": [
+            52
+          ],
+          "label": "Money You Will Receive",
+          "native_item": "minecraft:emerald",
+          "trigger": "none",
+          "real_effect": "Display incoming money when >0.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "other player money > 0"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "start_line": 24,
+          "end_line": 166
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "start_line": 198,
+          "end_line": 223
+        }
+      ],
+      "notes": [
+        "No explicit Cancel or Close slot. Closing the trade menu invokes existing trade cancellation logic.",
+        "trade_both_ready can be brief/absent for local trade because the ready callback applies immediately.",
+        "Decorative separators and bottom filler are never new click targets."
+      ]
+    },
+    {
+      "skin_key": "trade_self_ready",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44,
+        47,
+        52
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            9,
+            10,
+            11,
+            12,
+            18,
+            19,
+            20,
+            21,
+            27,
+            28,
+            29,
+            30,
+            36,
+            37,
+            38,
+            39
+          ],
+          "label": "You Will Give",
+          "native_item": "real trade-bank items",
+          "trigger": "native item movement",
+          "real_effect": "Writable offered item slots with existing graylist/blacklist checks; item change resets readiness.",
+          "preview_proposal": "Show locked example offer items. Do not emulate real ownership transfer or allow player item extraction/insertion.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            5,
+            6,
+            7,
+            8,
+            14,
+            15,
+            16,
+            17,
+            23,
+            24,
+            25,
+            26,
+            32,
+            33,
+            34,
+            35,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "You Will Receive",
+          "native_item": "other player trade-bank items",
+          "trigger": "none; immutable slots",
+          "real_effect": "Read-only incoming items.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "Trade / ready status",
+          "native_item": "minecraft:paper (neither), minecraft:orange_dye (one), minecraft:green_dye (both)",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle own ready. Local trade applies immediately if both become ready, otherwise reopens both views. Remote trade toggles ACTIVE/READY, sends update and refreshes.",
+          "preview_proposal": "idle -> self_ready; self_ready -> idle. other_ready click represents completing the trade: report simulated completion and close, rather than invent a durable confirm stage. A directly selected both_ready fixture toggles own readiness off -> other_ready; both_ready is not a promised long-lived production step.",
+          "condition": "always",
+          "target": "readiness state or applied trade",
+          "native_lore": [
+            "Both players must be Ready to complete the trade.",
+            "Click to toggle your ready status.",
+            "<other player> is READY when applicable.",
+            "You are READY / NOT READY."
+          ]
+        },
+        {
+          "slots": [
+            47
+          ],
+          "label": "Your Offered Money",
+          "native_item": "minecraft:emerald",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open trade_money when balance>0; otherwise show no-money message and remain.",
+          "preview_proposal": "Open money fixture preserving offered amount; blocked no-money example stays.",
+          "condition": "always",
+          "target": "trade_money"
+        },
+        {
+          "slots": [
+            52
+          ],
+          "label": "Money You Will Receive",
+          "native_item": "minecraft:emerald",
+          "trigger": "none",
+          "real_effect": "Display incoming money when >0.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "other player money > 0"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "start_line": 24,
+          "end_line": 166
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "start_line": 198,
+          "end_line": 223
+        }
+      ],
+      "notes": [
+        "No explicit Cancel or Close slot. Closing the trade menu invokes existing trade cancellation logic.",
+        "trade_both_ready can be brief/absent for local trade because the ready callback applies immediately.",
+        "Decorative separators and bottom filler are never new click targets."
+      ]
+    },
+    {
+      "skin_key": "trade_other_ready",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44,
+        47,
+        52
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            9,
+            10,
+            11,
+            12,
+            18,
+            19,
+            20,
+            21,
+            27,
+            28,
+            29,
+            30,
+            36,
+            37,
+            38,
+            39
+          ],
+          "label": "You Will Give",
+          "native_item": "real trade-bank items",
+          "trigger": "native item movement",
+          "real_effect": "Writable offered item slots with existing graylist/blacklist checks; item change resets readiness.",
+          "preview_proposal": "Show locked example offer items. Do not emulate real ownership transfer or allow player item extraction/insertion.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            5,
+            6,
+            7,
+            8,
+            14,
+            15,
+            16,
+            17,
+            23,
+            24,
+            25,
+            26,
+            32,
+            33,
+            34,
+            35,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "You Will Receive",
+          "native_item": "other player trade-bank items",
+          "trigger": "none; immutable slots",
+          "real_effect": "Read-only incoming items.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "Trade / ready status",
+          "native_item": "minecraft:paper (neither), minecraft:orange_dye (one), minecraft:green_dye (both)",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle own ready. Local trade applies immediately if both become ready, otherwise reopens both views. Remote trade toggles ACTIVE/READY, sends update and refreshes.",
+          "preview_proposal": "idle -> self_ready; self_ready -> idle. other_ready click represents completing the trade: report simulated completion and close, rather than invent a durable confirm stage. A directly selected both_ready fixture toggles own readiness off -> other_ready; both_ready is not a promised long-lived production step.",
+          "condition": "always",
+          "target": "readiness state or applied trade",
+          "native_lore": [
+            "Both players must be Ready to complete the trade.",
+            "Click to toggle your ready status.",
+            "<other player> is READY when applicable.",
+            "You are READY / NOT READY."
+          ]
+        },
+        {
+          "slots": [
+            47
+          ],
+          "label": "Your Offered Money",
+          "native_item": "minecraft:emerald",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open trade_money when balance>0; otherwise show no-money message and remain.",
+          "preview_proposal": "Open money fixture preserving offered amount; blocked no-money example stays.",
+          "condition": "always",
+          "target": "trade_money"
+        },
+        {
+          "slots": [
+            52
+          ],
+          "label": "Money You Will Receive",
+          "native_item": "minecraft:emerald",
+          "trigger": "none",
+          "real_effect": "Display incoming money when >0.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "other player money > 0"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "start_line": 24,
+          "end_line": 166
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "start_line": 198,
+          "end_line": 223
+        }
+      ],
+      "notes": [
+        "No explicit Cancel or Close slot. Closing the trade menu invokes existing trade cancellation logic.",
+        "trade_both_ready can be brief/absent for local trade because the ready callback applies immediately.",
+        "Decorative separators and bottom filler are never new click targets."
+      ]
+    },
+    {
+      "skin_key": "trade_both_ready",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44,
+        47,
+        52
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            9,
+            10,
+            11,
+            12,
+            18,
+            19,
+            20,
+            21,
+            27,
+            28,
+            29,
+            30,
+            36,
+            37,
+            38,
+            39
+          ],
+          "label": "You Will Give",
+          "native_item": "real trade-bank items",
+          "trigger": "native item movement",
+          "real_effect": "Writable offered item slots with existing graylist/blacklist checks; item change resets readiness.",
+          "preview_proposal": "Show locked example offer items. Do not emulate real ownership transfer or allow player item extraction/insertion.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            5,
+            6,
+            7,
+            8,
+            14,
+            15,
+            16,
+            17,
+            23,
+            24,
+            25,
+            26,
+            32,
+            33,
+            34,
+            35,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "You Will Receive",
+          "native_item": "other player trade-bank items",
+          "trigger": "none; immutable slots",
+          "real_effect": "Read-only incoming items.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "Trade / ready status",
+          "native_item": "minecraft:paper (neither), minecraft:orange_dye (one), minecraft:green_dye (both)",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Toggle own ready. Local trade applies immediately if both become ready, otherwise reopens both views. Remote trade toggles ACTIVE/READY, sends update and refreshes.",
+          "preview_proposal": "idle -> self_ready; self_ready -> idle. other_ready click represents completing the trade: report simulated completion and close, rather than invent a durable confirm stage. A directly selected both_ready fixture toggles own readiness off -> other_ready; both_ready is not a promised long-lived production step.",
+          "condition": "always",
+          "target": "readiness state or applied trade",
+          "native_lore": [
+            "Both players must be Ready to complete the trade.",
+            "Click to toggle your ready status.",
+            "<other player> is READY when applicable.",
+            "You are READY / NOT READY."
+          ]
+        },
+        {
+          "slots": [
+            47
+          ],
+          "label": "Your Offered Money",
+          "native_item": "minecraft:emerald",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open trade_money when balance>0; otherwise show no-money message and remain.",
+          "preview_proposal": "Open money fixture preserving offered amount; blocked no-money example stays.",
+          "condition": "always",
+          "target": "trade_money"
+        },
+        {
+          "slots": [
+            52
+          ],
+          "label": "Money You Will Receive",
+          "native_item": "minecraft:emerald",
+          "trigger": "none",
+          "real_effect": "Display incoming money when >0.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "other player money > 0"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "start_line": 24,
+          "end_line": 166
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "start_line": 198,
+          "end_line": 223
+        }
+      ],
+      "notes": [
+        "No explicit Cancel or Close slot. Closing the trade menu invokes existing trade cancellation logic.",
+        "trade_both_ready can be brief/absent for local trade because the ready callback applies immediately.",
+        "Decorative separators and bottom filler are never new click targets."
+      ]
+    },
+    {
+      "skin_key": "trade_money",
+      "live_slots_union": [
+        1,
+        4,
+        7
+      ],
+      "controls": [
+        {
+          "slots": [
+            1
+          ],
+          "label": "Increase offered money",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Add selected step, clamp, then write proposed trade-bank money and reopen money screen (range0..balance).",
+          "preview_proposal": "Increase fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            7
+          ],
+          "label": "Decrease offered money",
+          "native_item": "minecraft:arrow",
+          "trigger": "RIGHT 1; LEFT 10; SHIFT_RIGHT 100; SHIFT_LEFT 1000; other click types ignored.",
+          "real_effect": "Subtract selected step, clamp, then write proposed trade-bank money and reopen money screen (range0..balance).",
+          "preview_proposal": "Decrease fixture value using actual click-step mapping, clamp, refresh.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            4
+          ],
+          "label": "Offered Money: <amount>",
+          "native_item": "minecraft:emerald",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Confirm/return to trade. Local resets both ready states then reopens; remote opens with other-ready=false then sends update.",
+          "preview_proposal": "Return to trade_idle fixture with chosen offered amount; no money transfer.",
+          "condition": "always",
+          "target": "trade_idle (local reset)",
+          "native_lore": [
+            "Use the buttons to change offered money.",
+            "Click to confirm and return to the trade screen.",
+            "Your Balance: <balance>"
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "start_line": 169,
+          "end_line": 195
+        },
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "start_line": 313,
+          "end_line": 347
+        }
+      ],
+      "notes": [
+        "The real container is GENERIC_3x3 (dispenser), not a 9-column chest.",
+        "Themed title is art-only for stable centered positioning. Live amount/balance remain on emerald4.",
+        "No separate Back/Cancel item; center4 is confirm-and-return. Arrow clicks update trade-bank proposed money before return."
+      ]
+    },
+    {
+      "skin_key": "ticket_valid",
+      "live_slots_union": [
+        22,
+        29,
+        33
+      ],
+      "controls": [
+        {
+          "slots": [
+            22
+          ],
+          "label": "Ticket",
+          "native_item": "actual t.asItem(true)",
+          "trigger": "none",
+          "real_effect": "Display actual ticket including type/rank/prefix/scope/duration/status facts.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            29
+          ],
+          "label": "Cancel",
+          "native_item": "minecraft:red_concrete",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Play click sound and close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            33
+          ],
+          "label": "Confirm",
+          "native_item": "minecraft:lime_concrete",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Call QTicketCommands.checkOrUse(player,true), then close.",
+          "preview_proposal": "Show simulated redemption, then close. Never grant rank/prefix or consume a real ticket.",
+          "condition": "valid ticket only",
+          "native_lore": [
+            "Rank ticket: grants <rank> in <scope> for <duration> or permanently.",
+            "Prefix ticket: grants <prefix> for <duration> or permanently."
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
+          "start_line": 27,
+          "end_line": 81
+        }
+      ],
+      "notes": [
+        "ticket_invalid has no33 item or callback. Do not present an enabled Confirm action in this variant.",
+        "The26 border slots are decorative and replaced with protected empty elements in themed mode."
+      ]
+    },
+    {
+      "skin_key": "ticket_invalid",
+      "live_slots_union": [
+        22,
+        29,
+        33
+      ],
+      "controls": [
+        {
+          "slots": [
+            22
+          ],
+          "label": "Ticket",
+          "native_item": "actual t.asItem(true)",
+          "trigger": "none",
+          "real_effect": "Display actual ticket including type/rank/prefix/scope/duration/status facts.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            29
+          ],
+          "label": "Cancel",
+          "native_item": "minecraft:red_concrete",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Play click sound and close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            33
+          ],
+          "label": "Confirm",
+          "native_item": "minecraft:lime_concrete",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Call QTicketCommands.checkOrUse(player,true), then close.",
+          "preview_proposal": "Show simulated redemption, then close. Never grant rank/prefix or consume a real ticket.",
+          "condition": "valid ticket only",
+          "native_lore": [
+            "Rank ticket: grants <rank> in <scope> for <duration> or permanently.",
+            "Prefix ticket: grants <prefix> for <duration> or permanently."
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
+          "start_line": 27,
+          "end_line": 81
+        }
+      ],
+      "notes": [
+        "ticket_invalid has no33 item or callback. Do not present an enabled Confirm action in this variant.",
+        "The26 border slots are decorative and replaced with protected empty elements in themed mode."
+      ]
+    }
+  ]
+}

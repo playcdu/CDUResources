@@ -1,0 +1,142 @@
+{
+  "audit_date": "2026-09-13",
+  "support_policy": "No formal policy found; authenticated private GitHub releases list empty; current retained branch targets covered",
+  "excluded_by_user": [
+    "1.16.5",
+    "1.18.2",
+    "1.12"
+  ],
+  "targets": [
+    {
+      "server_minecraft": "1.19.2",
+      "loader": "Fabric",
+      "quasar_version_property": "5.10.0",
+      "upstream_ref": "origin/1.19",
+      "base_commit": "e860a0c7b23a71edee5df18f4b9e7ae1c6f1e8bf",
+      "java_release": 17,
+      "client_minecraft": "1.19.2",
+      "native_client_resource_format": 9,
+      "shared_zip_pack_format": 15,
+      "shared_zip_supported_formats": [
+        9,
+        34
+      ],
+      "build": "built-remapJar",
+      "released_client_parser": "passed",
+      "actual_resource_reload": "untested",
+      "actual_rendering": "untested",
+      "actual_interactions": "untested"
+    },
+    {
+      "server_minecraft": "1.19.2",
+      "loader": "Forge",
+      "quasar_version_property": "5.10.0",
+      "upstream_ref": "origin/1.19",
+      "base_commit": "e860a0c7b23a71edee5df18f4b9e7ae1c6f1e8bf",
+      "java_release": 17,
+      "client_minecraft": "1.19.2",
+      "native_client_resource_format": 9,
+      "shared_zip_pack_format": 15,
+      "shared_zip_supported_formats": [
+        9,
+        34
+      ],
+      "build": "blocked-missing-local-ServerGUI",
+      "released_client_parser": "passed",
+      "actual_resource_reload": "untested",
+      "actual_rendering": "untested",
+      "actual_interactions": "untested"
+    },
+    {
+      "server_minecraft": "1.20.1",
+      "loader": "Fabric",
+      "quasar_version_property": "5.10.0",
+      "upstream_ref": "origin/master",
+      "base_commit": "ce7931587892b1a721b4bb8057a03511ebc3d4cf",
+      "java_release": 17,
+      "client_minecraft": "1.20.1",
+      "native_client_resource_format": 15,
+      "shared_zip_pack_format": 15,
+      "shared_zip_supported_formats": [
+        9,
+        34
+      ],
+      "build": "built-remapJar",
+      "released_client_parser": "passed",
+      "actual_resource_reload": "untested",
+      "actual_rendering": "untested",
+      "actual_interactions": "untested"
+    },
+    {
+      "server_minecraft": "1.20.1",
+      "loader": "Forge",
+      "quasar_version_property": "5.10.0",
+      "upstream_ref": "origin/master",
+      "base_commit": "ce7931587892b1a721b4bb8057a03511ebc3d4cf",
+      "java_release": 17,
+      "client_minecraft": "1.20.1",
+      "native_client_resource_format": 15,
+      "shared_zip_pack_format": 15,
+      "shared_zip_supported_formats": [
+        9,
+        34
+      ],
+      "build": "blocked-missing-local-ServerGUI",
+      "released_client_parser": "passed",
+      "actual_resource_reload": "untested",
+      "actual_rendering": "untested",
+      "actual_interactions": "untested"
+    },
+    {
+      "server_minecraft": "1.21.1",
+      "loader": "Fabric",
+      "quasar_version_property": "5.12.1",
+      "upstream_ref": "origin/1.21",
+      "base_commit": "6e6be7f7716ff8ef76dc309e33203ff8e6e1530a",
+      "java_release": 21,
+      "client_minecraft": "1.21.1",
+      "native_client_resource_format": 34,
+      "shared_zip_pack_format": 15,
+      "shared_zip_supported_formats": [
+        9,
+        34
+      ],
+      "build": "built-remapJar",
+      "released_client_parser": "passed",
+      "actual_resource_reload": "untested",
+      "actual_rendering": "untested",
+      "actual_interactions": "untested"
+    },
+    {
+      "server_minecraft": "1.21.1",
+      "loader": "NeoForge",
+      "quasar_version_property": "5.12.1",
+      "upstream_ref": "origin/1.21",
+      "base_commit": "6e6be7f7716ff8ef76dc309e33203ff8e6e1530a",
+      "java_release": 21,
+      "client_minecraft": "1.21.1",
+      "native_client_resource_format": 34,
+      "shared_zip_pack_format": 15,
+      "shared_zip_supported_formats": [
+        9,
+        34
+      ],
+      "build": "blocked-missing-local-ServerGUI",
+      "released_client_parser": "passed",
+      "actual_resource_reload": "untested",
+      "actual_rendering": "untested",
+      "actual_interactions": "untested"
+    }
+  ],
+  "wider_clients": [
+    {
+      "version": "26.2",
+      "native_resource_format": "88.0",
+      "metadata_codec": "accepted final schema",
+      "declared_supported": false,
+      "font_load_rendering": "untested",
+      "quasar_server_port": "none"
+    }
+  ],
+  "protocol_note": "Resource pack compatibility does not establish cross-version client/server protocol compatibility."
+}
