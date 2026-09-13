@@ -46,6 +46,8 @@ def main():
             subprocess.run([sys.executable,str(ROOT/'tools/artist.py'),'verify-exports'],cwd=ROOT,check=True)
             run('test_artist.py')
             report['artistToolTests']='passed'
+        run('test_control_explorer.py')
+        report['controlExplorerSnapshotTests']='passed'
         node=shutil.which('node')
         if node:
             subprocess.run([node,str(ROOT/'tools/test_layout_model.cjs')],cwd=ROOT,check=True)

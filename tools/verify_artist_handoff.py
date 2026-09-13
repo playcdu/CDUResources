@@ -29,6 +29,8 @@ tests=subprocess.run([sys.executable,'tools/test_pack.py'],cwd=out,capture_outpu
 assert tests.returncode==0,tests.stdout+tests.stderr
 artist_tests=subprocess.run([sys.executable,'tools/test_artist.py'],cwd=out,capture_output=True,text=True)
 assert artist_tests.returncode==0,artist_tests.stdout+artist_tests.stderr
+explorer_tests=subprocess.run([sys.executable,'tools/test_control_explorer.py'],cwd=out,capture_output=True,text=True)
+assert explorer_tests.returncode==0,explorer_tests.stdout+explorer_tests.stderr
 original=(ROOT/'deliverables/quasar-gui.zip').read_bytes()
 rebuilt=(out/'deliverables/quasar-gui.zip').read_bytes()
 with zipfile.ZipFile(out/'deliverables/quasar-gui-artist-kit.zip') as kit:
@@ -37,6 +39,7 @@ with zipfile.ZipFile(out/'deliverables/quasar-gui-artist-kit.zip') as kit:
               'manifests/button-layouts.json','tools/check_artifacts.py','tools/verify_artist_handoff.py',
               'illustrations/contact-sheet.png','tools/sample_art.py','tools/artist_guides.py',
               'tools/build_control_explorer.py','tools/control-explorer.template.html',
+              'tools/test_control_explorer.py','tools/verify_control_explorer.py',
               'LAYOUT-EDITOR.html','Setup Artist Tools.cmd','Build Pack.cmd','Open Layout Helper.cmd',
               'tools/artist.py','tools/artist-tools.cmd','tools/build_artist_editor.py','tools/layout_model.js',
               'tools/layout-editor-ui.js','tools/layout-editor.template.html','tools/test_artist.py','tools/test_layout_model.cjs',
@@ -70,6 +73,7 @@ with zipfile.ZipFile(out/'deliverables/quasar-gui-artist-kit.zip') as kit:
     assert kit.read('LAYOUT-EDITOR.html') == (out/'LAYOUT-EDITOR.html').read_bytes()
     assert kit.read('pack-source/assets/quasar_gui/textures/menu/auction_house.png') == changed
 result=dict(standaloneArtistKitBuild=build.returncode,standaloneArtistKitTests=tests.returncode,
+    standaloneControlExplorerTests=explorer_tests.returncode,
     byteIdenticalPack=original==rebuilt,sha1=hashlib.sha1(rebuilt).hexdigest(),
     freshExtraction=out.relative_to(ROOT).as_posix(),normalBuildPreservesDocumentation=True,
     overrideGuideAndReexportUseEditedArtwork=True,canonicalArtworkPreserved=True,
