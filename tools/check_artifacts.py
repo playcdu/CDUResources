@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+import shutil
 import platform
 import subprocess
 import sys
@@ -20,7 +22,8 @@ def run(script):
 
 def checksums():
     result = {}
-    for name in ARTIFACTS:
+    sha1=(ROOT/'deliverables/quasar-gui.zip.sha1').read_text().strip()
+    for name in ARTIFACTS+('quasar-gui-layouts-'+sha1+'.json',):
         raw = (ROOT / "deliverables" / name).read_bytes()
         result[name] = {"bytes": len(raw), "sha1": hashlib.sha1(raw).hexdigest(),
                         "sha256": hashlib.sha256(raw).hexdigest()}
@@ -32,12 +35,25 @@ def main():
     evidence.mkdir(exist_ok=True)
     report = {"status": "running", "python": platform.python_version(), "pillow": PIL.__version__,
               "clientRendering": "not_tested", "gameplay": "not_tested",
-              "productStatus": "foundation_being_redesigned"}
+              "productStatus": "implemented_pending_client_validation"}
     try:
         expected_python = (ROOT / ".python-version").read_text().strip()
         expected_pillow = (ROOT / "requirements.txt").read_text().strip().split("==")[1]
-        if platform.python_version() != expected_python or PIL.__version__ != expected_pillow:
-            raise RuntimeError(f"Use Python {expected_python} and Pillow {expected_pillow} for reproducible artifacts")
+        python_ok=platform.python_version()==expected_python if os.environ.get('CI') else sys.version_info[:2]==(3,12)
+        if not python_ok or PIL.__version__ != expected_pillow:
+            raise RuntimeError(f"Use Python 3.12 locally ({expected_python} in CI) and Pillow {expected_pillow}")
+        if (ROOT/'tools/artist.py').is_file():
+            subprocess.run([sys.executable,str(ROOT/'tools/artist.py'),'verify-exports'],cwd=ROOT,check=True)
+            run('test_artist.py')
+            report['artistToolTests']='passed'
+        node=shutil.which('node')
+        if node:
+            subprocess.run([node,str(ROOT/'tools/test_layout_model.cjs')],cwd=ROOT,check=True)
+            report['layoutModelTests']='passed'
+        elif os.environ.get('CI'):
+            raise RuntimeError('CI requires Node for the layout model regression tests')
+        else:
+            report['layoutModelTests']='not run locally; Node unavailable; required in CI'
         run("build_pack.py")
         run("test_pack.py")
         tests = json.loads((evidence / "pack-tests/test-results.json").read_text())

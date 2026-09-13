@@ -200,6 +200,1062 @@
       "pulse_1": "U+E493",
       "pulse_2": "U+E494",
       "pulse_3": "U+E495"
+    },
+    "auction_duration/one_day": {
+      "normal": "U+E496",
+      "disabled": "U+E497",
+      "selected": "U+E498",
+      "pulse_1": "U+E499",
+      "pulse_2": "U+E49A",
+      "pulse_3": "U+E49B"
+    },
+    "auction_duration/three_days": {
+      "normal": "U+E49C",
+      "disabled": "U+E49D",
+      "selected": "U+E49E",
+      "pulse_1": "U+E49F",
+      "pulse_2": "U+E4A0",
+      "pulse_3": "U+E4A1"
+    },
+    "auction_duration/seven_days": {
+      "normal": "U+E4A2",
+      "disabled": "U+E4A3",
+      "selected": "U+E4A4",
+      "pulse_1": "U+E4A5",
+      "pulse_2": "U+E4A6",
+      "pulse_3": "U+E4A7"
+    },
+    "auction_duration/twelve_days": {
+      "normal": "U+E4A8",
+      "disabled": "U+E4A9",
+      "selected": "U+E4AA",
+      "pulse_1": "U+E4AB",
+      "pulse_2": "U+E4AC",
+      "pulse_3": "U+E4AD"
+    },
+    "auction_duration/fifteen_days": {
+      "normal": "U+E4AE",
+      "disabled": "U+E4AF",
+      "selected": "U+E4B0",
+      "pulse_1": "U+E4B1",
+      "pulse_2": "U+E4B2",
+      "pulse_3": "U+E4B3"
+    },
+    "auction_duration/close": {
+      "normal": "U+E4B4",
+      "disabled": "U+E4B5",
+      "selected": "U+E4B6",
+      "pulse_1": "U+E4B7",
+      "pulse_2": "U+E4B8",
+      "pulse_3": "U+E4B9"
+    },
+    "ticket_valid/cancel": {
+      "normal": "U+E4BA",
+      "disabled": "U+E4BB",
+      "selected": "U+E4BC",
+      "pulse_1": "U+E4BD",
+      "pulse_2": "U+E4BE",
+      "pulse_3": "U+E4BF"
+    },
+    "ticket_valid/redeem": {
+      "normal": "U+E4C0",
+      "disabled": "U+E4C1",
+      "selected": "U+E4C2",
+      "pulse_1": "U+E4C3",
+      "pulse_2": "U+E4C4",
+      "pulse_3": "U+E4C5"
+    },
+    "ticket_invalid/cancel": {
+      "normal": "U+E4C6",
+      "disabled": "U+E4C7",
+      "selected": "U+E4C8",
+      "pulse_1": "U+E4C9",
+      "pulse_2": "U+E4CA",
+      "pulse_3": "U+E4CB"
+    },
+    "ticket_invalid/redeem": {
+      "normal": "U+E4CC",
+      "disabled": "U+E4CD",
+      "selected": "U+E4CE",
+      "pulse_1": "U+E4CF",
+      "pulse_2": "U+E4D0",
+      "pulse_3": "U+E4D1"
+    },
+    "chest_shop_settings/back": {
+      "normal": "U+E4D2",
+      "disabled": "U+E4D3",
+      "selected": "U+E4D4",
+      "pulse_1": "U+E4D5",
+      "pulse_2": "U+E4D6",
+      "pulse_3": "U+E4D7"
+    },
+    "chest_shop_settings/stats": {
+      "normal": "U+E4D8",
+      "disabled": "U+E4D9",
+      "selected": "U+E4DA",
+      "pulse_1": "U+E4DB",
+      "pulse_2": "U+E4DC",
+      "pulse_3": "U+E4DD"
+    },
+    "chest_shop_settings/upgrade": {
+      "normal": "U+E4DE",
+      "disabled": "U+E4DF",
+      "selected": "U+E4E0",
+      "pulse_1": "U+E4E1",
+      "pulse_2": "U+E4E2",
+      "pulse_3": "U+E4E3"
+    },
+    "chest_shop_settings/rename": {
+      "normal": "U+E4E4",
+      "disabled": "U+E4E5",
+      "selected": "U+E4E6",
+      "pulse_1": "U+E4E7",
+      "pulse_2": "U+E4E8",
+      "pulse_3": "U+E4E9"
+    },
+    "chest_shop_settings/refresh": {
+      "normal": "U+E4EA",
+      "disabled": "U+E4EB",
+      "selected": "U+E4EC",
+      "pulse_1": "U+E4ED",
+      "pulse_2": "U+E4EE",
+      "pulse_3": "U+E4EF"
+    },
+    "chest_shop_upgrade/back": {
+      "normal": "U+E4F0",
+      "disabled": "U+E4F1",
+      "selected": "U+E4F2",
+      "pulse_1": "U+E4F3",
+      "pulse_2": "U+E4F4",
+      "pulse_3": "U+E4F5"
+    },
+    "chest_shop_upgrade/bid": {
+      "normal": "U+E4F6",
+      "disabled": "U+E4F7",
+      "selected": "U+E4F8",
+      "pulse_1": "U+E4F9",
+      "pulse_2": "U+E4FA",
+      "pulse_3": "U+E4FB"
+    },
+    "chest_shop_upgrade/increase": {
+      "normal": "U+E4FC",
+      "disabled": "U+E4FD",
+      "selected": "U+E4FE",
+      "pulse_1": "U+E4FF",
+      "pulse_2": "U+E500",
+      "pulse_3": "U+E501"
+    },
+    "chest_shop_upgrade/decrease": {
+      "normal": "U+E502",
+      "disabled": "U+E503",
+      "selected": "U+E504",
+      "pulse_1": "U+E505",
+      "pulse_2": "U+E506",
+      "pulse_3": "U+E507"
+    },
+    "chest_shop_upgrade/tier_1": {
+      "normal": "U+E508",
+      "disabled": "U+E509",
+      "selected": "U+E50A",
+      "pulse_1": "U+E50B",
+      "pulse_2": "U+E50C",
+      "pulse_3": "U+E50D"
+    },
+    "chest_shop_upgrade/tier_2": {
+      "normal": "U+E50E",
+      "disabled": "U+E50F",
+      "selected": "U+E510",
+      "pulse_1": "U+E511",
+      "pulse_2": "U+E512",
+      "pulse_3": "U+E513"
+    },
+    "chest_shop_upgrade/tier_3": {
+      "normal": "U+E514",
+      "disabled": "U+E515",
+      "selected": "U+E516",
+      "pulse_1": "U+E517",
+      "pulse_2": "U+E518",
+      "pulse_3": "U+E519"
+    },
+    "chest_shop_upgrade/confirm": {
+      "normal": "U+E51A",
+      "disabled": "U+E51B",
+      "selected": "U+E51C",
+      "pulse_1": "U+E51D",
+      "pulse_2": "U+E51E",
+      "pulse_3": "U+E51F"
+    },
+    "chest_shop_upgrade_confirm/back": {
+      "normal": "U+E520",
+      "disabled": "U+E521",
+      "selected": "U+E522",
+      "pulse_1": "U+E523",
+      "pulse_2": "U+E524",
+      "pulse_3": "U+E525"
+    },
+    "chest_shop_upgrade_confirm/bid": {
+      "normal": "U+E526",
+      "disabled": "U+E527",
+      "selected": "U+E528",
+      "pulse_1": "U+E529",
+      "pulse_2": "U+E52A",
+      "pulse_3": "U+E52B"
+    },
+    "chest_shop_upgrade_confirm/increase": {
+      "normal": "U+E52C",
+      "disabled": "U+E52D",
+      "selected": "U+E52E",
+      "pulse_1": "U+E52F",
+      "pulse_2": "U+E530",
+      "pulse_3": "U+E531"
+    },
+    "chest_shop_upgrade_confirm/decrease": {
+      "normal": "U+E532",
+      "disabled": "U+E533",
+      "selected": "U+E534",
+      "pulse_1": "U+E535",
+      "pulse_2": "U+E536",
+      "pulse_3": "U+E537"
+    },
+    "chest_shop_upgrade_confirm/tier_1": {
+      "normal": "U+E538",
+      "disabled": "U+E539",
+      "selected": "U+E53A",
+      "pulse_1": "U+E53B",
+      "pulse_2": "U+E53C",
+      "pulse_3": "U+E53D"
+    },
+    "chest_shop_upgrade_confirm/tier_2": {
+      "normal": "U+E53E",
+      "disabled": "U+E53F",
+      "selected": "U+E540",
+      "pulse_1": "U+E541",
+      "pulse_2": "U+E542",
+      "pulse_3": "U+E543"
+    },
+    "chest_shop_upgrade_confirm/tier_3": {
+      "normal": "U+E544",
+      "disabled": "U+E545",
+      "selected": "U+E546",
+      "pulse_1": "U+E547",
+      "pulse_2": "U+E548",
+      "pulse_3": "U+E549"
+    },
+    "chest_shop_upgrade_confirm/confirm": {
+      "normal": "U+E54A",
+      "disabled": "U+E54B",
+      "selected": "U+E54C",
+      "pulse_1": "U+E54D",
+      "pulse_2": "U+E54E",
+      "pulse_3": "U+E54F"
+    },
+    "chest_shop_upgrade_disabled/back": {
+      "normal": "U+E550",
+      "disabled": "U+E551",
+      "selected": "U+E552",
+      "pulse_1": "U+E553",
+      "pulse_2": "U+E554",
+      "pulse_3": "U+E555"
+    },
+    "chest_shop_upgrade_disabled/bid": {
+      "normal": "U+E556",
+      "disabled": "U+E557",
+      "selected": "U+E558",
+      "pulse_1": "U+E559",
+      "pulse_2": "U+E55A",
+      "pulse_3": "U+E55B"
+    },
+    "chest_shop_upgrade_disabled/increase": {
+      "normal": "U+E55C",
+      "disabled": "U+E55D",
+      "selected": "U+E55E",
+      "pulse_1": "U+E55F",
+      "pulse_2": "U+E560",
+      "pulse_3": "U+E561"
+    },
+    "chest_shop_upgrade_disabled/decrease": {
+      "normal": "U+E562",
+      "disabled": "U+E563",
+      "selected": "U+E564",
+      "pulse_1": "U+E565",
+      "pulse_2": "U+E566",
+      "pulse_3": "U+E567"
+    },
+    "chest_shop_upgrade_disabled/tier_1": {
+      "normal": "U+E568",
+      "disabled": "U+E569",
+      "selected": "U+E56A",
+      "pulse_1": "U+E56B",
+      "pulse_2": "U+E56C",
+      "pulse_3": "U+E56D"
+    },
+    "chest_shop_upgrade_disabled/tier_2": {
+      "normal": "U+E56E",
+      "disabled": "U+E56F",
+      "selected": "U+E570",
+      "pulse_1": "U+E571",
+      "pulse_2": "U+E572",
+      "pulse_3": "U+E573"
+    },
+    "chest_shop_upgrade_disabled/tier_3": {
+      "normal": "U+E574",
+      "disabled": "U+E575",
+      "selected": "U+E576",
+      "pulse_1": "U+E577",
+      "pulse_2": "U+E578",
+      "pulse_3": "U+E579"
+    },
+    "chest_shop_upgrade_disabled/confirm": {
+      "normal": "U+E57A",
+      "disabled": "U+E57B",
+      "selected": "U+E57C",
+      "pulse_1": "U+E57D",
+      "pulse_2": "U+E57E",
+      "pulse_3": "U+E57F"
+    },
+    "chest_shop_buy/back": {
+      "normal": "U+E580",
+      "disabled": "U+E581",
+      "selected": "U+E582",
+      "pulse_1": "U+E583",
+      "pulse_2": "U+E584",
+      "pulse_3": "U+E585"
+    },
+    "chest_shop_buy/increase": {
+      "normal": "U+E586",
+      "disabled": "U+E587",
+      "selected": "U+E588",
+      "pulse_1": "U+E589",
+      "pulse_2": "U+E58A",
+      "pulse_3": "U+E58B"
+    },
+    "chest_shop_buy/decrease": {
+      "normal": "U+E58C",
+      "disabled": "U+E58D",
+      "selected": "U+E58E",
+      "pulse_1": "U+E58F",
+      "pulse_2": "U+E590",
+      "pulse_3": "U+E591"
+    },
+    "chest_shop_buy/selected_amount": {
+      "normal": "U+E592",
+      "disabled": "U+E593",
+      "selected": "U+E594",
+      "pulse_1": "U+E595",
+      "pulse_2": "U+E596",
+      "pulse_3": "U+E597"
+    },
+    "chest_shop_buy/preset_1": {
+      "normal": "U+E598",
+      "disabled": "U+E599",
+      "selected": "U+E59A",
+      "pulse_1": "U+E59B",
+      "pulse_2": "U+E59C",
+      "pulse_3": "U+E59D"
+    },
+    "chest_shop_buy/preset_2": {
+      "normal": "U+E59E",
+      "disabled": "U+E59F",
+      "selected": "U+E5A0",
+      "pulse_1": "U+E5A1",
+      "pulse_2": "U+E5A2",
+      "pulse_3": "U+E5A3"
+    },
+    "chest_shop_buy/preset_3": {
+      "normal": "U+E5A4",
+      "disabled": "U+E5A5",
+      "selected": "U+E5A6",
+      "pulse_1": "U+E5A7",
+      "pulse_2": "U+E5A8",
+      "pulse_3": "U+E5A9"
+    },
+    "chest_shop_buy/preset_4": {
+      "normal": "U+E5AA",
+      "disabled": "U+E5AB",
+      "selected": "U+E5AC",
+      "pulse_1": "U+E5AD",
+      "pulse_2": "U+E5AE",
+      "pulse_3": "U+E5AF"
+    },
+    "chest_shop_sell/back": {
+      "normal": "U+E5B0",
+      "disabled": "U+E5B1",
+      "selected": "U+E5B2",
+      "pulse_1": "U+E5B3",
+      "pulse_2": "U+E5B4",
+      "pulse_3": "U+E5B5"
+    },
+    "chest_shop_sell/increase": {
+      "normal": "U+E5B6",
+      "disabled": "U+E5B7",
+      "selected": "U+E5B8",
+      "pulse_1": "U+E5B9",
+      "pulse_2": "U+E5BA",
+      "pulse_3": "U+E5BB"
+    },
+    "chest_shop_sell/decrease": {
+      "normal": "U+E5BC",
+      "disabled": "U+E5BD",
+      "selected": "U+E5BE",
+      "pulse_1": "U+E5BF",
+      "pulse_2": "U+E5C0",
+      "pulse_3": "U+E5C1"
+    },
+    "chest_shop_sell/selected_amount": {
+      "normal": "U+E5C2",
+      "disabled": "U+E5C3",
+      "selected": "U+E5C4",
+      "pulse_1": "U+E5C5",
+      "pulse_2": "U+E5C6",
+      "pulse_3": "U+E5C7"
+    },
+    "chest_shop_sell/preset_1": {
+      "normal": "U+E5C8",
+      "disabled": "U+E5C9",
+      "selected": "U+E5CA",
+      "pulse_1": "U+E5CB",
+      "pulse_2": "U+E5CC",
+      "pulse_3": "U+E5CD"
+    },
+    "chest_shop_sell/preset_2": {
+      "normal": "U+E5CE",
+      "disabled": "U+E5CF",
+      "selected": "U+E5D0",
+      "pulse_1": "U+E5D1",
+      "pulse_2": "U+E5D2",
+      "pulse_3": "U+E5D3"
+    },
+    "chest_shop_sell/preset_3": {
+      "normal": "U+E5D4",
+      "disabled": "U+E5D5",
+      "selected": "U+E5D6",
+      "pulse_1": "U+E5D7",
+      "pulse_2": "U+E5D8",
+      "pulse_3": "U+E5D9"
+    },
+    "chest_shop_sell/preset_4": {
+      "normal": "U+E5DA",
+      "disabled": "U+E5DB",
+      "selected": "U+E5DC",
+      "pulse_1": "U+E5DD",
+      "pulse_2": "U+E5DE",
+      "pulse_3": "U+E5DF"
+    },
+    "chest_shop_listing_enabled/back": {
+      "normal": "U+E5E0",
+      "disabled": "U+E5E1",
+      "selected": "U+E5E2",
+      "pulse_1": "U+E5E3",
+      "pulse_2": "U+E5E4",
+      "pulse_3": "U+E5E5"
+    },
+    "chest_shop_listing_enabled/stats": {
+      "normal": "U+E5E6",
+      "disabled": "U+E5E7",
+      "selected": "U+E5E8",
+      "pulse_1": "U+E5E9",
+      "pulse_2": "U+E5EA",
+      "pulse_3": "U+E5EB"
+    },
+    "chest_shop_listing_enabled/stock": {
+      "normal": "U+E5EC",
+      "disabled": "U+E5ED",
+      "selected": "U+E5EE",
+      "pulse_1": "U+E5EF",
+      "pulse_2": "U+E5F0",
+      "pulse_3": "U+E5F1"
+    },
+    "chest_shop_listing_enabled/sell_more": {
+      "normal": "U+E5F2",
+      "disabled": "U+E5F3",
+      "selected": "U+E5F4",
+      "pulse_1": "U+E5F5",
+      "pulse_2": "U+E5F6",
+      "pulse_3": "U+E5F7"
+    },
+    "chest_shop_listing_enabled/sell_price": {
+      "normal": "U+E5F8",
+      "disabled": "U+E5F9",
+      "selected": "U+E5FA",
+      "pulse_1": "U+E5FB",
+      "pulse_2": "U+E5FC",
+      "pulse_3": "U+E5FD"
+    },
+    "chest_shop_listing_enabled/sell_less": {
+      "normal": "U+E5FE",
+      "disabled": "U+E5FF",
+      "selected": "U+E600",
+      "pulse_1": "U+E601",
+      "pulse_2": "U+E602",
+      "pulse_3": "U+E603"
+    },
+    "chest_shop_listing_enabled/quantity_more": {
+      "normal": "U+E604",
+      "disabled": "U+E605",
+      "selected": "U+E606",
+      "pulse_1": "U+E607",
+      "pulse_2": "U+E608",
+      "pulse_3": "U+E609"
+    },
+    "chest_shop_listing_enabled/quantity": {
+      "normal": "U+E60A",
+      "disabled": "U+E60B",
+      "selected": "U+E60C",
+      "pulse_1": "U+E60D",
+      "pulse_2": "U+E60E",
+      "pulse_3": "U+E60F"
+    },
+    "chest_shop_listing_enabled/quantity_less": {
+      "normal": "U+E610",
+      "disabled": "U+E611",
+      "selected": "U+E612",
+      "pulse_1": "U+E613",
+      "pulse_2": "U+E614",
+      "pulse_3": "U+E615"
+    },
+    "chest_shop_listing_enabled/buy_more": {
+      "normal": "U+E616",
+      "disabled": "U+E617",
+      "selected": "U+E618",
+      "pulse_1": "U+E619",
+      "pulse_2": "U+E61A",
+      "pulse_3": "U+E61B"
+    },
+    "chest_shop_listing_enabled/buy_price": {
+      "normal": "U+E61C",
+      "disabled": "U+E61D",
+      "selected": "U+E61E",
+      "pulse_1": "U+E61F",
+      "pulse_2": "U+E620",
+      "pulse_3": "U+E621"
+    },
+    "chest_shop_listing_enabled/buy_less": {
+      "normal": "U+E622",
+      "disabled": "U+E623",
+      "selected": "U+E624",
+      "pulse_1": "U+E625",
+      "pulse_2": "U+E626",
+      "pulse_3": "U+E627"
+    },
+    "chest_shop_listing_enabled/toggle": {
+      "normal": "U+E628",
+      "disabled": "U+E629",
+      "selected": "U+E62A",
+      "pulse_1": "U+E62B",
+      "pulse_2": "U+E62C",
+      "pulse_3": "U+E62D"
+    },
+    "chest_shop_listing_disabled/back": {
+      "normal": "U+E62E",
+      "disabled": "U+E62F",
+      "selected": "U+E630",
+      "pulse_1": "U+E631",
+      "pulse_2": "U+E632",
+      "pulse_3": "U+E633"
+    },
+    "chest_shop_listing_disabled/stats": {
+      "normal": "U+E634",
+      "disabled": "U+E635",
+      "selected": "U+E636",
+      "pulse_1": "U+E637",
+      "pulse_2": "U+E638",
+      "pulse_3": "U+E639"
+    },
+    "chest_shop_listing_disabled/stock": {
+      "normal": "U+E63A",
+      "disabled": "U+E63B",
+      "selected": "U+E63C",
+      "pulse_1": "U+E63D",
+      "pulse_2": "U+E63E",
+      "pulse_3": "U+E63F"
+    },
+    "chest_shop_listing_disabled/sell_more": {
+      "normal": "U+E640",
+      "disabled": "U+E641",
+      "selected": "U+E642",
+      "pulse_1": "U+E643",
+      "pulse_2": "U+E644",
+      "pulse_3": "U+E645"
+    },
+    "chest_shop_listing_disabled/sell_price": {
+      "normal": "U+E646",
+      "disabled": "U+E647",
+      "selected": "U+E648",
+      "pulse_1": "U+E649",
+      "pulse_2": "U+E64A",
+      "pulse_3": "U+E64B"
+    },
+    "chest_shop_listing_disabled/sell_less": {
+      "normal": "U+E64C",
+      "disabled": "U+E64D",
+      "selected": "U+E64E",
+      "pulse_1": "U+E64F",
+      "pulse_2": "U+E650",
+      "pulse_3": "U+E651"
+    },
+    "chest_shop_listing_disabled/quantity_more": {
+      "normal": "U+E652",
+      "disabled": "U+E653",
+      "selected": "U+E654",
+      "pulse_1": "U+E655",
+      "pulse_2": "U+E656",
+      "pulse_3": "U+E657"
+    },
+    "chest_shop_listing_disabled/quantity": {
+      "normal": "U+E658",
+      "disabled": "U+E659",
+      "selected": "U+E65A",
+      "pulse_1": "U+E65B",
+      "pulse_2": "U+E65C",
+      "pulse_3": "U+E65D"
+    },
+    "chest_shop_listing_disabled/quantity_less": {
+      "normal": "U+E65E",
+      "disabled": "U+E65F",
+      "selected": "U+E660",
+      "pulse_1": "U+E661",
+      "pulse_2": "U+E662",
+      "pulse_3": "U+E663"
+    },
+    "chest_shop_listing_disabled/buy_more": {
+      "normal": "U+E664",
+      "disabled": "U+E665",
+      "selected": "U+E666",
+      "pulse_1": "U+E667",
+      "pulse_2": "U+E668",
+      "pulse_3": "U+E669"
+    },
+    "chest_shop_listing_disabled/buy_price": {
+      "normal": "U+E66A",
+      "disabled": "U+E66B",
+      "selected": "U+E66C",
+      "pulse_1": "U+E66D",
+      "pulse_2": "U+E66E",
+      "pulse_3": "U+E66F"
+    },
+    "chest_shop_listing_disabled/buy_less": {
+      "normal": "U+E670",
+      "disabled": "U+E671",
+      "selected": "U+E672",
+      "pulse_1": "U+E673",
+      "pulse_2": "U+E674",
+      "pulse_3": "U+E675"
+    },
+    "chest_shop_listing_disabled/toggle": {
+      "normal": "U+E676",
+      "disabled": "U+E677",
+      "selected": "U+E678",
+      "pulse_1": "U+E679",
+      "pulse_2": "U+E67A",
+      "pulse_3": "U+E67B"
+    },
+    "auction_house/my_listings": {
+      "normal": "U+E67C",
+      "disabled": "U+E67D",
+      "selected": "U+E67E",
+      "pulse_1": "U+E67F",
+      "pulse_2": "U+E680",
+      "pulse_3": "U+E681"
+    },
+    "auction_house/watchlist": {
+      "normal": "U+E682",
+      "disabled": "U+E683",
+      "selected": "U+E684",
+      "pulse_1": "U+E685",
+      "pulse_2": "U+E686",
+      "pulse_3": "U+E687"
+    },
+    "auction_house/notifications": {
+      "normal": "U+E688",
+      "disabled": "U+E689",
+      "selected": "U+E68A",
+      "pulse_1": "U+E68B",
+      "pulse_2": "U+E68C",
+      "pulse_3": "U+E68D"
+    },
+    "auction_house/balance": {
+      "normal": "U+E68E",
+      "disabled": "U+E68F",
+      "selected": "U+E690",
+      "pulse_1": "U+E691",
+      "pulse_2": "U+E692",
+      "pulse_3": "U+E693"
+    },
+    "auction_house/previous": {
+      "normal": "U+E694",
+      "disabled": "U+E695",
+      "selected": "U+E696",
+      "pulse_1": "U+E697",
+      "pulse_2": "U+E698",
+      "pulse_3": "U+E699"
+    },
+    "auction_house/search": {
+      "normal": "U+E69A",
+      "disabled": "U+E69B",
+      "selected": "U+E69C",
+      "pulse_1": "U+E69D",
+      "pulse_2": "U+E69E",
+      "pulse_3": "U+E69F"
+    },
+    "auction_house/sell": {
+      "normal": "U+E6A0",
+      "disabled": "U+E6A1",
+      "selected": "U+E6A2",
+      "pulse_1": "U+E6A3",
+      "pulse_2": "U+E6A4",
+      "pulse_3": "U+E6A5"
+    },
+    "auction_house/next": {
+      "normal": "U+E6A6",
+      "disabled": "U+E6A7",
+      "selected": "U+E6A8",
+      "pulse_1": "U+E6A9",
+      "pulse_2": "U+E6AA",
+      "pulse_3": "U+E6AB"
+    },
+    "auction_house/close": {
+      "normal": "U+E6AC",
+      "disabled": "U+E6AD",
+      "selected": "U+E6AE",
+      "pulse_1": "U+E6AF",
+      "pulse_2": "U+E6B0",
+      "pulse_3": "U+E6B1"
+    },
+    "auction_search/my_listings": {
+      "normal": "U+E6B2",
+      "disabled": "U+E6B3",
+      "selected": "U+E6B4",
+      "pulse_1": "U+E6B5",
+      "pulse_2": "U+E6B6",
+      "pulse_3": "U+E6B7"
+    },
+    "auction_search/watchlist": {
+      "normal": "U+E6B8",
+      "disabled": "U+E6B9",
+      "selected": "U+E6BA",
+      "pulse_1": "U+E6BB",
+      "pulse_2": "U+E6BC",
+      "pulse_3": "U+E6BD"
+    },
+    "auction_search/notifications": {
+      "normal": "U+E6BE",
+      "disabled": "U+E6BF",
+      "selected": "U+E6C0",
+      "pulse_1": "U+E6C1",
+      "pulse_2": "U+E6C2",
+      "pulse_3": "U+E6C3"
+    },
+    "auction_search/balance": {
+      "normal": "U+E6C4",
+      "disabled": "U+E6C5",
+      "selected": "U+E6C6",
+      "pulse_1": "U+E6C7",
+      "pulse_2": "U+E6C8",
+      "pulse_3": "U+E6C9"
+    },
+    "auction_search/previous": {
+      "normal": "U+E6CA",
+      "disabled": "U+E6CB",
+      "selected": "U+E6CC",
+      "pulse_1": "U+E6CD",
+      "pulse_2": "U+E6CE",
+      "pulse_3": "U+E6CF"
+    },
+    "auction_search/search": {
+      "normal": "U+E6D0",
+      "disabled": "U+E6D1",
+      "selected": "U+E6D2",
+      "pulse_1": "U+E6D3",
+      "pulse_2": "U+E6D4",
+      "pulse_3": "U+E6D5"
+    },
+    "auction_search/sell": {
+      "normal": "U+E6D6",
+      "disabled": "U+E6D7",
+      "selected": "U+E6D8",
+      "pulse_1": "U+E6D9",
+      "pulse_2": "U+E6DA",
+      "pulse_3": "U+E6DB"
+    },
+    "auction_search/next": {
+      "normal": "U+E6DC",
+      "disabled": "U+E6DD",
+      "selected": "U+E6DE",
+      "pulse_1": "U+E6DF",
+      "pulse_2": "U+E6E0",
+      "pulse_3": "U+E6E1"
+    },
+    "auction_search/close": {
+      "normal": "U+E6E2",
+      "disabled": "U+E6E3",
+      "selected": "U+E6E4",
+      "pulse_1": "U+E6E5",
+      "pulse_2": "U+E6E6",
+      "pulse_3": "U+E6E7"
+    },
+    "auction_mine/my_listings": {
+      "normal": "U+E6E8",
+      "disabled": "U+E6E9",
+      "selected": "U+E6EA",
+      "pulse_1": "U+E6EB",
+      "pulse_2": "U+E6EC",
+      "pulse_3": "U+E6ED"
+    },
+    "auction_mine/watchlist": {
+      "normal": "U+E6EE",
+      "disabled": "U+E6EF",
+      "selected": "U+E6F0",
+      "pulse_1": "U+E6F1",
+      "pulse_2": "U+E6F2",
+      "pulse_3": "U+E6F3"
+    },
+    "auction_mine/notifications": {
+      "normal": "U+E6F4",
+      "disabled": "U+E6F5",
+      "selected": "U+E6F6",
+      "pulse_1": "U+E6F7",
+      "pulse_2": "U+E6F8",
+      "pulse_3": "U+E6F9"
+    },
+    "auction_mine/balance": {
+      "normal": "U+E6FA",
+      "disabled": "U+E6FB",
+      "selected": "U+E6FC",
+      "pulse_1": "U+E6FD",
+      "pulse_2": "U+E6FE",
+      "pulse_3": "U+E6FF"
+    },
+    "auction_mine/previous": {
+      "normal": "U+E700",
+      "disabled": "U+E701",
+      "selected": "U+E702",
+      "pulse_1": "U+E703",
+      "pulse_2": "U+E704",
+      "pulse_3": "U+E705"
+    },
+    "auction_mine/search": {
+      "normal": "U+E706",
+      "disabled": "U+E707",
+      "selected": "U+E708",
+      "pulse_1": "U+E709",
+      "pulse_2": "U+E70A",
+      "pulse_3": "U+E70B"
+    },
+    "auction_mine/sell": {
+      "normal": "U+E70C",
+      "disabled": "U+E70D",
+      "selected": "U+E70E",
+      "pulse_1": "U+E70F",
+      "pulse_2": "U+E710",
+      "pulse_3": "U+E711"
+    },
+    "auction_mine/next": {
+      "normal": "U+E712",
+      "disabled": "U+E713",
+      "selected": "U+E714",
+      "pulse_1": "U+E715",
+      "pulse_2": "U+E716",
+      "pulse_3": "U+E717"
+    },
+    "auction_mine/close": {
+      "normal": "U+E718",
+      "disabled": "U+E719",
+      "selected": "U+E71A",
+      "pulse_1": "U+E71B",
+      "pulse_2": "U+E71C",
+      "pulse_3": "U+E71D"
+    },
+    "auction_watchlist/previous": {
+      "normal": "U+E71E",
+      "disabled": "U+E71F",
+      "selected": "U+E720",
+      "pulse_1": "U+E721",
+      "pulse_2": "U+E722",
+      "pulse_3": "U+E723"
+    },
+    "auction_watchlist/close": {
+      "normal": "U+E724",
+      "disabled": "U+E725",
+      "selected": "U+E726",
+      "pulse_1": "U+E727",
+      "pulse_2": "U+E728",
+      "pulse_3": "U+E729"
+    },
+    "auction_watchlist/next": {
+      "normal": "U+E72A",
+      "disabled": "U+E72B",
+      "selected": "U+E72C",
+      "pulse_1": "U+E72D",
+      "pulse_2": "U+E72E",
+      "pulse_3": "U+E72F"
+    },
+    "chest_shop_ads/balance": {
+      "normal": "U+E730",
+      "disabled": "U+E731",
+      "selected": "U+E732",
+      "pulse_1": "U+E733",
+      "pulse_2": "U+E734",
+      "pulse_3": "U+E735"
+    },
+    "chest_shop_ads/previous": {
+      "normal": "U+E736",
+      "disabled": "U+E737",
+      "selected": "U+E738",
+      "pulse_1": "U+E739",
+      "pulse_2": "U+E73A",
+      "pulse_3": "U+E73B"
+    },
+    "chest_shop_ads/search": {
+      "normal": "U+E73C",
+      "disabled": "U+E73D",
+      "selected": "U+E73E",
+      "pulse_1": "U+E73F",
+      "pulse_2": "U+E740",
+      "pulse_3": "U+E741"
+    },
+    "chest_shop_ads/create_shop": {
+      "normal": "U+E742",
+      "disabled": "U+E743",
+      "selected": "U+E744",
+      "pulse_1": "U+E745",
+      "pulse_2": "U+E746",
+      "pulse_3": "U+E747"
+    },
+    "chest_shop_ads/next": {
+      "normal": "U+E748",
+      "disabled": "U+E749",
+      "selected": "U+E74A",
+      "pulse_1": "U+E74B",
+      "pulse_2": "U+E74C",
+      "pulse_3": "U+E74D"
+    },
+    "chest_shop_ads/close": {
+      "normal": "U+E74E",
+      "disabled": "U+E74F",
+      "selected": "U+E750",
+      "pulse_1": "U+E751",
+      "pulse_2": "U+E752",
+      "pulse_3": "U+E753"
+    },
+    "chest_shop_search/balance": {
+      "normal": "U+E754",
+      "disabled": "U+E755",
+      "selected": "U+E756",
+      "pulse_1": "U+E757",
+      "pulse_2": "U+E758",
+      "pulse_3": "U+E759"
+    },
+    "chest_shop_search/previous": {
+      "normal": "U+E75A",
+      "disabled": "U+E75B",
+      "selected": "U+E75C",
+      "pulse_1": "U+E75D",
+      "pulse_2": "U+E75E",
+      "pulse_3": "U+E75F"
+    },
+    "chest_shop_search/search": {
+      "normal": "U+E760",
+      "disabled": "U+E761",
+      "selected": "U+E762",
+      "pulse_1": "U+E763",
+      "pulse_2": "U+E764",
+      "pulse_3": "U+E765"
+    },
+    "chest_shop_search/create_shop": {
+      "normal": "U+E766",
+      "disabled": "U+E767",
+      "selected": "U+E768",
+      "pulse_1": "U+E769",
+      "pulse_2": "U+E76A",
+      "pulse_3": "U+E76B"
+    },
+    "chest_shop_search/next": {
+      "normal": "U+E76C",
+      "disabled": "U+E76D",
+      "selected": "U+E76E",
+      "pulse_1": "U+E76F",
+      "pulse_2": "U+E770",
+      "pulse_3": "U+E771"
+    },
+    "chest_shop_search/close": {
+      "normal": "U+E772",
+      "disabled": "U+E773",
+      "selected": "U+E774",
+      "pulse_1": "U+E775",
+      "pulse_2": "U+E776",
+      "pulse_3": "U+E777"
+    },
+    "economy_log/previous": {
+      "normal": "U+E778",
+      "disabled": "U+E779",
+      "selected": "U+E77A",
+      "pulse_1": "U+E77B",
+      "pulse_2": "U+E77C",
+      "pulse_3": "U+E77D"
+    },
+    "economy_log/close": {
+      "normal": "U+E77E",
+      "disabled": "U+E77F",
+      "selected": "U+E780",
+      "pulse_1": "U+E781",
+      "pulse_2": "U+E782",
+      "pulse_3": "U+E783"
+    },
+    "economy_log/next": {
+      "normal": "U+E784",
+      "disabled": "U+E785",
+      "selected": "U+E786",
+      "pulse_1": "U+E787",
+      "pulse_2": "U+E788",
+      "pulse_3": "U+E789"
+    },
+    "chest_shop/close": {
+      "normal": "U+E78A",
+      "disabled": "U+E78B",
+      "selected": "U+E78C",
+      "pulse_1": "U+E78D",
+      "pulse_2": "U+E78E",
+      "pulse_3": "U+E78F"
+    },
+    "chest_shop/balance": {
+      "normal": "U+E790",
+      "disabled": "U+E791",
+      "selected": "U+E792",
+      "pulse_1": "U+E793",
+      "pulse_2": "U+E794",
+      "pulse_3": "U+E795"
+    },
+    "chest_shop/options": {
+      "normal": "U+E796",
+      "disabled": "U+E797",
+      "selected": "U+E798",
+      "pulse_1": "U+E799",
+      "pulse_2": "U+E79A",
+      "pulse_3": "U+E79B"
+    },
+    "chest_shop_owner/close": {
+      "normal": "U+E79C",
+      "disabled": "U+E79D",
+      "selected": "U+E79E",
+      "pulse_1": "U+E79F",
+      "pulse_2": "U+E7A0",
+      "pulse_3": "U+E7A1"
+    },
+    "chest_shop_owner/balance": {
+      "normal": "U+E7A2",
+      "disabled": "U+E7A3",
+      "selected": "U+E7A4",
+      "pulse_1": "U+E7A5",
+      "pulse_2": "U+E7A6",
+      "pulse_3": "U+E7A7"
+    },
+    "chest_shop_owner/options": {
+      "normal": "U+E7A8",
+      "disabled": "U+E7A9",
+      "selected": "U+E7AA",
+      "pulse_1": "U+E7AB",
+      "pulse_2": "U+E7AC",
+      "pulse_3": "U+E7AD"
     }
   }
 }

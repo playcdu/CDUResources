@@ -1,8 +1,23 @@
 {
-  "schema_version": 1,
-  "purpose": "Exact production controls plus explicitly proposed harmless preview behavior.",
-  "audit_basis": "Direct callback inspection of retained 1.21 source; retained 1.19/1.20.1 preserve the same numeric slot layouts. Source references are to the 1.21 canonical audited worktree.",
-  "slot_numbering": "Zero-based native top-container index. Each control acts only through native slots, not painted pixels.",
+  "schema_version": 2,
+  "purpose": "Logical production action bindings plus explicitly proposed harmless preview behavior.",
+  "audit_basis": "Direct callback inspection and presentation integration in independent1.21 patch sources;1.19/1.20.1 preserve these logical source bindings. Original Quasar and linked worktrees are read-only.",
+  "slot_numbering": "Zero-based logical source indices. Physical positions come from runtime-registry buttonRegions/contentRegion; wide controls bind every declared18x18 native hit cell.",
+  "redesigned_pagination": {
+    "keys": [
+      "auction_house",
+      "auction_search",
+      "auction_mine",
+      "auction_watchlist",
+      "chest_shop_ads",
+      "chest_shop_search",
+      "economy_log"
+    ],
+    "themed_capacity": 28,
+    "new_standard_capacity": 45,
+    "flow_contract": "Capacity and initial standard preference are captured once; refresh, detail return and pagination retain them through pack/mode changes. Current28-entry pages restore to original logical source slots on known loss.",
+    "content_region": "Original source span0..44 maps its first28 entries to physical10..16,19..25,28..34,37..43. Nonempty overflow or any redirect forces full standard fallback."
+  },
   "preview_status": "InventoryDebug implements immutable left-click teaching fixtures and original-action explanations. Representative routes and conditional controls have been independently reviewed against this map. Implemented scope is listed below; preview_proposal fields describe intended demonstrations and must not be read as a claim that every branch is simulated. No live Quasar interaction testing is claimed.",
   "preview_implementation": {
     "source": "../InventoryDebug/quasar-preview/src/main/java/com/playcdu/invdebug",
@@ -34,11 +49,12 @@
     "test_limit": "Source review and automated fixture checks are not in-game rendering, real pack-response or production transaction tests."
   },
   "artwork_rules": [
-    "Preserve transparent liveSlots windows for icons, counts and hover feedback.",
-    "Use fixed action legends on permanently empty protected space; dynamic prices/counts/state remain native item/name/lore.",
-    "A bitmap border/label does not enlarge the native slot hitbox.",
-    "Conditional controls must not be represented as always-enabled solely by paint.",
-    "Configured admin pages, storage and dense listing grids retain all potential item windows."
+    "Real content retains exact item stacks, counts and tooltips at the declared content destinations.",
+    "Painted controls use nonempty invisible-paper carriers preserving the original name/lore; each declared display cell invokes its logical source action.",
+    "Each native hit cell is18x18; adjacent declared cells form a larger rectangular target. Art outside declared cells is not clickable.",
+    "Absent conditional controls render disabled and have no callback.",
+    "Content/control destinations may not overlap; controls may not consume unassigned real content or redirected storage.",
+    "Configured admin pages and native storage/crafting preserve their native layout unless a separately validated adapter is supplied."
   ],
   "screens": [
     {
@@ -260,17 +276,17 @@
           "label": "Next Page",
           "native_item": "minecraft:arrow",
           "trigger": "Any click reaching this callback; no explicit ClickType filter.",
-          "real_effect": "Open same entries/key at page + 1.",
+          "real_effect": "Open same entries/key at page + 1 with the same fixed flow capacity.",
           "preview_proposal": "Increment fixture page; omit on last page.",
-          "condition": "entries.size > (page + 1) * 45",
+          "condition": "flow.hasNext(page, entries.size)",
           "target": "same key"
         }
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
-          "start_line": 57,
-          "end_line": 226
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "start_line": 58,
+          "end_line": 233
         }
       ],
       "notes": []
@@ -494,17 +510,17 @@
           "label": "Next Page",
           "native_item": "minecraft:arrow",
           "trigger": "Any click reaching this callback; no explicit ClickType filter.",
-          "real_effect": "Open same entries/key at page + 1.",
+          "real_effect": "Open same entries/key at page + 1 with the same fixed flow capacity.",
           "preview_proposal": "Increment fixture page; omit on last page.",
-          "condition": "entries.size > (page + 1) * 45",
+          "condition": "flow.hasNext(page, entries.size)",
           "target": "same key"
         }
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
-          "start_line": 57,
-          "end_line": 226
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "start_line": 58,
+          "end_line": 233
         }
       ],
       "notes": []
@@ -728,17 +744,17 @@
           "label": "Next Page",
           "native_item": "minecraft:arrow",
           "trigger": "Any click reaching this callback; no explicit ClickType filter.",
-          "real_effect": "Open same entries/key at page + 1.",
+          "real_effect": "Open same entries/key at page + 1 with the same fixed flow capacity.",
           "preview_proposal": "Increment fixture page; omit on last page.",
-          "condition": "entries.size > (page + 1) * 45",
+          "condition": "flow.hasNext(page, entries.size)",
           "target": "same key"
         }
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
-          "start_line": 57,
-          "end_line": 226
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "start_line": 58,
+          "end_line": 233
         }
       ],
       "notes": []
@@ -788,14 +804,14 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
-          "start_line": 279,
-          "end_line": 298
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "start_line": 296,
+          "end_line": 316
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
-          "start_line": 301,
-          "end_line": 354
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "start_line": 319,
+          "end_line": 372
         }
       ],
       "notes": [
@@ -851,6 +867,8 @@
         42,
         43,
         44,
+        45,
+        52,
         53
       ],
       "controls": [
@@ -914,6 +932,30 @@
         },
         {
           "slots": [
+            45
+          ],
+          "label": "Previous Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open previous watchlist page using the same flow capacity.",
+          "preview_proposal": "Previous fixture watchlist page.",
+          "condition": "page > 0",
+          "target": "auction_watchlist"
+        },
+        {
+          "slots": [
+            52
+          ],
+          "label": "Next Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Open next watchlist page using the same flow capacity.",
+          "preview_proposal": "Next fixture watchlist page.",
+          "condition": "flow.hasNext(page, entries.size)",
+          "target": "auction_watchlist"
+        },
+        {
+          "slots": [
             53
           ],
           "label": "Close",
@@ -926,13 +968,14 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
-          "start_line": 229,
-          "end_line": 258
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AuctionHouseSGui.java",
+          "start_line": 236,
+          "end_line": 275
         }
       ],
       "notes": [
-        "At most 45 entries; no pagination or Back button."
+        "28 entries in a themed flow,45 in a new standard flow; page capacity is fixed throughout navigation.",
+        "Removing a watched item clamps the current page to the new final page. No Back/Home button."
       ]
     },
     {
@@ -1035,12 +1078,12 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AHSelectTimeToSellSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AHSelectTimeToSellSGui.java",
           "start_line": 19,
           "end_line": 53
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/storage/shop/QAHData.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/storage/shop/QAHData.java",
           "start_line": 95,
           "end_line": 109
         }
@@ -1236,12 +1279,12 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
           "start_line": 35,
           "end_line": 106
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
           "start_line": 109,
           "end_line": 208
         }
@@ -1442,12 +1485,12 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
           "start_line": 35,
           "end_line": 106
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
           "start_line": 109,
           "end_line": 208
         }
@@ -1648,12 +1691,12 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
           "start_line": 35,
           "end_line": 106
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
           "start_line": 109,
           "end_line": 208
         }
@@ -1854,12 +1897,12 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
           "start_line": 35,
           "end_line": 106
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/AdminShopSGui.java",
           "start_line": 109,
           "end_line": 208
         }
@@ -1989,7 +2032,7 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 52,
           "end_line": 175
         }
@@ -2117,7 +2160,7 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 52,
           "end_line": 175
         }
@@ -2293,7 +2336,7 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 178,
           "end_line": 347
         }
@@ -2470,7 +2513,7 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 178,
           "end_line": 347
         }
@@ -2556,12 +2599,12 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 313,
           "end_line": 423
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 588,
           "end_line": 638
         }
@@ -2646,12 +2689,12 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 313,
           "end_line": 423
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 588,
           "end_line": 638
         }
@@ -2731,7 +2774,7 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 425,
           "end_line": 488
         }
@@ -2847,7 +2890,7 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 491,
           "end_line": 584
         }
@@ -2966,7 +3009,7 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 491,
           "end_line": 584
         }
@@ -3085,7 +3128,7 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 491,
           "end_line": 584
         }
@@ -3273,17 +3316,17 @@
           "label": "Next Page",
           "native_item": "minecraft:arrow",
           "trigger": "Any click reaching this callback; no explicit ClickType filter.",
-          "real_effect": "Next page of same entries/key.",
+          "real_effect": "Next page of same entries/key with fixed flow capacity.",
           "preview_proposal": "Next fixture page.",
-          "condition": "more than (page+1)*45 entries",
+          "condition": "flow.hasNext(page, entries.size)",
           "target": "same key"
         }
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
-          "start_line": 47,
-          "end_line": 162
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
+          "start_line": 48,
+          "end_line": 168
         }
       ],
       "notes": []
@@ -3466,20 +3509,176 @@
           "label": "Next Page",
           "native_item": "minecraft:arrow",
           "trigger": "Any click reaching this callback; no explicit ClickType filter.",
-          "real_effect": "Next page of same entries/key.",
+          "real_effect": "Next page of same entries/key with fixed flow capacity.",
           "preview_proposal": "Next fixture page.",
-          "condition": "more than (page+1)*45 entries",
+          "condition": "flow.hasNext(page, entries.size)",
           "target": "same key"
         }
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
-          "start_line": 47,
-          "end_line": 162
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopAdsSGui.java",
+          "start_line": 48,
+          "end_line": 168
         }
       ],
       "notes": []
+    },
+    {
+      "skin_key": "economy_log",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        49,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "Transaction history entry",
+          "native_item": "actual log item or paper/sign representation",
+          "trigger": "none",
+          "real_effect": "Display transaction facts and date; no action changes economic data.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            45
+          ],
+          "label": "Previous Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Read the preceding saved stream boundary with copied history and fixed flow capacity.",
+          "preview_proposal": "Previous fixture history page.",
+          "condition": "previous boundary history is nonempty",
+          "target": "economy_log"
+        },
+        {
+          "slots": [
+            49
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Next Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Read after the last displayed stream ID; remove only a matching inclusive boundary and use one lookahead.",
+          "preview_proposal": "Next fixture history page.",
+          "condition": "lookahead found another entry",
+          "target": "economy_log"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/EcoLogSGui.java",
+          "start_line": 30,
+          "end_line": 164
+        }
+      ],
+      "notes": [
+        "The flow uses28 entries when a supported themed layout is selected initially, otherwise45.",
+        "Cursor history is copied per navigation; a boundary deleted from Redis is not mistaken for the next real entry."
+      ]
     },
     {
       "skin_key": "economy_hub",
@@ -3589,9 +3788,9 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/EcoHubSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/EcoHubSGui.java",
           "start_line": 20,
-          "end_line": 110
+          "end_line": 111
         }
       ],
       "notes": []
@@ -3748,12 +3947,12 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
           "start_line": 24,
           "end_line": 166
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
           "start_line": 198,
           "end_line": 223
         }
@@ -3916,12 +4115,12 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
           "start_line": 24,
           "end_line": 166
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
           "start_line": 198,
           "end_line": 223
         }
@@ -4084,12 +4283,12 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
           "start_line": 24,
           "end_line": 166
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
           "start_line": 198,
           "end_line": 223
         }
@@ -4252,12 +4451,12 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
           "start_line": 24,
           "end_line": 166
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
           "start_line": 198,
           "end_line": 223
         }
@@ -4318,12 +4517,12 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/TradeSGui.java",
           "start_line": 169,
           "end_line": 195
         },
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/ChestShopSGui.java",
           "start_line": 313,
           "end_line": 347
         }
@@ -4382,7 +4581,7 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
           "start_line": 27,
           "end_line": 81
         }
@@ -4440,7 +4639,7 @@
       ],
       "source_evidence": [
         {
-          "path": "worktrees/1.21/common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
+          "path": ".build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java",
           "start_line": 27,
           "end_line": 81
         }

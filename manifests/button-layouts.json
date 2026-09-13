@@ -125,6 +125,24 @@
           "role": "action",
           "style": "danger"
         }
+      ],
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "ECONOMY",
+          "leftHeading": "ECONOMY",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
       ]
     },
     "auction_confirm": {
@@ -165,6 +183,33 @@
           "label": "Close",
           "role": "action",
           "style": "secondary"
+        }
+      ],
+      "contentRegion": {
+        "sourceSlots": [
+          20
+        ],
+        "slots": [
+          20
+        ]
+      },
+      "note": "Fixed native display item may move within free native top cells. Original logical source and one-item capacity stay fixed; no pagination change.",
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "AUCTION",
+          "leftHeading": "AUCTION",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
         }
       ]
     },
@@ -207,7 +252,8 @@
           "role": "action",
           "style": "secondary"
         }
-      ]
+      ],
+      "presentation": "painted_controls"
     },
     "trade_idle": {
       "contentSlots": [
@@ -301,7 +347,25 @@
       "defaultStates": {
         "ready": "normal",
         "other_money": "normal"
-      }
+      },
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "TRADE",
+          "leftHeading": "TRADE",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
     },
     "trade_self_ready": {
       "contentSlots": [
@@ -395,7 +459,25 @@
       "defaultStates": {
         "ready": "selected",
         "other_money": "normal"
-      }
+      },
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "TRADE",
+          "leftHeading": "TRADE",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
     },
     "trade_other_ready": {
       "contentSlots": [
@@ -489,7 +571,25 @@
       "defaultStates": {
         "ready": "normal",
         "other_money": "selected"
-      }
+      },
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "TRADE",
+          "leftHeading": "TRADE",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
     },
     "trade_both_ready": {
       "contentSlots": [
@@ -583,7 +683,4601 @@
       "defaultStates": {
         "ready": "selected",
         "other_money": "selected"
-      }
+      },
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "TRADE",
+          "leftHeading": "TRADE",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "auction_duration": {
+      "contentSlots": [],
+      "buttons": [
+        {
+          "id": "one_day",
+          "sourceSlot": 11,
+          "slots": [
+            0,
+            1,
+            2
+          ],
+          "label": "1 Day",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "three_days",
+          "sourceSlot": 12,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "3 Days",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "seven_days",
+          "sourceSlot": 13,
+          "slots": [
+            6,
+            7,
+            8
+          ],
+          "label": "7 Days",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "twelve_days",
+          "sourceSlot": 14,
+          "slots": [
+            9,
+            10,
+            11,
+            12
+          ],
+          "label": "12 Days",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "fifteen_days",
+          "sourceSlot": 15,
+          "slots": [
+            14,
+            15,
+            16,
+            17
+          ],
+          "label": "15 Days",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "close",
+          "sourceSlot": 8,
+          "slots": [
+            21,
+            22,
+            23,
+            24,
+            25,
+            26
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger"
+        }
+      ],
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "AUCTION",
+          "leftHeading": "AUCTION",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "ticket_valid": {
+      "contentSlots": [
+        22
+      ],
+      "buttons": [
+        {
+          "id": "cancel",
+          "sourceSlot": 29,
+          "slots": [
+            27,
+            28,
+            29,
+            36,
+            37,
+            38
+          ],
+          "label": "Cancel",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "redeem",
+          "sourceSlot": 33,
+          "slots": [
+            33,
+            34,
+            35,
+            42,
+            43,
+            44
+          ],
+          "label": "Redeem Ticket",
+          "role": "action",
+          "style": "primary",
+          "lines": [
+            "REDEEM",
+            "TICKET"
+          ]
+        }
+      ],
+      "defaultStates": {
+        "redeem": "normal"
+      },
+      "contentRegion": {
+        "sourceSlots": [
+          22
+        ],
+        "slots": [
+          22
+        ]
+      },
+      "note": "Fixed native display item may move within free native top cells. Original logical source and one-item capacity stay fixed; no pagination change.",
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "TICKET",
+          "leftHeading": "TICKET",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "ticket_invalid": {
+      "contentSlots": [
+        22
+      ],
+      "buttons": [
+        {
+          "id": "cancel",
+          "sourceSlot": 29,
+          "slots": [
+            27,
+            28,
+            29,
+            36,
+            37,
+            38
+          ],
+          "label": "Cancel",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "redeem",
+          "sourceSlot": 33,
+          "slots": [
+            33,
+            34,
+            35,
+            42,
+            43,
+            44
+          ],
+          "label": "Redeem Ticket",
+          "role": "action",
+          "style": "primary",
+          "lines": [
+            "REDEEM",
+            "TICKET"
+          ]
+        }
+      ],
+      "defaultStates": {
+        "redeem": "disabled"
+      },
+      "contentRegion": {
+        "sourceSlots": [
+          22
+        ],
+        "slots": [
+          22
+        ]
+      },
+      "note": "Fixed native display item may move within free native top cells. Original logical source and one-item capacity stay fixed; no pagination change.",
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "TICKET",
+          "leftHeading": "TICKET",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "chest_shop_settings": {
+      "contentSlots": [],
+      "buttons": [
+        {
+          "id": "back",
+          "sourceSlot": 8,
+          "slots": [
+            0,
+            1
+          ],
+          "label": "Back",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "stats",
+          "sourceSlot": 10,
+          "slots": [
+            2,
+            3,
+            4
+          ],
+          "label": "Stats",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "upgrade",
+          "sourceSlot": 12,
+          "slots": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "label": "Upgrade",
+          "role": "action",
+          "style": "primary"
+        },
+        {
+          "id": "rename",
+          "sourceSlot": 13,
+          "slots": [
+            9,
+            10,
+            11,
+            18,
+            19,
+            20
+          ],
+          "label": "Rename Shop",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "RENAME",
+            "SHOP"
+          ]
+        },
+        {
+          "id": "refresh",
+          "sourceSlot": 14,
+          "slots": [
+            15,
+            16,
+            17,
+            24,
+            25,
+            26
+          ],
+          "label": "Refresh Listings",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "REFRESH",
+            "LISTINGS"
+          ]
+        }
+      ],
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "CHEST SHOP",
+          "leftHeading": "CHEST",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "chest_shop_upgrade": {
+      "contentSlots": [],
+      "buttons": [
+        {
+          "id": "back",
+          "sourceSlot": 8,
+          "slots": [
+            0,
+            1
+          ],
+          "label": "Back",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "bid",
+          "sourceSlot": 10,
+          "slots": [
+            2,
+            3,
+            4
+          ],
+          "label": "Your Bid",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "increase",
+          "sourceSlot": 1,
+          "slots": [
+            9,
+            10
+          ],
+          "label": "More",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "decrease",
+          "sourceSlot": 19,
+          "slots": [
+            18,
+            19
+          ],
+          "label": "Less",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "tier_1",
+          "sourceSlot": 12,
+          "slots": [
+            5,
+            6
+          ],
+          "label": "Tier 1",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "tier_2",
+          "sourceSlot": 13,
+          "slots": [
+            14,
+            15
+          ],
+          "label": "Tier 2",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "tier_3",
+          "sourceSlot": 14,
+          "slots": [
+            23,
+            24
+          ],
+          "label": "Tier 3",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "confirm",
+          "sourceSlot": 16,
+          "slots": [
+            7,
+            8,
+            16,
+            17,
+            25,
+            26
+          ],
+          "label": "Apply",
+          "role": "action",
+          "style": "primary"
+        }
+      ],
+      "defaultStates": {
+        "confirm": "normal"
+      },
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "CHEST SHOP",
+          "leftHeading": "CHEST",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "chest_shop_upgrade_confirm": {
+      "contentSlots": [],
+      "buttons": [
+        {
+          "id": "back",
+          "sourceSlot": 8,
+          "slots": [
+            0,
+            1
+          ],
+          "label": "Back",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "bid",
+          "sourceSlot": 10,
+          "slots": [
+            2,
+            3,
+            4
+          ],
+          "label": "Your Bid",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "increase",
+          "sourceSlot": 1,
+          "slots": [
+            9,
+            10
+          ],
+          "label": "More",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "decrease",
+          "sourceSlot": 19,
+          "slots": [
+            18,
+            19
+          ],
+          "label": "Less",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "tier_1",
+          "sourceSlot": 12,
+          "slots": [
+            5,
+            6
+          ],
+          "label": "Tier 1",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "tier_2",
+          "sourceSlot": 13,
+          "slots": [
+            14,
+            15
+          ],
+          "label": "Tier 2",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "tier_3",
+          "sourceSlot": 14,
+          "slots": [
+            23,
+            24
+          ],
+          "label": "Tier 3",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "confirm",
+          "sourceSlot": 16,
+          "slots": [
+            7,
+            8,
+            16,
+            17,
+            25,
+            26
+          ],
+          "label": "Apply",
+          "role": "action",
+          "style": "primary"
+        }
+      ],
+      "defaultStates": {
+        "confirm": "normal"
+      },
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "CHEST SHOP",
+          "leftHeading": "CHEST",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "chest_shop_upgrade_disabled": {
+      "contentSlots": [],
+      "buttons": [
+        {
+          "id": "back",
+          "sourceSlot": 8,
+          "slots": [
+            0,
+            1
+          ],
+          "label": "Back",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "bid",
+          "sourceSlot": 10,
+          "slots": [
+            2,
+            3,
+            4
+          ],
+          "label": "Your Bid",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "increase",
+          "sourceSlot": 1,
+          "slots": [
+            9,
+            10
+          ],
+          "label": "More",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "decrease",
+          "sourceSlot": 19,
+          "slots": [
+            18,
+            19
+          ],
+          "label": "Less",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "tier_1",
+          "sourceSlot": 12,
+          "slots": [
+            5,
+            6
+          ],
+          "label": "Tier 1",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "tier_2",
+          "sourceSlot": 13,
+          "slots": [
+            14,
+            15
+          ],
+          "label": "Tier 2",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "tier_3",
+          "sourceSlot": 14,
+          "slots": [
+            23,
+            24
+          ],
+          "label": "Tier 3",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "confirm",
+          "sourceSlot": 16,
+          "slots": [
+            7,
+            8,
+            16,
+            17,
+            25,
+            26
+          ],
+          "label": "Apply",
+          "role": "action",
+          "style": "primary"
+        }
+      ],
+      "defaultStates": {
+        "confirm": "disabled"
+      },
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "CHEST SHOP",
+          "leftHeading": "CHEST",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "chest_shop_buy": {
+      "contentSlots": [],
+      "buttons": [
+        {
+          "id": "back",
+          "sourceSlot": 8,
+          "slots": [
+            6,
+            7,
+            8
+          ],
+          "label": "Back",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "increase",
+          "sourceSlot": 1,
+          "slots": [
+            0,
+            1
+          ],
+          "label": "More",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "decrease",
+          "sourceSlot": 19,
+          "slots": [
+            18,
+            19
+          ],
+          "label": "Less",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "selected_amount",
+          "sourceSlot": 10,
+          "slots": [
+            9,
+            10,
+            11,
+            12
+          ],
+          "label": "BUY NOW",
+          "role": "action",
+          "style": "primary"
+        },
+        {
+          "id": "preset_1",
+          "sourceSlot": 12,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Option 1",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "preset_2",
+          "sourceSlot": 13,
+          "slots": [
+            13,
+            14
+          ],
+          "label": "Opt 2",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "preset_3",
+          "sourceSlot": 14,
+          "slots": [
+            21,
+            22,
+            23
+          ],
+          "label": "Option 3",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "preset_4",
+          "sourceSlot": 15,
+          "slots": [
+            24,
+            25,
+            26
+          ],
+          "label": "Option 4",
+          "role": "action",
+          "style": "secondary"
+        }
+      ],
+      "note": "Preset slots are packed dynamically. Option numbers identify displayed choices, never a fixed item count or fraction. All amounts remain in original item names and lore.",
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "CHEST SHOP",
+          "leftHeading": "CHEST",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "chest_shop_sell": {
+      "contentSlots": [],
+      "buttons": [
+        {
+          "id": "back",
+          "sourceSlot": 8,
+          "slots": [
+            6,
+            7,
+            8
+          ],
+          "label": "Back",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "increase",
+          "sourceSlot": 1,
+          "slots": [
+            0,
+            1
+          ],
+          "label": "More",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "decrease",
+          "sourceSlot": 19,
+          "slots": [
+            18,
+            19
+          ],
+          "label": "Less",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "selected_amount",
+          "sourceSlot": 10,
+          "slots": [
+            9,
+            10,
+            11,
+            12
+          ],
+          "label": "SELL NOW",
+          "role": "action",
+          "style": "primary"
+        },
+        {
+          "id": "preset_1",
+          "sourceSlot": 12,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Option 1",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "preset_2",
+          "sourceSlot": 13,
+          "slots": [
+            13,
+            14
+          ],
+          "label": "Opt 2",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "preset_3",
+          "sourceSlot": 14,
+          "slots": [
+            21,
+            22,
+            23
+          ],
+          "label": "Option 3",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "preset_4",
+          "sourceSlot": 15,
+          "slots": [
+            24,
+            25,
+            26
+          ],
+          "label": "Option 4",
+          "role": "action",
+          "style": "secondary"
+        }
+      ],
+      "note": "Preset slots are packed dynamically. Option numbers identify displayed choices, never a fixed item count or fraction. All amounts remain in original item names and lore.",
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "CHEST SHOP",
+          "leftHeading": "CHEST",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "chest_shop_listing_enabled": {
+      "contentSlots": [],
+      "buttons": [
+        {
+          "id": "back",
+          "sourceSlot": 8,
+          "slots": [
+            0,
+            1,
+            2
+          ],
+          "label": "Back",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "stats",
+          "sourceSlot": 19,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Stats",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "stock",
+          "sourceSlot": 20,
+          "slots": [
+            6,
+            7,
+            8
+          ],
+          "label": "Stock",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "sell_more",
+          "sourceSlot": 14,
+          "slots": [
+            9,
+            10,
+            11
+          ],
+          "label": "Sell +",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "sell_price",
+          "sourceSlot": 23,
+          "slots": [
+            18,
+            19,
+            20
+          ],
+          "label": "Sell Price",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "sell_less",
+          "sourceSlot": 32,
+          "slots": [
+            27,
+            28,
+            29
+          ],
+          "label": "Sell -",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "quantity_more",
+          "sourceSlot": 13,
+          "slots": [
+            12,
+            13,
+            14
+          ],
+          "label": "Qty +",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "quantity",
+          "sourceSlot": 22,
+          "slots": [
+            21,
+            22,
+            23
+          ],
+          "label": "Quantity",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "quantity_less",
+          "sourceSlot": 31,
+          "slots": [
+            30,
+            31,
+            32
+          ],
+          "label": "Qty -",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "buy_more",
+          "sourceSlot": 15,
+          "slots": [
+            15,
+            16,
+            17
+          ],
+          "label": "Buy +",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "buy_price",
+          "sourceSlot": 24,
+          "slots": [
+            24,
+            25,
+            26
+          ],
+          "label": "Buy Price",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "buy_less",
+          "sourceSlot": 33,
+          "slots": [
+            33,
+            34,
+            35
+          ],
+          "label": "Buy -",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "toggle",
+          "sourceSlot": 25,
+          "slots": [
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "Disable Listing",
+          "role": "action",
+          "style": "danger"
+        }
+      ],
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 220,
+          "heading": "CHEST SHOP",
+          "leftHeading": "CHEST",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "chest_shop_listing_disabled": {
+      "contentSlots": [],
+      "buttons": [
+        {
+          "id": "back",
+          "sourceSlot": 8,
+          "slots": [
+            0,
+            1,
+            2
+          ],
+          "label": "Back",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "stats",
+          "sourceSlot": 19,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Stats",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "stock",
+          "sourceSlot": 20,
+          "slots": [
+            6,
+            7,
+            8
+          ],
+          "label": "Stock",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "sell_more",
+          "sourceSlot": 14,
+          "slots": [
+            9,
+            10,
+            11
+          ],
+          "label": "Sell +",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "sell_price",
+          "sourceSlot": 23,
+          "slots": [
+            18,
+            19,
+            20
+          ],
+          "label": "Sell Price",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "sell_less",
+          "sourceSlot": 32,
+          "slots": [
+            27,
+            28,
+            29
+          ],
+          "label": "Sell -",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "quantity_more",
+          "sourceSlot": 13,
+          "slots": [
+            12,
+            13,
+            14
+          ],
+          "label": "Qty +",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "quantity",
+          "sourceSlot": 22,
+          "slots": [
+            21,
+            22,
+            23
+          ],
+          "label": "Quantity",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "quantity_less",
+          "sourceSlot": 31,
+          "slots": [
+            30,
+            31,
+            32
+          ],
+          "label": "Qty -",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "buy_more",
+          "sourceSlot": 15,
+          "slots": [
+            15,
+            16,
+            17
+          ],
+          "label": "Buy +",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "buy_price",
+          "sourceSlot": 24,
+          "slots": [
+            24,
+            25,
+            26
+          ],
+          "label": "Buy Price",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "buy_less",
+          "sourceSlot": 33,
+          "slots": [
+            33,
+            34,
+            35
+          ],
+          "label": "Buy -",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "toggle",
+          "sourceSlot": 25,
+          "slots": [
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "Enable Listing",
+          "role": "action",
+          "style": "primary"
+        }
+      ],
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 220,
+          "heading": "CHEST SHOP",
+          "leftHeading": "CHEST",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "auction_house": {
+      "contentSlots": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "contentRegion": {
+        "sourceSlots": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ],
+        "slots": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43
+        ]
+      },
+      "buttons": [
+        {
+          "id": "my_listings",
+          "sourceSlot": 47,
+          "slots": [
+            0,
+            1,
+            2
+          ],
+          "label": "My Items",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "watchlist",
+          "sourceSlot": 51,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Watch",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "notifications",
+          "sourceSlot": 52,
+          "slots": [
+            6,
+            7,
+            8
+          ],
+          "label": "Alerts",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "balance",
+          "sourceSlot": 46,
+          "slots": [
+            9,
+            18,
+            27,
+            36
+          ],
+          "label": "Balance",
+          "role": "info",
+          "style": "secondary",
+          "icon": "balance"
+        },
+        {
+          "id": "previous",
+          "sourceSlot": 45,
+          "slots": [
+            45,
+            46
+          ],
+          "label": "Prev",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "search",
+          "sourceSlot": 48,
+          "slots": [
+            47,
+            48
+          ],
+          "label": "Find",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "sell",
+          "sourceSlot": 50,
+          "slots": [
+            49,
+            50
+          ],
+          "label": "Sell",
+          "role": "action",
+          "style": "primary"
+        },
+        {
+          "id": "next",
+          "sourceSlot": 53,
+          "slots": [
+            51,
+            52
+          ],
+          "label": "Next",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "close",
+          "sourceSlot": 49,
+          "slots": [
+            53
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger",
+          "icon": "close"
+        }
+      ],
+      "artLayers": [
+        {
+          "id": "market_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "purpose": "Noninteractive market frame and outside information; no click targets outside native slots"
+        }
+      ],
+      "presentation": "painted_controls"
+    },
+    "auction_search": {
+      "contentSlots": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "contentRegion": {
+        "sourceSlots": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ],
+        "slots": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43
+        ]
+      },
+      "buttons": [
+        {
+          "id": "my_listings",
+          "sourceSlot": 47,
+          "slots": [
+            0,
+            1,
+            2
+          ],
+          "label": "My Items",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "watchlist",
+          "sourceSlot": 51,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Watch",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "notifications",
+          "sourceSlot": 52,
+          "slots": [
+            6,
+            7,
+            8
+          ],
+          "label": "Alerts",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "balance",
+          "sourceSlot": 46,
+          "slots": [
+            9,
+            18,
+            27,
+            36
+          ],
+          "label": "Balance",
+          "role": "info",
+          "style": "secondary",
+          "icon": "balance"
+        },
+        {
+          "id": "previous",
+          "sourceSlot": 45,
+          "slots": [
+            45,
+            46
+          ],
+          "label": "Prev",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "search",
+          "sourceSlot": 48,
+          "slots": [
+            47,
+            48
+          ],
+          "label": "Find",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "sell",
+          "sourceSlot": 50,
+          "slots": [
+            49,
+            50
+          ],
+          "label": "Sell",
+          "role": "action",
+          "style": "primary"
+        },
+        {
+          "id": "next",
+          "sourceSlot": 53,
+          "slots": [
+            51,
+            52
+          ],
+          "label": "Next",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "close",
+          "sourceSlot": 49,
+          "slots": [
+            53
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger",
+          "icon": "close"
+        }
+      ],
+      "artLayers": [
+        {
+          "id": "market_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "purpose": "Noninteractive market frame and outside information; no click targets outside native slots"
+        }
+      ],
+      "presentation": "painted_controls"
+    },
+    "auction_mine": {
+      "contentSlots": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "contentRegion": {
+        "sourceSlots": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ],
+        "slots": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43
+        ]
+      },
+      "buttons": [
+        {
+          "id": "my_listings",
+          "sourceSlot": 47,
+          "slots": [
+            0,
+            1,
+            2
+          ],
+          "label": "My Items",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "watchlist",
+          "sourceSlot": 51,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Watch",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "notifications",
+          "sourceSlot": 52,
+          "slots": [
+            6,
+            7,
+            8
+          ],
+          "label": "Alerts",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "balance",
+          "sourceSlot": 46,
+          "slots": [
+            9,
+            18,
+            27,
+            36
+          ],
+          "label": "Balance",
+          "role": "info",
+          "style": "secondary",
+          "icon": "balance"
+        },
+        {
+          "id": "previous",
+          "sourceSlot": 45,
+          "slots": [
+            45,
+            46
+          ],
+          "label": "Prev",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "search",
+          "sourceSlot": 48,
+          "slots": [
+            47,
+            48
+          ],
+          "label": "Find",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "sell",
+          "sourceSlot": 50,
+          "slots": [
+            49,
+            50
+          ],
+          "label": "Sell",
+          "role": "action",
+          "style": "primary"
+        },
+        {
+          "id": "next",
+          "sourceSlot": 53,
+          "slots": [
+            51,
+            52
+          ],
+          "label": "Next",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "close",
+          "sourceSlot": 49,
+          "slots": [
+            53
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger",
+          "icon": "close"
+        }
+      ],
+      "artLayers": [
+        {
+          "id": "market_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "purpose": "Noninteractive market frame and outside information; no click targets outside native slots"
+        }
+      ],
+      "presentation": "painted_controls"
+    },
+    "auction_watchlist": {
+      "contentSlots": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "contentRegion": {
+        "sourceSlots": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ],
+        "slots": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43
+        ]
+      },
+      "buttons": [
+        {
+          "id": "previous",
+          "sourceSlot": 45,
+          "slots": [
+            45,
+            46,
+            47
+          ],
+          "label": "Previous",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "close",
+          "sourceSlot": 53,
+          "slots": [
+            48,
+            49,
+            50
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger"
+        },
+        {
+          "id": "next",
+          "sourceSlot": 52,
+          "slots": [
+            51,
+            52,
+            53
+          ],
+          "label": "Next",
+          "role": "action",
+          "style": "secondary"
+        }
+      ],
+      "artLayers": [
+        {
+          "id": "market_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "WATCHLIST",
+          "rightLines": [
+            "REVIEW",
+            "PAGES",
+            "BELOW"
+          ],
+          "purpose": "Noninteractive page frame and outside information; no click targets outside native slots"
+        }
+      ],
+      "presentation": "painted_controls"
+    },
+    "chest_shop_ads": {
+      "contentSlots": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "contentRegion": {
+        "sourceSlots": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ],
+        "slots": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43
+        ]
+      },
+      "buttons": [
+        {
+          "id": "balance",
+          "sourceSlot": 46,
+          "slots": [
+            9,
+            18,
+            27,
+            36
+          ],
+          "label": "Balance",
+          "role": "info",
+          "style": "secondary",
+          "icon": "balance"
+        },
+        {
+          "id": "previous",
+          "sourceSlot": 45,
+          "slots": [
+            45,
+            46
+          ],
+          "label": "Prev",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "search",
+          "sourceSlot": 48,
+          "slots": [
+            47,
+            48
+          ],
+          "label": "Find",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "create_shop",
+          "sourceSlot": 50,
+          "slots": [
+            49,
+            50
+          ],
+          "label": "Create",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "next",
+          "sourceSlot": 53,
+          "slots": [
+            51,
+            52
+          ],
+          "label": "Next",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "close",
+          "sourceSlot": 49,
+          "slots": [
+            53
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger",
+          "icon": "close"
+        }
+      ],
+      "artLayers": [
+        {
+          "id": "market_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "CHEST SHOPS",
+          "rightLines": [
+            "SEARCH",
+            "BROWSE",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive page frame and outside information; no click targets outside native slots"
+        }
+      ],
+      "presentation": "painted_controls"
+    },
+    "chest_shop_search": {
+      "contentSlots": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "contentRegion": {
+        "sourceSlots": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ],
+        "slots": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43
+        ]
+      },
+      "buttons": [
+        {
+          "id": "balance",
+          "sourceSlot": 46,
+          "slots": [
+            9,
+            18,
+            27,
+            36
+          ],
+          "label": "Balance",
+          "role": "info",
+          "style": "secondary",
+          "icon": "balance"
+        },
+        {
+          "id": "previous",
+          "sourceSlot": 45,
+          "slots": [
+            45,
+            46
+          ],
+          "label": "Prev",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "search",
+          "sourceSlot": 48,
+          "slots": [
+            47,
+            48
+          ],
+          "label": "Find",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "create_shop",
+          "sourceSlot": 50,
+          "slots": [
+            49,
+            50
+          ],
+          "label": "Create",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "next",
+          "sourceSlot": 53,
+          "slots": [
+            51,
+            52
+          ],
+          "label": "Next",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "close",
+          "sourceSlot": 49,
+          "slots": [
+            53
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger",
+          "icon": "close"
+        }
+      ],
+      "artLayers": [
+        {
+          "id": "market_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "CHEST SHOPS",
+          "rightLines": [
+            "SEARCH",
+            "BROWSE",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive page frame and outside information; no click targets outside native slots"
+        }
+      ],
+      "presentation": "painted_controls"
+    },
+    "economy_log": {
+      "contentSlots": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "contentRegion": {
+        "sourceSlots": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ],
+        "slots": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43
+        ]
+      },
+      "buttons": [
+        {
+          "id": "previous",
+          "sourceSlot": 45,
+          "slots": [
+            45,
+            46,
+            47
+          ],
+          "label": "Previous",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "close",
+          "sourceSlot": 49,
+          "slots": [
+            48,
+            49,
+            50
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger"
+        },
+        {
+          "id": "next",
+          "sourceSlot": 53,
+          "slots": [
+            51,
+            52,
+            53
+          ],
+          "label": "Next",
+          "role": "action",
+          "style": "secondary"
+        }
+      ],
+      "artLayers": [
+        {
+          "id": "market_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "HISTORY",
+          "rightLines": [
+            "REVIEW",
+            "PAGES",
+            "BELOW"
+          ],
+          "purpose": "Noninteractive page frame and outside information; no click targets outside native slots"
+        }
+      ],
+      "presentation": "painted_controls"
+    },
+    "chest_shop": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "buttons": [
+        {
+          "id": "close",
+          "sourceSlot": 8,
+          "slots": [
+            8
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger",
+          "icon": "close"
+        },
+        {
+          "id": "balance",
+          "sourceSlot": 17,
+          "slots": [
+            17
+          ],
+          "label": "Balance",
+          "role": "info",
+          "style": "secondary",
+          "icon": "balance"
+        },
+        {
+          "id": "options",
+          "sourceSlot": 26,
+          "slots": [
+            26
+          ],
+          "label": "Search",
+          "role": "action",
+          "style": "secondary",
+          "icon": "search",
+          "sourceControl": "Search"
+        }
+      ],
+      "note": "All 24 listing cells stay native. Existing right-column controls are painted one-cell icons; larger controls would consume real listings.",
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "CHEST SHOP",
+          "leftHeading": "CHEST",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "chest_shop_owner": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "buttons": [
+        {
+          "id": "close",
+          "sourceSlot": 8,
+          "slots": [
+            8
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger",
+          "icon": "close"
+        },
+        {
+          "id": "balance",
+          "sourceSlot": 17,
+          "slots": [
+            17
+          ],
+          "label": "Balance",
+          "role": "info",
+          "style": "secondary",
+          "icon": "balance"
+        },
+        {
+          "id": "options",
+          "sourceSlot": 26,
+          "slots": [
+            26
+          ],
+          "label": "Settings",
+          "role": "action",
+          "style": "secondary",
+          "icon": "settings",
+          "sourceControl": "Shop Options"
+        }
+      ],
+      "note": "All 24 listing cells stay native. Existing right-column controls are painted one-cell icons; larger controls would consume real listings.",
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "CHEST SHOP",
+          "leftHeading": "CHEST",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "admin_shop_categories": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "ADMIN SHOP",
+          "leftHeading": "ADMIN",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "admin_shop_listings": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "ADMIN SHOP",
+          "leftHeading": "ADMIN",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "admin_shop_search": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "ADMIN SHOP",
+          "leftHeading": "ADMIN",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "admin_shop_configured": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "ADMIN SHOP",
+          "leftHeading": "ADMIN",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "prefixes_1": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 148,
+          "heading": "PREFIXES",
+          "leftHeading": "PREFIXES",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "prefixes_2": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 166,
+          "heading": "PREFIXES",
+          "leftHeading": "PREFIXES",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "prefixes_3": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "PREFIXES",
+          "leftHeading": "PREFIXES",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "prefixes_4": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 202,
+          "heading": "PREFIXES",
+          "leftHeading": "PREFIXES",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "prefixes_5": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 220,
+          "heading": "PREFIXES",
+          "leftHeading": "PREFIXES",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "prefixes_6": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "PREFIXES",
+          "leftHeading": "PREFIXES",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "guild_bank_select_1": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 148,
+          "heading": "GUILD BANK",
+          "leftHeading": "GUILD",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "guild_bank_select_3": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "GUILD BANK",
+          "leftHeading": "GUILD",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "guild_bank_1": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 148,
+          "heading": "GUILD BANK",
+          "leftHeading": "GUILD",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "guild_bank_2": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 166,
+          "heading": "GUILD BANK",
+          "leftHeading": "GUILD",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "guild_bank_3": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "GUILD BANK",
+          "leftHeading": "GUILD",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "guild_bank_4": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 202,
+          "heading": "GUILD BANK",
+          "leftHeading": "GUILD",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "guild_bank_5": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 220,
+          "heading": "GUILD BANK",
+          "leftHeading": "GUILD",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "guild_bank_6": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "GUILD BANK",
+          "leftHeading": "GUILD",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "invsee_online": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "INVSEE",
+          "leftHeading": "INVSEE",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "invsee_offline": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "INVSEE",
+          "leftHeading": "INVSEE",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "trashcan": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "UTILITY",
+          "leftHeading": "UTILITY",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "ender_chest": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "UTILITY",
+          "leftHeading": "UTILITY",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "crafting": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved"
+    },
+    "template_chest_1": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 148,
+          "heading": "UTILITY",
+          "leftHeading": "UTILITY",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "template_chest_2": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 166,
+          "heading": "UTILITY",
+          "leftHeading": "UTILITY",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "template_chest_3": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 184,
+          "heading": "UTILITY",
+          "leftHeading": "UTILITY",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "template_chest_4": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 202,
+          "heading": "UTILITY",
+          "leftHeading": "UTILITY",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "template_chest_5": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 220,
+          "heading": "UTILITY",
+          "leftHeading": "UTILITY",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
+    },
+    "template_chest_6": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "buttons": [],
+      "note": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "presentation": "native_content_preserved",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "height": 238,
+          "heading": "UTILITY",
+          "leftHeading": "UTILITY",
+          "rightLines": [
+            "NATIVE",
+            "CONTENT",
+            "VISIBLE"
+          ],
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
+        }
+      ]
     }
   },
   "animation": {
@@ -592,7 +5286,7 @@
       "pulse_2",
       "pulse_3"
     ],
-    "ticksPerFrame": 2,
+    "ticksPerFrame": 4,
     "repeat": false,
     "trigger": "explicit server action/state feedback; never mouse hover",
     "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."

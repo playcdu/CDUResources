@@ -43,6 +43,7 @@ jobs:
             deliverables/quasar-gui.zip
             deliverables/quasar-gui.zip.sha1
             deliverables/quasar-gui.zip.sha256
+            deliverables/quasar-gui-layouts-*.json
           if-no-files-found: error
           retention-days: 30
       - name: Upload portable artist kit

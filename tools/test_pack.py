@@ -5,6 +5,7 @@ import hashlib
 import io
 import json
 import shutil
+import tempfile
 import unittest
 import zipfile
 from pathlib import Path
@@ -84,7 +85,8 @@ class PackTests(unittest.TestCase):
                     self.assertEqual(6+7-f['ascent'],y)
                     button_assets.validate_button((ROOT/'pack-source'/f['asset']).read_bytes(),g,skin,b,state)
         self.assertEqual(len(self.skins['trade_idle']['visibleContentSlots']),40)
-        self.assertEqual(self.skins['auction_confirm']['visibleContentSlots'],[20])
+        self.assertEqual(len(self.skins['auction_confirm']['visibleContentSlots']),1)
+        self.assertEqual(runtime['skins']['auction_confirm']['contentRegion']['sourceSlots'],[20])
 
     def test_carrier_exact_threshold_ranges_and_normal_paper(self):
         with zipfile.ZipFile(io.BytesIO(self.raw)) as z:
@@ -99,6 +101,58 @@ class PackTests(unittest.TestCase):
             for value in [2,37,194730,194732,200000]:self.assertEqual(resolve(value),'quasar_gui:item/paper_default')
             self.assertEqual(json.loads(z.read('assets/quasar_gui/models/item/button_carrier.json'))['elements'],[])
             self.assertNotIn('overrides',json.loads(z.read('assets/quasar_gui/models/item/paper_default.json')))
+
+    def test_readiness_visible_independently_of_optional_money_carrier(self):
+        # Zero incoming money removes its native info element. Each readiness
+        # skin must still have distinct static artwork when all button frames
+        # (including that optional info region) are omitted.
+        backgrounds=[]
+        for state in ('idle','self_ready','other_ready','both_ready'):
+            skin=self.skins['trade_'+state]
+            backgrounds.append((ROOT/'pack-source'/skin['asset']).read_bytes())
+            self.assertEqual(len(skin['visibleContentSlots']),40)
+        self.assertEqual(len(set(backgrounds)),4)
+
+    def test_dense_content_and_decorative_layer_contract(self):
+        import decorative_assets
+        config=read_json(ROOT/'manifests/button-layouts.json');runtime=read_json(ROOT/'manifests/runtime-registry.json')
+        for key,screen in config['screens'].items():
+            if 'contentRegion' not in screen:continue
+            expected_slots=screen['contentRegion']['slots']
+            if key in ('auction_confirm','ticket_valid','ticket_invalid'):
+                source=20 if key=='auction_confirm' else 22
+                self.assertEqual(screen['contentRegion']['sourceSlots'],[source])
+                self.assertEqual(len(expected_slots),1)
+            else:
+                self.assertEqual(screen['contentRegion']['sourceSlots'],list(range(45)))
+                self.assertEqual(len(expected_slots),28)
+            self.assertEqual(runtime['skins'][key]['contentRegion'],screen['contentRegion'])
+            self.assertEqual(set(screen['contentSlots']),set(expected_slots))
+            for b in screen['buttons']:self.assertFalse(set(b['slots'])&set(expected_slots))
+            g=self.layouts[self.skins[key]['layout']]
+            for layer in runtime['skins'][key].get('artLayers',[]):
+                self.assertLessEqual(layer['width'],256);self.assertLessEqual(layer['height'],256)
+                self.assertEqual(sum(ADVANCES[c] for c in layer['prefix']+layer['suffix'])+layer['advance'],0)
+                self.assertEqual(g['titleAnchor'][0]+sum(ADVANCES[c] for c in layer['prefix']),layer['x'])
+                self.assertEqual(13-layer['ascent'],layer['y'])
+                decorative_assets.validate((ROOT/'pack-source'/layer['asset']).read_bytes(),layer,g)
+
+    def test_hash_bound_runtime_sidecar(self):
+        sha=hashlib.sha1(self.raw).hexdigest()
+        sidecar=read_json(ROOT/'deliverables'/('quasar-gui-layouts-'+sha+'.json'))
+        self.assertEqual(sidecar['schemaVersion'],1);self.assertEqual(sidecar['packSha1'],sha)
+        self.assertEqual(sidecar['registry'],read_json(ROOT/'manifests/runtime-registry.json'))
+
+    def test_button_texture_override_preserves_all_other_assets(self):
+        runtime=read_json(ROOT/'manifests/runtime-registry.json')
+        asset=runtime['skins']['economy_hub']['buttonRegions'][0]['states']['normal']['asset']
+        source=ROOT/'pack-source'/asset;before=source.read_bytes()
+        override=self.out/'button-overrides'/asset;override.parent.mkdir(parents=True,exist_ok=True)
+        im=Image.open(source).convert('RGBA');im.putpixel((4,4),(193,103,82,255));im.save(override)
+        with contextlib.redirect_stdout(io.StringIO()):changed,_=build(self.out/'button-overrides',self.out/'button-override.zip',kit=False)
+        self.assertEqual(source.read_bytes(),before)
+        with zipfile.ZipFile(io.BytesIO(self.raw)) as a,zipfile.ZipFile(io.BytesIO(changed)) as b:
+            self.assertEqual([n for n in a.namelist() if a.read(n)!=b.read(n)],[asset])
 
     def test_reject_paper_exception_drift_and_extra_minecraft_paths(self):
         with zipfile.ZipFile(io.BytesIO(self.raw)) as z:files={n:z.read(n) for n in z.namelist()}
@@ -146,7 +200,8 @@ class PackTests(unittest.TestCase):
 
     def test_reject_opaque_item_well(self):
         s=self.skins['auction_house'];g=self.layouts[s['layout']]
-        image=Image.open(ROOT/'pack-source'/s['asset']).convert('RGBA');image.putpixel((8,18),(255,0,0,255))
+        p=next(p for p in g['slots'] if p['index']==s['visibleContentSlots'][0])
+        image=Image.open(ROOT/'pack-source'/s['asset']).convert('RGBA');image.putpixel((p['x'],p['y']),(255,0,0,255))
         b=io.BytesIO();image.save(b,format='PNG')
         with self.assertRaisesRegex(ValueError,'interaction'):validate_png(b.getvalue(),g,s,'bad')
 
@@ -173,13 +228,19 @@ class PackTests(unittest.TestCase):
         return path
 
     def test_merge_preserves_operator_metadata_and_hash(self):
-        op=self.operator_pack('operator.zip');out=self.new_output('merged.zip')
+        op=self.operator_pack('operator.zip')
+        # A geometry-only edit can keep pack bytes identical while changing its
+        # sidecar. Fresh test-owned output avoids stale sidecars from prior runs.
+        merge_dir=Path(tempfile.mkdtemp(prefix='merge-',dir=self.out));out=merge_dir/'merged.zip'
         report=merge(op,ROOT/'deliverables/quasar-gui.zip',out)
         with zipfile.ZipFile(op) as a,zipfile.ZipFile(out) as b:
             self.assertEqual(json.loads(a.read('pack.mcmeta')),json.loads(b.read('pack.mcmeta')))
             self.assertEqual(a.read('assets/example/lang/en_us.json'),b.read('assets/example/lang/en_us.json'))
         self.assertEqual(report['sha1'],hashlib.sha1(out.read_bytes()).hexdigest())
-        second=self.new_output('merged-repeat.zip');merge(op,ROOT/'deliverables/quasar-gui.zip',second)
+        sidecar=read_json(report['layoutSidecar'])
+        self.assertEqual(sidecar['packSha1'],report['sha1'])
+        self.assertEqual(sidecar['registry'],read_json(ROOT/'manifests/runtime-registry.json'))
+        second=merge_dir/'merged-repeat.zip';merge(op,ROOT/'deliverables/quasar-gui.zip',second)
         self.assertEqual(out.read_bytes(),second.read_bytes())
 
     def test_merge_rejects_path_collision(self):

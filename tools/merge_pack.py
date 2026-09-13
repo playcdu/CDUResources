@@ -24,11 +24,19 @@ def entries(path):
     if 'pack.mcmeta' not in result:raise ValueError('Missing root pack.mcmeta')
     return result
 
-def merge(operator,gui,out,metadata=None):
+def merge(operator,gui,out,metadata=None,layouts=None):
     if Path(out).resolve() in (Path(operator).resolve(),Path(gui).resolve()):raise ValueError('Output must differ from both inputs')
     if Path(out).exists():raise ValueError('Output already exists; choose a revision filename')
     op=entries(operator);q=entries(gui)
     validate_pack(Path(gui).read_bytes(),read_json(ROOT/'manifests/layouts.json')['layouts'],read_json(ROOT/'manifests/skins.json')['skins'])
+    gui_sha=hashlib.sha1(Path(gui).read_bytes()).hexdigest()
+    sidecar_name='quasar-gui-layouts-'+gui_sha+'.json'
+    candidates=[Path(layouts)] if layouts else [Path(gui).parent/sidecar_name,ROOT/'deliverables'/sidecar_name]
+    source=next((p for p in candidates if p.is_file()),None)
+    if source is None:raise ValueError('Missing matching GUI layout sidecar; supply --layouts '+sidecar_name)
+    layout_data=read_json(source)
+    if layout_data.get('schemaVersion')!=1 or layout_data.get('packSha1')!=gui_sha or not isinstance(layout_data.get('registry'),dict):
+        raise ValueError('GUI layout sidecar does not match input ZIP SHA-1/schema')
     conflicts=[]
     for name,data in q.items():
         if name!='pack.mcmeta' and name in op and op[name]!=data:conflicts.append(name)
@@ -44,12 +52,16 @@ def merge(operator,gui,out,metadata=None):
     # Metadata policy stays operator-owned. Use --metadata only after validating their assets.
     op.update({n:b for n,b in q.items() if n!='pack.mcmeta'})
     op['pack.mcmeta']=json_bytes(selected)
-    raw=zip_bytes(op);Path(out).parent.mkdir(parents=True,exist_ok=True);Path(out).write_bytes(raw)
-    digest=hashlib.sha1(raw).hexdigest();Path(str(out)+'.sha1').write_text(digest+'\n',encoding='ascii')
-    return dict(output=str(out),sha1=digest,bytes=len(raw),pathConflicts='none',
+    raw=zip_bytes(op);digest=hashlib.sha1(raw).hexdigest()
+    sidecar=Path(out).parent/('quasar-gui-layouts-'+digest+'.json')
+    layout_bytes=json_bytes({'schemaVersion':1,'packSha1':digest,'registry':layout_data['registry']})
+    if sidecar.exists() and sidecar.read_bytes()!=layout_bytes:raise ValueError('Conflicting merged layout sidecar already exists')
+    Path(out).parent.mkdir(parents=True,exist_ok=True);Path(out).write_bytes(raw)
+    Path(str(out)+'.sha1').write_text(digest+'\n',encoding='ascii');sidecar.write_bytes(layout_bytes)
+    return dict(output=str(out),sha1=digest,bytes=len(raw),layoutSidecar=str(sidecar),pathConflicts='none',
         metadata='explicit override' if metadata else 'operator preserved',
         warning='Merged metadata/assets still require actual client loading on each target. Configure merged ZIP hash and one offer owner.')
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('operator',type=Path);p.add_argument('gui',type=Path);p.add_argument('output',type=Path);p.add_argument('--metadata',type=Path)
-    a=p.parse_args();print(json.dumps(merge(a.operator,a.gui,a.output,a.metadata),indent=2))
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('operator',type=Path);p.add_argument('gui',type=Path);p.add_argument('output',type=Path);p.add_argument('--metadata',type=Path);p.add_argument('--layouts',type=Path)
+    a=p.parse_args();print(json.dumps(merge(a.operator,a.gui,a.output,a.metadata,a.layouts),indent=2))

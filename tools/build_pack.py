@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic Quasar GUI pack/artist-kit builder. Python 3.10+, Pillow 10+."""
+"""Deterministic Quasar GUI pack/artist-kit builder. Python 3.12, Pillow 12.3.0."""
 from __future__ import annotations
 import argparse
 import hashlib
@@ -15,6 +15,7 @@ from PIL import Image, ImageDraw, ImageFont
 import sample_art
 import artist_guides
 import button_assets
+import decorative_assets
 
 ROOT = Path(__file__).resolve().parents[1]
 # Developer repository stores artist documents in a subfolder; the exported kit
@@ -174,6 +175,7 @@ def validate_pack(raw,layouts,skins):
     buttons=button_assets.load(ROOT,layouts,skins)
     allocation=read_json(ROOT/'manifests/button-codepoints.json') if buttons['screens'] else {'regions':{}}
     button_lookup={}
+    art_lookup={r['glyph']:(key,layer,r) for key,layer,r in decorative_assets.records(ROOT,buttons,layouts,skins)}
     for key,screen in buttons['screens'].items():
         for button in screen['buttons']:
             for state,cp in allocation['regions'][key+'/'+button['id']].items():button_lookup[chr(int(cp[2:],16))]=(key,button,state)
@@ -201,6 +203,11 @@ def validate_pack(raw,layouts,skins):
                 cps += p['chars']
                 key=next((k for k,s in skins.items() if chr(int(s['codepoint'][2:],16))==p['chars'][0]),None)
                 if key is None:
+                    if p['chars'][0] in art_lookup:
+                        ak,layer,r=art_lookup[p['chars'][0]]
+                        if p['ascent']!=r['ascent'] or p['height']!=r['height'] or p['file']!=r['asset'].replace('assets/quasar_gui/textures/','quasar_gui:'):raise ValueError('Decorative provider metric/reference changed')
+                        decorative_assets.validate(z.read(r['asset']),layer,layouts[skins[ak]['layout']])
+                        continue
                     if p['chars'][0] not in button_lookup:raise ValueError('Unknown glyph')
                     bk,button,state=button_lookup[p['chars'][0]];bs=skins[bk];bg=layouts[bs['layout']]
                     x,y,w,h=button_assets.geometry(bg,button)
@@ -217,18 +224,33 @@ def validate_pack(raw,layouts,skins):
         expected_files={'pack.mcmeta','assets/quasar_gui/font/menu.json'}|{s['asset'] for s in skins.values()}
         if buttons['screens']:expected_files.update(button_assets.MODELS)
         expected_files.update(f'assets/quasar_gui/textures/buttons/{key}/{button["id"]}/{state}.png' for key,button,state in button_lookup.values())
+        expected_files.update(r['asset'] for key,layer,r in art_lookup.values())
         if set(names)!=expected_files:raise ValueError('Unexpected or missing pack asset path')
         if len(cps)!=len(set(cps)): raise ValueError('Duplicate codepoints')
-        if len(cps)!=len(skins)+len(button_lookup)+len(ADVANCES): raise ValueError('Missing skin/button provider')
+        if len(cps)!=len(skins)+len(button_lookup)+len(art_lookup)+len(ADVANCES): raise ValueError('Missing skin/button/art provider')
     return dict(status='passed-static',skinCount=len(skins),buttonRegionCount=sum(len(s['buttons']) for s in buttons['screens'].values()),buttonGlyphCount=len(button_lookup),fileCount=len(names),
                 sha1=hashlib.sha1(raw).hexdigest(),sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw),
                 actualClientLoading='untested',actualClientRendering='untested')
 
-def build(overrides=None,output=None,kit=True,regenerate_samples=False):
+def build(overrides=None,output=None,kit=True,regenerate_samples=False,regenerate_buttons=None):
     layouts=read_json(ROOT/'manifests/layouts.json')['layouts']; skins=read_json(ROOT/'manifests/skins.json')['skins']
     buttons=button_assets.load(ROOT,layouts,skins)
     write_json(ROOT/'manifests/skins.json',{'schemaVersion':1,'font':FONT,'skins':skins})
     controls={s['skin_key']:s for s in read_json(ROOT/'manifests/control-map.json')['screens']}
+    coverage={key:{'presentation':screen.get('presentation','painted_controls'),
+        'buttonRegions':len(screen['buttons']),'nativeContentCells':len(screen['contentSlots']),
+        'outsideArtLayers':len(screen.get('artLayers',[])),
+        'constraints':screen.get('note','Every painted cell dispatches its bound original action; live item content remains native.'),
+        'genericTemplate':key.startswith('template_')} for key,screen in buttons['screens'].items()}
+    write_json(ROOT/'manifests/design-coverage.json',{'schemaVersion':1,'skins':coverage})
+    coverage_text=['# Design coverage','',
+        'All 50 audited skins and six generic chest templates use the dark visual language. Painted controls are used where audited action slots permit them. Native selection, storage, inspection, crafting and configuration-defined content remain visible and keep their original slot positions.',
+        '', 'Crafting preserves its recipe controls and uses no outside frame. Chest frames add only noninteractive decoration outside the container. A generated guide proves layout composition, not live game interaction.', '',
+        '| Skin | Painted regions | Native cells | Outside layers | Constraint |','|---|---:|---:|---:|---|']
+    for key,row in coverage.items():
+        coverage_text.append('| '+key+' | '+str(row['buttonRegions'])+' | '+str(row['nativeContentCells'])+' | '+str(row['outsideArtLayers'])+' | '+row['constraints'].replace('|','/')+' |')
+    (ARTIST_ROOT/'docs').mkdir(parents=True,exist_ok=True)
+    (ARTIST_ROOT/'docs/DESIGN-COVERAGE.md').write_text('\n'.join(coverage_text)+'\n',encoding='utf-8')
     runtime=registry(layouts,skins)
     write_json(ROOT/'manifests/codepoints.json',{'font':FONT,'privateUseOnly':True,
         'art':{key:{'codepoint':skin['codepoint'],'asset':skin['asset']} for key,skin in skins.items()},
@@ -260,10 +282,13 @@ def build(overrides=None,output=None,kit=True,regenerate_samples=False):
         if kit:
             p=ARTIST_ROOT/'guides'/f'{key}.png';p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(png_bytes(artist_guides.create_guide(g,s,key,image,controls.get(key))))
             guide_images.append((key,image))
-    button_files,button_providers=button_assets.compile(ROOT,layouts,skins,buttons,runtime,regenerate_samples,overrides)
+    button_files,button_providers=button_assets.compile(ROOT,layouts,skins,buttons,runtime,regenerate_samples,overrides,regenerate_buttons)
     files.update(button_files);providers.extend(button_providers)
+    art_files,art_providers=decorative_assets.compile(ROOT,buttons,layouts,skins,runtime,regenerate_samples,overrides)
+    files.update(art_files);providers.extend(art_providers)
     codepoint_manifest=read_json(ROOT/'manifests/codepoints.json')
     codepoint_manifest['buttonLayers']=read_json(ROOT/'manifests/button-codepoints.json')['regions']
+    codepoint_manifest['artLayers']=read_json(ROOT/'manifests/art-codepoints.json')['layers']
     write_json(ROOT/'manifests/codepoints.json',codepoint_manifest)
     write_json(ROOT/'manifests/runtime-registry.json',runtime)
     files['assets/quasar_gui/font/menu.json']=json_bytes({'providers':providers})
@@ -280,14 +305,19 @@ def build(overrides=None,output=None,kit=True,regenerate_samples=False):
     out=Path(output) if output else ROOT/'deliverables/quasar-gui.zip';out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(raw)
     out.with_suffix('.zip.sha1').write_text(report['sha1']+'\n',encoding='ascii')
     out.with_suffix('.zip.sha256').write_text(report['sha256']+'\n',encoding='ascii')
+    sidecar_name='quasar-gui-layouts-'+report['sha1']+'.json'
+    sidecar=json_bytes({'schemaVersion':1,'packSha1':report['sha1'],'registry':runtime})
+    (out.parent/sidecar_name).write_bytes(sidecar)
     if not overrides:
         for name,data in files.items():
             p=ROOT/'pack-source'/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data)
     write_json(out.with_suffix('.validation.json'),report)
     if kit:
-        explorer_command=[sys.executable,str(ROOT/'tools/build_control_explorer.py')]
-        if overrides:explorer_command += ['--overrides',str(Path(overrides).resolve())]
-        subprocess.run(explorer_command,check=True)
+        for generator in ('build_control_explorer.py','render_button_previews.py','build_artist_editor.py'):
+            if not (ROOT/'tools'/generator).is_file():continue
+            guide_command=[sys.executable,str(ROOT/'tools'/generator)]
+            if overrides:guide_command += ['--overrides',str(Path(overrides).resolve())]
+            subprocess.run(guide_command,check=True)
         sheet=Image.new('RGB',(4*360,math.ceil(len(guide_images)/4)*480),(27,36,44));d=ImageDraw.Draw(sheet)
         for i,(key,image) in enumerate(guide_images):
             x=i%4*360+4;y=i//4*480+26
@@ -306,23 +336,23 @@ def build(overrides=None,output=None,kit=True,regenerate_samples=False):
             demo=artist_guides.composite(g,s,key,img,controls.get(key)).resize((528,g['height']*3),Image.Resampling.NEAREST)
             composite_sheet.paste(demo,(x,y+29))
             yy=y+g['height']*3+44
-            caption={'auction_house':'Listings above; previous, balance, my listings, search, close, sell, watch, notification, next below.',
-                'trade_self_ready':'Own offer left, other offer right. Readiness at slot 13; own money 47, other money 52.',
+            caption={'auction_house':'28 native listings. My Items, Watch and Alerts above; page/search/sell/close below; balance at left.',
+                'trade_self_ready':'20 offer cells on each side. Bottom buttons: your money, ready, their money. All offered items remain native.',
                 'chest_shop_listing_enabled':'Read-only stats/stock, quantity controls, buy/sell toggles and listing enable switch.',
-                'auction_confirm':'Hover the preview for price and seller. Slot 24 confirms; slot 53 closes.',
-                'ticket_valid':'Ticket preview 22, cancel 29 and valid-only redemption 33. Static panels have no callbacks.',
-                'chest_shop_settings':'Statistics 10, upgrade 12, rename 13, refresh 14 and back 8.'}[key]
+                'auction_confirm':'Hover the real preview for price and seller. The large purchase button retains the original purchase checks.',
+                'ticket_valid':'Ticket preview 22 stays native. Large Cancel and Redeem controls; invalid redemption remains disabled.',
+                'chest_shop_settings':'Read-only statistics, upgrade, rename, refresh and back retain the original logical actions.'}[key]
             for line in artist_guides.lines(caption,510):cd.text((x,yy),line,font=artist_guides.BODY,fill=(56,79,86));yy+=18
         (examples_dir/'contact-sheet.png').write_bytes(png_bytes(composite_sheet))
         s=skins['auction_house'];g=layouts[s['layout']];img=Image.open(io.BytesIO(files[s['asset']])).convert('RGBA')
         (examples_dir/'auction-layer-diagram.png').write_bytes(png_bytes(artist_guides.layer_diagram(g,s,img,controls.get('auction_house'))))
         kitfiles={}
-        for directory in ['pack-source','manifests','tools']:
+        for directory in ['pack-source','manifests','tools','artwork']:
             for p in sorted((ROOT/directory).rglob('*')):
-                if directory=='tools' and p.name not in ('build_pack.py','check_artifacts.py','verify_artist_handoff.py','sample_art.py','artist_guides.py','button_assets.py','render_button_previews.py','test_pack.py','merge_pack.py','fetch_client_fixtures.py','CheckTargetCodecs.java','CheckReleasedMetadata.java','build_control_explorer.py','control-explorer.template.html'):continue
+                if directory=='tools' and p.name not in ('build_pack.py','check_artifacts.py','verify_artist_handoff.py','sample_art.py','artist_guides.py','button_assets.py','decorative_assets.py','render_button_previews.py','test_pack.py','merge_pack.py','fetch_client_fixtures.py','CheckTargetCodecs.java','CheckReleasedMetadata.java','build_control_explorer.py','control-explorer.template.html','build_artist_editor.py','artist.py','artist-tools.cmd','layout_model.js','layout-editor-ui.js','layout-editor.template.html','test_artist.py','test_layout_model.cjs'):continue
                 if p.is_file() and '__pycache__' not in p.parts and p.suffix not in ('.pyc',): kitfiles[p.relative_to(ROOT).as_posix()]=p.read_bytes()
         for name,data in files.items():kitfiles['pack-source/'+name]=data
-        for name in ('START-HERE.md','CLIENT-COMPATIBILITY.md','LICENSE.txt','README.md','requirements.txt','.python-version','CONTROL-EXPLORER.html','contact-sheet.png'):
+        for name in ('START-HERE.md','CLIENT-COMPATIBILITY.md','LICENSE.txt','README.md','requirements.txt','.python-version','CONTROL-EXPLORER.html','LAYOUT-EDITOR.html','contact-sheet.png','Setup Artist Tools.cmd','Build Pack.cmd','Open Layout Helper.cmd'):
             p=ARTIST_ROOT/name
             if p.is_file():kitfiles[name]=p.read_bytes()
         for directory in ('guides','illustrations','docs'):
@@ -334,6 +364,7 @@ def build(overrides=None,output=None,kit=True,regenerate_samples=False):
         kitfiles['quasar-gui.zip']=raw
         kitfiles['deliverables/quasar-gui.zip']=raw
         kitfiles['deliverables/quasar-gui.zip.sha1']=(report['sha1']+'\n').encode('ascii')
+        kitfiles['deliverables/'+sidecar_name]=sidecar
         kitraw=zip_bytes(kitfiles)
         (ROOT/'deliverables/quasar-gui-artist-kit.zip').write_bytes(kitraw)
         (ROOT/'deliverables/quasar-gui-artist-kit.zip.sha256').write_text(hashlib.sha256(kitraw).hexdigest()+'\n',encoding='ascii')
@@ -342,9 +373,10 @@ def build(overrides=None,output=None,kit=True,regenerate_samples=False):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--overrides',type=Path);p.add_argument('--output',type=Path);p.add_argument('--no-kit',action='store_true');p.add_argument('--validate',type=Path);p.add_argument('--regenerate-samples',action='store_true',help='Explicitly replace canonical sample PNGs with generator output; never touches overrides')
+    p.add_argument('--regenerate-button',action='append',default=[],help='Explicitly regenerate only six state PNGs for skin/id; repeat for more regions. Other artwork is preserved.')
     a=p.parse_args()
     if a.validate:
         print(json.dumps(validate_pack(a.validate.read_bytes(),read_json(ROOT/'manifests/layouts.json')['layouts'],read_json(ROOT/'manifests/skins.json')['skins']),indent=2))
-    else:build(a.overrides,a.output,not a.no_kit,a.regenerate_samples)
+    else:build(a.overrides,a.output,not a.no_kit,a.regenerate_samples,a.regenerate_button)
 
 if __name__=='__main__':main()

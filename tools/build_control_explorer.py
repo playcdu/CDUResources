@@ -6,6 +6,7 @@ import json
 import io
 from PIL import Image
 import button_assets
+import decorative_assets
 
 ROOT = Path(__file__).resolve().parents[1]
 ARTIST_ROOT = ROOT if (ROOT / "START-HERE.md").is_file() else ROOT / "artist-kit"
@@ -34,6 +35,9 @@ for key, skin in skins.items():
     image_bytes=asset.read_bytes()
     if regions:
         image_bytes=button_assets.png(button_assets.compose(Image.open(io.BytesIO(image_bytes)),regions,read_asset))
+    layers=runtime['skins'][key].get('artLayers',[])
+    expanded,view=decorative_assets.compose(Image.open(io.BytesIO(image_bytes)).convert('RGBA'),layouts[skin['layout']],layers,read_asset)
+    image_bytes=button_assets.png(expanded)
     screen_controls=button_assets.mapped_controls(button_screens[key],controls.get(key)) if key in button_screens else controls.get(key,{})
     screens[key] = {"layout": layouts[skin["layout"]], "roles": skin.get("slotRoles", {}),
         "states": row.get("states", []), "source": row.get("source", "Generic geometry template"),
@@ -41,7 +45,7 @@ for key, skin in skins.items():
         "dynamic": row.get("dynamic_content", "Native slot content"),
         "removed": skin.get("removedDecorations", []), "controls": screen_controls.get("controls", []),
         "visibleContentSlots":skin.get('visibleContentSlots',skin.get('liveSlots',[])),
-        "paintedControlSlots":skin.get('paintedControlSlots',[]),"buttonRegions":regions,
+        "paintedControlSlots":skin.get('paintedControlSlots',[]),"buttonRegions":regions,"artLayers":layers,"viewBounds":view,
         "liveSlots": skin.get("liveSlots", [p["index"] for p in layouts[skin["layout"]]["slots"]]),
         "staticProtectedSlots": skin.get("staticProtectedSlots", []),
         "image": "data:image/png;base64," + base64.b64encode(image_bytes).decode()}

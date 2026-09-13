@@ -2,24 +2,28 @@
 
 Canonical editable resource-pack assets and artist tooling for CDU's Quasar GUI redesign.
 
-**Status: foundation being redesigned.** The current 50 audited menu skins and six chest templates preserve the previous native slot layouts. They are useful source material and compatibility contracts, not the completed redesigned interface. New navigation, visual buttons, meaningful states and revised layouts belong in the action-layout design and its matching server adapter. Static validation does not prove gameplay or client rendering.
+**Status: implemented design; client validation pending.** All 50 audited skins and six chest templates use dark framing. Twenty-seven have painted control regions; seven paged layouts use 28 native content cells. Storage, selectors, configured shops and crafting preserve protected native positions. See docs/DESIGN-COVERAGE.md for every skin. Static validation does not prove gameplay or client rendering.
 
-Edit PNGs in `pack-source/assets/quasar_gui/textures/menu/`. Normal builds preserve those source images. Geometry, fonts and audited control meaning are in `manifests/`; the planned interaction contract is `manifests/action-layouts.json`. This repository contains no Quasar gameplay source or compiled mods.
+Edit background, button-state and decorative PNGs in `pack-source/assets/quasar_gui/textures/`. Normal builds preserve those source images and optional Aseprite documents. Geometry, fonts and audited control meaning are in `manifests/`; the implemented interaction contract is `manifests/button-layouts.json`. This repository contains no Quasar gameplay source or compiled mods.
+
+## Start on Windows
+
+Install Python 3.12 once, then double-click **Setup Artist Tools.cmd**. Paint the supplied PNGs in Aseprite, and double-click **Build Pack.cmd** to export, validate and package your work. Optional Aseprite source documents stay in `artwork/`; PNG-only editing also works. Read [the Aseprite workflow](docs/ARTIST-WORKFLOW.md) for indexed frame exports, local Minecraft preview and committing source changes. **Open Layout Helper.cmd** is an optional alignment aid.
 
 ## Build and verify
 
-Use Python **3.12.14**, pinned in `.python-version`, and the pinned Pillow dependency:
+Use Python **3.12** locally (CI pins **3.12.14** in `.python-version`), and the pinned Pillow dependency:
 
 ```sh
 python -m pip install -r requirements.txt
 python tools/check_artifacts.py
 ```
 
-The check command builds the resource pack, runs the 14 existing pack tests, verifies byte-identical repeated pack and artist-kit builds, and extracts the artist kit into a fresh directory. It rebuilds and tests that portable copy, then checks that a texture override appears in its exported PNG and offline guide while the canonical source remains unchanged. More tests may be added for the redesigned interaction contract.
+The check command builds the resource pack, runs 23 pack tests, 15 artist-tool tests and (when Node is installed) 20 layout-model regression groups, verifies byte-identical repeated pack and artist-kit builds, and extracts the artist kit into a fresh directory. It rebuilds and tests that portable copy, then checks that a texture override appears in its exported PNG and offline guide while the canonical source remains unchanged. The suite covers real button regions, state glyphs, content masks, carrier model ranges and hash-bound layout sidecars.
 
-Outputs are generated under `deliverables/`: `quasar-gui.zip`, `quasar-gui-artist-kit.zip`, their checksum files, and `checksums.json`. Evidence is under `evidence/`. Generated output directories are ignored by Git. The same ZIP currently targets Minecraft Java 1.19.2, 1.20.1 and 1.21.1; read [client compatibility](CLIENT-COMPATIBILITY.md) for format warnings and verification limits.
+Outputs are generated under `deliverables/`: `quasar-gui.zip`, its hash-bound `quasar-gui-layouts-<sha1>.json`, `quasar-gui-artist-kit.zip`, their checksum files, and `checksums.json`. Evidence is under `evidence/`. Generated output directories are ignored by Git. The same ZIP currently targets Minecraft Java 1.19.2, 1.20.1 and 1.21.1; read [client compatibility](CLIENT-COMPATIBILITY.md) for format warnings and verification limits.
 
-For an ordinary rebuild, run `python tools/build_pack.py`. Open the generated `CONTROL-EXPLORER.html` to inspect the foundation artwork, audited slots and explanatory diagrams offline. Start with [the artist guide](START-HERE.md) and [texture overrides](docs/ARTIST-OVERRIDES.md). Use `--regenerate-samples` only when intentionally replacing canonical PNGs with procedural defaults.
+For an ordinary rebuild, run `python tools/build_pack.py`. Open the generated `CONTROL-EXPLORER.html` to inspect the actual composed artwork, audited slots and explanatory diagrams offline. Start with [the artist guide](START-HERE.md) and [texture overrides](docs/ARTIST-OVERRIDES.md). Use `--regenerate-samples` only when intentionally replacing canonical PNGs with procedural defaults.
 
 ## GitHub Actions
 

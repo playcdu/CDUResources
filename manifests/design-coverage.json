@@ -1,0 +1,453 @@
+{
+  "schemaVersion": 1,
+  "skins": {
+    "economy_hub": {
+      "presentation": "painted_controls",
+      "buttonRegions": 8,
+      "nativeContentCells": 0,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "auction_confirm": {
+      "presentation": "painted_controls",
+      "buttonRegions": 2,
+      "nativeContentCells": 1,
+      "outsideArtLayers": 1,
+      "constraints": "Fixed native display item may move within free native top cells. Original logical source and one-item capacity stay fixed; no pagination change.",
+      "genericTemplate": false
+    },
+    "trade_money": {
+      "presentation": "painted_controls",
+      "buttonRegions": 3,
+      "nativeContentCells": 0,
+      "outsideArtLayers": 0,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "trade_idle": {
+      "presentation": "painted_controls",
+      "buttonRegions": 3,
+      "nativeContentCells": 40,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "trade_self_ready": {
+      "presentation": "painted_controls",
+      "buttonRegions": 3,
+      "nativeContentCells": 40,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "trade_other_ready": {
+      "presentation": "painted_controls",
+      "buttonRegions": 3,
+      "nativeContentCells": 40,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "trade_both_ready": {
+      "presentation": "painted_controls",
+      "buttonRegions": 3,
+      "nativeContentCells": 40,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "auction_duration": {
+      "presentation": "painted_controls",
+      "buttonRegions": 6,
+      "nativeContentCells": 0,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "ticket_valid": {
+      "presentation": "painted_controls",
+      "buttonRegions": 2,
+      "nativeContentCells": 1,
+      "outsideArtLayers": 1,
+      "constraints": "Fixed native display item may move within free native top cells. Original logical source and one-item capacity stay fixed; no pagination change.",
+      "genericTemplate": false
+    },
+    "ticket_invalid": {
+      "presentation": "painted_controls",
+      "buttonRegions": 2,
+      "nativeContentCells": 1,
+      "outsideArtLayers": 1,
+      "constraints": "Fixed native display item may move within free native top cells. Original logical source and one-item capacity stay fixed; no pagination change.",
+      "genericTemplate": false
+    },
+    "chest_shop_settings": {
+      "presentation": "painted_controls",
+      "buttonRegions": 5,
+      "nativeContentCells": 0,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "chest_shop_upgrade": {
+      "presentation": "painted_controls",
+      "buttonRegions": 8,
+      "nativeContentCells": 0,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "chest_shop_upgrade_confirm": {
+      "presentation": "painted_controls",
+      "buttonRegions": 8,
+      "nativeContentCells": 0,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "chest_shop_upgrade_disabled": {
+      "presentation": "painted_controls",
+      "buttonRegions": 8,
+      "nativeContentCells": 0,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "chest_shop_buy": {
+      "presentation": "painted_controls",
+      "buttonRegions": 8,
+      "nativeContentCells": 0,
+      "outsideArtLayers": 1,
+      "constraints": "Preset slots are packed dynamically. Option numbers identify displayed choices, never a fixed item count or fraction. All amounts remain in original item names and lore.",
+      "genericTemplate": false
+    },
+    "chest_shop_sell": {
+      "presentation": "painted_controls",
+      "buttonRegions": 8,
+      "nativeContentCells": 0,
+      "outsideArtLayers": 1,
+      "constraints": "Preset slots are packed dynamically. Option numbers identify displayed choices, never a fixed item count or fraction. All amounts remain in original item names and lore.",
+      "genericTemplate": false
+    },
+    "chest_shop_listing_enabled": {
+      "presentation": "painted_controls",
+      "buttonRegions": 13,
+      "nativeContentCells": 0,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "chest_shop_listing_disabled": {
+      "presentation": "painted_controls",
+      "buttonRegions": 13,
+      "nativeContentCells": 0,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "auction_house": {
+      "presentation": "painted_controls",
+      "buttonRegions": 9,
+      "nativeContentCells": 28,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "auction_search": {
+      "presentation": "painted_controls",
+      "buttonRegions": 9,
+      "nativeContentCells": 28,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "auction_mine": {
+      "presentation": "painted_controls",
+      "buttonRegions": 9,
+      "nativeContentCells": 28,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "auction_watchlist": {
+      "presentation": "painted_controls",
+      "buttonRegions": 3,
+      "nativeContentCells": 28,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "chest_shop_ads": {
+      "presentation": "painted_controls",
+      "buttonRegions": 6,
+      "nativeContentCells": 28,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "chest_shop_search": {
+      "presentation": "painted_controls",
+      "buttonRegions": 6,
+      "nativeContentCells": 28,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "economy_log": {
+      "presentation": "painted_controls",
+      "buttonRegions": 3,
+      "nativeContentCells": 28,
+      "outsideArtLayers": 1,
+      "constraints": "Every painted cell dispatches its bound original action; live item content remains native.",
+      "genericTemplate": false
+    },
+    "chest_shop": {
+      "presentation": "painted_controls",
+      "buttonRegions": 3,
+      "nativeContentCells": 24,
+      "outsideArtLayers": 1,
+      "constraints": "All 24 listing cells stay native. Existing right-column controls are painted one-cell icons; larger controls would consume real listings.",
+      "genericTemplate": false
+    },
+    "chest_shop_owner": {
+      "presentation": "painted_controls",
+      "buttonRegions": 3,
+      "nativeContentCells": 24,
+      "outsideArtLayers": 1,
+      "constraints": "All 24 listing cells stay native. Existing right-column controls are painted one-cell icons; larger controls would consume real listings.",
+      "genericTemplate": false
+    },
+    "admin_shop_categories": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 54,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "admin_shop_listings": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 54,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "admin_shop_search": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 54,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "admin_shop_configured": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 54,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "prefixes_1": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 9,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "prefixes_2": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 18,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "prefixes_3": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 27,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "prefixes_4": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 36,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "prefixes_5": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 45,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "prefixes_6": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 54,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "guild_bank_select_1": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 9,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "guild_bank_select_3": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 27,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "guild_bank_1": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 9,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "guild_bank_2": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 18,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "guild_bank_3": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 27,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "guild_bank_4": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 36,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "guild_bank_5": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 45,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "guild_bank_6": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 54,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "invsee_online": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 54,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "invsee_offline": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 54,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "trashcan": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 54,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "ender_chest": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 27,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "crafting": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 10,
+      "outsideArtLayers": 0,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": false
+    },
+    "template_chest_1": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 9,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": true
+    },
+    "template_chest_2": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 18,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": true
+    },
+    "template_chest_3": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 27,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": true
+    },
+    "template_chest_4": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 36,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": true
+    },
+    "template_chest_5": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 45,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": true
+    },
+    "template_chest_6": {
+      "presentation": "native_content_preserved",
+      "buttonRegions": 0,
+      "nativeContentCells": 54,
+      "outsideArtLayers": 1,
+      "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
+      "genericTemplate": true
+    }
+  }
+}
