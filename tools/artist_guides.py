@@ -106,7 +106,7 @@ def classify(control,slot,key):
 
 def native_layer(layout,skin,key,controls):
     out=Image.new('RGBA',(layout['width'],layout['height']),(187,195,194,255));d=ImageDraw.Draw(out)
-    live=set(skin.get('liveSlots',[p['index'] for p in layout['slots']]))
+    live=set(skin.get('visibleContentSlots',skin.get('liveSlots',[p['index'] for p in layout['slots']])))
     for p in layout['slots']+layout['playerSlots']:
         x,y=p['x'],p['y'];d.rectangle((x-1,y-1,x+16,y+16),fill=(98,108,111,255));d.line((x-1,y+16,x+16,y+16,x+16,y-1),fill=(221,229,225,255))
     control_by_slot={i:c for c in (controls or {}).get('controls',[]) for i in c['slots']}
@@ -127,7 +127,8 @@ def composite(layout,skin,key,image,controls):
         names={'auction_house':'AUCTION HOUSE / PAGE 2','trade_self_ready':'TRADE WITH EXAMPLE PLAYER',
             'chest_shop_listing_enabled':'SHOP LISTING / EXAMPLE','auction_confirm':'CONFIRM PURCHASE',
             'ticket_valid':'TICKET REDEMPTION','chest_shop_settings':'SHOP OPTIONS'}
-        label(d,layout['titleAnchor'][0],6,names.get(key,key.replace('_',' '))[:layout['textWidth']//4],(47,61,68,255))
+        color=(235,244,239,255) if 'paintedControlSlots' in skin else (47,61,68,255)
+        label(d,layout['titleAnchor'][0],6,names.get(key,key.replace('_',' '))[:layout['textWidth']//4],color)
     label(d,8,layout['inventoryLabel'][1]+1,'INVENTORY',(47,61,68,255))
     return native.convert('RGB')
 

@@ -36,6 +36,7 @@ def merge(operator,gui,out,metadata=None):
     original_meta=json.loads(op['pack.mcmeta'])
     for name in op:
         if '/assets/quasar_gui/' in '/'+name and name not in q:conflicts.append(name+' (namespace/overlay collision)')
+        if name.endswith('/assets/minecraft/models/item/paper.json'):conflicts.append(name+' (paper carrier overlay collision)')
     if original_meta.get('filter'):conflicts.append('pack.mcmeta filter requires explicit review/removal in operator source')
     if conflicts:raise ValueError('Merge conflicts: '+', '.join(conflicts))
     selected=read_json(metadata) if metadata else original_meta

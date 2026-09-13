@@ -246,5 +246,207 @@
     "U+F00F": -64,
     "U+F010": -128,
     "U+F011": -256
+  },
+  "buttonLayers": {
+    "economy_hub/auction": {
+      "normal": "U+E400",
+      "disabled": "U+E401",
+      "selected": "U+E402",
+      "pulse_1": "U+E403",
+      "pulse_2": "U+E404",
+      "pulse_3": "U+E405"
+    },
+    "economy_hub/admin_shop": {
+      "normal": "U+E406",
+      "disabled": "U+E407",
+      "selected": "U+E408",
+      "pulse_1": "U+E409",
+      "pulse_2": "U+E40A",
+      "pulse_3": "U+E40B"
+    },
+    "economy_hub/balance": {
+      "normal": "U+E40C",
+      "disabled": "U+E40D",
+      "selected": "U+E40E",
+      "pulse_1": "U+E40F",
+      "pulse_2": "U+E410",
+      "pulse_3": "U+E411"
+    },
+    "economy_hub/privacy": {
+      "normal": "U+E412",
+      "disabled": "U+E413",
+      "selected": "U+E414",
+      "pulse_1": "U+E415",
+      "pulse_2": "U+E416",
+      "pulse_3": "U+E417"
+    },
+    "economy_hub/rank": {
+      "normal": "U+E418",
+      "disabled": "U+E419",
+      "selected": "U+E41A",
+      "pulse_1": "U+E41B",
+      "pulse_2": "U+E41C",
+      "pulse_3": "U+E41D"
+    },
+    "economy_hub/chest_shops": {
+      "normal": "U+E41E",
+      "disabled": "U+E41F",
+      "selected": "U+E420",
+      "pulse_1": "U+E421",
+      "pulse_2": "U+E422",
+      "pulse_3": "U+E423"
+    },
+    "economy_hub/history": {
+      "normal": "U+E424",
+      "disabled": "U+E425",
+      "selected": "U+E426",
+      "pulse_1": "U+E427",
+      "pulse_2": "U+E428",
+      "pulse_3": "U+E429"
+    },
+    "economy_hub/close": {
+      "normal": "U+E42A",
+      "disabled": "U+E42B",
+      "selected": "U+E42C",
+      "pulse_1": "U+E42D",
+      "pulse_2": "U+E42E",
+      "pulse_3": "U+E42F"
+    },
+    "auction_confirm/confirm": {
+      "normal": "U+E430",
+      "disabled": "U+E431",
+      "selected": "U+E432",
+      "pulse_1": "U+E433",
+      "pulse_2": "U+E434",
+      "pulse_3": "U+E435"
+    },
+    "auction_confirm/close": {
+      "normal": "U+E436",
+      "disabled": "U+E437",
+      "selected": "U+E438",
+      "pulse_1": "U+E439",
+      "pulse_2": "U+E43A",
+      "pulse_3": "U+E43B"
+    },
+    "trade_money/increase": {
+      "normal": "U+E43C",
+      "disabled": "U+E43D",
+      "selected": "U+E43E",
+      "pulse_1": "U+E43F",
+      "pulse_2": "U+E440",
+      "pulse_3": "U+E441"
+    },
+    "trade_money/return": {
+      "normal": "U+E442",
+      "disabled": "U+E443",
+      "selected": "U+E444",
+      "pulse_1": "U+E445",
+      "pulse_2": "U+E446",
+      "pulse_3": "U+E447"
+    },
+    "trade_money/decrease": {
+      "normal": "U+E448",
+      "disabled": "U+E449",
+      "selected": "U+E44A",
+      "pulse_1": "U+E44B",
+      "pulse_2": "U+E44C",
+      "pulse_3": "U+E44D"
+    },
+    "trade_idle/own_money": {
+      "normal": "U+E44E",
+      "disabled": "U+E44F",
+      "selected": "U+E450",
+      "pulse_1": "U+E451",
+      "pulse_2": "U+E452",
+      "pulse_3": "U+E453"
+    },
+    "trade_idle/ready": {
+      "normal": "U+E454",
+      "disabled": "U+E455",
+      "selected": "U+E456",
+      "pulse_1": "U+E457",
+      "pulse_2": "U+E458",
+      "pulse_3": "U+E459"
+    },
+    "trade_idle/other_money": {
+      "normal": "U+E45A",
+      "disabled": "U+E45B",
+      "selected": "U+E45C",
+      "pulse_1": "U+E45D",
+      "pulse_2": "U+E45E",
+      "pulse_3": "U+E45F"
+    },
+    "trade_self_ready/own_money": {
+      "normal": "U+E460",
+      "disabled": "U+E461",
+      "selected": "U+E462",
+      "pulse_1": "U+E463",
+      "pulse_2": "U+E464",
+      "pulse_3": "U+E465"
+    },
+    "trade_self_ready/ready": {
+      "normal": "U+E466",
+      "disabled": "U+E467",
+      "selected": "U+E468",
+      "pulse_1": "U+E469",
+      "pulse_2": "U+E46A",
+      "pulse_3": "U+E46B"
+    },
+    "trade_self_ready/other_money": {
+      "normal": "U+E46C",
+      "disabled": "U+E46D",
+      "selected": "U+E46E",
+      "pulse_1": "U+E46F",
+      "pulse_2": "U+E470",
+      "pulse_3": "U+E471"
+    },
+    "trade_other_ready/own_money": {
+      "normal": "U+E472",
+      "disabled": "U+E473",
+      "selected": "U+E474",
+      "pulse_1": "U+E475",
+      "pulse_2": "U+E476",
+      "pulse_3": "U+E477"
+    },
+    "trade_other_ready/ready": {
+      "normal": "U+E478",
+      "disabled": "U+E479",
+      "selected": "U+E47A",
+      "pulse_1": "U+E47B",
+      "pulse_2": "U+E47C",
+      "pulse_3": "U+E47D"
+    },
+    "trade_other_ready/other_money": {
+      "normal": "U+E47E",
+      "disabled": "U+E47F",
+      "selected": "U+E480",
+      "pulse_1": "U+E481",
+      "pulse_2": "U+E482",
+      "pulse_3": "U+E483"
+    },
+    "trade_both_ready/own_money": {
+      "normal": "U+E484",
+      "disabled": "U+E485",
+      "selected": "U+E486",
+      "pulse_1": "U+E487",
+      "pulse_2": "U+E488",
+      "pulse_3": "U+E489"
+    },
+    "trade_both_ready/ready": {
+      "normal": "U+E48A",
+      "disabled": "U+E48B",
+      "selected": "U+E48C",
+      "pulse_1": "U+E48D",
+      "pulse_2": "U+E48E",
+      "pulse_3": "U+E48F"
+    },
+    "trade_both_ready/other_money": {
+      "normal": "U+E490",
+      "disabled": "U+E491",
+      "selected": "U+E492",
+      "pulse_1": "U+E493",
+      "pulse_2": "U+E494",
+      "pulse_3": "U+E495"
+    }
   }
 }

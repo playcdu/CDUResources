@@ -526,6 +526,1356 @@
       "chars": [
         "\ue185"
       ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/auction/normal.png",
+      "ascent": -4,
+      "height": 36,
+      "chars": [
+        "\ue400"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/auction/disabled.png",
+      "ascent": -4,
+      "height": 36,
+      "chars": [
+        "\ue401"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/auction/selected.png",
+      "ascent": -4,
+      "height": 36,
+      "chars": [
+        "\ue402"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/auction/pulse_1.png",
+      "ascent": -4,
+      "height": 36,
+      "chars": [
+        "\ue403"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/auction/pulse_2.png",
+      "ascent": -4,
+      "height": 36,
+      "chars": [
+        "\ue404"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/auction/pulse_3.png",
+      "ascent": -4,
+      "height": 36,
+      "chars": [
+        "\ue405"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/admin_shop/normal.png",
+      "ascent": -4,
+      "height": 36,
+      "chars": [
+        "\ue406"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/admin_shop/disabled.png",
+      "ascent": -4,
+      "height": 36,
+      "chars": [
+        "\ue407"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/admin_shop/selected.png",
+      "ascent": -4,
+      "height": 36,
+      "chars": [
+        "\ue408"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/admin_shop/pulse_1.png",
+      "ascent": -4,
+      "height": 36,
+      "chars": [
+        "\ue409"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/admin_shop/pulse_2.png",
+      "ascent": -4,
+      "height": 36,
+      "chars": [
+        "\ue40a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/admin_shop/pulse_3.png",
+      "ascent": -4,
+      "height": 36,
+      "chars": [
+        "\ue40b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/balance/normal.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue40c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/balance/disabled.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue40d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/balance/selected.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue40e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/balance/pulse_1.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue40f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/balance/pulse_2.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue410"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/balance/pulse_3.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue411"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/privacy/normal.png",
+      "ascent": -22,
+      "height": 18,
+      "chars": [
+        "\ue412"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/privacy/disabled.png",
+      "ascent": -22,
+      "height": 18,
+      "chars": [
+        "\ue413"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/privacy/selected.png",
+      "ascent": -22,
+      "height": 18,
+      "chars": [
+        "\ue414"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/privacy/pulse_1.png",
+      "ascent": -22,
+      "height": 18,
+      "chars": [
+        "\ue415"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/privacy/pulse_2.png",
+      "ascent": -22,
+      "height": 18,
+      "chars": [
+        "\ue416"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/privacy/pulse_3.png",
+      "ascent": -22,
+      "height": 18,
+      "chars": [
+        "\ue417"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/rank/normal.png",
+      "ascent": -22,
+      "height": 18,
+      "chars": [
+        "\ue418"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/rank/disabled.png",
+      "ascent": -22,
+      "height": 18,
+      "chars": [
+        "\ue419"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/rank/selected.png",
+      "ascent": -22,
+      "height": 18,
+      "chars": [
+        "\ue41a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/rank/pulse_1.png",
+      "ascent": -22,
+      "height": 18,
+      "chars": [
+        "\ue41b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/rank/pulse_2.png",
+      "ascent": -22,
+      "height": 18,
+      "chars": [
+        "\ue41c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/rank/pulse_3.png",
+      "ascent": -22,
+      "height": 18,
+      "chars": [
+        "\ue41d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/chest_shops/normal.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue41e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/chest_shops/disabled.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue41f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/chest_shops/selected.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue420"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/chest_shops/pulse_1.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue421"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/chest_shops/pulse_2.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue422"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/chest_shops/pulse_3.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue423"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/history/normal.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue424"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/history/disabled.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue425"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/history/selected.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue426"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/history/pulse_1.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue427"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/history/pulse_2.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue428"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/history/pulse_3.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue429"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/close/normal.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue42a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/close/disabled.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue42b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/close/selected.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue42c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/close/pulse_1.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue42d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/close/pulse_2.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue42e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/economy_hub/close/pulse_3.png",
+      "ascent": -40,
+      "height": 18,
+      "chars": [
+        "\ue42f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/auction_confirm/confirm/normal.png",
+      "ascent": -40,
+      "height": 36,
+      "chars": [
+        "\ue430"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/auction_confirm/confirm/disabled.png",
+      "ascent": -40,
+      "height": 36,
+      "chars": [
+        "\ue431"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/auction_confirm/confirm/selected.png",
+      "ascent": -40,
+      "height": 36,
+      "chars": [
+        "\ue432"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/auction_confirm/confirm/pulse_1.png",
+      "ascent": -40,
+      "height": 36,
+      "chars": [
+        "\ue433"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/auction_confirm/confirm/pulse_2.png",
+      "ascent": -40,
+      "height": 36,
+      "chars": [
+        "\ue434"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/auction_confirm/confirm/pulse_3.png",
+      "ascent": -40,
+      "height": 36,
+      "chars": [
+        "\ue435"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/auction_confirm/close/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue436"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/auction_confirm/close/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue437"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/auction_confirm/close/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue438"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/auction_confirm/close/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue439"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/auction_confirm/close/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue43a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/auction_confirm/close/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue43b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/increase/normal.png",
+      "ascent": -3,
+      "height": 18,
+      "chars": [
+        "\ue43c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/increase/disabled.png",
+      "ascent": -3,
+      "height": 18,
+      "chars": [
+        "\ue43d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/increase/selected.png",
+      "ascent": -3,
+      "height": 18,
+      "chars": [
+        "\ue43e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/increase/pulse_1.png",
+      "ascent": -3,
+      "height": 18,
+      "chars": [
+        "\ue43f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/increase/pulse_2.png",
+      "ascent": -3,
+      "height": 18,
+      "chars": [
+        "\ue440"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/increase/pulse_3.png",
+      "ascent": -3,
+      "height": 18,
+      "chars": [
+        "\ue441"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/return/normal.png",
+      "ascent": -21,
+      "height": 18,
+      "chars": [
+        "\ue442"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/return/disabled.png",
+      "ascent": -21,
+      "height": 18,
+      "chars": [
+        "\ue443"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/return/selected.png",
+      "ascent": -21,
+      "height": 18,
+      "chars": [
+        "\ue444"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/return/pulse_1.png",
+      "ascent": -21,
+      "height": 18,
+      "chars": [
+        "\ue445"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/return/pulse_2.png",
+      "ascent": -21,
+      "height": 18,
+      "chars": [
+        "\ue446"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/return/pulse_3.png",
+      "ascent": -21,
+      "height": 18,
+      "chars": [
+        "\ue447"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/decrease/normal.png",
+      "ascent": -39,
+      "height": 18,
+      "chars": [
+        "\ue448"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/decrease/disabled.png",
+      "ascent": -39,
+      "height": 18,
+      "chars": [
+        "\ue449"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/decrease/selected.png",
+      "ascent": -39,
+      "height": 18,
+      "chars": [
+        "\ue44a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/decrease/pulse_1.png",
+      "ascent": -39,
+      "height": 18,
+      "chars": [
+        "\ue44b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/decrease/pulse_2.png",
+      "ascent": -39,
+      "height": 18,
+      "chars": [
+        "\ue44c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_money/decrease/pulse_3.png",
+      "ascent": -39,
+      "height": 18,
+      "chars": [
+        "\ue44d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/own_money/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue44e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/own_money/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue44f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/own_money/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue450"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/own_money/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue451"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/own_money/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue452"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/own_money/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue453"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/ready/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue454"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/ready/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue455"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/ready/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue456"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/ready/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue457"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/ready/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue458"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/ready/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue459"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/other_money/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue45a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/other_money/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue45b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/other_money/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue45c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/other_money/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue45d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/other_money/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue45e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_idle/other_money/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue45f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/own_money/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue460"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/own_money/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue461"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/own_money/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue462"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/own_money/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue463"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/own_money/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue464"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/own_money/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue465"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/ready/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue466"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/ready/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue467"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/ready/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue468"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/ready/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue469"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/ready/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue46a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/ready/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue46b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/other_money/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue46c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/other_money/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue46d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/other_money/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue46e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/other_money/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue46f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/other_money/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue470"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_self_ready/other_money/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue471"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/own_money/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue472"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/own_money/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue473"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/own_money/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue474"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/own_money/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue475"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/own_money/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue476"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/own_money/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue477"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/ready/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue478"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/ready/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue479"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/ready/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue47a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/ready/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue47b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/ready/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue47c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/ready/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue47d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/other_money/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue47e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/other_money/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue47f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/other_money/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue480"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/other_money/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue481"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/other_money/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue482"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_other_ready/other_money/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue483"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/own_money/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue484"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/own_money/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue485"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/own_money/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue486"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/own_money/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue487"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/own_money/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue488"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/own_money/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue489"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/ready/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue48a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/ready/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue48b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/ready/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue48c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/ready/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue48d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/ready/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue48e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/ready/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue48f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/other_money/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue490"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/other_money/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue491"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/other_money/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue492"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/other_money/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue493"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/other_money/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue494"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/trade_both_ready/other_money/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue495"
+      ]
     }
   ]
 }

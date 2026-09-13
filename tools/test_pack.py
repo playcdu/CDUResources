@@ -11,6 +11,7 @@ from pathlib import Path
 from PIL import Image
 from build_pack import ROOT, ADVANCES, build, read_json, registry, space, validate_pack, validate_png, zip_bytes
 from merge_pack import merge
+import button_assets
 
 class PackTests(unittest.TestCase):
     @classmethod
@@ -60,8 +61,64 @@ class PackTests(unittest.TestCase):
             self.assertEqual(live|static|decor,top)
             self.assertFalse(live&static or live&decor or static&decor)
             if key in controls:
-                expected=(set(controls[key]['live_slots_union'])&top)-decor
-                self.assertEqual(live,expected)
+                if 'visibleContentSlots' in skin:
+                    self.assertEqual(live,set(skin['visibleContentSlots'])|set(skin['paintedControlSlots']))
+                else:
+                    expected=(set(controls[key]['live_slots_union'])&top)-decor
+                    self.assertEqual(live,expected)
+
+    def test_button_regions_frames_and_real_content(self):
+        config=read_json(ROOT/'manifests/button-layouts.json');runtime=read_json(ROOT/'manifests/runtime-registry.json')
+        seen=set()
+        for key,screen in config['screens'].items():
+            skin=self.skins[key];g=self.layouts[skin['layout']];regions=runtime['skins'][key]['buttonRegions']
+            self.assertEqual(set(screen['contentSlots']),set(skin['visibleContentSlots']))
+            for b,r in zip(screen['buttons'],regions):
+                self.assertEqual(r['slots'],b['slots']);self.assertEqual(r['sourceSlot'],b['sourceSlot'])
+                self.assertEqual(set(r['states']),set(button_assets.STATES))
+                x,y,w,h=button_assets.geometry(g,b)
+                for state,f in r['states'].items():
+                    self.assertNotIn(f['glyph'],seen);seen.add(f['glyph'])
+                    self.assertEqual(g['titleAnchor'][0]+sum(ADVANCES[c] for c in f['prefix']),x)
+                    self.assertEqual(sum(ADVANCES[c] for c in f['prefix']+f['suffix'])+f['advance'],0)
+                    self.assertEqual(6+7-f['ascent'],y)
+                    button_assets.validate_button((ROOT/'pack-source'/f['asset']).read_bytes(),g,skin,b,state)
+        self.assertEqual(len(self.skins['trade_idle']['visibleContentSlots']),40)
+        self.assertEqual(self.skins['auction_confirm']['visibleContentSlots'],[20])
+
+    def test_carrier_exact_threshold_ranges_and_normal_paper(self):
+        with zipfile.ZipFile(io.BytesIO(self.raw)) as z:
+            model=json.loads(z.read(button_assets.PAPER_MODEL))
+            def resolve(value):
+                chosen='vanilla paper'
+                for override in model['overrides']:
+                    if value>=override['predicate']['custom_model_data']:chosen=override['model']
+                return chosen
+            self.assertEqual(resolve(0),'vanilla paper')
+            for value in [1,194731]:self.assertEqual(resolve(value),'quasar_gui:item/button_carrier')
+            for value in [2,37,194730,194732,200000]:self.assertEqual(resolve(value),'quasar_gui:item/paper_default')
+            self.assertEqual(json.loads(z.read('assets/quasar_gui/models/item/button_carrier.json'))['elements'],[])
+            self.assertNotIn('overrides',json.loads(z.read('assets/quasar_gui/models/item/paper_default.json')))
+
+    def test_reject_paper_exception_drift_and_extra_minecraft_paths(self):
+        with zipfile.ZipFile(io.BytesIO(self.raw)) as z:files={n:z.read(n) for n in z.namelist()}
+        model=json.loads(files[button_assets.PAPER_MODEL]);model['overrides'][2]['predicate']['custom_model_data']=194730
+        files[button_assets.PAPER_MODEL]=json.dumps(model).encode()
+        with self.assertRaisesRegex(ValueError,'carrier'):validate_pack(zip_bytes(files),self.layouts,self.skins)
+        files[button_assets.PAPER_MODEL]=json.dumps(button_assets.MODELS[button_assets.PAPER_MODEL]).encode()
+        files['assets/minecraft/models/item/stone.json']=b'{}'
+        with self.assertRaisesRegex(ValueError,'Unexpected'):validate_pack(zip_bytes(files),self.layouts,self.skins)
+
+    def test_reject_unreviewed_metadata_fields(self):
+        with zipfile.ZipFile(io.BytesIO(self.raw)) as z:files={n:z.read(n) for n in z.namelist()}
+        meta=json.loads(files['pack.mcmeta']);meta['filter']={'block':[{'namespace':'minecraft'}]}
+        files['pack.mcmeta']=json.dumps(meta).encode()
+        with self.assertRaisesRegex(ValueError,'metadata'):validate_pack(zip_bytes(files),self.layouts,self.skins)
+
+    def test_merge_rejects_paper_override_and_overlay(self):
+        for name,path in [('paper-conflict.zip',button_assets.PAPER_MODEL),('paper-overlay.zip','v34/'+button_assets.PAPER_MODEL)]:
+            op=self.operator_pack(name,{path:b'{}'})
+            with self.assertRaisesRegex(ValueError,'conflict'):merge(op,ROOT/'deliverables/quasar-gui.zip',self.new_output(name+'-merged.zip'))
 
     def test_zip_determinism_and_hash(self):
         with contextlib.redirect_stdout(io.StringIO()):

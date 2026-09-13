@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/paper"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "quasar_gui:item/button_carrier"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2
+      },
+      "model": "quasar_gui:item/paper_default"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 194731
+      },
+      "model": "quasar_gui:item/button_carrier"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 194732
+      },
+      "model": "quasar_gui:item/paper_default"
+    }
+  ]
+}

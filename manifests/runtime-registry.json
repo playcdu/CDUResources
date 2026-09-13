@@ -312,7 +312,17 @@
       "asset": "assets/quasar_gui/textures/menu/auction_confirm.png",
       "liveSlots": [
         20,
+        23,
         24,
+        25,
+        32,
+        33,
+        34,
+        48,
+        49,
+        50,
+        51,
+        52,
         53
       ],
       "staticProtectedSlots": [
@@ -338,17 +348,12 @@
         19,
         21,
         22,
-        23,
-        25,
         26,
         27,
         28,
         29,
         30,
         31,
-        32,
-        33,
-        34,
         35,
         36,
         37,
@@ -361,12 +366,264 @@
         44,
         45,
         46,
-        47,
+        47
+      ],
+      "buttonRegions": [
+        {
+          "id": "confirm",
+          "sourceSlot": 24,
+          "slots": [
+            23,
+            24,
+            25,
+            32,
+            33,
+            34
+          ],
+          "label": "Confirm Purchase",
+          "role": "action",
+          "style": "primary",
+          "lines": [
+            "CONFIRM",
+            "PURCHASE"
+          ],
+          "x": 97,
+          "y": 53,
+          "width": 54,
+          "height": 36,
+          "states": {
+            "normal": {
+              "glyph": "\ue430",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf004\uf003\uf000",
+              "suffix": "\uf010\uf00d",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -40,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/auction_confirm/confirm/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue431",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf004\uf003\uf000",
+              "suffix": "\uf010\uf00d",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -40,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/auction_confirm/confirm/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue432",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf004\uf003\uf000",
+              "suffix": "\uf010\uf00d",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -40,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/auction_confirm/confirm/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue433",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf004\uf003\uf000",
+              "suffix": "\uf010\uf00d",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -40,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/auction_confirm/confirm/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue434",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf004\uf003\uf000",
+              "suffix": "\uf010\uf00d",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -40,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/auction_confirm/confirm/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue435",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf004\uf003\uf000",
+              "suffix": "\uf010\uf00d",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -40,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/auction_confirm/confirm/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "close",
+          "sourceSlot": 53,
+          "slots": [
+            48,
+            49,
+            50,
+            51,
+            52,
+            53
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "secondary",
+          "x": 61,
+          "y": 107,
+          "width": 108,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue436",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 109,
+              "advancePin": [
+                107,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/auction_confirm/close/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue437",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 109,
+              "advancePin": [
+                107,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/auction_confirm/close/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue438",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 109,
+              "advancePin": [
+                107,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/auction_confirm/close/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue439",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 109,
+              "advancePin": [
+                107,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/auction_confirm/close/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue43a",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 109,
+              "advancePin": [
+                107,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/auction_confirm/close/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue43b",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 109,
+              "advancePin": [
+                107,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/auction_confirm/close/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        }
+      ],
+      "visibleContentSlots": [
+        20
+      ],
+      "paintedControlSlots": [
+        23,
+        24,
+        25,
+        32,
+        33,
+        34,
         48,
         49,
         50,
         51,
-        52
+        52,
+        53
       ]
     },
     "auction_duration": {
@@ -1374,16 +1631,6 @@
       "advance": 177,
       "asset": "assets/quasar_gui/textures/menu/economy_hub.png",
       "liveSlots": [
-        8,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16
-      ],
-      "staticProtectedSlots": [
         0,
         1,
         2,
@@ -1392,7 +1639,975 @@
         5,
         6,
         7,
+        8,
         9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "staticProtectedSlots": [],
+      "buttonRegions": [
+        {
+          "id": "auction",
+          "sourceSlot": 11,
+          "slots": [
+            0,
+            1,
+            2,
+            9,
+            10,
+            11
+          ],
+          "label": "Auction House",
+          "role": "action",
+          "style": "primary",
+          "lines": [
+            "AUCTION",
+            "HOUSE"
+          ],
+          "x": 7,
+          "y": 17,
+          "width": 54,
+          "height": 36,
+          "states": {
+            "normal": {
+              "glyph": "\ue400",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -4,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/auction/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue401",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -4,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/auction/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue402",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -4,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/auction/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue403",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -4,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/auction/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue404",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -4,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/auction/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue405",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -4,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/auction/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "admin_shop",
+          "sourceSlot": 12,
+          "slots": [
+            6,
+            7,
+            8,
+            15,
+            16,
+            17
+          ],
+          "label": "Admin Shop",
+          "role": "action",
+          "style": "primary",
+          "lines": [
+            "ADMIN",
+            "SHOP"
+          ],
+          "x": 115,
+          "y": 17,
+          "width": 54,
+          "height": 36,
+          "states": {
+            "normal": {
+              "glyph": "\ue406",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -4,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/admin_shop/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue407",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -4,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/admin_shop/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue408",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -4,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/admin_shop/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue409",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -4,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/admin_shop/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue40a",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -4,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/admin_shop/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue40b",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -4,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/admin_shop/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "balance",
+          "sourceSlot": 10,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Balance",
+          "role": "info",
+          "style": "secondary",
+          "x": 61,
+          "y": 17,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue40c",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/balance/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue40d",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/balance/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue40e",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/balance/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue40f",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/balance/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue410",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/balance/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue411",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/balance/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "privacy",
+          "sourceSlot": 15,
+          "slots": [
+            12,
+            13
+          ],
+          "label": "Privacy",
+          "role": "action",
+          "style": "secondary",
+          "x": 61,
+          "y": 35,
+          "width": 36,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue412",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00d\uf00c\uf00a",
+              "advance": 37,
+              "advancePin": [
+                35,
+                9
+              ],
+              "ascent": -22,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/privacy/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue413",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00d\uf00c\uf00a",
+              "advance": 37,
+              "advancePin": [
+                35,
+                9
+              ],
+              "ascent": -22,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/privacy/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue414",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00d\uf00c\uf00a",
+              "advance": 37,
+              "advancePin": [
+                35,
+                9
+              ],
+              "ascent": -22,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/privacy/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue415",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00d\uf00c\uf00a",
+              "advance": 37,
+              "advancePin": [
+                35,
+                9
+              ],
+              "ascent": -22,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/privacy/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue416",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00d\uf00c\uf00a",
+              "advance": 37,
+              "advancePin": [
+                35,
+                9
+              ],
+              "ascent": -22,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/privacy/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue417",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00d\uf00c\uf00a",
+              "advance": 37,
+              "advancePin": [
+                35,
+                9
+              ],
+              "ascent": -22,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/privacy/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "rank",
+          "sourceSlot": 16,
+          "slots": [
+            14
+          ],
+          "label": "Rank",
+          "role": "info",
+          "style": "secondary",
+          "x": 97,
+          "y": 35,
+          "width": 18,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue418",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf004\uf003\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 19,
+              "advancePin": [
+                17,
+                9
+              ],
+              "ascent": -22,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/rank/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue419",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf004\uf003\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 19,
+              "advancePin": [
+                17,
+                9
+              ],
+              "ascent": -22,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/rank/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue41a",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf004\uf003\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 19,
+              "advancePin": [
+                17,
+                9
+              ],
+              "ascent": -22,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/rank/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue41b",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf004\uf003\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 19,
+              "advancePin": [
+                17,
+                9
+              ],
+              "ascent": -22,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/rank/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue41c",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf004\uf003\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 19,
+              "advancePin": [
+                17,
+                9
+              ],
+              "ascent": -22,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/rank/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue41d",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf004\uf003\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 19,
+              "advancePin": [
+                17,
+                9
+              ],
+              "ascent": -22,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/rank/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "chest_shops",
+          "sourceSlot": 13,
+          "slots": [
+            18,
+            19,
+            20
+          ],
+          "label": "Chest Shops",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "CHEST",
+            "SHOPS"
+          ],
+          "x": 7,
+          "y": 53,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue41e",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/chest_shops/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue41f",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/chest_shops/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue420",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/chest_shops/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue421",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/chest_shops/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue422",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/chest_shops/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue423",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/chest_shops/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "history",
+          "sourceSlot": 14,
+          "slots": [
+            21,
+            22,
+            23
+          ],
+          "label": "History",
+          "role": "action",
+          "style": "secondary",
+          "x": 61,
+          "y": 53,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue424",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/history/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue425",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/history/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue426",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/history/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue427",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/history/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue428",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/history/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue429",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/history/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "close",
+          "sourceSlot": 8,
+          "slots": [
+            24,
+            25,
+            26
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger",
+          "x": 115,
+          "y": 53,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue42a",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/close/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue42b",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/close/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue42c",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/close/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue42d",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/close/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue42e",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/close/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue42f",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -40,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/economy_hub/close/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        }
+      ],
+      "visibleContentSlots": [],
+      "paintedControlSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
         17,
         18,
         19,
@@ -1506,7 +2721,6 @@
         10,
         11,
         12,
-        13,
         14,
         15,
         16,
@@ -1535,10 +2749,424 @@
         42,
         43,
         44,
+        45,
+        46,
         47,
-        52
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
       ],
-      "staticProtectedSlots": []
+      "staticProtectedSlots": [
+        13
+      ],
+      "buttonRegions": [
+        {
+          "id": "own_money",
+          "sourceSlot": 47,
+          "slots": [
+            45,
+            46,
+            47
+          ],
+          "label": "Your Money",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "YOUR",
+            "MONEY"
+          ],
+          "x": 7,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue44e",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/own_money/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue44f",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/own_money/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue450",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/own_money/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue451",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/own_money/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue452",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/own_money/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue453",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/own_money/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "ready",
+          "sourceSlot": 13,
+          "slots": [
+            48,
+            49,
+            50
+          ],
+          "label": "Ready",
+          "role": "action",
+          "style": "primary",
+          "x": 61,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue454",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/ready/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue455",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/ready/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue456",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/ready/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue457",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/ready/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue458",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/ready/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue459",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/ready/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "other_money",
+          "sourceSlot": 52,
+          "slots": [
+            51,
+            52,
+            53
+          ],
+          "label": "Their Money",
+          "role": "info",
+          "style": "secondary",
+          "lines": [
+            "THEIR",
+            "MONEY"
+          ],
+          "x": 115,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue45a",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/other_money/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue45b",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/other_money/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue45c",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/other_money/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue45d",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/other_money/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue45e",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/other_money/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue45f",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_idle/other_money/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        }
+      ],
+      "visibleContentSlots": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44
+      ],
+      "paintedControlSlots": [
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ]
     },
     "trade_self_ready": {
       "glyph": "\ue119",
@@ -1568,7 +3196,6 @@
         10,
         11,
         12,
-        13,
         14,
         15,
         16,
@@ -1597,10 +3224,424 @@
         42,
         43,
         44,
+        45,
+        46,
         47,
-        52
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
       ],
-      "staticProtectedSlots": []
+      "staticProtectedSlots": [
+        13
+      ],
+      "buttonRegions": [
+        {
+          "id": "own_money",
+          "sourceSlot": 47,
+          "slots": [
+            45,
+            46,
+            47
+          ],
+          "label": "Your Money",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "YOUR",
+            "MONEY"
+          ],
+          "x": 7,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue460",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/own_money/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue461",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/own_money/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue462",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/own_money/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue463",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/own_money/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue464",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/own_money/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue465",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/own_money/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "ready",
+          "sourceSlot": 13,
+          "slots": [
+            48,
+            49,
+            50
+          ],
+          "label": "Ready",
+          "role": "action",
+          "style": "primary",
+          "x": 61,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue466",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/ready/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue467",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/ready/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue468",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/ready/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue469",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/ready/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue46a",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/ready/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue46b",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/ready/pulse_3.png"
+            }
+          },
+          "defaultState": "selected",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "other_money",
+          "sourceSlot": 52,
+          "slots": [
+            51,
+            52,
+            53
+          ],
+          "label": "Their Money",
+          "role": "info",
+          "style": "secondary",
+          "lines": [
+            "THEIR",
+            "MONEY"
+          ],
+          "x": 115,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue46c",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/other_money/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue46d",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/other_money/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue46e",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/other_money/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue46f",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/other_money/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue470",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/other_money/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue471",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_self_ready/other_money/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        }
+      ],
+      "visibleContentSlots": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44
+      ],
+      "paintedControlSlots": [
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ]
     },
     "trade_other_ready": {
       "glyph": "\ue11a",
@@ -1630,7 +3671,6 @@
         10,
         11,
         12,
-        13,
         14,
         15,
         16,
@@ -1659,10 +3699,424 @@
         42,
         43,
         44,
+        45,
+        46,
         47,
-        52
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
       ],
-      "staticProtectedSlots": []
+      "staticProtectedSlots": [
+        13
+      ],
+      "buttonRegions": [
+        {
+          "id": "own_money",
+          "sourceSlot": 47,
+          "slots": [
+            45,
+            46,
+            47
+          ],
+          "label": "Your Money",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "YOUR",
+            "MONEY"
+          ],
+          "x": 7,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue472",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/own_money/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue473",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/own_money/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue474",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/own_money/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue475",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/own_money/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue476",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/own_money/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue477",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/own_money/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "ready",
+          "sourceSlot": 13,
+          "slots": [
+            48,
+            49,
+            50
+          ],
+          "label": "Ready",
+          "role": "action",
+          "style": "primary",
+          "x": 61,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue478",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/ready/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue479",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/ready/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue47a",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/ready/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue47b",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/ready/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue47c",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/ready/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue47d",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/ready/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "other_money",
+          "sourceSlot": 52,
+          "slots": [
+            51,
+            52,
+            53
+          ],
+          "label": "Their Money",
+          "role": "info",
+          "style": "secondary",
+          "lines": [
+            "THEIR",
+            "MONEY"
+          ],
+          "x": 115,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue47e",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/other_money/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue47f",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/other_money/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue480",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/other_money/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue481",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/other_money/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue482",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/other_money/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue483",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_other_ready/other_money/pulse_3.png"
+            }
+          },
+          "defaultState": "selected",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        }
+      ],
+      "visibleContentSlots": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44
+      ],
+      "paintedControlSlots": [
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ]
     },
     "trade_both_ready": {
       "glyph": "\ue11b",
@@ -1692,7 +4146,6 @@
         10,
         11,
         12,
-        13,
         14,
         15,
         16,
@@ -1721,10 +4174,424 @@
         42,
         43,
         44,
+        45,
+        46,
         47,
-        52
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
       ],
-      "staticProtectedSlots": []
+      "staticProtectedSlots": [
+        13
+      ],
+      "buttonRegions": [
+        {
+          "id": "own_money",
+          "sourceSlot": 47,
+          "slots": [
+            45,
+            46,
+            47
+          ],
+          "label": "Your Money",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "YOUR",
+            "MONEY"
+          ],
+          "x": 7,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue484",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/own_money/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue485",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/own_money/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue486",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/own_money/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue487",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/own_money/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue488",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/own_money/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue489",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/own_money/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "ready",
+          "sourceSlot": 13,
+          "slots": [
+            48,
+            49,
+            50
+          ],
+          "label": "Ready",
+          "role": "action",
+          "style": "primary",
+          "x": 61,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue48a",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/ready/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue48b",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/ready/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue48c",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/ready/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue48d",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/ready/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue48e",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/ready/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue48f",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/ready/pulse_3.png"
+            }
+          },
+          "defaultState": "selected",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "other_money",
+          "sourceSlot": 52,
+          "slots": [
+            51,
+            52,
+            53
+          ],
+          "label": "Their Money",
+          "role": "info",
+          "style": "secondary",
+          "lines": [
+            "THEIR",
+            "MONEY"
+          ],
+          "x": 115,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue490",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/other_money/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue491",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/other_money/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue492",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/other_money/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue493",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/other_money/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue494",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/other_money/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue495",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_both_ready/other_money/pulse_3.png"
+            }
+          },
+          "defaultState": "selected",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        }
+      ],
+      "visibleContentSlots": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44
+      ],
+      "paintedControlSlots": [
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ]
     },
     "trade_money": {
       "glyph": "\ue11c",
@@ -1742,16 +4609,371 @@
       "advance": 177,
       "asset": "assets/quasar_gui/textures/menu/trade_money.png",
       "liveSlots": [
-        1,
-        4,
-        7
-      ],
-      "staticProtectedSlots": [
         0,
+        1,
         2,
         3,
+        4,
         5,
         6,
+        7,
+        8
+      ],
+      "staticProtectedSlots": [],
+      "buttonRegions": [
+        {
+          "id": "increase",
+          "sourceSlot": 1,
+          "slots": [
+            0,
+            1,
+            2
+          ],
+          "label": "Increase",
+          "role": "action",
+          "style": "primary",
+          "x": 61,
+          "y": 16,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue43c",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -3,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/increase/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue43d",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -3,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/increase/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue43e",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -3,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/increase/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue43f",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -3,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/increase/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue440",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -3,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/increase/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue441",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -3,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/increase/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "return",
+          "sourceSlot": 4,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Return",
+          "role": "action",
+          "style": "secondary",
+          "x": 61,
+          "y": 34,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue442",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -21,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/return/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue443",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -21,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/return/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue444",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -21,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/return/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue445",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -21,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/return/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue446",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -21,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/return/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue447",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -21,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/return/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "decrease",
+          "sourceSlot": 7,
+          "slots": [
+            6,
+            7,
+            8
+          ],
+          "label": "Decrease",
+          "role": "action",
+          "style": "secondary",
+          "x": 61,
+          "y": 52,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue448",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -39,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/decrease/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue449",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -39,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/decrease/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue44a",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -39,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/decrease/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue44b",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -39,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/decrease/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue44c",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -39,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/decrease/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue44d",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -39,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/trade_money/decrease/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 2,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        }
+      ],
+      "visibleContentSlots": [],
+      "paintedControlSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
         8
       ]
     },
@@ -3245,5 +6467,15 @@
     "|": 2,
     "}": 4,
     "~": 7
+  },
+  "buttonCarrier": {
+    "item": "minecraft:paper",
+    "customModelData": 194731,
+    "model": "quasar_gui:item/button_carrier",
+    "restoreThreshold": 194732,
+    "legacyInventoryDebug": {
+      "customModelData": 1,
+      "restoreThreshold": 2
+    }
   }
 }

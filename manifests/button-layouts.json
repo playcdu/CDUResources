@@ -1,0 +1,600 @@
+{
+  "schemaVersion": 1,
+  "carrier": {
+    "item": "minecraft:paper",
+    "customModelData": 194731,
+    "model": "quasar_gui:item/button_carrier",
+    "restoreThreshold": 194732,
+    "legacyInventoryDebug": {
+      "customModelData": 1,
+      "restoreThreshold": 2
+    }
+  },
+  "screens": {
+    "economy_hub": {
+      "contentSlots": [],
+      "buttons": [
+        {
+          "id": "auction",
+          "sourceSlot": 11,
+          "slots": [
+            0,
+            1,
+            2,
+            9,
+            10,
+            11
+          ],
+          "label": "Auction House",
+          "role": "action",
+          "style": "primary",
+          "lines": [
+            "AUCTION",
+            "HOUSE"
+          ]
+        },
+        {
+          "id": "admin_shop",
+          "sourceSlot": 12,
+          "slots": [
+            6,
+            7,
+            8,
+            15,
+            16,
+            17
+          ],
+          "label": "Admin Shop",
+          "role": "action",
+          "style": "primary",
+          "lines": [
+            "ADMIN",
+            "SHOP"
+          ]
+        },
+        {
+          "id": "balance",
+          "sourceSlot": 10,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Balance",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "privacy",
+          "sourceSlot": 15,
+          "slots": [
+            12,
+            13
+          ],
+          "label": "Privacy",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "rank",
+          "sourceSlot": 16,
+          "slots": [
+            14
+          ],
+          "label": "Rank",
+          "role": "info",
+          "style": "secondary"
+        },
+        {
+          "id": "chest_shops",
+          "sourceSlot": 13,
+          "slots": [
+            18,
+            19,
+            20
+          ],
+          "label": "Chest Shops",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "CHEST",
+            "SHOPS"
+          ]
+        },
+        {
+          "id": "history",
+          "sourceSlot": 14,
+          "slots": [
+            21,
+            22,
+            23
+          ],
+          "label": "History",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "close",
+          "sourceSlot": 8,
+          "slots": [
+            24,
+            25,
+            26
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger"
+        }
+      ]
+    },
+    "auction_confirm": {
+      "contentSlots": [
+        20
+      ],
+      "buttons": [
+        {
+          "id": "confirm",
+          "sourceSlot": 24,
+          "slots": [
+            23,
+            24,
+            25,
+            32,
+            33,
+            34
+          ],
+          "label": "Confirm Purchase",
+          "role": "action",
+          "style": "primary",
+          "lines": [
+            "CONFIRM",
+            "PURCHASE"
+          ]
+        },
+        {
+          "id": "close",
+          "sourceSlot": 53,
+          "slots": [
+            48,
+            49,
+            50,
+            51,
+            52,
+            53
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "secondary"
+        }
+      ]
+    },
+    "trade_money": {
+      "contentSlots": [],
+      "buttons": [
+        {
+          "id": "increase",
+          "sourceSlot": 1,
+          "slots": [
+            0,
+            1,
+            2
+          ],
+          "label": "Increase",
+          "role": "action",
+          "style": "primary"
+        },
+        {
+          "id": "return",
+          "sourceSlot": 4,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Return",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "decrease",
+          "sourceSlot": 7,
+          "slots": [
+            6,
+            7,
+            8
+          ],
+          "label": "Decrease",
+          "role": "action",
+          "style": "secondary"
+        }
+      ]
+    },
+    "trade_idle": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44
+      ],
+      "buttons": [
+        {
+          "id": "own_money",
+          "sourceSlot": 47,
+          "slots": [
+            45,
+            46,
+            47
+          ],
+          "label": "Your Money",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "YOUR",
+            "MONEY"
+          ]
+        },
+        {
+          "id": "ready",
+          "sourceSlot": 13,
+          "slots": [
+            48,
+            49,
+            50
+          ],
+          "label": "Ready",
+          "role": "action",
+          "style": "primary"
+        },
+        {
+          "id": "other_money",
+          "sourceSlot": 52,
+          "slots": [
+            51,
+            52,
+            53
+          ],
+          "label": "Their Money",
+          "role": "info",
+          "style": "secondary",
+          "lines": [
+            "THEIR",
+            "MONEY"
+          ]
+        }
+      ],
+      "defaultStates": {
+        "ready": "normal",
+        "other_money": "normal"
+      }
+    },
+    "trade_self_ready": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44
+      ],
+      "buttons": [
+        {
+          "id": "own_money",
+          "sourceSlot": 47,
+          "slots": [
+            45,
+            46,
+            47
+          ],
+          "label": "Your Money",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "YOUR",
+            "MONEY"
+          ]
+        },
+        {
+          "id": "ready",
+          "sourceSlot": 13,
+          "slots": [
+            48,
+            49,
+            50
+          ],
+          "label": "Ready",
+          "role": "action",
+          "style": "primary"
+        },
+        {
+          "id": "other_money",
+          "sourceSlot": 52,
+          "slots": [
+            51,
+            52,
+            53
+          ],
+          "label": "Their Money",
+          "role": "info",
+          "style": "secondary",
+          "lines": [
+            "THEIR",
+            "MONEY"
+          ]
+        }
+      ],
+      "defaultStates": {
+        "ready": "selected",
+        "other_money": "normal"
+      }
+    },
+    "trade_other_ready": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44
+      ],
+      "buttons": [
+        {
+          "id": "own_money",
+          "sourceSlot": 47,
+          "slots": [
+            45,
+            46,
+            47
+          ],
+          "label": "Your Money",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "YOUR",
+            "MONEY"
+          ]
+        },
+        {
+          "id": "ready",
+          "sourceSlot": 13,
+          "slots": [
+            48,
+            49,
+            50
+          ],
+          "label": "Ready",
+          "role": "action",
+          "style": "primary"
+        },
+        {
+          "id": "other_money",
+          "sourceSlot": 52,
+          "slots": [
+            51,
+            52,
+            53
+          ],
+          "label": "Their Money",
+          "role": "info",
+          "style": "secondary",
+          "lines": [
+            "THEIR",
+            "MONEY"
+          ]
+        }
+      ],
+      "defaultStates": {
+        "ready": "normal",
+        "other_money": "selected"
+      }
+    },
+    "trade_both_ready": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44
+      ],
+      "buttons": [
+        {
+          "id": "own_money",
+          "sourceSlot": 47,
+          "slots": [
+            45,
+            46,
+            47
+          ],
+          "label": "Your Money",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "YOUR",
+            "MONEY"
+          ]
+        },
+        {
+          "id": "ready",
+          "sourceSlot": 13,
+          "slots": [
+            48,
+            49,
+            50
+          ],
+          "label": "Ready",
+          "role": "action",
+          "style": "primary"
+        },
+        {
+          "id": "other_money",
+          "sourceSlot": 52,
+          "slots": [
+            51,
+            52,
+            53
+          ],
+          "label": "Their Money",
+          "role": "info",
+          "style": "secondary",
+          "lines": [
+            "THEIR",
+            "MONEY"
+          ]
+        }
+      ],
+      "defaultStates": {
+        "ready": "selected",
+        "other_money": "selected"
+      }
+    }
+  },
+  "animation": {
+    "frames": [
+      "pulse_1",
+      "pulse_2",
+      "pulse_3"
+    ],
+    "ticksPerFrame": 2,
+    "repeat": false,
+    "trigger": "explicit server action/state feedback; never mouse hover",
+    "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+  }
+}

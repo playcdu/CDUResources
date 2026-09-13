@@ -14,6 +14,7 @@ from pathlib import Path, PurePosixPath
 from PIL import Image, ImageDraw, ImageFont
 import sample_art
 import artist_guides
+import button_assets
 
 ROOT = Path(__file__).resolve().parents[1]
 # Developer repository stores artist documents in a subfolder; the exported kit
@@ -64,7 +65,7 @@ def masks(layout, skin):
     dx,dy,w,h=layout['itemClearance']
     result=[]
     for slot in layout['slots'] + layout['playerSlots']:
-        if slot in layout['slots'] and slot['index'] not in skin.get('liveSlots',[p['index'] for p in layout['slots'] if p['index'] not in skin['removedDecorations']]):
+        if slot in layout['slots'] and slot['index'] not in skin.get('visibleContentSlots',skin.get('liveSlots',[p['index'] for p in layout['slots'] if p['index'] not in skin['removedDecorations']])):
             continue
         result.append([slot['x']+dx,slot['y']+dy,w,h])
     result += [v['rect'] for v in layout['extraTransparent']]
@@ -170,14 +171,24 @@ def zip_bytes(files):
     return out.getvalue()
 
 def validate_pack(raw,layouts,skins):
+    buttons=button_assets.load(ROOT,layouts,skins)
+    allocation=read_json(ROOT/'manifests/button-codepoints.json') if buttons['screens'] else {'regions':{}}
+    button_lookup={}
+    for key,screen in buttons['screens'].items():
+        for button in screen['buttons']:
+            for state,cp in allocation['regions'][key+'/'+button['id']].items():button_lookup[chr(int(cp[2:],16))]=(key,button,state)
     with zipfile.ZipFile(io.BytesIO(raw)) as z:
         names=z.namelist()
         if len(names)!=len(set(names)): raise ValueError('Duplicate ZIP paths')
         for name in names:
             p=PurePosixPath(name)
             if p.is_absolute() or '..' in p.parts or '\\' in name: raise ValueError('Unsafe ZIP path')
-            if name!='pack.mcmeta' and not name.startswith('assets/quasar_gui/'): raise ValueError(f'Unexpected file {name}')
+            if name!='pack.mcmeta' and not name.startswith('assets/quasar_gui/') and name!=button_assets.PAPER_MODEL: raise ValueError(f'Unexpected file {name}')
+        if buttons['screens']:
+            for name,expected in button_assets.MODELS.items():
+                if json.loads(z.read(name))!=expected:raise ValueError('Unexpected GUI carrier model/paper override: '+name)
         meta=json.loads(z.read('pack.mcmeta'))
+        if set(meta)!={'pack'} or set(meta['pack'])!={'pack_format','supported_formats','description'}:raise ValueError('Unexpected pack metadata fields')
         if meta['pack']['pack_format']!=15 or meta['pack']['supported_formats']!=[9,34]: raise ValueError('Unexpected tested-target metadata')
         providers=json.loads(z.read('assets/quasar_gui/font/menu.json'))['providers']
         cps=[]
@@ -189,23 +200,36 @@ def validate_pack(raw,layouts,skins):
                 if len(p['chars'])!=1 or len(p['chars'][0])!=1: raise ValueError('Expected single art glyph')
                 cps += p['chars']
                 key=next((k for k,s in skins.items() if chr(int(s['codepoint'][2:],16))==p['chars'][0]),None)
-                if key is None: raise ValueError('Unknown glyph')
+                if key is None:
+                    if p['chars'][0] not in button_lookup:raise ValueError('Unknown glyph')
+                    bk,button,state=button_lookup[p['chars'][0]];bs=skins[bk];bg=layouts[bs['layout']]
+                    x,y,w,h=button_assets.geometry(bg,button)
+                    asset=f'assets/quasar_gui/textures/buttons/{bk}/{button["id"]}/{state}.png'
+                    if p['ascent']!=13-y or p['height']!=h or p['file']!=asset.replace('assets/quasar_gui/textures/','quasar_gui:'):raise ValueError('Button provider metric/reference changed')
+                    button_assets.validate_button(z.read(asset),bg,bs,button,state)
+                    continue
                 s=skins[key];g=layouts[s['layout']]
                 if p['ascent']!=g['ascent'] or p['height']!=g['height']: raise ValueError('Provider metric changed')
                 asset='assets/'+p['file'].replace(':','/textures/')
                 if asset!=s['asset']: raise ValueError('Asset reference mismatch')
                 validate_png(z.read(asset),g,s,key)
             else: raise ValueError('Unexpected font provider')
+        expected_files={'pack.mcmeta','assets/quasar_gui/font/menu.json'}|{s['asset'] for s in skins.values()}
+        if buttons['screens']:expected_files.update(button_assets.MODELS)
+        expected_files.update(f'assets/quasar_gui/textures/buttons/{key}/{button["id"]}/{state}.png' for key,button,state in button_lookup.values())
+        if set(names)!=expected_files:raise ValueError('Unexpected or missing pack asset path')
         if len(cps)!=len(set(cps)): raise ValueError('Duplicate codepoints')
-        if len(cps)!=len(skins)+len(ADVANCES): raise ValueError('Missing skin provider')
-    return dict(status='passed-static',skinCount=len(skins),fileCount=len(names),
+        if len(cps)!=len(skins)+len(button_lookup)+len(ADVANCES): raise ValueError('Missing skin/button provider')
+    return dict(status='passed-static',skinCount=len(skins),buttonRegionCount=sum(len(s['buttons']) for s in buttons['screens'].values()),buttonGlyphCount=len(button_lookup),fileCount=len(names),
                 sha1=hashlib.sha1(raw).hexdigest(),sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw),
                 actualClientLoading='untested',actualClientRendering='untested')
 
 def build(overrides=None,output=None,kit=True,regenerate_samples=False):
     layouts=read_json(ROOT/'manifests/layouts.json')['layouts']; skins=read_json(ROOT/'manifests/skins.json')['skins']
+    buttons=button_assets.load(ROOT,layouts,skins)
+    write_json(ROOT/'manifests/skins.json',{'schemaVersion':1,'font':FONT,'skins':skins})
     controls={s['skin_key']:s for s in read_json(ROOT/'manifests/control-map.json')['screens']}
-    runtime=registry(layouts,skins);write_json(ROOT/'manifests/runtime-registry.json',runtime)
+    runtime=registry(layouts,skins)
     write_json(ROOT/'manifests/codepoints.json',{'font':FONT,'privateUseOnly':True,
         'art':{key:{'codepoint':skin['codepoint'],'asset':skin['asset']} for key,skin in skins.items()},
         'space':{f'U+{ord(c):04X}':v for c,v in ADVANCES.items()}})
@@ -213,6 +237,8 @@ def build(overrides=None,output=None,kit=True,regenerate_samples=False):
         'skins':{key:{'layout':skin['layout'],'transparentMasks':masks(layouts[skin['layout']],skin),
             'opaqueProtectedDecorationSlots':skin['removedDecorations'],
             'opaqueStaticProtectedSlots':skin.get('staticProtectedSlots',[]),
+            'visibleContentSlots':skin.get('visibleContentSlots',skin.get('liveSlots',[])),
+            'paintedControlSlots':skin.get('paintedControlSlots',[]),
             'liveSlots':skin.get('liveSlots',[]),
             'slotRoles':skin.get('slotRoles',{})} for key,skin in skins.items()}})
     providers=[{'type':'space','advances':ADVANCES}]
@@ -225,7 +251,7 @@ def build(overrides=None,output=None,kit=True,regenerate_samples=False):
         if canonical.is_file() and not regenerate_samples:
             raw=canonical.read_bytes();image=Image.open(io.BytesIO(raw)).convert('RGBA')
         else:
-            image=art(g,s,key);raw=png_bytes(image)
+            image=button_assets.background(g,s,key) if key in buttons['screens'] else art(g,s,key);raw=png_bytes(image)
         override=Path(overrides)/s['asset'] if overrides else None
         if override and override.is_file(): raw=override.read_bytes();image=Image.open(io.BytesIO(raw)).convert('RGBA')
         validate_png(raw,g,s,key);files[s['asset']]=raw
@@ -234,7 +260,22 @@ def build(overrides=None,output=None,kit=True,regenerate_samples=False):
         if kit:
             p=ARTIST_ROOT/'guides'/f'{key}.png';p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(png_bytes(artist_guides.create_guide(g,s,key,image,controls.get(key))))
             guide_images.append((key,image))
+    button_files,button_providers=button_assets.compile(ROOT,layouts,skins,buttons,runtime,regenerate_samples,overrides)
+    files.update(button_files);providers.extend(button_providers)
+    codepoint_manifest=read_json(ROOT/'manifests/codepoints.json')
+    codepoint_manifest['buttonLayers']=read_json(ROOT/'manifests/button-codepoints.json')['regions']
+    write_json(ROOT/'manifests/codepoints.json',codepoint_manifest)
+    write_json(ROOT/'manifests/runtime-registry.json',runtime)
     files['assets/quasar_gui/font/menu.json']=json_bytes({'providers':providers})
+    def rendered_art(key):
+        image=Image.open(io.BytesIO(files[skins[key]['asset']])).convert('RGBA')
+        return button_assets.compose(image,runtime['skins'][key].get('buttonRegions',[]),files.__getitem__)
+    if kit:
+        for key,screen in buttons['screens'].items():
+            controls[key]=button_assets.mapped_controls(screen,controls.get(key))
+            s=skins[key];g=layouts[s['layout']];image=rendered_art(key)
+            (ARTIST_ROOT/'guides'/f'{key}.png').write_bytes(png_bytes(artist_guides.create_guide(g,s,key,image,controls[key])))
+        guide_images=[(key,rendered_art(key)) for key,_ in guide_images]
     raw=zip_bytes(files);report=validate_pack(raw,layouts,skins)
     out=Path(output) if output else ROOT/'deliverables/quasar-gui.zip';out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(raw)
     out.with_suffix('.zip.sha1').write_text(report['sha1']+'\n',encoding='ascii')
@@ -259,7 +300,7 @@ def build(overrides=None,output=None,kit=True,regenerate_samples=False):
         composite_sheet=Image.new('RGB',(3*560,2*850+64),(239,243,240));cd=ImageDraw.Draw(composite_sheet)
         cd.text((18,15),'LAYOUT ILLUSTRATIONS - NOT GAMEPLAY | Actual artwork + original schematic native icons',font=artist_guides.TITLE,fill=(32,61,76))
         for i,key in enumerate(examples):
-            s=skins[key];g=layouts[s['layout']];img=Image.open(io.BytesIO(files[s['asset']])).convert('RGBA')
+            s=skins[key];g=layouts[s['layout']];img=rendered_art(key)
             (examples_dir/f'{key}.png').write_bytes(png_bytes(artist_guides.illustration(g,s,key,img,controls.get(key))))
             x=i%3*560+16;y=i//3*850+65;cd.text((x,y),key.replace('_',' ').upper(),font=artist_guides.BODY,fill=(31,70,86))
             demo=artist_guides.composite(g,s,key,img,controls.get(key)).resize((528,g['height']*3),Image.Resampling.NEAREST)
@@ -278,7 +319,7 @@ def build(overrides=None,output=None,kit=True,regenerate_samples=False):
         kitfiles={}
         for directory in ['pack-source','manifests','tools']:
             for p in sorted((ROOT/directory).rglob('*')):
-                if directory=='tools' and p.name not in ('build_pack.py','check_artifacts.py','verify_artist_handoff.py','sample_art.py','artist_guides.py','test_pack.py','merge_pack.py','fetch_client_fixtures.py','CheckTargetCodecs.java','CheckReleasedMetadata.java','build_control_explorer.py','control-explorer.template.html'):continue
+                if directory=='tools' and p.name not in ('build_pack.py','check_artifacts.py','verify_artist_handoff.py','sample_art.py','artist_guides.py','button_assets.py','render_button_previews.py','test_pack.py','merge_pack.py','fetch_client_fixtures.py','CheckTargetCodecs.java','CheckReleasedMetadata.java','build_control_explorer.py','control-explorer.template.html'):continue
                 if p.is_file() and '__pycache__' not in p.parts and p.suffix not in ('.pyc',): kitfiles[p.relative_to(ROOT).as_posix()]=p.read_bytes()
         for name,data in files.items():kitfiles['pack-source/'+name]=data
         for name in ('START-HERE.md','CLIENT-COMPATIBILITY.md','LICENSE.txt','README.md','requirements.txt','.python-version','CONTROL-EXPLORER.html','contact-sheet.png'):
