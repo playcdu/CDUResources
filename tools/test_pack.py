@@ -124,8 +124,16 @@ class PackTests(unittest.TestCase):
                 self.assertEqual(screen['contentRegion']['sourceSlots'],[source])
                 self.assertEqual(len(expected_slots),1)
             else:
-                self.assertEqual(screen['contentRegion']['sourceSlots'],list(range(45)))
-                self.assertEqual(len(expected_slots),28)
+                sources=screen['contentRegion']['sourceSlots']
+                self.assertEqual(sources,list(range(45)))
+                g=self.layouts[self.skins[key]['layout']]
+                native={slot['index'] for slot in g['slots']}
+                occupied={slot for button in screen['buttons'] for slot in button['slots']}
+                available=native-occupied
+                self.assertGreater(len(expected_slots),0)
+                self.assertLessEqual(len(expected_slots),min(len(sources),len(available)))
+                self.assertEqual(len(expected_slots),len(set(expected_slots)))
+                self.assertTrue(set(expected_slots)<=available)
             self.assertEqual(runtime['skins'][key]['contentRegion'],screen['contentRegion'])
             self.assertEqual(set(screen['contentSlots']),set(expected_slots))
             for b in screen['buttons']:self.assertFalse(set(b['slots'])&set(expected_slots))

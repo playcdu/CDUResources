@@ -336,7 +336,7 @@ def build(overrides=None,output=None,kit=True,regenerate_samples=False,regenerat
             demo=artist_guides.composite(g,s,key,img,controls.get(key)).resize((528,g['height']*3),Image.Resampling.NEAREST)
             composite_sheet.paste(demo,(x,y+29))
             yy=y+g['height']*3+44
-            caption={'auction_house':'28 native listings. My Items, Watch and Alerts above; page/search/sell/close below; balance at left.',
+            caption={'auction_house':f"{len(skins['auction_house'].get('visibleContentSlots',[]))} native listings. My Items, Watch and Alerts above; page/search/sell/close below; balance at left.",
                 'trade_self_ready':'20 offer cells on each side. Bottom buttons: your money, ready, their money. All offered items remain native.',
                 'chest_shop_listing_enabled':'Read-only stats/stock, quantity controls, buy/sell toggles and listing enable switch.',
                 'auction_confirm':'Hover the real preview for price and seller. The large purchase button retains the original purchase checks.',

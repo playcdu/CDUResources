@@ -61,6 +61,12 @@ Double-click **Open Layout Helper.cmd**, or open the generated `LAYOUT-EDITOR.ht
 
 The protected overlay is an alignment aid. The real builder also checks pixel transparency masks, frame dimensions, glyph advance pins and semantic layout contracts. Decorative art can extend outside the native inventory while native content remains visible. Decorative pixels do not create additional click targets.
 
+## Advanced page capacity edits
+
+To change the item count of an existing paged screen, edit that screen in `manifests/button-layouts.json` directly. Keep its original `contentRegion.sourceSlots` unchanged, set `contentRegion.slots` to a nonempty complete rectangle of free native top slots, and set `contentSlots` to the same destinations. The count cannot exceed the declared source slots or available cells, and destinations must not overlap buttons. For example, a seven-column, three-row rectangle gives 21 visible items. The three single-item confirmation/ticket displays keep one cell; storage, crafting and redirected slots retain their existing restrictions.
+
+Repaint the affected background and any intersecting artwork in Aseprite: clear the full declared item clearances at every retained or new destination and paint vacated wells only outside those clearances. Neighboring clearances overlap, so removing a row does not free every pixel in its old wells. A changed clearance may also move an adjacent button frame's required advance pin; update that frame or explicitly regenerate the affected binding with `python tools/build_pack.py --regenerate-button skin/id`. Run **Build Pack.cmd** to regenerate masks, the runtime registry, guides, helper and matching sidecar, and validate the artwork. If those PNGs have registered Aseprite sources, export their updated receipts too. The optional helper and CI require complete rectangles; the helper itself preserves the count in its loaded manifest and cannot resize page capacity. Reopen the rebuilt helper after a manual capacity change, and reopen the Minecraft menu after loading the new pack and sidecar so a new paging flow uses that capacity.
+
 ## Refresh a local Minecraft preview without rebuilding the mod
 
 Install the matching InventoryDebug preview mod once. After a successful resource build, explicitly select your **own Minecraft instance directory** (the folder containing that profile's `resourcepacks` and `config` folders):
