@@ -34,7 +34,39 @@ For an ordinary rebuild, run `python tools/build_pack.py`. Builds refresh both c
 
 ## GitHub Actions
 
-[Resource pack checks](.github/workflows/resource-pack.yml) runs on pushes to `main`, pull requests targeting `main`, and manual dispatch. It uses pinned Python/Pillow versions and commit-pinned official GitHub actions. Successful runs attach pack, artist-kit and checksum artifacts; verification evidence is attached even after a failed check. Artifacts follow the private repository's access rules and expire after 30 days. The workflow needs only `contents: read` and GitHub's automatic token; it creates no release, public host or deployment.
+### Published branch packs
+
+Every branch pushed to `playcdu/CDUResources` is discoverable through
+**https://api.playcdu.co/resource-packs/branches**. Each successful build publishes
+an immutable player ZIP, SHA-1/SHA-256 and matching Quasar layout sidecar. The
+catalog gives the exact branch and source commit, with separate legacy
+(1.19.2/1.20.1/1.21.1) and 26.1.2 downloads. Minecraft 1.12 is excluded.
+
+`Publish GitHub branch packs` runs on pushes where its small trigger workflow is
+present, branch creation/deletion and manual dispatch. A ten-minute scheduled
+sweep also finds older branches that do not contain that workflow. GitHub can
+delay scheduled jobs; the Actions page offers **Run workflow** for an immediate
+sync. Only changed branch heads build. Local-only branches are not published.
+
+For one branch, use
+`https://api.playcdu.co/resource-packs/branches?branch=art%2Fcozy-theme`.
+Branch names remain exact, including slashes and case. Download URLs contain the
+pack hash and never change bytes. A failed build keeps the last successful
+release and is visibly marked failed; deleting a branch removes it from the
+current catalog but retains immutable downloads for existing pins and rollback.
+
+Argus's **Modpack Configs → Resource pack** panel can load a published branch into
+the pin or fleet-default form. Saving selects that exact release; subsequent
+branch pushes do not silently change a running server or an existing pin.
+Publishing does not deploy Quasar layouts or restart Minecraft. Standard menus
+remain the fallback until a matching validated layout is installed.
+
+The trusted reusable publisher runs from `main`; branch build jobs have no
+publishing identity or long-lived cloud credentials. A fresh publishing job
+validates downloaded artifacts and authenticates to Cloudflare with GitHub OIDC.
+The Worker and public API are maintained in `playcdu/CDUResourceDelivery`.
+
+[Resource pack checks](.github/workflows/resource-pack.yml) runs on pushes to `main`, pull requests targeting `main`, and manual dispatch. It uses pinned Python/Pillow versions and commit-pinned official GitHub actions. Successful runs attach pack, artist-kit and checksum artifacts; verification evidence is attached even after a failed check. Artifacts follow the repository's access rules and expire after 30 days. This separate verification workflow needs only `contents: read` and GitHub's automatic token; branch publication uses the workflow described above.
 
 Changes are committed directly to `main` according to the repository owner's workflow. [CI provenance](docs/CI.md) records action versions and their official sources.
 
