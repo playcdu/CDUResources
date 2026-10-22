@@ -749,58 +749,12 @@ def paint_one_button(key, b, seed):
     return img
 
 
-def _state_overrides(normal, b):
-    """Hand-adjusted state frames where the shared derivation falls short.
-
-    1. ``compose.lettering_mask`` also matches single characters ("1", "I")
-       in the ink_0 rim and the clipped tag corners. Those rim pixels then
-       count as lettering, the pulse rings are compressed to 1/1/1 and
-       pulse_1 == pulse_2. Lettering never sits on the outer three rings, so
-       glyph hits there are dropped before the shared transforms run.
-    2. Where the real lettering (a descender) still leaves room for only one
-       ring, pulse_2 would equal pulse_1; it keeps the 1 px ring and adds the
-       afterglow one ring further in (never on lettering or its halo), so the
-       glow visibly spreads before pulse_3 fades it."""
-    w, h = normal.size
-    glyphs = C.lettering_mask(normal, b, halo=False)
-    if not glyphs:
-        return None
-    dist = P.edge_distance(normal, 6)
-    keep = {(x, y) for (x, y) in glyphs if dist[y][x] is not None and dist[y][x] >= 3}
-    if not keep:
-        return None
-    halo = C.lettering_mask(normal, b, halo=True)
-    near = {(x + dx, y + dy) for (x, y) in keep for dx in (-1, 0, 1) for dy in (-1, 0, 1)}
-    protect = {p for p in halo if p in near}
-    out = {st: P.make_state(normal, st, protect=protect, glyphs=keep)
-           for st in ('disabled', 'selected', 'pulse_1', 'pulse_2', 'pulse_3')}
-    if out['pulse_1'].tobytes() == out['pulse_2'].tobytes():
-        from palette import ramp_of, step
-        p2 = out['pulse_1'].copy()
-        px = p2.load()
-        for y in range(h):
-            for x in range(w):
-                q = px[x, y]
-                if q[3] == 0 or (x, y) in protect or dist[y][x] != 2 or (ramp_of(q) or ('',))[0] == 'ink':
-                    continue
-                px[x, y] = step(q, 1) + (q[3],)
-        out['pulse_2'] = p2
-    # whatever the shared detector calls lettering (rim hits included) stays
-    # exactly as painted in every pulse, so the selftest contract still holds
-    src = normal.load()
-    for st in ('pulse_1', 'pulse_2', 'pulse_3'):
-        px = out[st].load()
-        for (x, y) in halo:
-            px[x, y] = src[x, y]
-    return out
-
-
 def paint_buttons(key, root=None):
     s = geo.skin(key)
     seed = SEEDS[key]
     for i, b in enumerate(s.buttons):
         normal = paint_one_button(key, b, seed + i)
-        states = C.button_states(normal, key, b.id, overrides=_state_overrides(normal, b))
+        states = C.button_states(normal, key, b.id)   # shared transforms (rim-safe lettering mask)
         C.save_button_states(states, key, b.id, root=root)
 
 

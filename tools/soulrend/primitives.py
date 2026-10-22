@@ -1394,6 +1394,11 @@ def make_pulse(img, n, protect=None):
     pulse_3  a faint checker-dithered ember ring 1 px in, afterglow at 2 px;
              the server's next frame is the resting state
 
+    When the lettering leaves room for only one ring (``pulse_depths`` gives
+    1/1/1), pulse_2 cannot move outward, so it alternates bright and
+    afterglow pixels along the ring and spreads an afterglow one ring further
+    in (never onto ``protect``): the three frames always differ.
+
     ``protect`` (lettering plus 1 px halo, from ``compose.lettering_mask``)
     never changes. Ring colour contrasts with its surface (``glow_colour``).
     Ink pixels and alpha never change."""
@@ -1409,6 +1414,9 @@ def make_pulse(img, n, protect=None):
     if after_d == ring_d:
         after_d = None
     faint = n == 3
+    spread = n == 2 and depths[0] == depths[1]     # no room to move outward
+    if spread:
+        after_d = ring_d + 1
     for y in range(out.height):
         for x in range(out.width):
             p = px[x, y]
@@ -1417,7 +1425,9 @@ def make_pulse(img, n, protect=None):
             d = dist[y][x]
             c = None
             if d == ring_d:
-                if not faint:
+                if spread and (x + y) % 2:
+                    c = step(p, 1)
+                elif not faint:
                     c = glow_colour(p)
                 elif (x + y) % 2 == 0:
                     c = EMBER[0] if luminance(p) < 120 else EMBER[1]

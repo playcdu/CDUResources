@@ -247,14 +247,17 @@ class Face:
 
 GRAVEN = Face('graven', {**_GRAVEN_UPPER, **_GRAVEN_DIGITS, **_GRAVEN_PUNCT, **_GRAVEN_LOWER},
               cap_height=7, x_height=5, descender=2, tracking=1,
-              kerning={('L', 'T'): -1, ('L', 'Y'): -1, ('L', 'V'): -1, ('L', 'W'): -1, ('T', 'A'): -1,
-                       ('A', 'T'): -1, ('A', 'V'): -1, ('V', 'A'): -1, ('A', 'Y'): -1, ('Y', 'A'): -1,
-                       ('A', 'W'): -1, ('W', 'A'): -1, ('T', '.'): -1, ('Y', '.'): -1, ('P', '.'): -1,
-                       ('F', '.'): -1, ('T', 'o'): -1, ('T', 'a'): -1, ('T', 'e'): -1, ('T', 'r'): -1,
-                       ('r', '.'): -1, ('r', ','): -1, ('/', '/'): -1, ('P', 'A'): -1, ('F', 'A'): -1})
+              # Every pair keeps at least one clear column between the two glyphs on
+              # every row and no edge or corner contact (audited at 1x; WA, AW, LW
+              # merged into a 3 px blob and Tr touched diagonally, so they are out).
+              kerning={('L', 'T'): -1, ('L', 'Y'): -1, ('L', 'V'): -1, ('T', 'A'): -1, ('A', 'T'): -1,
+                       ('A', 'V'): -1, ('V', 'A'): -1, ('A', 'Y'): -1, ('Y', 'A'): -1, ('T', '.'): -1,
+                       ('Y', '.'): -1, ('P', '.'): -1, ('F', '.'): -1, ('T', 'o'): -1, ('T', 'a'): -1,
+                       ('T', 'e'): -1, ('r', '.'): -1, ('r', ','): -1, ('/', '/'): -1, ('P', 'A'): -1,
+                       ('F', 'A'): -1})
 RUNE = Face('rune', _RUNE, cap_height=5, x_height=5, descender=0, tracking=1,
-            kerning={('L', 'T'): -1, ('T', 'A'): -1, ('A', 'T'): -1, ('L', 'Y'): -1, ('Y', 'A'): -1,
-                     ('A', 'Y'): -1, ('T', '.'): -1, ('L', 'V'): -1},
+            # same audit: YA / AY merged, TA / AT / LV touched diagonally
+            kerning={('L', 'T'): -1, ('L', 'Y'): -1, ('T', '.'): -1},
             upper_only=True)
 FACES = {'graven': GRAVEN, 'rune': RUNE}
 FACE_ALIASES = {'hearth': 'graven', 'sprig': 'rune'}

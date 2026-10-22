@@ -25,6 +25,7 @@ Licence: MIT.
 from __future__ import annotations
 
 import sys as _sys
+import weakref as _weakref
 from pathlib import Path as _Path
 
 if __name__ == 'compose':
@@ -293,35 +294,86 @@ def button_kind(button):
     return button.style
 
 
+def _label_options(button, rune=True):
+    """(lines, face, gap) candidates in preference order: GRAVEN capitals,
+    GRAVEN mixed case (label only), RUNE capitals. Never invents words."""
+    options = [(list(button.text_lines), 'graven', 2)]
+    if not button.lines:
+        options.append(([button.label], 'graven', 2))
+    if rune:
+        options.append(([t.upper() for t in button.text_lines], 'rune', 1))
+    return options
+
+
 def _label_plan(button, box, rune=True):
     """Choose (lines, face, gap) that fit ``box``: GRAVEN capitals, then GRAVEN
     mixed case (label only), then RUNE capitals (unless ``rune`` is False).
     Never invents words."""
     _, _, w, h = box
-    options = [(button.text_lines, 'graven')]
-    if not button.lines:
-        options.append(([button.label], 'graven'))
-    if rune:
-        options.append(([t.upper() for t in button.text_lines], 'rune'))
-    for lines, face in options:
+    for lines, face, gap in _label_options(button, rune):
         f = L.FACES[face]
-        gap = 2 if face == 'graven' else 1
         tall = len(lines) * f.cap_height + (len(lines) - 1) * gap
         if all(L.text_width(t, face) <= w for t in lines) and tall <= h:
             return lines, face, gap
     raise ValueError(f'label {button.text_lines} does not fit {box} for {button.id}')
 
 
-def letter(img, button, box, colour, shadow=None):
-    """Letter the button's own label centred in ``box``. Returns (lines, face)."""
+def _layout_offsets(lines, face, gap):
+    """Per-line (dx, dy) of each line's left/top relative to the label's
+    centre column and top row, exactly as ``letter`` places them."""
+    f = L.FACES[face]
+    return [(-(L.text_width(t, face) // 2), i * (f.cap_height + gap)) for i, t in enumerate(lines)]
+
+
+def label_layout(button, box):
+    """[(x, y, text, face)] for each line ``letter`` draws in ``box``."""
     lines, face, gap = _label_plan(button, box)
     f = L.FACES[face]
     x, y, w, h = box
     total = len(lines) * f.cap_height + (len(lines) - 1) * gap
     top = y + (h - total + 1) // 2
-    for i, t in enumerate(lines):
-        L.draw_text_centered(img, x + (w + 1) // 2, top + i * (f.cap_height + gap), t, colour, shadow, face=face)
-    return lines, face
+    cx = x + (w + 1) // 2
+    return [(cx + dx, top + dy, t, face) for (dx, dy), t in zip(_layout_offsets(lines, face, gap), lines)]
+
+
+def label_pixels(layout):
+    """Glyph pixel set of a ``label_layout`` (no shadow, no halo)."""
+    out = set()
+    for lx, ly, t, face in layout:
+        out.update((lx + px, ly + py) for px, py in L._pixels(t, face))
+    return out
+
+
+_LETTERED = {}      # id(img) -> (weakref to img, {(skin_key, button_id): glyph pixel set})
+
+
+def _remember_lettering(img, button, pixels):
+    for k in [k for k, (ref, _) in _LETTERED.items() if ref() is None]:
+        del _LETTERED[k]
+    entry = _LETTERED.get(id(img))
+    if entry is None or entry[0]() is not img:
+        entry = (_weakref.ref(img), {})
+        _LETTERED[id(img)] = entry
+    entry[1].setdefault((button.skin_key, button.id), set()).update(pixels)
+
+
+def lettered_pixels(img, button):
+    """The glyph pixels ``letter`` drew for ``button`` on this exact image
+    object, or None (another image, a copy, or hand lettering)."""
+    entry = _LETTERED.get(id(img))
+    if entry is None or entry[0]() is not img:
+        return None
+    return entry[1].get((button.skin_key, button.id))
+
+
+def letter(img, button, box, colour, shadow=None):
+    """Letter the button's own label centred in ``box``. Returns (lines, face).
+    The glyph pixels are remembered for ``lettering_mask``."""
+    layout = label_layout(button, box)
+    for lx, ly, t, face in layout:
+        L.draw_text(img, lx, ly, t, colour, shadow, face=face)
+    _remember_lettering(img, button, label_pixels(layout))
+    return [t for _, _, t, _ in layout], layout[0][3]
 
 
 def primary_face(img, body, seed=0):
@@ -470,23 +522,65 @@ def _templates(strings):
     return out
 
 
-def lettering_mask(img, button, halo=True):
-    """Find the button's own lettering in a painted image and return the set of
-    its pixels (plus, with ``halo``, a 1 px 8-neighbour halo that holds the
-    text shadow and the contrast ring round each letter).
+RIM_RINGS = 2        # outline + first inner ring: never lettering, never protected
 
-    Detection matches the GRAVEN/RUNE rendering of the label, its lines, their
-    words and their single characters at every offset: a hit needs every glyph
-    pixel to share one opaque colour while at least 75 % (whole strings) or
-    100 % (single characters) of the other pixels in the glyph box differ from
-    it, so flat fills never match. Single characters (for hand-kerned
-    lettering) only count on rows where a whole word or line was found and in
-    that lettering's colour, so negative space or a stray shape in a page curl
-    can never pass for a letter. Icons
-    and unlettered faces return an empty set (the transforms then only spare
-    ink)."""
-    if button.icon or button_kind(button) in ('close', 'icon'):
-        return set()
+
+def _search_label(img, button):
+    """Whole-label template search for lettering drawn on a copy or in a
+    hand-chosen box: every (lines, face, gap) option of the button's own
+    label, at every offset. A hit needs >= 90 % of the template's pixels to
+    share one opaque colour, while at most half of the other pixels in its
+    bounding box have that colour (so flat fills never match). Returns the
+    best hit's template pixels (image coordinates) or an empty set."""
+    W, H = img.size
+    px = img.load()
+    best, best_score = set(), 0.0
+    for lines, face, gap in _label_options(button):
+        rel = []
+        for (dx, dy), t in zip(_layout_offsets(lines, face, gap), lines):
+            rel += [(dx + gx, dy + gy) for gx, gy in L._pixels(t, face)]
+        if len(rel) < 6:
+            continue
+        x0 = min(x for x, _ in rel); y0 = min(y for _, y in rel)
+        rel = [(x - x0, y - y0) for x, y in rel]
+        tw = max(x for x, _ in rel) + 1; th = max(y for _, y in rel) + 1
+        if tw > W or th > H:
+            continue
+        glyph = set(rel)
+        others = [(x, y) for y in range(th) for x in range(tw) if (x, y) not in glyph]
+        n = len(rel)
+        allowed = n - int(n * 0.9)
+        for oy in range(0, H - th + 1):
+            for ox in range(0, W - tw + 1):
+                counts = {}
+                miss = 0
+                for (x, y) in rel:
+                    c = px[ox + x, oy + y]
+                    if c[3] == 0:
+                        miss += 1
+                    else:
+                        counts[c] = counts.get(c, 0) + 1
+                    if miss > allowed:
+                        break
+                if miss > allowed or not counts:
+                    continue
+                c, hits = max(counts.items(), key=lambda kv: kv[1])
+                if hits < n - allowed:
+                    continue
+                same = sum(1 for (x, y) in others if px[ox + x, oy + y] == c)
+                if same > len(others) // 2:
+                    continue
+                score = hits / n
+                if score > best_score:
+                    best_score = score
+                    best = {(ox + x, oy + y) for (x, y) in rel}
+    return best
+
+
+def _shape_search(img, button):
+    """Last resort for hand lettering: the GRAVEN/RUNE rendering of the label,
+    its lines, words and single characters matched by shape and one colour
+    (single characters only on the rows and in the colour of a word hit)."""
     W, H = img.size
     px = img.load()
     found = set()
@@ -500,11 +594,11 @@ def lettering_mask(img, button, halo=True):
             others = [(x, y) for y in range(h) for x in range(w) if (x, y) not in glyph]
             first = pts[0]
             for oy in range(0, H - h + 1):
-                if single and rows and not any(oy + k in rows for k in range(h)):
+                if single and (not rows or not any(oy + k in rows for k in range(h))):
                     continue
                 for ox in range(0, W - w + 1):
                     c = px[ox + first[0], oy + first[1]]
-                    if c[3] == 0 or (single and inks and c not in inks):
+                    if c[3] == 0 or (single and c not in inks):
                         continue
                     if any(px[ox + x, oy + y] != c for x, y in pts):
                         continue
@@ -514,6 +608,33 @@ def lettering_mask(img, button, halo=True):
         if not want_single:
             rows = {y for (_, y) in found}
             inks = {px[x, y] for (x, y) in found}
+    return found
+
+
+def lettering_mask(img, button, halo=True):
+    """The set of the button's own lettering pixels in a painted image (plus,
+    with ``halo``, a 1 px 8-neighbour halo that holds the text shadow and the
+    contrast ring round each letter).
+
+    Sources, in order: (1) the exact glyph pixels ``letter`` drew on this
+    image object; (2) a whole-label template search (the label's own lines,
+    face and spacing, >= 90 % of its pixels in one colour), which finds
+    lettering on copies and in hand-chosen boxes; (3) for genuinely
+    hand-lettered labels, the old word / character shape search. Transparent
+    pixels and the outer ``RIM_RINGS`` rings of the shape (outline and first
+    inner ring) are never part of the mask, so a rim or a clipped corner can
+    never squeeze the pulse rings. Icons and unlettered faces return an empty
+    set."""
+    if button.icon or button_kind(button) in ('close', 'icon'):
+        return set()
+    W, H = img.size
+    a = img.getchannel('A').load()
+    found = lettered_pixels(img, button)
+    found = {p for p in (found or ()) if 0 <= p[0] < W and 0 <= p[1] < H and a[p[0], p[1]]}
+    if not found:
+        found = _search_label(img, button)
+    if not found:
+        found = _shape_search(img, button)
     if halo and found:
         grown = set(found)
         for (x, y) in found:
@@ -522,6 +643,9 @@ def lettering_mask(img, button, halo=True):
                     if 0 <= x + dx < W and 0 <= y + dy < H:
                         grown.add((x + dx, y + dy))
         found = grown
+    if found:
+        dist = P.edge_distance(img, RIM_RINGS)
+        found = {(x, y) for (x, y) in found if a[x, y] and dist[y][x] is not None and dist[y][x] >= RIM_RINGS}
     return found
 
 

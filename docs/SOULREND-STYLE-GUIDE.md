@@ -236,10 +236,15 @@ Hand-adjust afterwards if needed and pass the result through
 | pulse_3 | `make_pulse(img, 3, protect)`: a faint checker-dithered ring 1 px in (ember_0 on dark, ember_1 on light), afterglow at 2 px | fading; the next frame is the resting state |
 
 **Pulses and selected never touch lettering; disabled only dims it.** `button_states` finds the button's own
-lettering in the painted normal frame (`compose.lettering_mask`: the
-GRAVEN/RUNE rendering of its lines, label, words and characters, matched by
-shape and single colour; single characters only count on the rows and in the
-colour of a whole-word hit, so negative space can never pass for a letter).
+lettering in the painted normal frame with `compose.lettering_mask`, from
+the label geometry rather than by guessing shapes: (1) the exact glyph pixels
+`compose.letter` drew on that image; else (2) a whole-label template search
+(the label's own lines, face and spacing; at least 90 % of its pixels in one
+colour), which finds lettering on copies and in hand-chosen boxes; only for
+genuinely hand-lettered labels (3) the old word / character shape search. The
+outline and the first inner ring of the shape are never part of the mask, so
+a rim or a clipped corner can never pass for a "1" or an "I" and squeeze the
+pulse rings.
 Selected keeps the glyph pixels exactly; pulses keep the glyphs plus a 1 px
 halo that holds the text shadow and contrast ring; disabled recolours the
 glyph pixels in place as described above. When lettering comes
@@ -247,7 +252,11 @@ closer than 4 px to the edge, as on most 18 px tall buttons, the three ring
 depths are compressed into the free band between edge and letters
 (`pulse_depths`: 3/2/1 px with room for three, 2/1/1 with room for two,
 1/1/1 with room for one), so the glow runs only along the outer rows and
-columns. Letter with `lettering.draw_text` or `compose.letter` so the
+columns. With room for one ring (two RUNE lines or a descender on an 18 px
+button) pulse_2 cannot move outward, so it alternates bright and afterglow
+pixels along the ring and spreads an afterglow one ring further in (never
+onto the lettering halo): the three pulse frames always differ, and
+`selftest.py` fails if any two of a button's six states are identical. Letter with `lettering.draw_text` or `compose.letter` so the
 detector can find your text; `selftest.py` fails if a lettered button has no
 detectable lettering, if selected or a pulse changes a lettering pixel, or if
 a disabled lettering pixel moves, changes alpha or keeps a live colour (gold,
@@ -427,8 +436,13 @@ modpack's medieval font or from any other font.
 | traits | inward foot serifs on A H K M N R; drooping T arms; spurred E F L; uncial C and G; chamfered D; flag serifs on lowercase ascenders and entry strokes on x-height stems; uncial a and u | chisel-cut bowls, pointed A, angular S and 0 |
 | charset | A-Z, a-z, 0-9, space + - = $ . , : ; ! ? / ' " ( ) [ ] < > % & # * _ (87 glyphs) | A-Z, 0-9, space + - = $ . , : ! ? / ' & < > ( ) % # * (56 glyphs) |
 
-Kerning pairs (-1): GRAVEN LT LY LV LW TA AT AV VA AY YA AW WA T. Y. P. F.
-To Ta Te Tr r. r, // PA FA (25 pairs); RUNE LT TA AT LY YA AY T. LV.
+Kerning pairs (-1): GRAVEN LT LY LV TA AT AV VA AY YA T. Y. P. F. To Ta Te
+r. r, // PA FA (21 pairs); RUNE LT LY T. (3 pairs). Every kept pair leaves at
+least one clear column between the two glyphs on every row and no edge or
+corner contact, audited at 1x. WA, AW and LW (GRAVEN) merged the W's stroke
+and the next foot into a 3 px blob (WATCH read smudged) and Tr touched
+diagonally; RUNE YA / AY merged and TA / AT / LV touched; all were removed.
+Add a pair only after rendering it at 1x and checking that rule.
 
 Coordinates: `draw_text(img, x, y, s, color, shadow=None, outline=None,
 face='graven')` puts the top of the cap height at y; the baseline is
