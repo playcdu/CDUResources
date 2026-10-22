@@ -19,7 +19,7 @@ beams, the GUILD tag, a wordless sage guild banner with an embroidered
 parchment shield bearing an iron key, and an iron-banded strongbox with a
 candle and coins. Vault screens hang a lantern, a coin-and-ledger shelf and,
 when there is height, a pennant garland and an inkwell shelf; the selection
-screens hang a key ring and a rack of small locked vault doors. Panel
+screens hang a key ring and the guild strongroom door. Panel
 compositions are laid out per height, not cropped.
 
 Deterministic: fixed seeds, no clock. Licence: code MIT; artwork CC0-1.0.
@@ -411,29 +411,57 @@ def pennant(img, x, y, length, seed, cloth=SAGE):
     P.hline(img, x - 1, x + w, y + 5, WOOD[3])
 
 
-def lockers(img, x, y, rows, seed):
-    """A small wooden rack of locked vault doors (2 columns): each an iron
-    door with rivets and a brass lockplate. Wordless: choose a vault."""
-    dw, dh = 13, 11
-    w = 2 * dw + 5
-    h = rows * (dh + 2) + 3
+def vault_door(img, x, y, w, h, seed):
+    """The guild strongroom door set in a wooden jamb: one riveted iron door
+    with two heavy hinges, a brass spoked handwheel and a keyhole plate.
+    A single door, never a rack of small ones, so nothing on the wall can be
+    read as a count of vaults. Wordless: choose a vault. Returns ``h``."""
     P.plank(img, (x, y, w, h), WOOD, seed, 'ink_1', radius=1, grain=0.4)
-    for r_ in range(rows):
-        for c_ in range(2):
-            dx = x + 2 + c_ * (dw + 1)
-            dy = y + 2 + r_ * (dh + 2)
-            P.ink_outline(img, (dx, dy, dw, dh), 'ink_1', radius=0, heavy='br', fill_colour=ASH[1])
-            P.hline(img, dx + 1, dx + dw - 2, dy + 1, ASH[2])
-            P.vline(img, dx + 1, dy + 1, dy + dh - 2, ASH[2])
-            P.hline(img, dx + 2, dx + dw - 2, dy + dh - 2, ASH[0])
-            P.vline(img, dx + dw - 2, dy + 2, dy + dh - 2, ASH[0])
-            for (rx, ry) in ((dx + 2, dy + 2), (dx + dw - 3, dy + 2), (dx + 2, dy + dh - 3), (dx + dw - 3, dy + dh - 3)):
-                P.put(img, rx, ry, PARCHMENT[3] if (rx, ry) == (dx + 2, dy + 2) else ASH[2])
-            # brass lockplate with keyhole
-            lx, ly = dx + dw // 2 - 2, dy + 3
-            P.sprite(img, lx, ly, ['o333o', 'o2k1o', 'o2k1o', 'o111o', '.ooo.'] if False else
-                     ['.ooo.', 'o32ko' if False else 'o3k2o', 'o2k1o', 'o211o', '.ooo.'],
-                     {'o': INK[1], '3': BRASS[3], '2': BRASS[2], '1': BRASS[0], 'k': INK[0]})
+    dx, dy, dw, dh = x + 3, y + 3, w - 6, h - 6
+    P.ink_outline(img, (dx, dy, dw, dh), 'ink_1', radius=1, heavy='br', fill_colour=ASH[1])
+    P.hline(img, dx + 1, dx + dw - 3, dy + 1, ASH[2])
+    P.vline(img, dx + 1, dy + 1, dy + dh - 3, ASH[2])
+    P.hline(img, dx + 2, dx + dw - 2, dy + dh - 2, ASH[0])
+    P.vline(img, dx + dw - 2, dy + 2, dy + dh - 2, ASH[0])
+    P.put(img, dx + 2, dy + 1, PARCHMENT[3])                   # glint
+    # rivet rows along the top and bottom of the door
+    for xx in range(dx + 3, dx + dw - 3, 5):
+        rivet(img, xx, dy + 3)
+        rivet(img, xx, dy + dh - 5)
+    # two heavy hinges reaching over the jamb on the left
+    for hy in (dy + 7, dy + dh - 10):
+        P.ink_outline(img, (x + 1, hy, 9, 4), 'ink_1', radius=0, heavy='b', fill_colour=ASH[0])
+        P.hline(img, x + 2, x + 8, hy + 1, ASH[2])
+        P.put(img, x + 6, hy + 2, PARCHMENT[3])
+        P.vline(img, x + 1, hy - 1, hy + 4, INK[1])               # knuckle on the jamb
+        P.vline(img, x + 2, hy - 1, hy + 4, ASH[1])
+    # spoked brass handwheel in the middle of the door
+    cx, cy = dx + dw // 2 + 1, dy + dh // 2 - 1
+    for j in range(-8, 9):
+        for i in range(-8, 9):
+            d = (i * i + j * j) ** 0.5
+            col = None
+            if 3.5 <= d < 4.5 or 5.5 <= d < 6.4:
+                col = INK[1]
+            elif 4.5 <= d < 5.5:
+                col = BRASS[3] if i + j <= -5 else BRASS[1] if i + j >= 4 else BRASS[2]
+            elif (i == 0 or j == 0) and d < 8:
+                col = INK[1] if d >= 7 or abs(i + j) == 0 else BRASS[2] if (i < 0 or j < 0) else BRASS[1]
+            if col is not None:
+                P.put(img, cx + i, cy + j, col)
+    P.sprite(img, cx - 1, cy - 1, ['o2o', '2k1', 'o1o'],
+             {'o': INK[1], '2': BRASS[2], '1': BRASS[0], 'k': INK[0]})
+    # keyhole plate under the wheel
+    ky = cy + 10
+    if ky + 5 <= dy + dh - 6:
+        P.sprite(img, cx - 2, ky, ['.ooo.', 'o3k2o', 'o2k1o', 'o211o', '.ooo.'],
+                 {'o': INK[1], '3': BRASS[3], '2': BRASS[2], '1': BRASS[0], 'k': INK[0]})
+    # tall doors: a barred peep slot near the top
+    if dh >= 50:
+        sy = dy + 8
+        P.ink_outline(img, (cx - 5, sy, 11, 4), 'ink_1', radius=0, fill_colour=INK[0])
+        for xx in range(cx - 3, cx + 4, 2):
+            P.vline(img, xx, sy + 1, sy + 2, ASH[2])
     return h
 
 
@@ -637,15 +665,15 @@ def paint_frame(key):
     if key not in SELECT:
         vine(img, rp.right - 10, 30, bottom - 20, seed + 23)
     if key in SELECT:
-        # key hoop on a nail, a rack of locked vault doors with a candle on
-        # top, a shut padlock on a nail and a coin purse
+        # key hoop on a nail, the strongroom door with a candle on top, a
+        # shut padlock on a nail and a coin purse
         rows = 3 if H < 170 else 5
         rack_h = rows * 13 + 3
         heights = [23, 12 + rack_h, 17]
         ys = stack_positions(10, bottom, heights)
         key_hoop(img, rx + 19, ys[0], seed)
         ry = ys[1] + 12
-        lockers(img, rx + 4, ry, rows, seed + 11)
+        vault_door(img, rx + 4, ry, 31, rack_h, seed + 11)
         icons.draw_motif(img, 'candle', rx + 25, ry - 11)
         P.lantern_glow_ring(img, rx + 27, ry - 9, 10, strength=1)
         icons.draw_motif(img, 'coin', rx + 8, ry - 5)

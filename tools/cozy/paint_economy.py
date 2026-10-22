@@ -593,7 +593,21 @@ def log_background():
         if yy < py0 + ph - 1:
             P.hline(img, px0 + 2, px0 + 11, yy, SKY[2])
             P.hline(img, grid.right + 7, px0 + pw - 3, yy, SKY[2])
-    # the ledger's pressed wax seal in the header corner
+    # the ledger's pressed wax seal in the header corner, on two ribbon tails
+    # that run down the margin past the first row: a document seal lying on
+    # the page, not an object sitting in a slot
+    P.sprite(img, px0 + 2, py0 + 12, [
+        '..o21oo21o..',
+        '..o21oo21o..',
+        '.o21o..o21o.',
+        '.o21o..o21o.',
+        '.o21o..o21o.',
+        'o21o....o21o',
+        'o21o....o21o',
+        'o21o....o21o',
+        'o00o....o00o',
+        'o..o....o..o',
+    ], {'o': INK[1], '2': BERRY[2], '1': BERRY[1], '0': BERRY[0]})
     P.wax_seal(img, px0 + 8, py0 + 7, 6, BERRY, SEED + 12, drip=True, emblem='coin')
     # bookmark ribbon hanging from the top edge over the right margin
     ribbon_bookmark(img, grid.right + 9, cover[1] - 1, 70, BERRY, w=5)

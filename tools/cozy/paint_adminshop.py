@@ -187,14 +187,14 @@ TINY_CRATE = [
     'ooooooo',
 ]
 
-TINY_LENS = [
-    '.ooo...',
-    'osmmo..',
-    'ommlo..',
-    'omllo..',
-    '.oooo..',
-    '....oc.',
-    '.....oc',
+TINY_INDEX = [          # a ruled index card with a berry tab (not the search-button lens)
+    '.....ooo',
+    'oooooyzo',
+    'osssssso',
+    'ommmmmmo',
+    'orrrrrro',
+    'ommmmmmo',
+    'oooooooo',
 ]
 
 TINY_LABEL = [          # a little drawer front: blank card, brass pull
@@ -571,8 +571,8 @@ def feature_configured(img, rp, seed):
     # a dyed sage header bar (no words) and ruled lines
     P.fill(img, (x + 3, y + 4, w - 6, 3), SAGE[2])
     P.hline(img, x + 3, x + w - 4, y + 7, SAGE[1])
-    for k, ry in enumerate(range(y + 11, y + h - 18, 4)):
-        P.stitch_line(img, x + 3, ry, x + w - 5 - (5 if k % 3 == 2 else 0), ry, SKY[2], 3, 1, phase=k)
+    for ry in range(y + 11, y + h - 18, 4):      # plain ruling, never pseudo-writing
+        P.hline(img, x + 3, x + w - 4, ry, SKY[2])
     P.page_curl(img, (x, y, w, h), 'bl', 5, behind=FW[1])
     P.tack(img, x + w // 2, y + 1)
     # ribbon tails under the seal
@@ -740,7 +740,7 @@ def rail_rivets(img, s, holes, protect):
 BAND_MOTIF = {
     'admin_shop_categories': TINY_LABEL,
     'admin_shop_listings': TINY_CRATE,
-    'admin_shop_search': TINY_LENS,
+    'admin_shop_search': TINY_INDEX,
     'admin_shop_configured': TINY_SEAL,
 }
 

@@ -460,8 +460,13 @@ def paint_background(key):
         # lens lying on the bench (rim r4), handle to the right
         big_lens(ov, 82, 26, 4, handle=(1, 0), hlen=9)
         icons.draw_motif(ov, 'ledger', 108, 22)
-        spr(ov, 124, 22, JAR, K_JAR)
-        spr(ov, 134, 21, BOTTLE, K_BOTTLE)
+        # honey jar with the bottle standing in front of it: one still life
+        # that straddles the cell 6 | 7 boundary and casts a shadow, so it
+        # never reads as an item icon sitting in a slot
+        spr(ov, 126, 22, JAR, K_JAR)
+        spr(ov, 131, 21, BOTTLE, K_BOTTLE)
+        P.vline(ov, 136, 24, 30, WOOD[0])
+        P.vline(ov, 137, 27, 30, WOOD[1])
         notice(ov, (146, 23, 14, 8), seed + 3, ruled=2, tack=True)
         P.tack(ov, 6, 22, small=True)
 

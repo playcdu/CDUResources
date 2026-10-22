@@ -629,27 +629,63 @@ def balance_plaque(img, body, seed):
 # Backgrounds
 # ===========================================================================
 
+# Envelope standing on its edge, flap closed with a small berry seal. 13 x 9.
+ENVELOPE = [
+    'ooooooooooooo',
+    'o3p2222222p1o',
+    'o23p22222p21o',
+    'o222p222p221o',
+    'o2222pyp2221o',
+    'o222pyzyp221o',
+    'o22p2yyx2p21o',
+    'o1p1111x11p1o',
+    'OOOOOOOOOOOOO',
+]
+K_ENVELOPE = {'o': INK[1], 'O': INK[0], '3': PARCHMENT[3], '2': PARCHMENT[2], '1': PARCHMENT[1],
+              'p': PARCHMENT[0], 'y': BERRY[1], 'z': BERRY[2], 'x': BERRY[0]}
+
+
+def cubby_shelf(img, x0, x1, y):
+    """A ledge fitted across a niche: ink-edged board (lit top row), and the
+    shadow it casts on the back wall below it."""
+    P.hline(img, x0, x1, y, INK[1])
+    P.hline(img, x0, x1, y + 1, WOOD[4])
+    P.hline(img, x0, x1, y + 2, WOOD[2])
+    P.hline(img, x0, x1, y + 3, INK[0])
+    P.hline(img, x0, x1, y + 4, WOOD[0])
+    for gx in (x0 + 4, x1 - 3):
+        P.put(img, gx, y + 2, WOOD[1])
+
+
 def static_column_market(img, key, seed):
     """Right column beside the grid (static cells 17/26/35/44): a recessed
-    cubby holding two blank price tags on twine, a per-screen motif (house:
-    the lot ledger; search: the magnifying glass; mine: my own sealed lot)
-    and the gavel on its block."""
+    cubby with two blank price tags on twine, a ledge across it holding the
+    per-screen still life (house: two ledgers with a bookmark; search: the
+    lens propped behind a ledger; mine: my own lot letter, sealed), and the
+    gavel resting on its block on the cubby floor. Every prop stands on
+    something or overlaps a neighbour, so none reads as an item in a cell."""
     niche(img, (156, 36, 17, 70))
     nail(img, 164, 39)
     hang(img, 164, 40, 160, 45)
     hang(img, 164, 40, 168, 50)
     price_tag(img, 157, 44, 8, 14, BERRY, seed)
     price_tag(img, 165, 49, 7, 12, BRASS, seed + 1)
+    ledge = 86                                   # straddles the cell 35 / 44 boundary
+    cubby_shelf(img, 157, 171, ledge)
     if key == 'auction_house':
-        icons.draw_motif(img, 'ledger', 159, 71)
-        P.vline(img, 167, 81, 83, BERRY[1])                   # bookmark tail
-        P.put(img, 167, 84, BERRY[0])
+        book(img, 158, ledge - 6, 13, 6, BERRY)
+        book(img, 159, ledge - 11, 11, 6, SKY)
+        P.vline(img, 167, ledge, ledge + 4, BERRY[1])        # bookmark over the ledge
+        P.put(img, 168, ledge + 1, BERRY[0])
+        P.put(img, 167, ledge + 5, BERRY[0])
     elif key == 'auction_search':
-        icons.draw_icon(img, 'search', (158, 67, 14, 16))
-    else:   # auction_mine: my own lots, closed with my seal
-        P.wax_seal(img, 164, 75, 6, BERRY, seed, drip=True, emblem='star')
-    sound_block(img, 157, 98)
-    gavel_short(img, 158, 91)
+        rows, k = icons.ICONS['search']
+        P.sprite(img, 160, ledge - 16, rows, k, flip_x=True)  # leaning on the back wall
+        book(img, 158, ledge - 6, 13, 6, SAGE)              # ...half hidden behind a ledger
+    else:   # auction_mine: my own lot, a letter sealed with my wax
+        sprite(img, 158, ledge - 9, ENVELOPE, K_ENVELOPE)
+    sound_block(img, 157, 100)                    # resting on the cubby floor
+    gavel_short(img, 158, 93)
 
 
 def paint_market_background(key):
@@ -723,20 +759,25 @@ def paint_confirm_background(key):
     price_tag(img, 80, 57, 9, 16, BERRY, seed)
     # --- docket above the confirm plate: ruled lines only, sealed ---
     ruled_sheet(img, (100, 19, 66, 30), seed, curl='br', behind=WOOD[1])
-    # --- left: inkwell and quill, a stack of ledgers ---
+    # --- left: inkwell and quill on a wall shelf, the hand bell hung beneath
+    # it (both straddle cell boundaries), a stack of ledgers ---
+    shelf(img, 6, 41, 24, seed + 4)
     quill(img, 12, 24)
-    nail(img, 16, 50)
-    bell(img, 12, 51)
+    P.vline(img, 18, 46, 48, INK[1])              # bell cord from the shelf
+    bell(img, 14, 48)
     book(img, 6, 92, 22, 5, SKY)
     book(img, 8, 87, 19, 5, BERRY)
     book(img, 5, 97, 24, 6, SAGE)
-    # --- bottom-left (cells 45-47): the gavel resting on its block, coins ---
-    gavel_on_block(img, 12, 112)
-    coin_stack(img, 44, 113)
-    # --- right of the confirm plate: candle on a dish, ledger ---
-    icons.draw_motif(img, 'candle', 158, 64)
-    P.lantern_glow_ring(img, 160, 66, 9, strength=1)
-    icons.draw_motif(img, 'ledger', 157, 91)
+    # --- bottom-left (cells 45-47): the gavel on its block and coins, on a shelf ---
+    shelf(img, 8, 119, 38, seed + 5)
+    gavel_on_block(img, 11, 109)
+    coin_stack(img, 32, 110)
+    # --- right of the confirm plate: candle and a standing ledger on a wall
+    # shelf that straddles cells 35/44 ---
+    shelf(img, 151, 86, 20, seed + 6)
+    icons.draw_motif(img, 'candle', 152, 75)
+    P.lantern_glow_ring(img, 155, 77, 9, strength=1)
+    icons.draw_motif(img, 'ledger', 159, 76)
     P.tack(img, 3, s.height - 4, small=True)
     P.tack(img, s.width - 4, s.height - 4, small=True)
     geo.finish_background(img, key)
@@ -747,9 +788,13 @@ def paint_duration_background(key):
     seed = SEED[key]
     s = geo.skin(key)
     img = C.base_background(key, seed=seed)
-    # --- static cell 13 between the 12/15-day tags: hourglass in a niche ---
-    niche(img, (80, 36, 16, 16))
-    hourglass(img, 82, 36)
+    # --- static cell 13 between the 12/15-day tags: plain board crossed by the
+    # twine the duration tags hang on (a nail and a berry bow at the knot), so
+    # the cell never reads as an item in a slot ---
+    P.twine(img, 76, 41, 87, 39, sag=2)
+    P.twine(img, 89, 39, 99, 44, sag=2)
+    nail(img, 88, 38)
+    P.sprite(img, 86, 39, ['y.y', 'xyx', '.x.', 'x.x'], {'y': BERRY[1], 'x': BERRY[0]})
     # --- static cells 18-20 left of Close: shelf with candle clock, ledger, gavel ---
     shelf(img, 8, 65, 52, seed)
     sprite(img, 11, 53, CANDLE_CLOCK_S, K_CANDLE_CLOCK)

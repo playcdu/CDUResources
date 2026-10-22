@@ -298,8 +298,13 @@ def book(img, x, y, w, h, ramp, band=None):
         P.hline(img, x + 1, x + w - 2, by, band or BRASS[2])
 
 
+# Shelf boards under moonlight: ash body and sheen, a cold sky glint on top.
+NIGHT_SHELF = [WOOD[0], ASH[0], ASH[1], ASH[2], SKY[2]]
+
+
 def shelf(img, x, y, w, seed, metal):
-    P.plank(img, (x, y, w, 5), C.FRAME_WOOD[1:] + [WOOD[4]], seed, 'ink_1', radius=1, grain=0.5)
+    ramp = NIGHT_SHELF if metal is IRON else C.FRAME_WOOD[1:] + [WOOD[4]]
+    P.plank(img, (x, y, w, 5), ramp, seed, 'ink_1', radius=1, grain=0.5)
     for bx in (x + 3, x + w - 5):
         P.sprite(img, bx, y + 5, ['oo', 'o2', '.o'], {'o': INK[1], '2': metal[1]})
 
@@ -399,7 +404,7 @@ def moonlight(img, x0, y0, x1, y1, spread):
     """A cool shaft of moonlight from a window: board browns inside the slanted
     band turn to their ash counterparts on an ordered checker (50 % in the
     core, 25 % at the soft edges and the far end). Never a gradient."""
-    cool = {WOOD[1]: ASH[0], WOOD[2]: ASH[1], WOOD[3]: ASH[2]}
+    cool = {WOOD[1]: ASH[0], WOOD[2]: ASH[1], WOOD[3]: ASH[2], ASH[0]: ASH[1]}
     px = img.load()
     n = max(1, y1 - y0)
     for y in range(y0, y1):
@@ -550,8 +555,10 @@ def paint_frame(key):
         return ribbon[0] <= x < ribbon[0] + ribbon[2] and y < ribbon[3]
 
     if not lit:
-        # quieter board: the sheen and highlights drop a step
-        remap(img, {WOOD[3]: WOOD[2], WOOD[2]: WOOD[1]}, keep=keep_ribbon)
+        # moonlit board: the oiled browns cool to blue-grey ash (body ash_0,
+        # sheen ash_1) and the top-left highlights catch cold sky light; the
+        # dark seams keep their wood so the boards still read as wood.
+        remap(img, {WOOD[1]: ASH[0], WOOD[2]: ASH[1], WOOD[3]: SKY[1], WOOD[4]: SKY[2]})
 
     # ---------------- left panel -----------------------------------------
     P.rope(img, lx + 4, 12, lx + 35, 12, sag=2)

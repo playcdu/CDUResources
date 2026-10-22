@@ -636,6 +636,76 @@ def cast_shadow(img, x, y, w):
     P.hline(img, x + 1, x + w, y, WOOD[0])
 
 
+# Service bell on the buy counter, 7x5 (smaller than an item icon, standing
+# on the counter top with the counter's shadow line under it).
+BELL = ['...o...', '..o3o..', '.o3221o', 'o32221o', 'ooooooo']
+K_BELL = {'o': INK[1], '3': BRASS[3], '2': BRASS[2], '1': BRASS[0]}
+# Twine-tied parcel on the sell counter, 8x5.
+PARCEL = ['oooooooo', 'o33t333o', 'ottttttO', 'o22t222O', 'oOOOOOOO']
+K_PARCEL = {'o': INK[1], 'O': INK[0], '3': PARCHMENT[1], '2': PARCHMENT[0], 't': WOOD[3]}
+# A coin lying flat on the counter, 5x3.
+COIN_FLAT = ['.ooo.', 'o321o', '.ooo.']
+K_COIN_FLAT = {'o': INK[1], '3': BRASS[3], '2': BRASS[2], '1': BRASS[0]}
+
+
+def stall_awning(img, x0, x1, y):
+    """A striped ember-and-cream shop awning on a brass rail, running the full
+    width between two controls, with a pointed hem and a dithered shade under
+    it. ``y`` is the rail's top row; the hem tips land on y + 11."""
+    P.hline(img, x0, x1, y, INK[1])
+    P.hline(img, x0, x1, y + 1, BRASS[2])
+    P.hline(img, x0 + 1, x0 + 2, y + 1, BRASS[3])
+    P.hline(img, x0, x1, y + 2, INK[1])
+    for x in range(x0, x1 + 1):
+        k = (x - x0) // 3
+        ramp = EMBER if k % 2 == 0 else [PARCHMENT[1], PARCHMENT[2], PARCHMENT[3]]
+        P.put(img, x, y + 3, ramp[2])                       # lit fold under the rail
+        for yy in range(y + 4, y + 8):
+            P.put(img, x, yy, ramp[1])
+        P.put(img, x, y + 8, ramp[0])                       # shaded lower edge
+        # pointed hem: each stripe tapers to an ink tip
+        pos = (x - x0) % 3
+        if pos == 1:
+            P.put(img, x, y + 9, ramp[0])
+            P.put(img, x, y + 10, INK[1])
+        else:
+            P.put(img, x, y + 9, INK[1])
+    # the awning's shade falls on the boards below it, fading out
+    P.dither_patch(img, (x0, y + 11, x1 - x0 + 1, 1), WOOD[0], density=0.5)
+    P.dither_patch(img, (x0, y + 12, x1 - x0 + 1, 1), WOOD[0], density=0.25)
+
+
+def stall_counter(img, x0, x1, y0, y1, buy):
+    """The stall's counter: an oiled counter top running the full width with a
+    boarded front below it, and two small things on top (a service bell and a
+    coin to buy; a tied parcel and a coin to sell)."""
+    top = y1 - 10
+    # counter top (3 rows) with ink edges, lit front lip
+    P.hline(img, x0, x1, top, INK[1])
+    P.hline(img, x0, x1, top + 1, WOOD[4])
+    for x in range(x0, x1 + 1):
+        if (x - x0) % 7 in (2, 5):
+            P.put(img, x, top + 1, WOOD[3])                  # broken highlight
+    P.hline(img, x0, x1, top + 2, WOOD[3])
+    P.hline(img, x0, x1, top + 3, INK[0])
+    # boarded front under the overhang
+    P.hline(img, x0, x1, top + 4, WOOD[0])
+    for yy in range(top + 5, y1):
+        for x in range(x0, x1 + 1):
+            P.put(img, x, yy, WOOD[0] if (x - x0) % 5 == 4 else WOOD[1])
+    for x in range(x0 + 1, x1 + 1, 5):
+        P.put(img, x, top + 6, WOOD[2])                       # nail heads
+        P.put(img, x + 1, top + 5, WOOD[2])
+    P.hline(img, x0, x1, y1, INK[0])
+    # things on the counter, standing on its top edge
+    if buy:
+        P.sprite(img, x0 + 3, top - 5, BELL, K_BELL)
+        P.sprite(img, x0 + 12, top - 3, COIN_FLAT, K_COIN_FLAT)
+    else:
+        P.sprite(img, x0 + 2, top - 5, PARCEL, K_PARCEL)
+        P.sprite(img, x0 + 12, top - 3, COIN_FLAT, K_COIN_FLAT)
+
+
 def bg_settings(key):
     s = geo.skin(key)
     img = C.base_background(key, seed=SEED)
@@ -666,28 +736,12 @@ def bg_trade(key):
     buy = key == 'chest_shop_buy'
     img = C.base_background(key, seed=SEED + (1 if buy else 2))
     shop_posts(img, key, 15, 72)
-    # cell A (43, 17, 18, 18) and cell C (43, 53, 18, 18)
-    if buy:
-        # a coin purse hanging from a nail
-        P.put(img, 52, 19, INK[1]); P.put(img, 52, 20, BRASS[2])
-        P.ink_line(img, 52, 21, 50, 23, 'parch_1'); P.ink_line(img, 52, 21, 54, 23, 'parch_1')
-        P.sprite(img, 46, 21, icons.PURSE, icons.K_PURSE)
-        # an open crate full of straw waiting for goods
-        P.sprite(img, 46, 58, OPEN_CRATE, K_OPEN)
-        cast_shadow(img, 46, 67, 10)
-        icons.draw_motif(img, 'coin', 56, 64)
-    else:
-        # a parcel crate tied with twine and a blank tag, ready to go out
-        P.sprite(img, 47, 23, CRATE9, K_W)
-        P.vline(img, 51, 23, 31, PARCHMENT[1]); P.hline(img, 47, 55, 27, PARCHMENT[1])
-        P.put(img, 51, 27, PARCHMENT[0])
-        P.ink_line(img, 52, 27, 56, 22, 'parch_1')
-        P.linen_tag(img, (55, 19, 5, 6), eyelet=None)
-        cast_shadow(img, 47, 32, 9)
-        # coins come back: a little stack in a tray
-        for k, (cx, cy) in enumerate(((46, 63), (51, 63), (48, 60), (54, 60))):
-            icons.draw_motif(img, 'coin', cx, cy)
-        P.hline(img, 45, 59, 68, INK[1]); P.hline(img, 46, 58, 67, WOOD[3])
+    # cell A (43, 17, 18, 18) and cell C (43, 53, 18, 18): the column between
+    # the controls is a market-stall front, not two props in two cells. Both
+    # pieces run edge to edge and continue behind the neighbouring controls,
+    # so nothing sits centred in a cell like an item icon.
+    stall_awning(img, 43, 60, 17)
+    stall_counter(img, 43, 60, 53, 70, buy)
     # cell B (115, 35, 54, 18): a shelf where the exchange happens
     shelf(img, 117, 48, 50, SEED + 7)
     left = (icons.PURSE, icons.K_PURSE) if buy else (SLAT11, K_W)

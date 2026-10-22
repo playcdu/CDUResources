@@ -199,8 +199,8 @@ def blank_card(img, x, y, w, h, seed):
     """A pinned parchment card with sky ruled lines (no words) and a curl."""
     P.parchment_panel(img, (x, y, w, h), seed, outline='ink_1', fibres=True)
     P.hline(img, x + 3, x + w - 4, y + 5, BERRY[2])                  # margin rule
-    for k in range(9, h - 4, 4):
-        P.stitch_line(img, x + 3, y + k, x + w - 4, y + k, SKY[2], 4, 1, phase=k)
+    for k in range(9, h - 4, 4):                     # plain ruling, never pseudo-writing
+        P.hline(img, x + 3, x + w - 4, y + k, SKY[2])
     P.page_curl(img, (x, y, w, h), 'br', 5, behind=CORK_FRAME[0])
 
 
