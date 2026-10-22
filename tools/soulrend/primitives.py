@@ -34,8 +34,15 @@ import weakref
 from collections import deque
 from pathlib import Path as _Path
 
-if __name__ == 'primitives':
-    _sys.modules.setdefault('soulrend.primitives', _sys.modules[__name__])
+if __name__ == 'primitives':                 # imported by its plain name from tools/soulrend
+    # one module object per process: if the package copy exists, the plain name
+    # becomes it (the import machinery returns sys.modules[name]); else this
+    # module also serves as soulrend.primitives. Shared state (backdrop, cut and
+    # lettering registries) therefore never splits across two copies.
+    if 'soulrend.primitives' in _sys.modules:
+        _sys.modules[__name__] = _sys.modules['soulrend.primitives']
+    else:
+        _sys.modules['soulrend.primitives'] = _sys.modules[__name__]
 _TOOLS = _Path(__file__).resolve().parents[1]
 if str(_TOOLS) not in _sys.path:
     _sys.path.append(str(_TOOLS))
@@ -421,6 +428,54 @@ def backdrop_pixel(img, x, y):
     return None
 
 
+_CUTS = {}          # id(img) -> (weakref to img, [(x, y, before RGBA, after RGBA), ...])
+
+
+def _record_cuts(img, before, box):
+    """Remember every cell an edge cut (deckle notch, tear) changed inside
+    ``box`` grown by 1 px, comparing ``before`` (a full-image copy taken just
+    before the cut) with ``img``."""
+    x, y, w, h = box
+    bp, ip = before.load(), img.load()
+    cells = []
+    for yy in range(max(0, y - 1), min(img.height, y + h + 1)):
+        for xx in range(max(0, x - 1), min(img.width, x + w + 1)):
+            if bp[xx, yy] != ip[xx, yy]:
+                cells.append((xx, yy, bp[xx, yy], ip[xx, yy]))
+    if not cells:
+        return
+    for k in [k for k, (ref, _) in _CUTS.items() if ref() is None]:
+        del _CUTS[k]
+    entry = _CUTS.get(id(img))
+    if entry is None or entry[0]() is not img:
+        entry = (weakref.ref(img), [])
+        _CUTS[id(img)] = entry
+    entry[1].extend(cells)
+
+
+def restore_cuts(img, x0, x1, y0=None, y1=None):
+    """Undo recorded edge cuts (``vellum_strip`` deckle notches, ``torn_edge``
+    tears) whose cells lie in columns ``x0 .. x1`` (and rows ``y0 .. y1`` when
+    given), wherever the cell still shows exactly what the cut left.
+    ``compose.letter`` calls this for the label's columns plus 1 px either
+    side, so no notch is ever cut under a label. Returns the cells restored."""
+    entry = _CUTS.get(id(img))
+    if entry is None or entry[0]() is not img:
+        return 0
+    px = img.load()
+    keep, n = [], 0
+    for cell in entry[1]:
+        x, y, before, after = cell
+        inside = x0 <= x <= x1 and (y0 is None or y0 <= y <= y1)
+        if inside and px[x, y] == after:
+            px[x, y] = before
+            n += 1
+        elif not inside:
+            keep.append(cell)
+    entry[1][:] = keep
+    return n
+
+
 def reveal(img, x, y, under=None):
     """Cut one cell out of a painted surface: show ``under`` (an image
     snapshot taken before painting) at (x, y), else the remembered backdrop
@@ -616,8 +671,11 @@ def vellum_strip(img, box, seed=0, outline='ink_1', deckle='tb', ramp=VELLUM, fi
     for (i, j) in edge:
         s = _side(inside, i, j)
         put(img, x + i, y + j, 'ink_0' if any(c in heavy for c in s if c in 'br') else outline)
-    for side in deckle:
-        _deckle(img, box, side, r, outline, ramp, under)
+    if deckle:
+        uncut = img.copy()
+        for side in deckle:
+            _deckle(img, box, side, r, outline, ramp, under)
+        _record_cuts(img, uncut, box)
     return box
 
 
@@ -666,6 +724,7 @@ def torn_edge(img, box, edge='r', seed=0, depth=3, behind=None, ramp=VELLUM, out
     inside."""
     x, y, w, h = box
     r = _rng(seed, 'torn', edge, box)
+    uncut = img.copy()
     n = h if edge in 'lr' else w
     d = r.randint(0, depth)
     for i in range(n):
@@ -691,6 +750,7 @@ def torn_edge(img, box, edge='r', seed=0, depth=3, behind=None, ramp=VELLUM, out
                 put(img, px, py, ('ember_0' if (i % 3) else 'umber_0') if burnt else ramp[0])
             elif burnt and k == depth - d + 2 and i % 2:
                 put(img, px, py, ramp[0])
+    _record_cuts(img, uncut, box)
 
 
 def page_curl(img, box, corner='br', size=5, ramp=VELLUM, outline='ink_1', behind=None, under=None):
@@ -1288,6 +1348,9 @@ def _inert_letter(p):
     return IRON[3] if luminance(p) >= 88 else INK[1]
 
 
+CRACK_CLEAR = 3     # Chebyshev distance a disabled crack pixel keeps from every glyph pixel
+
+
 def make_disabled(img, lettering=None, cracks=True, seed=0):
     """Cold grey stone, label included: every non-ink pixel is mapped by
     luminance onto just three flat tones, ink_1 / iron_1 / iron_2 (thresholds
@@ -1297,8 +1360,11 @@ def make_disabled(img, lettering=None, cracks=True, seed=0):
     exactly but are recoloured into the dead-stone lettering register
     (``_inert_letter``: gold -> iron_3, vellum_3 -> iron_3, ink stays ink), so
     a disabled primary reads grey-on-grey rather than gold-on-grey. With
-    ``cracks`` two short hairline cracks (ink_1) are scored across the face,
-    kept 1 px clear of the lettering. Alpha unchanged."""
+    ``cracks`` two short hairline cracks (ink_1) are scored across the face:
+    every crack pixel keeps a Chebyshev distance of at least
+    ``CRACK_CLEAR`` (3, i.e. two clear pixels) from every lettering pixel, and
+    any 8-connected crack remnant shorter than 3 px after that clipping is
+    dropped, so a crack never reads as part of a glyph. Alpha unchanged."""
     lettering = lettering or set()
     out = img.copy()
     px = out.load()
@@ -1313,17 +1379,36 @@ def make_disabled(img, lettering=None, cracks=True, seed=0):
                 px[x, y] = _inert(p) + (p[3],)
     if cracks and out.width >= 18 and out.height >= 12:
         dist = edge_distance(out, 3)
-        near = {(x + dx, y + dy) for (x, y) in lettering for dx in (-1, 0, 1) for dy in (-1, 0, 1)}
+        c = CRACK_CLEAR - 1
+        near = {(x + dx, y + dy) for (x, y) in lettering for dx in range(-c, c + 1) for dy in range(-c, c + 1)}
         r = _rng(seed, 'disabled', out.size)
         starts = [(2 + r.randint(0, 3), 2), (out.width - 6 - r.randint(0, 3), out.height - 3)]
+        crack_px = set()
         for k, (sx, sy) in enumerate(starts):
             cx, cy = sx, sy
             for i in range(5 if out.height < 30 else 8):
                 if 0 <= cx < out.width and 0 <= cy < out.height and px[cx, cy][3] and \
-                        (cx, cy) not in near and (dist[cy][cx] or 0) >= 1 and not _is_ink(px[cx, cy]):
-                    px[cx, cy] = INK[1] + (px[cx, cy][3],)
+                        (cx, cy) not in near and (dist[cy][cx] or 0) >= 1 and not _is_ink(px[cx, cy]) \
+                        and px[cx, cy][:3] != INK[1]:
+                    crack_px.add((cx, cy))
                 cx += 1 if k == 0 else -1
                 cy += (1 if k == 0 else -1) if (i % 3 != 1) else 0
+        seen = set()
+        for p0 in sorted(crack_px):
+            if p0 in seen:
+                continue
+            comp, todo = set(), [p0]
+            while todo:
+                q = todo.pop()
+                if q in seen:
+                    continue
+                seen.add(q)
+                comp.add(q)
+                todo.extend((q[0] + dx, q[1] + dy) for dx in (-1, 0, 1) for dy in (-1, 0, 1)
+                            if (q[0] + dx, q[1] + dy) in crack_px)
+            if len(comp) >= 3:
+                for (qx, qy) in comp:
+                    px[qx, qy] = INK[1] + (px[qx, qy][3],)
     return out
 
 
@@ -1463,9 +1548,10 @@ def make_disabled_seal(img):
 def make_state(img, state, protect=None, seal=False, glyphs=None):
     """Apply the shared transform for a state name to a painted normal frame.
 
-    ``protect``: lettering pixels plus a 1 px halo (pulses never touch them);
-    ``glyphs``: the lettering pixels alone (selected keeps them; disabled keeps
-    their position and alpha but dims their colour; defaults to ``protect``).
+    ``protect``: lettering pixels plus a 1 px halo (selected and the pulses
+    never touch them); ``glyphs``: the lettering pixels alone (disabled keeps
+    their position and alpha but dims their colour and keeps its cracks
+    ``CRACK_CLEAR`` away from them; defaults to ``protect``).
     ``seal``: a wax-seal control (disabled uses ``make_disabled_seal``)."""
     glyphs = protect if glyphs is None else glyphs
     if state == 'normal':
@@ -1473,7 +1559,7 @@ def make_state(img, state, protect=None, seal=False, glyphs=None):
     if state == 'disabled':
         return make_disabled_seal(img) if seal else make_disabled(img, glyphs)
     if state == 'selected':
-        return make_selected(img, glyphs)
+        return make_selected(img, protect)
     if state.startswith('pulse_'):
         return make_pulse(img, int(state[-1]), protect)
     raise ValueError(f'unknown state {state!r}')

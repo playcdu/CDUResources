@@ -28,8 +28,15 @@ import sys as _sys
 import weakref as _weakref
 from pathlib import Path as _Path
 
-if __name__ == 'compose':
-    _sys.modules.setdefault('soulrend.compose', _sys.modules[__name__])
+if __name__ == 'compose':                 # imported by its plain name from tools/soulrend
+    # one module object per process: if the package copy exists, the plain name
+    # becomes it (the import machinery returns sys.modules[name]); else this
+    # module also serves as soulrend.compose. Shared state (backdrop, cut and
+    # lettering registries) therefore never splits across two copies.
+    if 'soulrend.compose' in _sys.modules:
+        _sys.modules[__name__] = _sys.modules['soulrend.compose']
+    else:
+        _sys.modules['soulrend.compose'] = _sys.modules[__name__]
 _TOOLS = _Path(__file__).resolve().parents[1]
 for _p in (str(_TOOLS), str(_TOOLS / 'cozy')):
     if _p not in _sys.path:
@@ -305,14 +312,20 @@ def _label_options(button, rune=True):
     return options
 
 
+def _label_height(lines, face, gap):
+    """Full glyph extent of a label block: every line's cap height plus the
+    gaps, plus the descender rows when the LAST line uses them (g j p q y)."""
+    f = L.FACES[face]
+    return (len(lines) - 1) * (f.cap_height + gap) + L.text_height(lines[-1], face)
+
+
 def _label_plan(button, box, rune=True):
     """Choose (lines, face, gap) that fit ``box``: GRAVEN capitals, then GRAVEN
     mixed case (label only), then RUNE capitals (unless ``rune`` is False).
-    Never invents words."""
+    Never invents words. Descenders count toward the height."""
     _, _, w, h = box
     for lines, face, gap in _label_options(button, rune):
-        f = L.FACES[face]
-        tall = len(lines) * f.cap_height + (len(lines) - 1) * gap
+        tall = _label_height(lines, face, gap)
         if all(L.text_width(t, face) <= w for t in lines) and tall <= h:
             return lines, face, gap
     raise ValueError(f'label {button.text_lines} does not fit {box} for {button.id}')
@@ -326,11 +339,12 @@ def _layout_offsets(lines, face, gap):
 
 
 def label_layout(button, box):
-    """[(x, y, text, face)] for each line ``letter`` draws in ``box``."""
+    """[(x, y, text, face)] for each line ``letter`` draws in ``box``,
+    centred vertically on the full glyph extent (descenders included, so a
+    mixed-case 'Privacy' sits one row higher than its caps alone would)."""
     lines, face, gap = _label_plan(button, box)
-    f = L.FACES[face]
     x, y, w, h = box
-    total = len(lines) * f.cap_height + (len(lines) - 1) * gap
+    total = _label_height(lines, face, gap)
     top = y + (h - total + 1) // 2
     cx = x + (w + 1) // 2
     return [(cx + dx, top + dy, t, face) for (dx, dy), t in zip(_layout_offsets(lines, face, gap), lines)]
@@ -368,8 +382,15 @@ def lettered_pixels(img, button):
 
 def letter(img, button, box, colour, shadow=None):
     """Letter the button's own label centred in ``box``. Returns (lines, face).
-    The glyph pixels are remembered for ``lettering_mask``."""
+    First undoes any deckle notch or tear (``primitives.restore_cuts``) in the
+    label's columns plus 1 px either side, within 3 rows of the box, so no
+    edge cut ever sits under a label; the glyph pixels are remembered for
+    ``lettering_mask``."""
     layout = label_layout(button, box)
+    pix = label_pixels(layout)
+    if pix:
+        P.restore_cuts(img, min(x for x, _ in pix) - 1, max(x for x, _ in pix) + 1,
+                       box[1] - 3, box[1] + box[3] + 2)
     for lx, ly, t, face in layout:
         L.draw_text(img, lx, ly, t, colour, shadow, face=face)
     _remember_lettering(img, button, label_pixels(layout))
@@ -620,11 +641,13 @@ def lettering_mask(img, button, halo=True):
     image object; (2) a whole-label template search (the label's own lines,
     face and spacing, >= 90 % of its pixels in one colour), which finds
     lettering on copies and in hand-chosen boxes; (3) for genuinely
-    hand-lettered labels, the old word / character shape search. Transparent
-    pixels and the outer ``RIM_RINGS`` rings of the shape (outline and first
-    inner ring) are never part of the mask, so a rim or a clipped corner can
-    never squeeze the pulse rings. Icons and unlettered faces return an empty
-    set."""
+    hand-lettered labels, the old word / character shape search, whose hits
+    on the outer ``RIM_RINGS`` rings (outline and first inner ring) are
+    discarded so a rim or a clipped corner can never pass for a letter. The
+    1 px halo is always kept in full, even within 2 px of the texture edge,
+    so a pulse ring never touches a descender over a torn edge. Transparent
+    pixels are never part of the mask. Icons and unlettered faces return an
+    empty set."""
     if button.icon or button_kind(button) in ('close', 'icon'):
         return set()
     W, H = img.size
@@ -635,6 +658,9 @@ def lettering_mask(img, button, halo=True):
         found = _search_label(img, button)
     if not found:
         found = _shape_search(img, button)
+        if found:
+            dist = P.edge_distance(img, RIM_RINGS)
+            found = {(x, y) for (x, y) in found if dist[y][x] is not None and dist[y][x] >= RIM_RINGS}
     if halo and found:
         grown = set(found)
         for (x, y) in found:
@@ -643,10 +669,7 @@ def lettering_mask(img, button, halo=True):
                     if 0 <= x + dx < W and 0 <= y + dy < H:
                         grown.add((x + dx, y + dy))
         found = grown
-    if found:
-        dist = P.edge_distance(img, RIM_RINGS)
-        found = {(x, y) for (x, y) in found if a[x, y] and dist[y][x] is not None and dist[y][x] >= RIM_RINGS}
-    return found
+    return {(x, y) for (x, y) in found if a[x, y]}
 
 
 def button_states(normal, key, button_id, overrides=None):
@@ -654,8 +677,8 @@ def button_states(normal, key, button_id, overrides=None):
     shared transforms; ``overrides`` maps state -> hand-adjusted image.
 
     The button's lettering (``lettering_mask``) keeps its shape and alpha in
-    every state: selected keeps the glyph pixels exactly, pulses keep the
-    glyphs and their 1 px halo exactly, and disabled recolours the glyphs into
+    every state: selected and the pulses keep the glyphs and their 1 px halo
+    exactly, and disabled recolours the glyphs into
     the dead-stone lettering register (gold and vellum -> iron_3, ink stays
     ink) so the whole control reads inert.
     The close seal (``button_kind == 'close'``) uses

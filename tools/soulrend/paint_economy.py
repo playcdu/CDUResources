@@ -401,26 +401,10 @@ def ledger_bookmark(img, x):
     P.sprite(img, x, 0, ['oso', 'oso', 'oso', 'oso', 'oto', 'r.r'])
 
 
-def privacy_strip(key, b, seed):
-    """The 36 px Privacy strip. Its label only fits in GRAVEN mixed case
-    without rivets, and the 'y' descender hangs two rows below the cap
-    height; ``compose.letter`` centres the caps, which leaves the descender
-    one row off the bottom deckle so every pulse ring ran against it. The
-    same strip and label, lettered one row higher: caps rows 5-11 and the
-    descender on 12-13, centred on the strip with clear air for the rings."""
-    img = C.new(b.w, b.h)
-    x, y, w, h = C.secondary_face(img, b.body.tuple(), seed, rivets=False)
-    C.letter(img, b, (x, y - 1, w, h), 'ink_0')
-    return img
-
-
 def paint_buttons(key, out, seed):
     s = geo.skin(key)
     for b in s.buttons:
-        if key == 'economy_hub' and b.id == 'privacy':
-            img = privacy_strip(key, b, seed)
-        else:
-            img = C.paint_button(key, b.id, seed=seed)
+        img = C.paint_button(key, b.id, seed=seed)   # descender-aware centring is shared now
         if key == 'economy_hub':
             if b.id == 'auction':
                 plate_touches(img, b, GAVEL)

@@ -115,6 +115,10 @@ Do:
   backdrop automatically; before painting paper by hand, call
   `P.remember_backdrop(img, box)` (or pass `under=` a snapshot) so a later
   tear knows what to show. `behind=<colour>` still forces a flat fill.
+- **No cut under a label.** Deckle notches and tears are recorded as they are
+  cut; `compose.letter` undoes any of them in the label's columns plus 1 px
+  either side before it letters, so a descender or the pulse ring never sits
+  over a notch.
 - **Masonry with intent.** Ashlar courses of 7-16 px blocks, mostly stone_1,
   some stone_2, a rare sunken stone_0 block, chipped corners, a crack, moss
   that grows more often toward the damp bottom (`stone_blocks(moss=)`). Tune
@@ -229,8 +233,8 @@ Hand-adjust afterwards if needed and pass the result through
 | State | Transform | Reads as |
 |---|---|---|
 | normal | as painted | at rest |
-| disabled | `make_disabled`: every non-ink face pixel is mapped by luminance onto three flat cold tones, ink_1 / iron_1 / iron_2 (thresholds 42 / 88): gold, blood and vellum go dead, bevels flatten, glints vanish. **The lettering is dimmed too**: each glyph pixel keeps its exact position and alpha but is recoloured into the dead-stone lettering register (light lettering such as gold_2 or vellum_3 becomes iron_3, dark non-ink lettering ink_1, ink stays ink), so a disabled primary reads grey-on-grey, never gold-on-grey; the same applies to GRAVEN and RUNE labels on secondary, danger, info and page faces. Two short ink_1 hairline cracks are scored across the face, kept 1 px clear of the letters. The close seal uses `make_disabled_seal`: blood wax cools to iron_0/1/2, the X keeps its ink | cold grey stone, label included: dim, clearly inert, still legible |
-| selected | `make_selected`: every non-ink colour except the lettering moves one ramp step lighter (raised); the first interior ring becomes a soul-cyan rim (soul_2 on the top/left runs over dark surfaces, soul_1 elsewhere, soul_0 on the bottom/right runs); a 3 px soul sparkle in the top-right interior | lit by soul-light, raised |
+| disabled | `make_disabled`: every non-ink face pixel is mapped by luminance onto three flat cold tones, ink_1 / iron_1 / iron_2 (thresholds 42 / 88): gold, blood and vellum go dead, bevels flatten, glints vanish. **The lettering is dimmed too**: each glyph pixel keeps its exact position and alpha but is recoloured into the dead-stone lettering register (light lettering such as gold_2 or vellum_3 becomes iron_3, dark non-ink lettering ink_1, ink stays ink), so a disabled primary reads grey-on-grey, never gold-on-grey; the same applies to GRAVEN and RUNE labels on secondary, danger, info and page faces. Two short ink_1 hairline cracks are scored across the face; every crack pixel keeps two clear pixels from the lettering (Chebyshev distance >= 3, `CRACK_CLEAR`) and any remnant shorter than 3 px after that clipping is dropped, so a crack never reads as a stroke of a glyph. The close seal uses `make_disabled_seal`: blood wax cools to iron_0/1/2, the X keeps its ink | cold grey stone, label included: dim, clearly inert, still legible |
+| selected | `make_selected`: every non-ink colour except the lettering and its 1 px border moves one ramp step lighter (raised); the first interior ring becomes a soul-cyan rim (soul_2 on the top/left runs over dark surfaces, soul_1 elsewhere, soul_0 on the bottom/right runs); a 3 px soul sparkle in the top-right interior | lit by soul-light, raised |
 | pulse_1 | `make_pulse(img, 1, protect)`: a bright ember ring 3 px in from the edge; unlettered faces (icons, seals) also warm one step in the core | the bonfire flares |
 | pulse_2 | `make_pulse(img, 2, protect)`: the ring expands to 2 px in; afterglow (one step lighter) where it was | the glow spreads |
 | pulse_3 | `make_pulse(img, 3, protect)`: a faint checker-dithered ring 1 px in (ember_0 on dark, ember_1 on light), afterglow at 2 px | fading; the next frame is the resting state |
@@ -241,12 +245,14 @@ the label geometry rather than by guessing shapes: (1) the exact glyph pixels
 `compose.letter` drew on that image; else (2) a whole-label template search
 (the label's own lines, face and spacing; at least 90 % of its pixels in one
 colour), which finds lettering on copies and in hand-chosen boxes; only for
-genuinely hand-lettered labels (3) the old word / character shape search. The
-outline and the first inner ring of the shape are never part of the mask, so
-a rim or a clipped corner can never pass for a "1" or an "I" and squeeze the
-pulse rings.
-Selected keeps the glyph pixels exactly; pulses keep the glyphs plus a 1 px
-halo that holds the text shadow and contrast ring; disabled recolours the
+genuinely hand-lettered labels (3) the old word / character shape search,
+whose hits on the outline and first inner ring are discarded, so a rim or a
+clipped corner can never pass for a "1" or an "I" and squeeze the pulse
+rings. The 1 px halo round the lettering is always kept in full, even within
+2 px of the texture edge, so a pulse ring never touches a descender over a
+torn edge.
+Selected and every pulse frame keep the glyphs plus that 1 px border (which
+holds the text shadow and contrast ring) exactly; disabled recolours the
 glyph pixels in place as described above. When lettering comes
 closer than 4 px to the edge, as on most 18 px tall buttons, the three ring
 depths are compressed into the free band between edge and letters
@@ -459,6 +465,10 @@ their rivets before falling back to RUNE. Every one of the 157 labels fits:
 121 regions use GRAVEN capitals, 10 GRAVEN mixed case (Buy Price, Sell Price,
 Decrease, Privacy, Opt 2, Create), 9 RUNE (only the two-line labels on 18 px
 buttons: CHEST / SHOPS, YOUR / MONEY, THEIR / MONEY), and 17 are icons.
+
+Labels are centred on their full glyph extent: a mixed-case label with a
+descender (g j p q y) on an 18 px strip sits one row higher than its caps
+alone would, so the descender clears the bottom edge and the pulse rings.
 
 Colours: gold_2 with an ink_0 shadow on iron; ink_0 on vellum and stone;
 vellum_3 with a blood_0 shadow on blood cloth; vellum_3 with `outline=ink_0`

@@ -793,59 +793,12 @@ def paint_one_button(key, b, seed):
     return img
 
 
-CRACK_CLEAR = 3      # Chebyshev distance a disabled crack pixel keeps from any glyph
-
-
-def disabled_override(normal, b):
-    """The shared disabled frame with its hairline cracks kept 2 clear
-    pixels from the lettering. The shared transform keeps them only 1 px
-    clear, and on the small ink-lettered strips and tags a crack ending
-    diagonally off a glyph read as part of it ("Tier/1", "STOCK" with a long
-    leg, a cedilla under the c of Price, a tail on the Y of QUANTITY). Crack
-    pixels nearer than ``CRACK_CLEAR`` are left uncracked and any remnant
-    shorter than 3 px is dropped; everything else (the dimmed face, the
-    dimmed lettering, alpha) is the shared ``make_disabled`` result. Returns
-    None when nothing needs changing."""
-    glyphs = C.lettering_mask(normal, b, halo=False)
-    if not glyphs or C.button_kind(b) == 'close':
-        return None
-    full = P.make_disabled(normal, glyphs)
-    bare = P.make_disabled(normal, glyphs, cracks=False)
-    fp, bp = full.load(), bare.load()
-    crack = {(x, y) for y in range(full.height) for x in range(full.width) if fp[x, y] != bp[x, y]}
-    far = {(x, y) for (x, y) in crack
-           if all(max(abs(x - gx), abs(y - gy)) >= CRACK_CLEAR for (gx, gy) in glyphs)}
-    if far == crack:
-        return None
-    keep, seen = set(), set()
-    for p0 in sorted(far):
-        if p0 in seen:
-            continue
-        comp, todo = set(), [p0]
-        while todo:
-            q = todo.pop()
-            if q in seen:
-                continue
-            seen.add(q)
-            comp.add(q)
-            todo.extend((q[0] + dx, q[1] + dy) for dx in (-1, 0, 1) for dy in (-1, 0, 1)
-                        if (q[0] + dx, q[1] + dy) in far)
-        if len(comp) >= 3:
-            keep |= comp
-    out = bare.copy()
-    for q in keep:
-        out.putpixel(q, fp[q])
-    return out
-
-
 def paint_buttons(key, root=None):
     s = geo.skin(key)
     seed = SEEDS[key]
     for i, b in enumerate(s.buttons):
         normal = paint_one_button(key, b, seed + i)
-        dis = disabled_override(normal, b)
-        states = C.button_states(normal, key, b.id,   # shared transforms (rim-safe lettering mask)
-                                 overrides={'disabled': dis} if dis is not None else None)
+        states = C.button_states(normal, key, b.id)   # shared transforms (crack clearance built in)
         C.save_button_states(states, key, b.id, root=root)
 
 

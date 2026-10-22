@@ -19,8 +19,15 @@ from __future__ import annotations
 import sys as _sys
 from pathlib import Path as _Path
 
-if __name__ == 'icons':
-    _sys.modules.setdefault('soulrend.icons', _sys.modules[__name__])
+if __name__ == 'icons':                 # imported by its plain name from tools/soulrend
+    # one module object per process: if the package copy exists, the plain name
+    # becomes it (the import machinery returns sys.modules[name]); else this
+    # module also serves as soulrend.icons. Shared state (backdrop, cut and
+    # lettering registries) therefore never splits across two copies.
+    if 'soulrend.icons' in _sys.modules:
+        _sys.modules[__name__] = _sys.modules['soulrend.icons']
+    else:
+        _sys.modules['soulrend.icons'] = _sys.modules[__name__]
 _TOOLS = _Path(__file__).resolve().parents[1]
 if str(_TOOLS) not in _sys.path:
     _sys.path.append(str(_TOOLS))

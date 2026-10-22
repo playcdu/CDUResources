@@ -71,7 +71,10 @@ PY=C:\Users\Brandon\.cache\codex-runtimes\codex-primary-runtime\dependencies\pyt
    `tools/` on `sys.path` and use `from soulrend import compose, primitives`.
    Inside the package every module imports its siblings as
    `soulrend.<name>`, so Soulrend and cozy modules with the same names never
-   collide in one process.
+   collide in one process. Plain-name and package imports always give the
+   same module object (`import primitives` after `import compose` is
+   `soulrend.primitives`), so the shared registries (remembered backdrops,
+   edge cuts, lettering) are never split between two copies.
 
 2. Validate exactly as the builder does, linting against this palette:
 

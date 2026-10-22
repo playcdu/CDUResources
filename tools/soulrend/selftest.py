@@ -14,8 +14,10 @@
    images that pass the builder's own validators for EVERY skin, button and
    state; every pixel is on the Soulrend palette with alpha 0 or 255; the
    live title and inventory glyph rows are light vellum (the --style lint);
-   the state transforms leave alpha byte-identical; selected never changes a
-   lettering pixel and pulses never change a lettering pixel or its 1 px halo;
+   the state transforms leave alpha byte-identical; neither selected nor any
+   pulse changes a lettering pixel or any pixel of the 1 px border around the
+   lettering; disabled cracks keep two clear pixels (Chebyshev >= 3) from every
+   lettering pixel;
    disabled keeps every lettering pixel in place but only in the dead-stone
    register (ink or iron_3 / ink_1, never gold, vellum, blood, ember or soul);
    every lettered button has detectable lettering; the six state images of
@@ -25,7 +27,8 @@
    least 90 % of the label pixels ``compose.letter`` drew;
 4. unless ``--skip-pack-source``: on the painted pack-source buttons, the six
    states are pairwise different, lettering is detected on every lettered
-   button, and no pulse touches the lettering or its halo.
+   button, neither selected nor any pulse touches the lettering or its 1 px
+   border, and disabled cracks keep two clear pixels from the lettering.
 
 Licence: MIT.
 """
@@ -48,6 +51,7 @@ import geometry as geo  # noqa: E402
 from soulrend import compose as C  # noqa: E402
 from soulrend import lettering as L  # noqa: E402
 from soulrend import palette as PAL  # noqa: E402
+from soulrend import primitives as P  # noqa: E402
 
 import build_pack  # noqa: E402
 import button_assets  # noqa: E402
@@ -86,6 +90,36 @@ def distinct_errors(states, label):
         for b in names[i + 1:]:
             if raw[a] == raw[b]:
                 errs.append(f'{label}: {a} and {b} are identical')
+    return errs
+
+
+def border(glyphs, size):
+    """Glyph pixels plus their 1 px 8-neighbour border, clipped to ``size``."""
+    w, h = size
+    return {(x + dx, y + dy) for (x, y) in glyphs for dx in (-1, 0, 1) for dy in (-1, 0, 1)
+            if 0 <= x + dx < w and 0 <= y + dy < h}
+
+
+def lettering_state_errors(normal, states, glyphs, label):
+    """Selected and pulses keep glyphs + 1 px border; disabled cracks keep
+    CRACK_CLEAR (Chebyshev) from every glyph."""
+    errs = []
+    ring = border(glyphs, normal.size)
+    npx = normal.load()
+    for st in ('selected', 'pulse_1', 'pulse_2', 'pulse_3'):
+        spx = states[st].load()
+        bad = [xy for xy in ring if spx[xy] != npx[xy]]
+        if bad:
+            errs.append(f'{label}/{st}: changed {len(bad)} pixel(s) of the lettering or its 1 px border, e.g. {bad[:3]}')
+    if glyphs:
+        bare = P.make_disabled(normal, glyphs, cracks=False).load()
+        dpx = states['disabled'].load()
+        cracks = [(x, y) for y in range(normal.height) for x in range(normal.width)
+                  if dpx[x, y] != bare[x, y] and dpx[x, y][:3] == PAL.INK[1] and npx[x, y][3]]
+        close = [c for c in cracks
+                 if min(max(abs(c[0] - gx), abs(c[1] - gy)) for (gx, gy) in glyphs) < P.CRACK_CLEAR]
+        if close:
+            errs.append(f'{label}/disabled: crack pixel(s) closer than {P.CRACK_CLEAR} px to lettering, e.g. {close[:3]}')
     return errs
 
 
@@ -171,8 +205,7 @@ def main(argv=None):
                     if cover < 0.9:
                         errors.append(f'{key}/{b.id}: lettering mask covers {cover:.0%} of the drawn label (< 90%)')
                 errors += distinct_errors(states, f'{key}/{b.id}')
-                if any(states['selected'].getpixel(xy) != normal.getpixel(xy) for xy in glyphs):
-                    errors.append(f'{key}/{b.id}/selected: transform touched lettering')
+                errors += lettering_state_errors(normal, states, glyphs, f'{key}/{b.id}')
                 dead = {PAL.IRON[3], PAL.INK[0], PAL.INK[1], PAL.INK[2]}
                 for xy in glyphs:
                     q = states['disabled'].getpixel(xy)
@@ -202,6 +235,8 @@ def main(argv=None):
                     if any(states[st].getpixel(xy) != normal.getpixel(xy) for xy in glyphs):
                         errors.append(f'pack-source {key}/{b.id}/{st}: pulse touched lettering')
                 errors += distinct_errors(states, f'pack-source {key}/{b.id}')
+                errors += lettering_state_errors(normal, states, C.lettering_mask(normal, b, halo=False),
+                                                 f'pack-source {key}/{b.id}')
                 painted += 1
     for e in errors:
         print('FAIL', e)

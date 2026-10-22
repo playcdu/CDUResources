@@ -25,8 +25,15 @@ from __future__ import annotations
 
 import sys as _sys
 
-if __name__ == 'palette':                      # loaded as a plain module from tools/soulrend
-    _sys.modules.setdefault('soulrend.palette', _sys.modules[__name__])
+if __name__ == 'palette':                 # imported by its plain name from tools/soulrend
+    # one module object per process: if the package copy exists, the plain name
+    # becomes it (the import machinery returns sys.modules[name]); else this
+    # module also serves as soulrend.palette. Shared state (backdrop, cut and
+    # lettering registries) therefore never splits across two copies.
+    if 'soulrend.palette' in _sys.modules:
+        _sys.modules[__name__] = _sys.modules['soulrend.palette']
+    else:
+        _sys.modules['soulrend.palette'] = _sys.modules[__name__]
 
 THEME = 'soulrend'
 

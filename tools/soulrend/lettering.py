@@ -26,8 +26,15 @@ from __future__ import annotations
 import sys as _sys
 from pathlib import Path as _Path
 
-if __name__ == 'lettering':
-    _sys.modules.setdefault('soulrend.lettering', _sys.modules[__name__])
+if __name__ == 'lettering':                 # imported by its plain name from tools/soulrend
+    # one module object per process: if the package copy exists, the plain name
+    # becomes it (the import machinery returns sys.modules[name]); else this
+    # module also serves as soulrend.lettering. Shared state (backdrop, cut and
+    # lettering registries) therefore never splits across two copies.
+    if 'soulrend.lettering' in _sys.modules:
+        _sys.modules[__name__] = _sys.modules['soulrend.lettering']
+    else:
+        _sys.modules['soulrend.lettering'] = _sys.modules[__name__]
 _TOOLS = _Path(__file__).resolve().parents[1]
 if str(_TOOLS) not in _sys.path:
     _sys.path.append(str(_TOOLS))
