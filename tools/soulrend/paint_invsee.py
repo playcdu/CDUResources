@@ -21,8 +21,8 @@ Family identity: a scrying mirror / soul-lens over a leather satchel.
 
 Backgrounds: the shared umber (online) or cold iron-grey (offline) sheet with
 saddle stitching in the margins and the vellum bands held by leather straps
-through iron buckles; iron-framed sockets round every native well. The only
-word is the INVSEE heading on the frame plaque (allowed by the brief).
+through iron buckles; iron-framed sockets round every native well. No words:
+the frame plaque is the wordless heraldic plaque like every Soulrend frame.
 
 Deterministic: fixed seeds, no clock. Licence: code MIT; artwork CC0-1.0.
 """
@@ -497,7 +497,7 @@ def paint_frame(key):
     lit = online(key)
     wall = STONE if lit else IRON
     ash = MOSS if lit else [STONE[0], STONE[1], STONE[2]]
-    img = C.base_frame(key, a.id, seed=seed, heading=True, ramp=wall)
+    img = C.base_frame(key, a.id, seed=seed, heading=False, ramp=wall)   # frames are wordless
     lp, rp = a.left_panel, a.right_panel
     H, W = a.h, a.w
     if not lit:

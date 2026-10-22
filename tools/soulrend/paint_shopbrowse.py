@@ -535,8 +535,11 @@ def paint_bg_chest6(key):
         P.sprite(img, lx, yi + 2, LANTERN_SMALL)
         P.glow(img, lx + 2, yi + 6, 6, 'ember')
 
+    # The right column's props are scene pieces, never item-shaped sprites
+    # centred in an 18 px static cell: the notice straddles the cell seams,
+    # the sconce bridges two cells and the sack slumps on the crate stack.
     if ads:
-        notice(img, 156, 36, 15, 19, seed=seed)
+        notice(img, 156, 32, 15, 24, seed=seed)
         P.crack(img, 168, 62, 5, seed=seed, colour=STONE[0], light=STONE[3])
     else:
         # light first, so the glass itself stays deep soul_0 (a spice, not a fill)
@@ -544,10 +547,11 @@ def paint_bg_chest6(key):
         P.sprite(img, 156, 34, LENS_BIG)
         P.sprite(img, 161, 47, ['oco', 'obo', 'oco', 'obo'])
         ledge(img, 157, 51, 14, seed, brackets=False)
-    candle_sconce(img, 163, 61, seed=seed, glow_r=9)
+    candle_sconce(img, 163, 63, seed=seed, glow_r=9)
     crate(img, 155, 95, 17, 11, seed)
     crate(img, 157, 85, 13, 9, seed + 1)
-    P.sprite(img, 158, 72, SACK_SMALL)
+    P.sprite(img, 156, 75, SACK_SMALL)                 # resting on the small crate
+    P.hline(img, 166, 168, 85, UMBER[0])               # its cast shadow on the lid
 
     P.chain(img, 4, 35, 4, 104, seed=seed + 3, shadow=None)
     P.sprite(img, W // 2 - 8, H - 5, CRATE_PLATE)
@@ -591,8 +595,9 @@ def paint_buttons(key):
 
 def _top_bottom(img, a, seed):
     W, H = a.w, a.h
-    P.chain(img, 12, 4, W // 2 - 32, 4, sag=2, seed=seed + 11)
-    P.chain(img, W // 2 + 31, 4, W - 13, 4, sag=2, seed=seed + 12)
+    # chains swag from the corners to the scroll ends of the wordless plaque
+    P.chain(img, 12, 4, W // 2 - 21, 4, sag=2, seed=seed + 11)
+    P.chain(img, W // 2 + 21, 4, W - 13, 4, sag=2, seed=seed + 12)
     for xa, xb in ((8, 120), (136, W - 9)):
         P.chain(img, xa, H - 6, xb, H - 6, sag=2, seed=seed + xa)
         P.rivet(img, xa - 2, H - 7, 'gold', 3); P.rivet(img, xb - 1, H - 7, 'gold', 3)
@@ -711,7 +716,7 @@ def paint_frame(key):
     seed = SEED[key]
     s = geo.skin(key)
     a = s.art_layers[0]
-    img = C.base_frame(key, a.id, seed=seed, heading=True)
+    img = C.base_frame(key, a.id, seed=seed)   # wordless plaque, like every Soulrend frame
     left_panel(img, a, key, seed)
     right_panel(img, a, key, seed)
     _top_bottom(img, a, seed)

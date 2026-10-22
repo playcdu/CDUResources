@@ -168,20 +168,19 @@ SOUND_BLOCK = [
     '.oooooo.',
 ]
 
-# scrying lens on a little iron stand (search), soul glass
-LENS_STAND = [
-    '..ooooo..',
+# the scrying lens on its chain: iron bezel with a hanging loop, deep soul_0
+# glass with a soul_2 / soul_1 glint top-left, iron collar below
+LENS_HUNG = [
+    '...ooo...',
+    '..ooaoo..',
     '.ocdccbo.',
-    'ockLlkkao',
-    'odLlkkkao',
-    'oclkkkkao',
-    'ockkkk0ao',
-    '.ockkkao.',
-    '..ooooo..',
-    '....o....',
-    '...obo...',
-    '..obbao..',
-    '.ooooooo.',
+    'ocLlkkkao',
+    'odlkkkkao',
+    'ockkkkkao',
+    'ockkkkbao',
+    '.ocbbbao.',
+    '..ooaoo..',
+    '...ooo...',
 ]
 
 # sealed writ (mine): a folded vellum packet tied with blood cord, big seal
@@ -497,15 +496,19 @@ def niche_market(img, key, seed):
     if prop == 'ledger':
         icons.draw_motif(img, 'ledger', x + 1, 79)
     elif prop == 'lens':
-        P.sprite(img, x + 3, 78, LENS_STAND)
+        # the scrying lens hangs on a short chain from the ledge above, its
+        # glass deep soul_0 with one glint, painted over its own soul-light so
+        # the glow pools on the masonry and never fills the glass: a lamp in
+        # the niche, not a glowing orb centred in a cell like an item
+        P.glow(img, x + 7, 82, 7, 'soul')
+        P.chain(img, x + 7, 72, x + 7, 75, seed=seed + 2, shadow=None)
+        P.sprite(img, x + 3, 76, LENS_HUNG)
     else:
         icons.draw_motif(img, 'writ', x + 1, 81)
     P.chain(img, x + 10, 95, x + 10, 95, seed=seed + 3, shadow=None)
     tag(img, x + 7, 96, 'blood', short=True)
     P.moss_tuft(img, x + 2, 94, 3, seed=seed)
     P.glow(img, fx, fy + 2, 11, 'ember')
-    if prop == 'lens':
-        P.glow(img, x + 7, 82, 7, 'soul')
 
 
 def paint_market_background(key, seed):
@@ -651,20 +654,50 @@ def paint_confirm_background(key, seed):
     return img
 
 
+# an hourglass incised into a dressed wall block (16 x 16, original CC0-1.0):
+# m = the groove in shadow, q = its lit lower/right lip (cold top-left light),
+# n = sand settled in the lower bulb; '.' leaves the stone_2 face
+HOURGLASS_RELIEF = [
+    '................',
+    '..mmmmmmmmmmmm..',
+    '...qqqqqqqqqqqq.',
+    '...m........mq..',
+    '...m........mq..',
+    '....m......mq...',
+    '.....m....mq....',
+    '......m..mq.....',
+    '.......mmq......',
+    '......m..mq.....',
+    '.....m....mq....',
+    '....m..nn..mq...',
+    '...m..nnnn..mq..',
+    '...mnnnnnnnnmq..',
+    '..mmmmmmmmmmmmq.',
+    '...qqqqqqqqqqqq.',
+]
+
+
+def hourglass_relief(img, x, y):
+    """Slot 13's wall block: a 16 x 16 dressed stone face (stone_2) set in
+    the sheet with an ink_1 lintel and jamb on the top/left and a stone_0
+    joint on the bottom/right, the hourglass cut into it in stone tones
+    only. ``x, y`` is the top-left of the 18 x 18 cell."""
+    P.fill(img, (x + 1, y + 1, 16, 16), STONE[2])
+    P.hline(img, x, x + 17, y, INK[1]); P.vline(img, x, y, y + 17, INK[1])
+    P.hline(img, x + 1, x + 17, y + 17, STONE[0]); P.vline(img, x + 17, y + 1, y + 17, STONE[0])
+    P.sprite(img, x + 1, y + 1, HOURGLASS_RELIEF,
+             {'m': STONE[0], 'q': STONE[3], 'n': STONE[1]})
+
+
 def paint_duration_background(key, seed):
     img = C.base_background(key, seed=seed)
     s = geo.skin(key)
-    # static slot 13 (x 79..96, y 35..52): a small round-headed niche between
-    # the 12 and 15 day strips, an hourglass standing on its sill
-    recess(img, (79, 35, 18, 18), seed, course=5, moss=0.0)
-    for yy in range(36, 40):
-        for xx in range(80, 96):
-            if (xx - 87.5) ** 2 + (yy - 42) ** 2 > 7.5 ** 2:
-                P.put(img, xx, yy, STONE[1] if (xx + yy) % 5 else STONE[2])
-    P.sprite(img, 86, 35, ['oqo', 'opo'])
-    P.sprite(img, 84, 36, HOURGLASS)
-    P.hline(img, 81, 94, 49, STONE[3]); P.hline(img, 81, 94, 50, STONE[1])
-    P.hline(img, 80, 95, 51, INK[0])
+    # static slot 13 (x 79..96, y 35..52), boxed in by the 3 day, 12 day and
+    # 15 day strips and Close: one dressed wall block filling the whole cell
+    # with an hourglass carved into it edge to edge. Stone tones only, no ink
+    # outline, no sill: a relief in the wall, never an object centred in a
+    # cell like an item.
+    hourglass_relief(img, 79, 35)
     # static slots 18-20 (x 7..60, y 53..70): a shelf scene - candle clock,
     # hourglass, the gavel at rest, a sealed writ
     recess(img, (6, 53, 56, 19), seed + 1, course=6, moss=0.0)
@@ -771,7 +804,7 @@ def paint_market_frame(key, seed):
 def paint_watchlist_frame(key, seed):
     s = geo.skin(key)
     a = s.layer()
-    img = C.base_frame(key, a.id, seed=seed, heading=True)
+    img = C.base_frame(key, a.id, seed=seed, heading=False)   # frames are wordless
     lp, rp = a.left_panel, a.right_panel
     H = a.h
     L, R = lp.x, rp.x
@@ -816,7 +849,7 @@ def paint_menu_frame(key, seed):
     """auction_confirm (238 tall) and auction_duration (184 tall)."""
     s = geo.skin(key)
     a = s.layer()
-    img = C.base_frame(key, a.id, seed=seed, heading=True)
+    img = C.base_frame(key, a.id, seed=seed, heading=False)   # frames are wordless
     L, R = a.left_panel.x, a.right_panel.x
     H = a.h
     tall = H > 200

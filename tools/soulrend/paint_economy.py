@@ -336,10 +336,14 @@ def plate_touches(img, b, emblem):
 
 
 def tablet_coins(img, b):
-    """Two gold coins inlaid in the ends of the balance tablet."""
+    """Two coin roundels incised into the ends of the balance tablet, in
+    stone tones only: a groove in shadow (stone_1) on the upper-left of each
+    ring, its lit lip (stone_2) lower-right. Cut into the stone, never gold
+    studs, so the read-only tablet carries no rivet-like hardware that would
+    echo the pressable vellum strips."""
     cy = b.h // 2 - 1
     for x in (3, b.w - 5):
-        P.sprite(img, x, cy - 1, ['.H.', 'Hhg', '.g.'])
+        P.sprite(img, x, cy - 1, ['.n.', 'n.p', '.p.'], {'n': STONE[1], 'p': STONE[2]})
 
 
 def ledger_bookmark(img, x):

@@ -588,8 +588,8 @@ def scene_listing(bg, key, seed, enabled):
     layer = C.new(bg.width, bg.height)
     P.stone_blocks(layer, box, seed, STONE, course=6, moss=0.08)
     P.ink_outline(layer, box, 'ink_1', radius=0, heavy='br')
-    # window opening, centred a little right of the lantern
-    wx, wy, ww, wh = x + 17, y + 3, 22, 13
+    # window opening in the right two cells; its shutters straddle the seams
+    wx, wy, ww, wh = x + 30, y + 3, 16, 13
     P.ink_outline(layer, (wx - 1, wy - 1, ww + 2, wh + 2), 'ink_1', radius=0)
     P.hline(layer, wx - 2, wx + ww + 1, wy + wh + 1, STONE[3])        # sill
     P.hline(layer, wx - 2, wx + ww + 1, wy + wh, STONE[2])
@@ -623,9 +623,10 @@ def scene_listing(bg, key, seed, enabled):
         P.hline(layer, wx - 3, wx + ww + 2, by + 2, 'ink_0')
         sprite(layer, wx + ww // 2 - 2, by - 1, PADLOCK)
         cobweb(layer, x + w - 7, y + 1, 'tr')
-    # the lantern on its bracket, left of the window
-    wall_bracket(layer, x + 1, y + 3, 6)
-    lx, ly = lantern(layer, x + 4, y + 5, lit=enabled)
+    # the lantern hangs from a long wall bracket across the seam of cells 36
+    # and 37 (never centred in one cell like an item icon)
+    wall_bracket(layer, x + 1, y + 3, 17)
+    lx, ly = lantern(layer, x + 14, y + 5, lit=enabled)
     if enabled:
         lamp_glow(layer, lx, ly, 8)
     paste(bg, layer, box)
@@ -682,7 +683,7 @@ def tag_face(img, b, seed):
     P.sprite(img, 2, cy, ['.oo.', 'oc.d', 'ob.c', '.ba.'])
     P.put(img, 1, cy + 1, VELLUM[0]); P.put(img, 1, cy + 2, VELLUM[0])
     P.put(img, w - 3, h - 3, VELLUM[0])
-    return (7, 2, w - 9, h - 4)
+    return (6, 2, w - 9, h - 4)            # centred between eyelet and rim
 
 
 def plate_gem(img, b, seed):
@@ -748,12 +749,58 @@ def paint_one_button(key, b, seed):
     return img
 
 
+def _state_overrides(normal, b):
+    """Hand-adjusted state frames where the shared derivation falls short.
+
+    1. ``compose.lettering_mask`` also matches single characters ("1", "I")
+       in the ink_0 rim and the clipped tag corners. Those rim pixels then
+       count as lettering, the pulse rings are compressed to 1/1/1 and
+       pulse_1 == pulse_2. Lettering never sits on the outer three rings, so
+       glyph hits there are dropped before the shared transforms run.
+    2. Where the real lettering (a descender) still leaves room for only one
+       ring, pulse_2 would equal pulse_1; it keeps the 1 px ring and adds the
+       afterglow one ring further in (never on lettering or its halo), so the
+       glow visibly spreads before pulse_3 fades it."""
+    w, h = normal.size
+    glyphs = C.lettering_mask(normal, b, halo=False)
+    if not glyphs:
+        return None
+    dist = P.edge_distance(normal, 6)
+    keep = {(x, y) for (x, y) in glyphs if dist[y][x] is not None and dist[y][x] >= 3}
+    if not keep:
+        return None
+    halo = C.lettering_mask(normal, b, halo=True)
+    near = {(x + dx, y + dy) for (x, y) in keep for dx in (-1, 0, 1) for dy in (-1, 0, 1)}
+    protect = {p for p in halo if p in near}
+    out = {st: P.make_state(normal, st, protect=protect, glyphs=keep)
+           for st in ('disabled', 'selected', 'pulse_1', 'pulse_2', 'pulse_3')}
+    if out['pulse_1'].tobytes() == out['pulse_2'].tobytes():
+        from palette import ramp_of, step
+        p2 = out['pulse_1'].copy()
+        px = p2.load()
+        for y in range(h):
+            for x in range(w):
+                q = px[x, y]
+                if q[3] == 0 or (x, y) in protect or dist[y][x] != 2 or (ramp_of(q) or ('',))[0] == 'ink':
+                    continue
+                px[x, y] = step(q, 1) + (q[3],)
+        out['pulse_2'] = p2
+    # whatever the shared detector calls lettering (rim hits included) stays
+    # exactly as painted in every pulse, so the selftest contract still holds
+    src = normal.load()
+    for st in ('pulse_1', 'pulse_2', 'pulse_3'):
+        px = out[st].load()
+        for (x, y) in halo:
+            px[x, y] = src[x, y]
+    return out
+
+
 def paint_buttons(key, root=None):
     s = geo.skin(key)
     seed = SEEDS[key]
     for i, b in enumerate(s.buttons):
         normal = paint_one_button(key, b, seed + i)
-        states = C.button_states(normal, key, b.id)
+        states = C.button_states(normal, key, b.id, overrides=_state_overrides(normal, b))
         C.save_button_states(states, key, b.id, root=root)
 
 
