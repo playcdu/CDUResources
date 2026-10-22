@@ -9,11 +9,19 @@
     python tools/cozy/preview.py economy_hub --buttons-sheet
     python tools/cozy/preview.py economy_hub --frame-alone | --background-alone
     python tools/cozy/preview.py --all            # every skin, default options
+    python tools/cozy/preview.py economy_hub --theme soulrend
 
 Output: a nearest-neighbour PNG (``--scale``, default 3) at ``--out`` or
-``evidence/cozy-previews/<key>[-<variant>].png``. Importable API:
-``render``, ``render_frame_alone``, ``render_background_alone``,
-``buttons_sheet``, ``export``.
+``evidence/cozy-previews/<key>[-<variant>].png`` (``--theme soulrend``:
+``evidence/soulrend-previews/``). Importable API: ``render``,
+``render_frame_alone``, ``render_background_alone``, ``buttons_sheet``,
+``export``, ``set_theme``, ``lettering_for``.
+
+``--theme {cozy,soulrend}`` (default: the QUASAR_GUI_THEME environment
+variable, else cozy; the flag wins) selects the face used for the schematic
+title, "Inventory" label and item counts (cozy HEARTH/SPRIG or Soulrend
+GRAVEN/RUNE) and the default output directory. The textures previewed are
+always the ones in pack-source (or the overrides given).
 
 Composition order (bottom to top), matching the client: dimmed world, a
 SCHEMATIC stand-in for the vanilla container texture (flat grey panel and slot
@@ -30,6 +38,9 @@ Licence: MIT.
 from __future__ import annotations
 
 import argparse
+import importlib
+import importlib.util
+import os
 import sys
 from pathlib import Path
 
@@ -44,6 +55,45 @@ import lettering as L  # noqa: E402
 
 ROOT = geo.ROOT
 OUT_DIR = ROOT / 'evidence' / 'cozy-previews'
+THEMES = ('cozy', 'soulrend')
+THEME_ENV = 'QUASAR_GUI_THEME'
+OUT_DIRS = {'cozy': OUT_DIR, 'soulrend': ROOT / 'evidence' / 'soulrend-previews'}
+_THEME = [None]
+
+
+def resolve_theme(name=None):
+    """Explicit name, else $QUASAR_GUI_THEME, else 'cozy'."""
+    theme = name or os.environ.get(THEME_ENV) or 'cozy'
+    if theme not in THEMES:
+        raise ValueError(f'unknown theme {theme!r}; choose one of {", ".join(THEMES)}')
+    return theme
+
+
+def set_theme(name=None):
+    """Select the theme used by later render calls (None: environment/default)."""
+    _THEME[0] = resolve_theme(name)
+    return _THEME[0]
+
+
+def current_theme():
+    return _THEME[0] or resolve_theme()
+
+
+def lettering_for(theme=None):
+    """Lettering module for the schematic text: cozy HEARTH/SPRIG or Soulrend
+    GRAVEN/RUNE (both accept the 'sprig' face name used for counts)."""
+    theme = resolve_theme(theme) if theme else current_theme()
+    if theme == 'soulrend':
+        return importlib.import_module('soulrend.lettering')
+    if Path(getattr(L, '__file__', '')).resolve().parent == _HERE:
+        return L
+    # another theme's module shadows the plain name: load the cozy one by path
+    if 'cozy_lettering' not in sys.modules:
+        spec = importlib.util.spec_from_file_location('cozy_lettering', _HERE / 'lettering.py')
+        mod = importlib.util.module_from_spec(spec)
+        sys.modules['cozy_lettering'] = mod
+        spec.loader.exec_module(mod)
+    return sys.modules['cozy_lettering']
 WORLD = (38, 34, 40, 255)
 TITLE_GREY = (64, 64, 64, 255)          # vanilla container label colour 0x404040
 MAGENTA = (255, 0, 255, 255)
@@ -125,24 +175,26 @@ def _item(img, slot, ox, oy, count):
     d.line((x + 3, y + 3, x + 6, y + 3), fill=(190, 194, 204, 255))
 
 
-def _count(img, slot, ox, oy, count):
+def _count(img, slot, ox, oy, count, Lm=None):
+    Lm = Lm or lettering_for()
     x, y = ox + slot.x, oy + slot.y
     if count > 1:
         t = str(count)
-        w = L.text_width(t, 'sprig')
-        L.draw_text(img, x + 17 - w, y + 11, t, ITEM_TEXT, shadow=(60, 60, 60, 255), face='sprig')
+        w = Lm.text_width(t, 'sprig')
+        Lm.draw_text(img, x + 17 - w, y + 11, t, ITEM_TEXT, shadow=(60, 60, 60, 255), face='sprig')
 
 
 def _title_text(key):
     return ' '.join(w.capitalize() for w in key.split('_'))
 
 
-def _live_text(img, s, ox, oy, long_title):
+def _live_text(img, s, ox, oy, long_title, Lm=None):
+    Lm = Lm or lettering_for()
     if not s.is_dispenser:
         ax, ay = s.title_anchor
         text = LONG_TITLE if long_title else _title_text(s.key)
         layer = Image.new('RGBA', img.size, (0, 0, 0, 0))
-        L.draw_text(layer, ox + ax, oy + ay, text, TITLE_GREY)
+        Lm.draw_text(layer, ox + ax, oy + ay, text, TITLE_GREY)
         if long_title:
             # live text is truncated to the layout text width
             clip = Image.new('RGBA', img.size, (0, 0, 0, 0))
@@ -151,7 +203,7 @@ def _live_text(img, s, ox, oy, long_title):
             layer = clip
         img.alpha_composite(layer)
     iv = s.inventory_label
-    L.draw_text(img, ox + iv.x, oy + iv.y, 'Inventory', TITLE_GREY)
+    Lm.draw_text(img, ox + iv.x, oy + iv.y, 'Inventory', TITLE_GREY)
 
 
 # ---------------------------------------------------------------------------
@@ -180,13 +232,15 @@ def button_state_map(s, state=None, states=None):
 
 
 def render(key, state=None, content='sample', long_title=False, overrides=None, states=None,
-           overrides_dir=None, outline_clearances=False, scale=1, schematic=True, frames=True):
+           overrides_dir=None, outline_clearances=False, scale=1, schematic=True, frames=True, theme=None):
     """Composite preview of ``key``. ``state`` forces one state on every
     button; ``states`` maps button id -> state (defaults come from
     button-layouts.json defaultStates). ``content``: 'sample' (about a third of
     the native wells + a few player slots), 'full' or 'empty'. Returns a PIL
-    image at ``scale`` (outlines are drawn 1 px thick after scaling)."""
+    image at ``scale`` (outlines are drawn 1 px thick after scaling).
+    ``theme`` picks the schematic lettering (default: ``current_theme()``)."""
     s = geo.skin(key)
+    Lm = lettering_for(theme)
     bx, by, bw, bh = bounds(s) if frames else (0, 0, s.width, s.height)
     ox, oy = -bx, -by
     img = Image.new('RGBA', (bw, bh), WORLD)
@@ -197,7 +251,7 @@ def render(key, state=None, content='sample', long_title=False, overrides=None, 
         for i, slot in enumerate(top + players):
             _item(img, slot, ox, oy, counts[i % 7])
         for i, slot in enumerate(top + players):   # counts overlap neighbours, like vanilla
-            _count(img, slot, ox, oy, counts[i % 7])
+            _count(img, slot, ox, oy, counts[i % 7], Lm)
     if frames:
         for a in s.art_layers:
             img.alpha_composite(load_texture(f'frames/{key}/{a.id}.png', overrides, overrides_dir), (ox + a.x, oy + a.y))
@@ -207,7 +261,7 @@ def render(key, state=None, content='sample', long_title=False, overrides=None, 
         img.alpha_composite(load_texture(f'buttons/{key}/{b.id}/{chosen[b.id]}.png', overrides, overrides_dir),
                             (ox + b.x, oy + b.y))
     if schematic:
-        _live_text(img, s, ox, oy, long_title)
+        _live_text(img, s, ox, oy, long_title, Lm)
     if scale != 1:
         img = img.resize((img.width * scale, img.height * scale), Image.Resampling.NEAREST)
     if outline_clearances:
@@ -328,7 +382,11 @@ def main(argv=None):
     ap.add_argument('--overrides-dir', type=Path, help='directory laid out like textures/ to preview instead')
     ap.add_argument('--scale', type=int, default=3)
     ap.add_argument('--out', type=Path)
+    ap.add_argument('--theme', choices=THEMES, help='schematic lettering and output directory '
+                    f'(default: ${THEME_ENV}, else cozy)')
     a = ap.parse_args(argv)
+    theme = set_theme(a.theme)
+    out_dir = OUT_DIRS[theme]
     keys = geo.all_skins() if a.all else [a.key]
     if not keys or keys == [None]:
         ap.error('give a skin key or --all')
@@ -360,7 +418,9 @@ def main(argv=None):
             if a.long_title: variant.append('long')
             if a.outline_clearances: variant.append('clearances')
             caption = (f'{key} PREVIEW - grey squares, titles and slot backdrop are schematic, not texture content')
-        out = a.out if (a.out and not a.all) else OUT_DIR / (key + ('-' + '-'.join(variant) if variant else '') + '.png')
+            if theme != 'cozy':
+                caption += f' (theme: {theme})'
+        out = a.out if (a.out and not a.all) else out_dir / (key + ('-' + '-'.join(variant) if variant else '') + '.png')
         export(img, out, caption)
         print(f'WROTE {out}')
     return 0

@@ -5,6 +5,7 @@
     python tools/cozy/validate.py --all
     python tools/cozy/validate.py economy_hub --style          # + cozy style lint
     python tools/cozy/validate.py --all --isolated-build       # + full build in a temp copy
+    python tools/cozy/validate.py --all --theme soulrend --style   # lint against the Soulrend palette
 
 Default mode reads the pack-source PNGs of the named skins and runs, in-process,
 exactly the functions ``tools/build_pack.py`` uses:
@@ -20,9 +21,14 @@ slots, as the builder does). One line per asset: ``PASS <path>`` or
 ``--isolated-build`` additionally copies pack-source, manifests, tools and the
 root docs into a fresh temporary directory and runs
 ``build_pack.py --no-kit --output <temp>/quasar-gui.zip`` there, so nothing in
-the shared tree or deliverables/ is written. ``--style`` adds non-fatal cozy
+the shared tree or deliverables/ is written. ``--style`` adds non-fatal style
 lint (palette conformance, light title / inventory bands, no pure black/white);
 ``--strict-style`` makes those lint findings fatal.
+
+``--theme {cozy,soulrend}`` selects the palette module the style lint checks
+against (tools/cozy/palette.py or tools/soulrend/palette.py). Default: the
+QUASAR_GUI_THEME environment variable, else cozy; the flag takes precedence.
+The contract checks (the builder's validators) are identical for every theme.
 
 Licence: MIT.
 """
@@ -30,6 +36,9 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib
+import importlib.util
+import os
 import shutil
 import subprocess
 import sys
@@ -51,6 +60,32 @@ from PIL import Image  # noqa: E402
 
 TEX = 'assets/quasar_gui/textures'
 HINT = chr(10) + '     hint: '
+THEMES = ('cozy', 'soulrend')
+THEME_ENV = 'QUASAR_GUI_THEME'
+
+
+def resolve_theme(name=None):
+    """Explicit name, else $QUASAR_GUI_THEME, else 'cozy'."""
+    theme = name or os.environ.get(THEME_ENV) or 'cozy'
+    if theme not in THEMES:
+        raise ValueError(f'unknown theme {theme!r}; choose one of {", ".join(THEMES)}')
+    return theme
+
+
+def palette_for(theme=None):
+    """The palette module whose MASTER / luminance the style lint uses."""
+    theme = resolve_theme(theme)
+    if theme == 'soulrend':
+        return importlib.import_module('soulrend.palette')
+    if Path(getattr(palette, '__file__', '')).resolve().parent == _HERE:
+        return palette
+    # another theme's module shadows the plain name: load the cozy one by path
+    if 'cozy_palette' not in sys.modules:
+        spec = importlib.util.spec_from_file_location('cozy_palette', _HERE / 'palette.py')
+        mod = importlib.util.module_from_spec(spec)
+        sys.modules['cozy_palette'] = mod
+        spec.loader.exec_module(mod)
+    return sys.modules['cozy_palette']
 
 
 def _rel(path):
@@ -98,12 +133,14 @@ def _check(results, path, fn):
     return raw
 
 
-def validate_skin(key, source_root=None, style=False):
+def validate_skin(key, source_root=None, style=False, theme=None):
     """Return a list of (ok, path, message) for every asset of ``key``.
 
     ``source_root`` defaults to pack-source; pass another directory laid out as
     ``assets/quasar_gui/textures/...`` to validate experiments elsewhere.
+    ``theme`` selects the palette for the style lint (see ``resolve_theme``).
     """
+    pal = palette_for(theme) if style else None
     layouts, skins, config = geometry.raw_manifests()
     s = skins[key]
     g = layouts[s['layout']]
@@ -112,7 +149,7 @@ def validate_skin(key, source_root=None, style=False):
     raw = _check(results, base / s['asset'], lambda r: build_pack.validate_png(r, g, s, key))
     if style and raw is not None:
         results += style_lint(key, Image.open(base / s['asset']).convert('RGBA'), 'background',
-                              _rel(base / s['asset']))
+                              _rel(base / s['asset']), pal)
     screen = config['screens'].get(key, {'buttons': []})
     for b in screen['buttons']:
         for state in button_assets.STATES:
@@ -122,12 +159,12 @@ def validate_skin(key, source_root=None, style=False):
                 ok_, path_, msg_ = results[-1]
                 results[-1] = (False, path_, msg_ + HINT + button_hint(key, b['id'], p))
             if style and raw is not None:
-                results += style_lint(key, Image.open(p).convert('RGBA'), 'button', _rel(p))
+                results += style_lint(key, Image.open(p).convert('RGBA'), 'button', _rel(p), pal)
     for layer in screen.get('artLayers', []):
         p = base / TEX / 'frames' / key / f'{layer["id"]}.png'
         raw = _check(results, p, lambda r, layer=layer: decorative_assets.validate(r, layer, g))
         if style and raw is not None:
-            results += style_lint(key, Image.open(p).convert('RGBA'), 'frame', _rel(p))
+            results += style_lint(key, Image.open(p).convert('RGBA'), 'frame', _rel(p), pal)
     return results
 
 
@@ -149,15 +186,18 @@ def text_rows(key):
     return out
 
 
-def style_lint(key, img, kind, label):
-    """Cozy style checks. Returns (ok, path, message) tuples tagged 'STYLE'."""
+def style_lint(key, img, kind, label, pal=None):
+    """Style checks against ``pal`` (a theme palette module, default cozy).
+    Returns (ok, path, message) tuples tagged 'STYLE'."""
+    pal = pal or palette_for('cozy')
     out = []
     pixels = [p for p in _pixels(img) if p[3]]
     if pixels:
-        allowed = set(palette.MASTER)
+        allowed = set(pal.MASTER)
         off = sum(1 for p in pixels if tuple(p[:3]) not in allowed)
         if off:
-            out.append((None, label, f'STYLE {off}/{len(pixels)} opaque pixels are off the master palette'))
+            out.append((None, label, f'STYLE {off}/{len(pixels)} opaque pixels are off the '
+                                     f'{getattr(pal, "THEME", "cozy")} master palette'))
         extremes = sum(1 for p in pixels if tuple(p[:3]) in ((0, 0, 0), (255, 255, 255)))
         if extremes:
             out.append((None, label, f'STYLE {extremes} pure black/white pixels'))
@@ -167,7 +207,7 @@ def style_lint(key, img, kind, label):
     if kind == 'background':
         for name, r in text_rows(key):
             crop = img.crop(r.crop_box())
-            vals = [palette.luminance(p) for p in _pixels(crop) if p[3]]
+            vals = [pal.luminance(p) for p in _pixels(crop) if p[3]]
             if not vals:
                 continue
             mean = sum(vals) / len(vals)
@@ -234,7 +274,9 @@ def main(argv=None):
     ap.add_argument('--isolated-build', action='store_true', help='also run the real builder in a temp copy')
     ap.add_argument('--keep-temp', action='store_true', help='keep the isolated build directory')
     ap.add_argument('--source-root', type=Path, help='validate a directory laid out like pack-source instead')
-    ap.add_argument('--style', action='store_true', help='print non-fatal cozy style lint')
+    ap.add_argument('--style', action='store_true', help='print non-fatal style lint for the theme')
+    ap.add_argument('--theme', choices=THEMES, help='palette used by --style / --strict-style '
+                    f'(default: ${THEME_ENV}, else cozy)')
     ap.add_argument('--strict-style', action='store_true', help='style lint findings are failures')
     ap.add_argument('--quiet', action='store_true', help='only print failures and the summary')
     a = ap.parse_args(argv)
@@ -244,11 +286,15 @@ def main(argv=None):
     unknown = [k for k in keys if k not in geometry.all_skins()]
     if unknown:
         ap.error('unknown skin(s): ' + ', '.join(unknown))
+    try:
+        theme = resolve_theme(a.theme)
+    except ValueError as exc:
+        ap.error(str(exc))
     failures = 0
     passes = 0
     lint = 0
     for key in keys:
-        for ok, path, msg in validate_skin(key, a.source_root, a.style or a.strict_style):
+        for ok, path, msg in validate_skin(key, a.source_root, a.style or a.strict_style, theme):
             if ok is True:
                 passes += 1
                 if not a.quiet:
@@ -263,7 +309,7 @@ def main(argv=None):
         failures += lint
     if keys:
         print(f'SUMMARY {passes} passed, {failures} failed' + (f', {lint} style findings' if lint else '') +
-              f' across {len(keys)} skin(s)')
+              f' across {len(keys)} skin(s)' + (f' (theme {theme})' if theme != 'cozy' else ''))
     if a.isolated_build:
         ok, lines, tmp = isolated_build(a.keep_temp)
         for line in lines:

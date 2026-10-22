@@ -3,6 +3,7 @@
 
     python tools/cozy/build_fixtures.py            # build every page, then check them
     python tools/cozy/build_fixtures.py --check    # only re-check pages already built
+    python tools/cozy/build_fixtures.py --theme soulrend   # the Soulrend gallery
 
 Writes under ``evidence/cozy-fixtures/`` (gitignored):
 
@@ -20,6 +21,15 @@ taken from the game. Output is deterministic for a given checkout (no clock,
 no randomness). Reads pack-source and ``git show`` only; never writes outside
 evidence/. See docs/COZY-FIXTURES.md.
 
+``--theme {cozy,soulrend}`` (default: $QUASAR_GUI_THEME, else cozy; the flag
+wins) switches the page titles ("Cozy GUI Fixtures" / "Soulrend GUI Fixtures",
+"<Theme> <Family> Family", "Midnight vs <Theme>"), the palette swatches, the
+typeface specimen, the schematic lettering, the page colour tokens, the output
+directory (``evidence/cozy-fixtures/`` or ``evidence/soulrend-fixtures/``) and
+the URL map (``tools/cozy/fixture_urls.json`` or
+``tools/soulrend/fixture_urls.json``). The textures shown are always the ones
+in pack-source on the current checkout.
+
 Licence: MIT.
 """
 from __future__ import annotations
@@ -28,7 +38,9 @@ import argparse
 import json
 import base64
 import html
+import importlib
 import io
+import os
 import re
 import subprocess
 import sys
@@ -53,6 +65,67 @@ BASELINE = '037c5ef7cb5dbe6fe5ab04dadcb2d2c44cd0372e'
 HARD_LIMIT = 16 * 1000 * 1000          # publisher limit (16 MB, decimal to be safe)
 URL_MAP_PATH = ROOT / 'tools' / 'cozy' / 'fixture_urls.json'   # published artifact URLs, tracked
 ARTIFACT_PREFIX = 'https://claude.ai/artifact/'
+THEME_ENV = 'QUASAR_GUI_THEME'
+
+# Everything that differs between the theme galleries. ``faces`` are
+# (attribute, display name, description) of the two lettering faces.
+THEME_CONFIG = {
+    'cozy': {
+        'name': 'Cozy', 'branch': 'art/cozy-theme',
+        'out': ROOT / 'evidence' / 'cozy-fixtures',
+        'urls': ROOT / 'tools' / 'cozy' / 'fixture_urls.json',
+        'doc': 'docs/COZY-FIXTURES.md',
+        'blurb': 'cozy hand-drawn pixel-art replacement',
+        'faces': (('HEARTH', 'HEARTH', 'mixed case, the main face'),
+                  ('SPRIG', 'SPRIG', 'uppercase only, for tight labels and stack counts')),
+        'tokens': None,
+    },
+    'soulrend': {
+        'name': 'Soulrend', 'branch': 'art/soulrend-theme',
+        'out': ROOT / 'evidence' / 'soulrend-fixtures',
+        'urls': ROOT / 'tools' / 'soulrend' / 'fixture_urls.json',
+        'doc': 'docs/SOULREND-STYLE-GUIDE.md',
+        'blurb': 'Soulrend dark-fantasy pixel-art replacement',
+        'faces': (('GRAVEN', 'GRAVEN', 'a thin medieval serif in mixed case, the main face'),
+                  ('RUNE', 'RUNE', 'carved capitals for tight labels, banners and stack counts')),
+        # page colour tokens: (light mode, dark mode)
+        'tokens': ({'--bg': '#e6ddc8', '--surface': '#f1eadb', '--surface-2': '#d9ccb0', '--fg': '#1f1717',
+                    '--muted': '#5a4c44', '--line': '#c4b494', '--accent': '#7e1e22', '--link': '#6e2a1c',
+                    '--link-hover': '#9a3a26', '--eyebrow': '#5e4a2c', '--note-bg': '#e9d9b4',
+                    '--note-line': '#98763a', '--code-bg': '#ddd0b4'},
+                   {'--bg': '#161213', '--surface': '#221b19', '--surface-2': '#2e2522', '--fg': '#ece4d2',
+                    '--muted': '#b9ab96', '--line': '#3e3430', '--accent': '#e07a68', '--link': '#d8b464',
+                    '--link-hover': '#f0cf86', '--eyebrow': '#7fc9cf', '--note-bg': '#2a201c',
+                    '--note-line': '#98763a', '--code-bg': '#2e2522'}),
+    },
+}
+THEME = dict(THEME_CONFIG['cozy'], key='cozy')
+_COZY_PAL, _COZY_L = pal, L          # the cozy modules imported above
+
+
+def resolve_theme(name=None):
+    """Explicit name, else $QUASAR_GUI_THEME, else 'cozy'."""
+    theme = name or os.environ.get(THEME_ENV) or 'cozy'
+    if theme not in THEME_CONFIG:
+        raise ValueError(f'unknown theme {theme!r}; choose one of {", ".join(THEME_CONFIG)}')
+    return theme
+
+
+def configure(name=None):
+    """Point the module at a theme: output dir, URL map, palette, lettering,
+    preview lettering and strings. Returns the theme key."""
+    global OUT, URL_MAP_PATH, pal, L, THEME
+    key = resolve_theme(name)
+    THEME = dict(THEME_CONFIG[key], key=key)
+    OUT = THEME['out']
+    URL_MAP_PATH = THEME['urls']
+    pv.set_theme(key)
+    if key == 'cozy':
+        pal, L = _COZY_PAL, _COZY_L
+    else:
+        pal = importlib.import_module(f'{key}.palette')
+        L = importlib.import_module(f'{key}.lettering')
+    return key
 
 
 def url_map():
@@ -301,8 +374,22 @@ def _swatch_classes():
     return '\n'.join(f'.sw-{n} {{ background: var(--sw-{n}); }}' for n in pal.NAMED)
 
 
+def _themed_css():
+    """CSS with the active theme's colour tokens (cozy keeps CSS as written)."""
+    if not THEME['tokens']:
+        return CSS
+    light, dark = THEME['tokens']
+    head, sep, tail = CSS.partition('@media')
+
+    def sub(part, values):
+        for k, v in values.items():
+            part = re.sub(rf'(\n\s*{re.escape(k)}:\s*)#[0-9a-fA-F]{{3,8}};', rf'\g<1>{v};', part)
+        return part
+    return sub(head, light) + sep + sub(tail, dark)
+
+
 def page(title, body, swatches=False):
-    css = CSS.replace('%SWATCHES%', _swatch_tokens() if swatches else '')
+    css = _themed_css().replace('%SWATCHES%', _swatch_tokens() if swatches else '')
     if swatches:
         css += _swatch_classes() + '\n'
     return (f'<title>{html.escape(title)}</title>\n'
@@ -349,7 +436,7 @@ def family_token(family, part=None):
 
 
 def family_title(family):
-    return f'Cozy {FAMILY_NAME[family]} Family'
+    return f'{THEME["name"]} {FAMILY_NAME[family]} Family'
 
 
 # ---------------------------------------------------------------------------
@@ -484,10 +571,10 @@ def family_pages(family, keys, all_parts):
                 items.append(f'<li><span aria-current="page">{lbl}</span></li>' if j == i else
                              f'<li><a href="{{{{URL:{family_token(family, j)}}}}}">{lbl}</a></li>')
             partnav = f'<p class="eyebrow">This family is split across {len(parts)} pages</p><ul class="parts">{"".join(items)}</ul>'
-        h1 = (f'Cozy {esc(FAMILY_NAME[family])} family' + (f', part {i} of {len(parts)}' if split else ''))
+        h1 = (f'{THEME["name"]} {esc(FAMILY_NAME[family])} family' + (f', part {i} of {len(parts)}' if split else ''))
         body = (f'<nav class="topnav" aria-label="Gallery"><a href="{{{{URL:index}}}}">Back to index</a>'
-                f'<a href="{{{{URL:before-after}}}}">Midnight vs Cozy</a></nav>'
-                f'<header id="top"><p class="eyebrow">CDUResources cozy theme &middot; fixture gallery</p>'
+                f'<a href="{{{{URL:before-after}}}}">Midnight vs {THEME["name"]}</a></nav>'
+                f'<header id="top"><p class="eyebrow">CDUResources {THEME["name"].lower()} theme &middot; fixture gallery</p>'
                 f'<h1>{h1}</h1>'
                 f'<p class="lede">{len(keys)} skins, {nbtn} painted buttons ({nbtn * len(geo.STATES)} state PNGs) '
                 f'and {nfr} outer frames. Accent motif: {esc(acc["motif"])}.'
@@ -558,22 +645,22 @@ def index_page(by_family, all_parts, sha):
                       f'<div class="grid">{"".join(cards)}</div></section>')
     ramps = []
     for rname, cols in pal.RAMPS.items():
-        short = {'parchment': 'parch'}.get(rname, rname)
-        chips = ''.join(f'<li class="chip"><div class="sw sw-{short}_{i}" role="img" aria-label="{short}_{i} swatch"></div>'
-                        f'<code>{short}_{i}</code><br><span class="muted">{c[0]}, {c[1]}, {c[2]}</span></li>'
-                        for i, c in enumerate(cols))
+        chips = ''.join(f'<li class="chip"><div class="sw sw-{pal.name_of(c)}" role="img" aria-label="{pal.name_of(c)} swatch"></div>'
+                        f'<code>{pal.name_of(c)}</code><br><span class="muted">{c[0]}, {c[1]}, {c[2]}</span></li>'
+                        for c in cols)
         ramps.append(f'<div class="ramp"><h3>{esc(rname)} <span class="muted small">({len(cols)}, dark to light)</span></h3>'
                      f'<ul class="chips">{chips}</ul></div>')
     aliases = [('OUTLINE', pal.OUTLINE), ('OUTLINE_DEEP', pal.OUTLINE_DEEP), ('TEXT_DARK', pal.TEXT_DARK),
                ('TEXT_LIGHT', pal.TEXT_LIGHT), ('SHADOW', pal.SHADOW), ('GLOW', pal.GLOW), ('TITLE_BAND', pal.TITLE_BAND)]
     alias_txt = ', '.join(f'<code>{a}</code> = <code>{pal.name_of(c)}</code>' for a, c in aliases)
     spec = L.specimen(scale=1)
-    H, S = L.HEARTH, L.SPRIG
+    (h_attr, h_name, h_desc), (s_attr, s_name, s_desc) = THEME['faces']
+    H, S = getattr(L, h_attr), getattr(L, s_attr)
     body = (f'<nav class="topnav" aria-label="Gallery"><a href="#families">Families</a><a href="#palette">Palette</a>'
-            f'<a href="#typeface">Typeface</a><a href="{{{{URL:before-after}}}}">Midnight vs Cozy</a></nav>'
-            f'<header id="top"><p class="eyebrow">CDUResources &middot; art/cozy-theme</p>'
-            f'<h1>Cozy GUI fixtures</h1>'
-            f'<p class="lede">Every texture of the cozy hand-drawn pixel-art replacement for the Quasar GUI pack: '
+            f'<a href="#typeface">Typeface</a><a href="{{{{URL:before-after}}}}">Midnight vs {THEME["name"]}</a></nav>'
+            f'<header id="top"><p class="eyebrow">CDUResources &middot; {THEME["branch"]}</p>'
+            f'<h1>{THEME["name"]} GUI fixtures</h1>'
+            f'<p class="lede">Every texture of the {THEME["blurb"]} for the Quasar GUI pack: '
             f'{len(geo.all_skins())} screens, {total_btn} painted buttons in six states each '
             f'({total_btn * len(geo.STATES)} PNGs) and {total_fr} outer frames, grouped by family.</p></header>'
             + note()
@@ -588,7 +675,7 @@ def index_page(by_family, all_parts, sha):
             + f'<p class="small muted">Built from commit <code>{esc(sha[:12])}</code>. Thumbnails are rendered at 1x '
               'and scaled 2x nearest-neighbour.</p>'
             + f'<h3>Pages</h3><ul class="famlinks">{"".join(fam_links)}'
-              f'<li><a href="{{{{URL:before-after}}}}">Midnight vs Cozy</a> <span class="muted small">(before / after)</span></li></ul>'
+              f'<li><a href="{{{{URL:before-after}}}}">Midnight vs {THEME["name"]}</a> <span class="muted small">(before / after)</span></li></ul>'
             + f'<div id="families">{"".join(groups)}</div>'
             + f'<h2 id="palette">Master palette</h2>'
               f'<p>{len(pal.NAMED)} named colours in {len(pal.RAMPS)} ramps, each ordered dark to light; no pure black '
@@ -596,15 +683,14 @@ def index_page(by_family, all_parts, sha):
               f'<div class="ramps">{"".join(ramps)}</div>'
             + f'<h2 id="typeface">Bespoke pixel typeface</h2>'
               '<p>Two original faces drawn for the pack (CC0-1.0), used for every painted label.</p>'
-              f'<ul class="spec"><li><strong>HEARTH</strong>: cap {H.cap_height} / x {H.x_height} / desc '
-              f'{H.descender} / track {H.tracking}; mixed case, the main face.</li>'
-              f'<li><strong>SPRIG</strong>: cap {S.cap_height} / track {S.tracking}; uppercase only, for tight '
-              'labels and stack counts.</li></ul>'
-              f'<figure><div class="art">{img_tag(spec, "Typeface specimen of HEARTH and SPRIG with fit checks", display_scale=3)}</div>'
+              f'<ul class="spec"><li><strong>{h_name}</strong>: cap {H.cap_height} / x {H.x_height} / desc '
+              f'{H.descender} / track {H.tracking}; {h_desc}.</li>'
+              f'<li><strong>{s_name}</strong>: cap {S.cap_height} / track {S.tracking}; {s_desc}.</li></ul>'
+              f'<figure><div class="art">{img_tag(spec, f"Typeface specimen of {h_name} and {s_name} with fit checks", display_scale=3)}</div>'
               '<figcaption>Specimen from <code>lettering.specimen()</code>, shown 3x: both faces, fit checks against '
               'the tightest button widths, kerning pairs, shadow and outline treatments.</figcaption></figure>'
-            + '<footer>Generated by <code>tools/cozy/build_fixtures.py</code>; see <code>docs/COZY-FIXTURES.md</code>.</footer>')
-    return page('Cozy GUI Fixtures', body, swatches=True)
+            + f'<footer>Generated by <code>tools/cozy/build_fixtures.py</code>; see <code>{THEME["doc"]}</code>.</footer>')
+    return page(f'{THEME["name"]} GUI Fixtures', body, swatches=True)
 
 
 # ---------------------------------------------------------------------------
@@ -644,6 +730,7 @@ def before_after_page(all_parts):
             s = geo.skin(k)
             before = pv.render(k, overrides_dir=tex, scale=3)
             after = pv.render(k, scale=3)
+            after_alt = f'{k} {THEME["name"].lower()} replacement composite, 3x'
             fam = f'{{{{URL:{part_of(all_parts, s.family, k)}}}}}#{k}'
             rows.append(
                 f'<section class="skin" id="{esc(k)}" aria-labelledby="h-{esc(k)}">'
@@ -653,19 +740,19 @@ def before_after_page(all_parts):
                 f'<figure><span class="tag base">Baseline &middot; midnight</span>'
                 f'<div class="art">{img_tag(before, f"{k} baseline midnight artwork composite, 3x")}</div>'
                 f'<figcaption>Before: midnight artwork from commit <code>{BASELINE[:7]}</code>.</figcaption></figure>'
-                f'<figure><span class="tag cozy">Cozy &middot; replacement</span>'
-                f'<div class="art">{img_tag(after, f"{k} cozy replacement composite, 3x")}</div>'
-                f'<figcaption>After: cozy artwork on <code>art/cozy-theme</code>.</figcaption></figure></div>'
+                f'<figure><span class="tag cozy">{THEME["name"]} &middot; replacement</span>'
+                f'<div class="art">{img_tag(after, after_alt)}</div>'
+                f'<figcaption>After: {THEME["name"].lower()} artwork on <code>{THEME["branch"]}</code>.</figcaption></figure></div>'
                 f'<p class="small"><a href="{fam}">Every texture of {esc(k)}</a> &middot; <a href="#top">Back to top</a></p>'
                 '</section>')
     toc = ''.join(f'<li><a href="#{esc(k)}">{esc(k)}</a></li>' for k in BEFORE_AFTER)
     fams = sorted({geo.skin(k).family for k in BEFORE_AFTER}, key=FAMILY_ORDER.index)
     body = (f'<nav class="topnav" aria-label="Gallery"><a href="{{{{URL:index}}}}">Back to index</a></nav>'
-            f'<header id="top"><p class="eyebrow">CDUResources cozy theme &middot; before and after</p>'
-            f'<h1>Midnight vs Cozy</h1>'
+            f'<header id="top"><p class="eyebrow">CDUResources {THEME["name"].lower()} theme &middot; before and after</p>'
+            f'<h1>Midnight vs {THEME["name"]}</h1>'
             f'<p class="lede">{len(BEFORE_AFTER)} representative screens covering all {len(fams)} families. '
             f'The left (or upper) picture of each pair is the <strong>baseline midnight</strong> artwork from commit '
-            f'<code>{BASELINE}</code>; the right (or lower) one is the <strong>cozy replacement</strong>.</p></header>'
+            f'<code>{BASELINE}</code>; the right (or lower) one is the <strong>{THEME["name"].lower()} replacement</strong>.</p></header>'
             + note()
             + '<p class="small muted">Both sides use the same schematic items, title and default button states, so '
               'only the texture PNGs differ.</p>'
@@ -673,7 +760,7 @@ def before_after_page(all_parts):
             + ''.join(rows)
             + '<footer><a href="{{URL:index}}">Back to index</a> &middot; generated by '
               '<code>tools/cozy/build_fixtures.py</code></footer>')
-    return page('Midnight vs Cozy', body)
+    return page(f'Midnight vs {THEME["name"]}', body)
 
 
 # ---------------------------------------------------------------------------
@@ -821,8 +908,14 @@ def build():
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('--check', action='store_true', help='only check pages already in evidence/cozy-fixtures')
+    ap.add_argument('--check', action='store_true', help='only check pages already in the output directory')
+    ap.add_argument('--theme', choices=tuple(THEME_CONFIG), help='gallery theme (default: '
+                    f'${THEME_ENV}, else cozy)')
     a = ap.parse_args(argv)
+    try:
+        configure(a.theme)
+    except ValueError as exc:
+        ap.error(str(exc))
     names = (sorted((p.name for p in OUT.glob('*.html')), key=lambda n: (n != 'index.html', n))
              if a.check else build())
     return 0 if run_checks(names) else 1
