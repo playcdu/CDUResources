@@ -22,8 +22,9 @@ slots, as the builder does). One line per asset: ``PASS <path>`` or
 root docs into a fresh temporary directory and runs
 ``build_pack.py --no-kit --output <temp>/quasar-gui.zip`` there, so nothing in
 the shared tree or deliverables/ is written. ``--style`` adds non-fatal style
-lint (palette conformance, light title / inventory bands, no pure black/white);
-``--strict-style`` makes those lint findings fatal.
+lint (palette conformance, light title / inventory bands, no pure black/white,
+no semi-transparent pixels, no stray transparent holes in a frame outside the
+native container); ``--strict-style`` makes those lint findings fatal.
 
 ``--theme {cozy,soulrend}`` selects the palette module the style lint checks
 against (tools/cozy/palette.py or tools/soulrend/palette.py). Default: the
@@ -164,7 +165,7 @@ def validate_skin(key, source_root=None, style=False, theme=None):
         p = base / TEX / 'frames' / key / f'{layer["id"]}.png'
         raw = _check(results, p, lambda r, layer=layer: decorative_assets.validate(r, layer, g))
         if style and raw is not None:
-            results += style_lint(key, Image.open(p).convert('RGBA'), 'frame', _rel(p), pal)
+            results += style_lint(key, Image.open(p).convert('RGBA'), 'frame', _rel(p), pal, layer['id'])
     return results
 
 
@@ -186,11 +187,46 @@ def text_rows(key):
     return out
 
 
-def style_lint(key, img, kind, label, pal=None):
+# Rim corner pixels an outer frame may leave clear: the radius-3 rounded
+# corner both themes' base_frame cuts (6 pixels per corner, corner-local).
+FRAME_CORNER_CUT = ((0, 0), (1, 0), (2, 0), (0, 1), (0, 2), (1, 1))
+
+
+def frame_corner_pixels(w, h):
+    out = set()
+    for (i, j) in FRAME_CORNER_CUT:
+        out |= {(i, j), (w - 1 - i, j), (i, h - 1 - j), (w - 1 - i, h - 1 - j)}
+    return out
+
+
+def stray_frame_holes(key, img, layer_id=None):
+    """Pixels of a frame with alpha < 255 that lie outside the native
+    container rectangle and outside the rounded rim corners: holes through
+    which the game world would show. Returns a sorted list of (x, y)."""
+    c = geometry.skin(key).layer(layer_id).container
+    corners = frame_corner_pixels(img.width, img.height)
+    a = img.getchannel('A').load()
+    out = []
+    for y in range(img.height):
+        for x in range(img.width):
+            if a[x, y] < 255 and not c.contains(x, y) and (x, y) not in corners:
+                out.append((x, y))
+    return out
+
+
+def style_lint(key, img, kind, label, pal=None, layer_id=None):
     """Style checks against ``pal`` (a theme palette module, default cozy).
-    Returns (ok, path, message) tuples tagged 'STYLE'."""
+    Returns (ok, path, message) tuples tagged 'STYLE'. Frames (``kind``
+    'frame', ``layer_id`` their artLayers id) are also checked for stray
+    transparent holes outside the native container."""
     pal = pal or palette_for('cozy')
     out = []
+    if kind == 'frame':
+        holes = stray_frame_holes(key, img, layer_id)
+        if holes:
+            sample = ', '.join(f'({x},{y})' for x, y in holes[:6])
+            out.append((None, label, f'STYLE frame has {len(holes)} stray transparent pixel(s) outside the '
+                                     f'native container and rim corners, e.g. {sample}'))
     pixels = [p for p in _pixels(img) if p[3]]
     if pixels:
         allowed = set(pal.MASTER)
@@ -203,7 +239,7 @@ def style_lint(key, img, kind, label, pal=None):
             out.append((None, label, f'STYLE {extremes} pure black/white pixels'))
         partial = sum(1 for p in pixels if p[3] != 255)
         if partial:
-            out.append((None, label, f'STYLE {partial} semi-transparent pixels (use 0 or 255)'))
+            out.append((None, label, f'STYLE {partial} semi-transparent pixels (alpha 1-254; use 0 or 255)'))
     if kind == 'background':
         for name, r in text_rows(key):
             crop = img.crop(r.crop_box())

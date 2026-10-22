@@ -108,6 +108,13 @@ Do:
   few sit 1 px off the line (`chain`); cracks step in short irregular runs
   (`crack`); vellum edges are hand-cut (`vellum_strip(deckle=)`); paper tears
   jag (`torn_edge`); banners end in a ragged swallowtail (`banner`).
+- **Cuts reveal, they never punch holes.** Every edge-cutting helper (deckled
+  vellum, `torn_edge`, `page_curl`, banner tatters) shows what was painted
+  under the surface in the cells it cuts: the wall on a frame, the sheet on a
+  background, alpha 0 only on an empty button. `vellum_strip` records its
+  backdrop automatically; before painting paper by hand, call
+  `P.remember_backdrop(img, box)` (or pass `under=` a snapshot) so a later
+  tear knows what to show. `behind=<colour>` still forces a flat fill.
 - **Masonry with intent.** Ashlar courses of 7-16 px blocks, mostly stone_1,
   some stone_2, a rare sunken stone_0 block, chipped corners, a crack, moss
   that grows more often toward the damp bottom (`stone_blocks(moss=)`). Tune
@@ -369,6 +376,10 @@ a ledger resting in a niche of dungeon masonry.
 | left / right panels | 40 px each | banners, sconces and candles with ember glow, an arch niche, ledges with goblets and ledgers, chains, a gargoyle corbel, family motifs |
 | pin | (255, h//2) | alpha 255 on the rim (`compose.finish_frame`) |
 
+Outside the container a frame is opaque everywhere except the 6 rounded rim
+pixels in each corner. A transparent pixel anywhere else is a hole through
+which the game world shows; `validate.py --style` reports it (below).
+
 **Frames carry no words.** The brief allows only one painted title in the
 whole pack (OFFERED MONEY), so the artLayers `heading`, `leftHeading` and
 `rightLines` are treated as design notes: the heading becomes the wordless
@@ -488,7 +499,11 @@ name resolves through whichever palette module is loaded, so the Soulrend
 wrappers pass an explicit ink_0.
 
 Style lint (`--style --theme soulrend`, non-fatal unless `--strict-style`):
-Soulrend palette only, no pure black/white, alpha 0 or 255, and light title /
-inventory glyph rows (mean luminance >= 180, <= 8 % dark pixels). Until the
+Soulrend palette only, no pure black/white, no semi-transparent pixels (alpha
+strictly between 0 and 255) in any texture, light title / inventory glyph rows
+(mean luminance >= 180, <= 8 % dark pixels), and, for every frame, no pixel
+with alpha < 255 outside the native container rectangle and the radius-3
+rounded rim corners (the WARN line names the frame and the first offending
+coordinates). Until the
 Soulrend art is painted, pack-source still holds the cozy textures, so these
 warnings are expected; the contract checks must pass regardless.

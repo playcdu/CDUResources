@@ -18,7 +18,7 @@ PY=C:\Users\Brandon\.cache\codex-runtimes\codex-primary-runtime\dependencies\pyt
 |---|---|
 | `palette.py` | the 36-colour master palette (ink, iron, stone, umber, vellum, blood, ember, soul, gold, moss, void), `FAMILY_ACCENT` / `SKIN_ACCENT` / `accent_for()`, `rgba()`, `step()`, `snap()`, `luminance()` |
 | `lettering.py` | the GRAVEN (cap 7) and RUNE (cap 5) faces: `text_width`, `draw_text`, `draw_text_centered`, `draw_lines_centered`, `fit_face`, `specimen`; run it to write `evidence/soulrend/typeface-specimen.png` |
-| `primitives.py` | hand-drawn helpers: stone masonry and tablets, umber sheet, iron plate, rivets, chains, vellum strips, torn edges, page curls, blood cloth, wax seals, candles, banners, gold filigree, arch niches, moss, cracks, glow; socket wells; the state transforms (`make_disabled`, `make_selected`, `make_pulse`, `make_disabled_seal`, `make_state`) |
+| `primitives.py` | hand-drawn helpers (cuts reveal the remembered backdrop: `remember_backdrop`, `reveal`): stone masonry and tablets, umber sheet, iron plate, rivets, chains, vellum strips, torn edges, page curls, blood cloth, wax seals, candles, banners, gold filigree, arch niches, moss, cracks, glow; socket wells; the state transforms (`make_disabled`, `make_selected`, `make_pulse`, `make_disabled_seal`, `make_state`) |
 | `icons.py` | icon sprites (close seal, pouch on a chain, scrying lens, iron cog, heraldic crest), seal emblems, heraldic crests, frame motifs |
 | `compose.py` | the shared base look with cozy-identical signatures: `base_background`, `base_frame`, `paint_button`, `button_states`, `save_png`, `save_button_states`, plus `bands`, `letter`, `lettering_mask`, `button_kind`, `side_banner`, `heading_plaque`, `finish_background/button/frame` |
 | `paint_example.py` | the worked example and quality bar (writes only to `evidence/soulrend/example/`) |
@@ -81,7 +81,11 @@ PY=C:\Users\Brandon\.cache\codex-runtimes\codex-primary-runtime\dependencies\pyt
    ```
 
    `FAIL` lines carry the builder's exact message plus a hint. `WARN STYLE`
-   lines flag off-palette pixels, semi-transparency and dark text bands.
+   lines flag off-palette pixels, semi-transparency, dark text bands and stray
+   transparent holes in a frame outside the native container. Edge-cutting
+   helpers reveal the backdrop instead of punching holes; before painting paper
+   by hand call `P.remember_backdrop(img, box)` so a later `torn_edge` /
+   `page_curl` knows what lies underneath.
    `set QUASAR_GUI_THEME=soulrend` does the same as `--theme soulrend` for
    validate.py, preview.py and build_fixtures.py; the flag wins.
 

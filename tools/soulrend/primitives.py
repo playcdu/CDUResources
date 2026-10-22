@@ -12,6 +12,9 @@ lines       ink_line (optional wobble, line weight), crack, chain
 edges       highlight_edge, shadow_edge, ink_outline, bevel
 materials   umber_panel, stone_blocks, stone_tablet, iron_plate, rivet,
             vellum_strip, torn_edge, page_curl, cloth_panel, wax_seal
+backdrops   remember_backdrop, reveal: edge-cutting helpers (deckle, tear,
+            page curl, banner tatter) never punch alpha-0 holes through an
+            opaque surface; a cut cell shows what was painted underneath
 details     candle, banner, gold_filigree, arch_niche, moss_tuft, glow,
             dither_patch
 wells       well_frame, socket_well, carved_well, merge_holes
@@ -27,6 +30,7 @@ from __future__ import annotations
 
 import random
 import sys as _sys
+import weakref
 from collections import deque
 from pathlib import Path as _Path
 
@@ -381,6 +385,57 @@ def bevel(img, box, light, dark, inset=0, corners=True):
 
 
 # ---------------------------------------------------------------------------
+# Backdrops: what lies under a surface, so cutting its edge reveals it
+# ---------------------------------------------------------------------------
+
+_BACKDROPS = {}     # id(img) -> (weakref to img, [(box, snapshot crop), ...])
+
+
+def remember_backdrop(img, box=None):
+    """Record what is painted under ``box`` (default: the whole image) BEFORE
+    a surface is painted there. Later ``torn_edge`` / ``page_curl`` calls with
+    ``behind=None`` restore these pixels into the cells they cut away, so a
+    tear in vellum on a stone wall shows the wall, while on an empty button it
+    is still alpha 0. ``vellum_strip`` calls this itself; call it yourself
+    before painting paper by hand. Returns the snapshot crop."""
+    x, y, w, h = box or (0, 0, img.width, img.height)
+    crop = img.crop((x, y, x + w, y + h))
+    for k in [k for k, (ref, _) in _BACKDROPS.items() if ref() is None]:
+        del _BACKDROPS[k]
+    entry = _BACKDROPS.get(id(img))
+    if entry is None or entry[0]() is not img:
+        entry = (weakref.ref(img), [])
+        _BACKDROPS[id(img)] = entry
+    entry[1].append(((x, y, w, h), crop))
+    return crop
+
+
+def backdrop_pixel(img, x, y):
+    """The most recently remembered backdrop pixel at (x, y), or None."""
+    entry = _BACKDROPS.get(id(img))
+    if entry is None or entry[0]() is not img:
+        return None
+    for (bx, by, bw, bh), crop in reversed(entry[1]):
+        if bx <= x < bx + bw and by <= y < by + bh:
+            return crop.getpixel((x - bx, y - by))
+    return None
+
+
+def reveal(img, x, y, under=None):
+    """Cut one cell out of a painted surface: show ``under`` (an image
+    snapshot taken before painting) at (x, y), else the remembered backdrop
+    (``remember_backdrop``), else alpha 0. Never punches a hole through a
+    surface whose backdrop is known to be opaque."""
+    if not (0 <= x < img.width and 0 <= y < img.height):
+        return
+    if under is not None:
+        c = under.getpixel((x, y))
+    else:
+        c = backdrop_pixel(img, x, y) or (0, 0, 0, 0)
+    img.putpixel((x, y), c)
+
+
+# ---------------------------------------------------------------------------
 # Materials
 # ---------------------------------------------------------------------------
 
@@ -547,6 +602,7 @@ def vellum_strip(img, box, seed=0, outline='ink_1', deckle='tb', ramp=VELLUM, fi
     x, y, w, h = box
     r = _rng(seed, 'vellum', box)
     under = img.copy()
+    remember_backdrop(img, box)
     fill(img, (x + 1, y + 1, w - 2, h - 2), ramp[2])
     hline(img, x + 1, x + w - 2, y + 1, ramp[3])
     if h >= 6:
@@ -598,11 +654,16 @@ def _deckle(img, box, side, r, outline, ramp, under=None):
             t += run + r.randint(2, 5)
 
 
-def torn_edge(img, box, edge='r', seed=0, depth=3, behind=None, ramp=VELLUM, outline='ink_1', burnt=False):
+def torn_edge(img, box, edge='r', seed=0, depth=3, behind=None, ramp=VELLUM, outline='ink_1', burnt=False,
+              under=None):
     """Tear the ``edge`` of already painted paper inside ``box``: a jagged ink
     line up to ``depth`` px deep with a ramp[0] fibre shadow just inside it.
-    Pixels beyond the tear become ``behind`` (a colour) or alpha 0. With
-    ``burnt`` the tear is charred: ink_0 edge, ember_0 / umber_0 scorch inside."""
+    Pixels beyond the tear become ``behind`` (a colour) or, with
+    ``behind=None``, show what was under the paper (``under`` snapshot, else
+    the backdrop ``vellum_strip`` / ``remember_backdrop`` recorded, else alpha
+    0 - an empty button). A tear never opens a hole through an opaque wall.
+    With ``burnt`` the tear is charred: ink_0 edge, ember_0 / umber_0 scorch
+    inside."""
     x, y, w, h = box
     r = _rng(seed, 'torn', edge, box)
     n = h if edge in 'lr' else w
@@ -621,8 +682,7 @@ def torn_edge(img, box, edge='r', seed=0, depth=3, behind=None, ramp=VELLUM, out
                 px, py = x + i, y + k
             if k < depth - d:
                 if behind is None:
-                    if 0 <= px < img.width and 0 <= py < img.height:
-                        img.putpixel((px, py), (0, 0, 0, 0))
+                    reveal(img, px, py, under)
                 else:
                     put(img, px, py, behind)
             elif k == depth - d:
@@ -633,10 +693,11 @@ def torn_edge(img, box, edge='r', seed=0, depth=3, behind=None, ramp=VELLUM, out
                 put(img, px, py, ramp[0])
 
 
-def page_curl(img, box, corner='br', size=5, ramp=VELLUM, outline='ink_1', behind=None):
+def page_curl(img, box, corner='br', size=5, ramp=VELLUM, outline='ink_1', behind=None, under=None):
     """Curl the ``corner`` ('br', 'bl', 'tr', 'tl') of already painted vellum.
     Measured from the corner, pixels with i + j < size - 1 become ``behind``
-    (or alpha 0); the fold diagonal i + j == size - 1 is ink; the turned flap
+    (or, with ``behind=None``, what was under the page: ``under`` snapshot,
+    else the remembered backdrop, else alpha 0); the fold diagonal i + j == size - 1 is ink; the turned flap
     is the removed triangle reflected across the fold, painted ramp[1] (the
     page's underside) with an ink outer edge, a ramp[3] crease along the fold
     and a ramp[0] tip. Returns the flap pixels."""
@@ -653,8 +714,7 @@ def page_curl(img, box, corner='br', size=5, ramp=VELLUM, outline='ink_1', behin
             px, py = at(i, j)
             if i + j < s - 1:
                 if behind is None:
-                    if 0 <= px < img.width and 0 <= py < img.height:
-                        img.putpixel((px, py), (0, 0, 0, 0))
+                    reveal(img, px, py, under)
                 else:
                     put(img, px, py, behind)
             else:
@@ -820,8 +880,11 @@ def banner(img, x, y, w, h, ramp=MOSS, seed=0, emblem=None, rod=True, trim=GOLD,
     ramp[0] right shadow column and folds), a ``trim`` line under the rod, a
     tattered swallowtail bottom with seeded ragged notches (``tatter``), and an
     optional ``emblem`` sprite name from icons.CRESTS centred in the field.
-    The banner box is (x, y, w, h) not counting the rod overhang."""
+    The banner box is (x, y, w, h) not counting the rod overhang. Tatter
+    notches show whatever was painted under the banner (the wall on a frame,
+    alpha 0 only where the image was already empty), never a new hole."""
     r = _rng(seed, 'banner', x, y, w, h)
+    under = img.copy()
     cut = max(2, w // 3)
     for j in range(h):
         for i in range(w):
@@ -844,8 +907,7 @@ def banner(img, x, y, w, h, ramp=MOSS, seed=0, emblem=None, rod=True, trim=GOLD,
         depth_here = cut - abs(i - (w - 1) / 2) * (2 * cut / max(1, w))
         by = y + h - 1 - max(0, int(depth_here)) - 1
         if tatter and 0 < i < w - 1 and r.random() < 0.3:
-            if 0 <= x + i < img.width and 0 <= by < img.height:
-                img.putpixel((x + i, by), (0, 0, 0, 0))
+            reveal(img, x + i, by, under)
             by -= 1
         put(img, x + i, by, 'ink_0')
     # folds
