@@ -1,6 +1,6 @@
 # Controls, artwork, and preview behavior
 
-This guide follows Quasar's action callbacks and the independent patch source integration. The machine-readable companion is [control-map.json](../manifests/control-map.json), containing 31 screen keys, native item choices, logical bindings, guards, transitions, and source references. It was produced by direct source inspection; it does not certify live gameplay testing. Its `preview_implementation` metadata records the implemented demonstration scope. Per-control `preview_proposal` fields describe intended demonstrations and are not a claim that every production branch is simulated.
+This guide follows Quasar's action callbacks and the independent patch source integration. The machine-readable companion is [control-map.json](../manifests/control-map.json), containing 35 screen keys, native item choices, logical bindings, guards, transitions, and source references. It was produced by direct source inspection; it does not certify live gameplay testing. Its `preview_implementation` metadata records the implemented demonstration scope. Per-control `preview_proposal` fields describe intended demonstrations and are not a claim that every production branch is simulated.
 
 Slots below are **zero-based logical source indices**. The runtime registry maps them to physical cells through `buttonRegions` and `contentRegion`. Each cell of a wide painted control has a nonempty invisible-paper carrier, preserving the original name/lore and invoking the original callback with its logical source index. Adjacent 18×18 native hit regions form a continuous target. Real content keeps its item stack, count, and tooltip. Bounds and overlap checks prevent artwork controls from taking over unrelated items or redirected storage. Original Quasar and its linked worktrees remain read-only; implementation references point to independent patch copies.
 
@@ -173,6 +173,45 @@ There is no explicit Cancel/Close item. Closing invokes existing trade cancellat
 
 The invalid variant has **no source item or callback at 33**. Standard mode leaves that slot absent. The themed layout may show clearly disabled redemption artwork, with no carrier or action; it must never appear enabled. The 26 perimeter filler slots are decorative and become protected empty elements in themed mode. Source: [ticket callbacks and descriptions](../.build/patch-sources/1.21/common/src/main/java/anar4732/quasar/sgui/TicketRedeemSGui.java).
 
+## Plots
+
+The four plot keys were audited on the read-only Quasar checkout (branch 1.21; `common/src/main/java/anar4732/quasar/sgui/Plot*SGui.java`). Their skins and layouts are authored here, but the QuasarGUIPatches title composition that selects them and the InventoryDebug fixtures are not implemented yet, so no production rendering is claimed. The server selects `plot_buy` for the title prefix **Buy Plot -** and `plot_rent` for **Rent Plot -** (one Java screen, two states), `plot_list` for **Plots - Page N** and `plot_manage` for **Manage Plot -**.
+
+`plot_buy` / `plot_rent` are six-row chests built by `PlotBuySGui.open` with exactly three live positions. The 26 perimeter slots hold alternating blue/yellow glass panes with no callback; themed mode replaces them with protected empty elements, exactly as for the ticket screens.
+
+| Slot | Native control | Actual effect / artwork wording |
+| --- | --- | --- |
+| 22 | Grass block (command block for server plots): the plot | Read-only; lore carries owner, bounds, volume, chunk count and the price (per period and contents for rent). Keep its well clear inside the pegged boundary. |
+| 29 | Red concrete: Cancel | Click sound and close. Use **Cancel**. |
+| 33 | Lime concrete: Confirm Purchase / Confirm Rental | Click sound, economy cooldown check, close, then the original `buy` or `rent` transaction with every failure branch reported in chat. Use **Confirm Purchase** on `plot_buy` and **Confirm Rental** on `plot_rent`. |
+
+There is no Back callback and no second confirmation stage; a demonstration must not return to the plot list or simulate claims, balances or block extraction. Renting an "Empty" plot extracts the owner's blocks after payment, which is a reason to keep the native lore visible, not to paint it.
+
+`plot_list` is a six-row chest whose entries are added with `gui.addSlot`, so they fill 0-44 contiguously, 45 per page, in their native positions (no content redirect and no capacity change; this key is deliberately absent from `redesigned_pagination`). Slots 46-48 and 50-52 never hold an item.
+
+| Slot | Native control | Actual effect |
+| --- | --- | --- |
+| 0-44 | Grass block / command block: a plot (own plots green, others gold) | **Left click only** opens `plot_manage` for that plot; other click types are ignored. Lore: dimension, ID, bounds (or "Incomplete"), volume, chunk count, and owner/state for moderators. |
+| 45 | Arrow: Previous Page | Previous page, only if page > 0 |
+| 49 | Barrier: Close | Closes |
+| 53 | Arrow: Next Page | Next page, only when a later page exists |
+
+The themed bottom row binds 45-47 to Previous Page, 48-50 to Close and 51-53 to Next Page.
+
+`plot_manage` is a three-row chest opened from a list entry (`PlotManageSGui.open` re-checks membership and `canManage`). The title is the same for every plot state, so the two state-dependent cells stay native:
+
+| Slot | Native control | Actual effect |
+| --- | --- | --- |
+| 8 | Barrier: Close (shared `QSGuiUtils.CLOSE`) | Closes |
+| 10 | Ender pearl: Teleport | Safe teleport above the plot centre, click sound, close. **Present only with the TP_POS permission**; the themed region renders disabled with no carrier otherwise. |
+| 11 | Ender eye: Toggle Preview | Toggles the plot border preview and closes |
+| 12 | Name tag: Rename | Sends a clickable `/plots rename <id> ` suggestion and closes |
+| 13 | Oak sign: Sell (state NONE) / For Sale (state FOR_SALE) / absent (FOR_RENT) | Sell explains chunk alignment, sends `/plots sell <id> ` and closes; For Sale is read-only with the price and a sign tip |
+| 14 | Clock: Lease Out (NONE) / For Rent or Rented (FOR_RENT) / absent (FOR_SALE) | Lease Out explains price, duration and `withBlock`/`empty`, sends `/plots leaseOut <id> ` and closes; the status item is read-only with price, duration, contents and renter |
+| 16 | TNT: Destroy | Warns when rented out, sends a clickable **run-command** `/plots destroy <id>` confirmation and closes |
+
+Themed regions: Toggle Preview 0-2, Rename 3-5, Close 6-8, Teleport 9-12 and 18-21, Destroy 15-17 and 24-26; cells 13 and 14 keep their native items and 22-23 carry static artwork (boundary stakes). Rename, Sell, Lease Out and Destroy open no forms; they print chat links. Never paint Sell or Lease Out words anywhere, because the same cells show read-only status items in other states.
+
 ## Confirmed sparse live-slot unions
 
 These sets include every possible native item, information item, and callback carrier across states. Keeping a window for an absent conditional item is safe. Painting an explanatory panel across one of these slots is not.
@@ -188,5 +227,7 @@ These sets include every possible native item, information item, and callback ca
 | `economy_hub` | 8, 10–16 |
 | `trade_money` | 1, 4, 7 |
 | `ticket_*` | 22, 29, 33 (33 valid-only) |
+| `plot_buy`, `plot_rent` | 22, 29, 33 |
+| `plot_manage` | 8, 10-14, 16 (10 permission-only; 13/14 state-dependent, kept native) |
 
 Native storage, arbitrary configured pages, and dense listing views retain all potential item windows. This is an artwork boundary, not permission to alter callback logic or add controls.

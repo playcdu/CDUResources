@@ -230,7 +230,7 @@ def isolated_build(keep=False):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('skins', nargs='*', help='skin keys to validate')
-    ap.add_argument('--all', action='store_true', help='validate all 56 skins')
+    ap.add_argument('--all', action='store_true', help='validate all 60 skins')
     ap.add_argument('--isolated-build', action='store_true', help='also run the real builder in a temp copy')
     ap.add_argument('--keep-temp', action='store_true', help='keep the isolated build directory')
     ap.add_argument('--source-root', type=Path, help='validate a directory laid out like pack-source instead')

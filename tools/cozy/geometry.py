@@ -323,7 +323,7 @@ def skin(key):
 
 
 def all_skins():
-    """Every skin key in manifest order (56)."""
+    """Every skin key in manifest order (60)."""
     return list(_data()[1].keys())
 
 

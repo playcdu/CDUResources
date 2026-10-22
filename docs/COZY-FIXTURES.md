@@ -1,8 +1,8 @@
 # Cozy fixture gallery
 
 The fixture gallery is a set of self-contained HTML pages that show every
-texture of the cozy replacement (56 menu backgrounds, 157 painted buttons in six
-states each, 54 outer frames) so the artwork can be reviewed in claude.ai
+texture of the cozy replacement (60 menu backgrounds, 169 painted buttons in six
+states each, 58 outer frames) so the artwork can be reviewed in claude.ai
 without checking out `art/cozy-theme`. Each page is one HTML file with every
 image embedded as a PNG data URI and no external resources.
 
@@ -39,7 +39,7 @@ settings and upgrades) and links the parts to each other.
 ## Page contents
 
 - **Index** (`index.html`, "Cozy GUI Fixtures"): a "what this is" note; links
-  to every family page and the before/after page; all 56 skins as cards grouped
+  to every family page and the before/after page; all 60 skins as cards grouped
   by family (economy, auction, chest_shop, trade, ticket, admin_shop,
   guild_bank, prefixes, invsee, utility), each with a 1x composite scaled 2x
   nearest-neighbour, the skin key, layout and size, button count, frame layer(s)

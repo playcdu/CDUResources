@@ -1,7 +1,7 @@
 # Cozy style guide
 
-This guide defines the cozy replacement for every texture in the pack: 56
-backgrounds, 942 button-state PNGs (157 regions x 6 states) and 54 outer
+This guide defines the cozy replacement for every texture in the pack: 60
+backgrounds, 1014 button-state PNGs (169 regions x 6 states) and 58 outer
 frames. Geometry, codepoints and interaction contracts are frozen; only the
 pixels change. The shared tooling lives in [tools/cozy/](../tools/cozy/README.md),
 and every rule below names the helper that satisfies it.
@@ -89,6 +89,7 @@ an accent ramp and a secondary ramp, used only in decorative regions
 | prefixes | plum | ember | name tags pinned to a corkboard (wood_3 board, plum/ember tags, tacks) |
 | invsee | sky | brass | a magnifying glass over a leather satchel |
 | invsee_offline | ash | sky | same satchel under blue-grey moonlight; no lantern glow |
+| plot | sage | sky | surveyor's deed with a double ruled border and brass corner guards, boundary stakes on twine, signpost with blank arrow boards, rolled map, brass key, eight-point compass rose (no letters), picket fence (`tools/cozy/paint_plots.py`) |
 | trashcan | sage | wood | slatted compost bin and fallen leaves |
 | ender_chest | plum | plum | indigo-dark wood (`ENDER_WOOD`), soft purple lantern light |
 | crafting | wood | brass | workbench top, tool loop (hammer, saw, chisel hanging on a rope) |
@@ -352,7 +353,7 @@ T. Y. F. P. To Ta Te r. 11 //; SPRIG LT TA AT LY YA AY T. API:
 Required fits (checked by `selftest.py`): LISTINGS 38/50, DISABLE LISTING
 70/104, PURCHASE 39/50, 12 DAYS 31/68. `compose.letter` tries HEARTH
 capitals, then HEARTH mixed case of the label, then SPRIG capitals; every
-one of the 157 labels fits. Two-line labels on 18-px buttons fall back to
+one of the 169 labels fits. Two-line labels on 18-px buttons fall back to
 SPRIG (two 5-px rows and a 1-px gap).
 
 Colours: ink_0 on parchment, linen and brass; parch_3 with a berry_0 or

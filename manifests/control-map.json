@@ -43,7 +43,8 @@
       "Complete tier/bid/fee/affordability calculations",
       "Permission and cross-server service integration",
       "Non-left original click variants, including right-click sale and shift-right ownership actions",
-      "Other catalog controls without an explicit modeled transition"
+      "Other catalog controls without an explicit modeled transition",
+      "Plot screens (plot_buy, plot_rent, plot_list, plot_manage): contract only, no fixtures or routes yet"
     ],
     "interaction_boundary": "Only native PICKUP button0 dispatches preview actions. Right/shift/drag/swap/drop/clone/double-click and all real item movement are suppressed. Fresh sample stacks remain locked; the immutable model has no Quasar, inventory, economy, teleport or rank APIs.",
     "test_limit": "Source review and automated fixture checks are not in-game rendering, real pack-response or production transaction tests."
@@ -4647,6 +4648,543 @@
       "notes": [
         "ticket_invalid has no33 item or callback. Do not present an enabled Confirm action in this variant.",
         "The26 border slots are decorative and replaced with protected empty elements in themed mode."
+      ]
+    },
+    {
+      "skin_key": "plot_buy",
+      "live_slots_union": [
+        22,
+        29,
+        33
+      ],
+      "controls": [
+        {
+          "slots": [
+            22
+          ],
+          "label": "Plot preview",
+          "native_item": "minecraft:grass_block (minecraft:command_block for server plots)",
+          "trigger": "none",
+          "real_effect": "Display the plot named after plot.displayName() with owner, bounds, volume, chunk count and price lore.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always",
+          "native_lore": [
+            "Owner: <owner>",
+            "Bounds: (<min>) to (<max>)",
+            "Volume: <volume>",
+            "Chunk count: <count>",
+            "Price: <currency>"
+          ]
+        },
+        {
+          "slots": [
+            29
+          ],
+          "label": "Cancel",
+          "native_item": "minecraft:red_concrete",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Play click sound and close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            33
+          ],
+          "label": "Confirm Purchase",
+          "native_item": "minecraft:lime_concrete",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Play click sound; if QEcoCooldownHelper.checkCooldown passes, close and run the original buy(player, plotId) transaction (ownership transfer and balance changes happen there, with chat messages on every failure branch).",
+          "preview_proposal": "Report a simulated purchase and close; never transfer claims, money or items.",
+          "condition": "always",
+          "native_lore": [
+            "Buy <plot> for <currency>"
+          ]
+        },
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            17,
+            18,
+            26,
+            27,
+            35,
+            36,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53
+          ],
+          "label": "Border pane",
+          "native_item": "minecraft:blue_stained_glass_pane / minecraft:yellow_stained_glass_pane (alternating by slot parity), name '\u00a77'",
+          "trigger": "none",
+          "real_effect": "Decorative filler only; no callback.",
+          "preview_proposal": "Omit in the themed fixture; protected empty elements.",
+          "condition": "always"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "../Quasar/common/src/main/java/anar4732/quasar/sgui/PlotBuySGui.java",
+          "branch": "1.21",
+          "start_line": 28,
+          "end_line": 74
+        },
+        {
+          "path": "../Quasar/common/src/main/java/anar4732/quasar/sgui/PlotBuySGui.java",
+          "branch": "1.21",
+          "start_line": 95,
+          "end_line": 148
+        }
+      ],
+      "notes": [
+        "Opened only while the plot state is FOR_SALE; the title is 'Buy Plot - <name>'. The same Java screen with state FOR_RENT uses plot_rent.",
+        "There is no Back callback; Cancel closes. Do not paint or simulate a return to plot_list.",
+        "Price, owner and bounds live only in slot 22's lore and the confirm button's lore; never bake them into artwork."
+      ]
+    },
+    {
+      "skin_key": "plot_rent",
+      "live_slots_union": [
+        22,
+        29,
+        33
+      ],
+      "controls": [
+        {
+          "slots": [
+            22
+          ],
+          "label": "Plot preview",
+          "native_item": "minecraft:grass_block (minecraft:command_block for server plots)",
+          "trigger": "none",
+          "real_effect": "Display the plot named after plot.displayName() with owner, bounds, volume, chunk count and price lore.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "always",
+          "native_lore": [
+            "Owner: <owner>",
+            "Bounds: (<min>) to (<max>)",
+            "Volume: <volume>",
+            "Chunk count: <count>",
+            "Price: <currency>/<days> days",
+            "Contents: With existing blocks | Empty"
+          ]
+        },
+        {
+          "slots": [
+            29
+          ],
+          "label": "Cancel",
+          "native_item": "minecraft:red_concrete",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Play click sound and close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            33
+          ],
+          "label": "Confirm Rental",
+          "native_item": "minecraft:lime_concrete",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Play click sound; if QEcoCooldownHelper.checkCooldown passes, close and run the original rent(player, plotId) transaction (ownership transfer and balance changes happen there, with chat messages on every failure branch).",
+          "preview_proposal": "Report a simulated rental and close; never transfer claims, money or items.",
+          "condition": "always",
+          "native_lore": [
+            "Rent <plot> for <currency>/<days> days"
+          ]
+        },
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            17,
+            18,
+            26,
+            27,
+            35,
+            36,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53
+          ],
+          "label": "Border pane",
+          "native_item": "minecraft:blue_stained_glass_pane / minecraft:yellow_stained_glass_pane (alternating by slot parity), name '\u00a77'",
+          "trigger": "none",
+          "real_effect": "Decorative filler only; no callback.",
+          "preview_proposal": "Omit in the themed fixture; protected empty elements.",
+          "condition": "always"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "../Quasar/common/src/main/java/anar4732/quasar/sgui/PlotBuySGui.java",
+          "branch": "1.21",
+          "start_line": 28,
+          "end_line": 74
+        },
+        {
+          "path": "../Quasar/common/src/main/java/anar4732/quasar/sgui/PlotBuySGui.java",
+          "branch": "1.21",
+          "start_line": 150,
+          "end_line": 208
+        }
+      ],
+      "notes": [
+        "Opened only while the plot state is FOR_RENT and nobody rents it yet; the title is 'Rent Plot - <name>'.",
+        "Renting an 'Empty' plot extracts the owner's blocks and items after payment; the artwork must not suggest otherwise.",
+        "There is no Back callback; Cancel closes."
+      ]
+    },
+    {
+      "skin_key": "plot_list",
+      "live_slots_union": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        49,
+        53
+      ],
+      "controls": [
+        {
+          "slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ],
+          "label": "Plot entry",
+          "native_item": "minecraft:grass_block (minecraft:command_block for server plots)",
+          "trigger": "MOUSE_LEFT only; other click types are ignored.",
+          "real_effect": "Open plot_manage for that plot (PlotManageSGui.open re-checks membership and canManage).",
+          "preview_proposal": "Use example plots with truthful Dimension / ID / Bounds / Volume / Chunk count lore; LEFT opens the manage fixture.",
+          "condition": "Entry present: plots visible to the viewer (own plots, or every plot for moderators), 45 per page via gui.addSlot.",
+          "target": "plot_manage",
+          "native_lore": [
+            "Dimension: <dimension>",
+            "ID: <uuid>",
+            "Bounds: (<min>) to (<max>) | Bounds: Incomplete",
+            "Volume: <volume>",
+            "Chunk count: <count>",
+            "Owner: <owner> (moderators)",
+            "State: <NONE|FOR_SALE|FOR_RENT> (moderators)",
+            "",
+            "Left-Click to manage"
+          ]
+        },
+        {
+          "slots": [
+            45
+          ],
+          "label": "Previous Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Reopen at page - 1.",
+          "preview_proposal": "Decrement fixture page; omit on first page.",
+          "condition": "page > 0",
+          "target": "same key"
+        },
+        {
+          "slots": [
+            49
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            53
+          ],
+          "label": "Next Page",
+          "native_item": "minecraft:arrow",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Reopen at page + 1.",
+          "preview_proposal": "Increment fixture page; omit on last page.",
+          "condition": "page < lastPage",
+          "target": "same key"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "../Quasar/common/src/main/java/anar4732/quasar/sgui/PlotListSGui.java",
+          "branch": "1.21",
+          "start_line": 25,
+          "end_line": 86
+        }
+      ],
+      "notes": [
+        "Entries are added with gui.addSlot, so they fill 0..44 contiguously; 46-48 and 50-52 never hold an item.",
+        "Page size is fixed at 45 and keeps its native positions: this key is deliberately not in redesigned_pagination.",
+        "Own plots are named in green, others in gold; that colour is native text, not artwork."
+      ]
+    },
+    {
+      "skin_key": "plot_manage",
+      "live_slots_union": [
+        8,
+        10,
+        11,
+        12,
+        13,
+        14,
+        16
+      ],
+      "controls": [
+        {
+          "slots": [
+            8
+          ],
+          "label": "Close",
+          "native_item": "minecraft:barrier",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Close.",
+          "preview_proposal": "Close preview. Do not redirect to a invented parent screen.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            10
+          ],
+          "label": "Teleport",
+          "native_item": "minecraft:ender_pearl",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Teleport to a safe position above the plot centre (messages when bounds or dimension are unavailable), click sound, close.",
+          "preview_proposal": "Report a simulated teleport and close; never move the player.",
+          "condition": "QPlayerData.hasPermission(TP_POS); absent otherwise"
+        },
+        {
+          "slots": [
+            11
+          ],
+          "label": "Toggle Preview",
+          "native_item": "minecraft:ender_eye",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Click sound, QPlotPreview.togglePreview(player, plotId), close.",
+          "preview_proposal": "Toggle a fixture flag and close; no world particles.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            12
+          ],
+          "label": "Rename",
+          "native_item": "minecraft:name_tag",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Click sound, send a clickable '/plots rename <id> ' suggestion, close.",
+          "preview_proposal": "Show the same command guidance as demonstration text, then close; do not run the command.",
+          "condition": "always"
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "Sell",
+          "native_item": "minecraft:oak_sign",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Click sound, explain chunk alignment, send a clickable '/plots sell <id> ' suggestion, close.",
+          "preview_proposal": "Show the same command guidance, then close.",
+          "condition": "plot.state is NONE",
+          "native_lore": [
+            "Click to sell this plot",
+            "",
+            "Selling this plot will reassign claim ownership to the buyer."
+          ]
+        },
+        {
+          "slots": [
+            13
+          ],
+          "label": "For Sale",
+          "native_item": "minecraft:oak_sign",
+          "trigger": "none",
+          "real_effect": "Read-only sale status with price and sign tip.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "plot.state is FOR_SALE",
+          "native_lore": [
+            "This plot is currently for sale",
+            "Price: <price>",
+            "",
+            "TIP: Place a sign in the plot with [Plot] on the first line ..."
+          ]
+        },
+        {
+          "slots": [
+            14
+          ],
+          "label": "Lease Out",
+          "native_item": "minecraft:clock",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Click sound, explain price/duration/withBlock options, send a clickable '/plots leaseOut <id> ' suggestion, close.",
+          "preview_proposal": "Show the same command guidance, then close.",
+          "condition": "plot.state is NONE",
+          "native_lore": [
+            "Click to lease out this plot",
+            "",
+            "Rented plots will remain under your ownership, but the renter will have access to it for a set duration."
+          ]
+        },
+        {
+          "slots": [
+            14
+          ],
+          "label": "For Rent / Rented",
+          "native_item": "minecraft:clock",
+          "trigger": "none",
+          "real_effect": "Read-only rent status: availability, price, duration, contents, renter name or sign tip.",
+          "preview_proposal": "Read-only example; no navigation or game mutation.",
+          "condition": "plot.state is FOR_RENT",
+          "native_lore": [
+            "This plot is currently available for rent | This plot is currently rented",
+            "Price: <currency>",
+            "Duration: <days> days",
+            "Contents: With existing blocks | Empty",
+            "Renter: <name> | TIP: Place a sign ..."
+          ]
+        },
+        {
+          "slots": [
+            16
+          ],
+          "label": "Destroy",
+          "native_item": "minecraft:tnt",
+          "trigger": "Any click reaching this callback; no explicit ClickType filter.",
+          "real_effect": "Click sound; warn when rented out; send a clickable RUN_COMMAND '/plots destroy <id>' confirmation; close.",
+          "preview_proposal": "Show the confirmation link as demonstration text and close; never destroy a plot.",
+          "condition": "always"
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "../Quasar/common/src/main/java/anar4732/quasar/sgui/PlotManageSGui.java",
+          "branch": "1.21",
+          "start_line": 26,
+          "end_line": 147
+        }
+      ],
+      "notes": [
+        "Slots 13 and 14 change item, name, role and presence with the plot state and share one title, so they stay native content cells; their painted neighbours never carry Sell / Lease Out words.",
+        "Slot 10 is a conditional control: render the Teleport region disabled with no carrier when the permission is missing.",
+        "Rename, Sell, Lease Out and Destroy do not open forms; they print chat links and close. Destroy's link runs the command directly.",
+        "Close uses the shared QSGuiUtils.CLOSE barrier element."
       ]
     }
   ]

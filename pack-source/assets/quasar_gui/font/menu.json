@@ -475,6 +475,42 @@
     },
     {
       "type": "bitmap",
+      "file": "quasar_gui:menu/plot_buy.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue132"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/plot_rent.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue133"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/plot_list.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\ue134"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:menu/plot_manage.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": [
+        "\ue135"
+      ]
+    },
+    {
+      "type": "bitmap",
       "file": "quasar_gui:menu/template_chest_1.png",
       "ascent": 13,
       "height": 132,
@@ -9007,6 +9043,654 @@
     },
     {
       "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_buy/cancel/normal.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7ae"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_buy/cancel/disabled.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7af"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_buy/cancel/selected.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7b0"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_buy/cancel/pulse_1.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7b1"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_buy/cancel/pulse_2.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7b2"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_buy/cancel/pulse_3.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7b3"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_buy/confirm/normal.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7b4"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_buy/confirm/disabled.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7b5"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_buy/confirm/selected.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7b6"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_buy/confirm/pulse_1.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7b7"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_buy/confirm/pulse_2.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7b8"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_buy/confirm/pulse_3.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7b9"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_rent/cancel/normal.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7ba"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_rent/cancel/disabled.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7bb"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_rent/cancel/selected.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7bc"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_rent/cancel/pulse_1.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7bd"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_rent/cancel/pulse_2.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7be"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_rent/cancel/pulse_3.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7bf"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_rent/confirm/normal.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7c0"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_rent/confirm/disabled.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7c1"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_rent/confirm/selected.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7c2"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_rent/confirm/pulse_1.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7c3"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_rent/confirm/pulse_2.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7c4"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_rent/confirm/pulse_3.png",
+      "ascent": -58,
+      "height": 36,
+      "chars": [
+        "\ue7c5"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/previous/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7c6"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/previous/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7c7"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/previous/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7c8"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/previous/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7c9"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/previous/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7ca"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/previous/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7cb"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/close/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7cc"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/close/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7cd"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/close/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7ce"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/close/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7cf"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/close/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7d0"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/close/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7d1"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/next/normal.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7d2"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/next/disabled.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7d3"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/next/selected.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7d4"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/next/pulse_1.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7d5"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/next/pulse_2.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7d6"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_list/next/pulse_3.png",
+      "ascent": -94,
+      "height": 18,
+      "chars": [
+        "\ue7d7"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/preview/normal.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7d8"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/preview/disabled.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7d9"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/preview/selected.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7da"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/preview/pulse_1.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7db"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/preview/pulse_2.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7dc"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/preview/pulse_3.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7dd"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/rename/normal.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7de"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/rename/disabled.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7df"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/rename/selected.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7e0"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/rename/pulse_1.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7e1"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/rename/pulse_2.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7e2"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/rename/pulse_3.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7e3"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/close/normal.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7e4"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/close/disabled.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7e5"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/close/selected.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7e6"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/close/pulse_1.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7e7"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/close/pulse_2.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7e8"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/close/pulse_3.png",
+      "ascent": -4,
+      "height": 18,
+      "chars": [
+        "\ue7e9"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/teleport/normal.png",
+      "ascent": -22,
+      "height": 36,
+      "chars": [
+        "\ue7ea"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/teleport/disabled.png",
+      "ascent": -22,
+      "height": 36,
+      "chars": [
+        "\ue7eb"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/teleport/selected.png",
+      "ascent": -22,
+      "height": 36,
+      "chars": [
+        "\ue7ec"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/teleport/pulse_1.png",
+      "ascent": -22,
+      "height": 36,
+      "chars": [
+        "\ue7ed"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/teleport/pulse_2.png",
+      "ascent": -22,
+      "height": 36,
+      "chars": [
+        "\ue7ee"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/teleport/pulse_3.png",
+      "ascent": -22,
+      "height": 36,
+      "chars": [
+        "\ue7ef"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/destroy/normal.png",
+      "ascent": -22,
+      "height": 36,
+      "chars": [
+        "\ue7f0"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/destroy/disabled.png",
+      "ascent": -22,
+      "height": 36,
+      "chars": [
+        "\ue7f1"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/destroy/selected.png",
+      "ascent": -22,
+      "height": 36,
+      "chars": [
+        "\ue7f2"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/destroy/pulse_1.png",
+      "ascent": -22,
+      "height": 36,
+      "chars": [
+        "\ue7f3"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/destroy/pulse_2.png",
+      "ascent": -22,
+      "height": 36,
+      "chars": [
+        "\ue7f4"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:buttons/plot_manage/destroy/pulse_3.png",
+      "ascent": -22,
+      "height": 36,
+      "chars": [
+        "\ue7f5"
+      ]
+    },
+    {
+      "type": "bitmap",
       "file": "quasar_gui:frames/economy_hub/menu_frame.png",
       "ascent": 21,
       "height": 184,
@@ -9489,6 +10173,42 @@
       "height": 238,
       "chars": [
         "\ue235"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:frames/plot_buy/menu_frame.png",
+      "ascent": 21,
+      "height": 238,
+      "chars": [
+        "\ue236"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:frames/plot_rent/menu_frame.png",
+      "ascent": 21,
+      "height": 238,
+      "chars": [
+        "\ue237"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:frames/plot_list/menu_frame.png",
+      "ascent": 21,
+      "height": 238,
+      "chars": [
+        "\ue238"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "quasar_gui:frames/plot_manage/menu_frame.png",
+      "ascent": 21,
+      "height": 184,
+      "chars": [
+        "\ue239"
       ]
     }
   ]

@@ -66,10 +66,10 @@ def resolve_links(text, urls):
 PAGE_BUDGET = 14 * 1000 * 1000         # split a family page before it passes this
 
 FAMILY_ORDER = ['economy', 'auction', 'chest_shop', 'trade', 'ticket', 'admin_shop',
-                'guild_bank', 'prefixes', 'invsee', 'utility']
+                'guild_bank', 'prefixes', 'invsee', 'plot', 'utility']
 FAMILY_NAME = {'economy': 'Economy', 'auction': 'Auction', 'chest_shop': 'Chest Shop', 'trade': 'Trade',
                'ticket': 'Ticket', 'admin_shop': 'Admin Shop', 'guild_bank': 'Guild Bank',
-               'prefixes': 'Prefixes', 'invsee': 'Invsee', 'utility': 'Utility'}
+               'prefixes': 'Prefixes', 'invsee': 'Invsee', 'plot': 'Plot', 'utility': 'Utility'}
 # Sensible sub-groups, used only when a family must be split (adjacent groups are
 # packed together while they fit the budget).
 SPLIT_GROUPS = {
@@ -796,7 +796,7 @@ def build():
     sha = head_sha()
     by_family = geo.skins_by_family()
     assert set(by_family) == set(FAMILY_ORDER), sorted(by_family)
-    assert len(geo.all_skins()) == 56
+    assert len(geo.all_skins()) == 60
     for f in OUT.glob('*.html'):           # drop pages from an earlier split plan
         f.unlink()
     all_parts, names = {}, []

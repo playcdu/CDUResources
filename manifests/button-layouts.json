@@ -5278,6 +5278,337 @@
           "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured"
         }
       ]
+    },
+    "plot_buy": {
+      "contentSlots": [
+        22
+      ],
+      "buttons": [
+        {
+          "id": "cancel",
+          "sourceSlot": 29,
+          "slots": [
+            27,
+            28,
+            29,
+            36,
+            37,
+            38
+          ],
+          "label": "Cancel",
+          "role": "action",
+          "style": "danger"
+        },
+        {
+          "id": "confirm",
+          "sourceSlot": 33,
+          "slots": [
+            33,
+            34,
+            35,
+            42,
+            43,
+            44
+          ],
+          "label": "Confirm Purchase",
+          "role": "action",
+          "style": "primary",
+          "lines": [
+            "CONFIRM",
+            "PURCHASE"
+          ]
+        }
+      ],
+      "note": "Fixed native plot preview at 22 keeps its live owner, bounds, volume, chunk-count and price lore. The 26 border panes are decorative and become protected empty elements; no pagination.",
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured",
+          "height": 238,
+          "heading": "BUY PLOT",
+          "leftHeading": "PLOT",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ]
+        }
+      ]
+    },
+    "plot_rent": {
+      "contentSlots": [
+        22
+      ],
+      "buttons": [
+        {
+          "id": "cancel",
+          "sourceSlot": 29,
+          "slots": [
+            27,
+            28,
+            29,
+            36,
+            37,
+            38
+          ],
+          "label": "Cancel",
+          "role": "action",
+          "style": "danger"
+        },
+        {
+          "id": "confirm",
+          "sourceSlot": 33,
+          "slots": [
+            33,
+            34,
+            35,
+            42,
+            43,
+            44
+          ],
+          "label": "Confirm Rental",
+          "role": "action",
+          "style": "primary",
+          "lines": [
+            "CONFIRM",
+            "RENTAL"
+          ]
+        }
+      ],
+      "note": "Fixed native plot preview at 22 keeps its live owner, bounds, volume, chunk-count and price lore. The 26 border panes are decorative and become protected empty elements; no pagination.",
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured",
+          "height": 238,
+          "heading": "RENT PLOT",
+          "leftHeading": "PLOT",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ]
+        }
+      ]
+    },
+    "plot_list": {
+      "contentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "buttons": [
+        {
+          "id": "previous",
+          "sourceSlot": 45,
+          "slots": [
+            45,
+            46,
+            47
+          ],
+          "label": "Previous Page",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "PREVIOUS"
+          ]
+        },
+        {
+          "id": "close",
+          "sourceSlot": 49,
+          "slots": [
+            48,
+            49,
+            50
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger"
+        },
+        {
+          "id": "next",
+          "sourceSlot": 53,
+          "slots": [
+            51,
+            52,
+            53
+          ],
+          "label": "Next Page",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "NEXT"
+          ]
+        }
+      ],
+      "note": "All 45 plot entries stay native in their original positions (45 per page, no content redirect and no capacity change). Only the empty bottom row carries painted controls.",
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured",
+          "height": 238,
+          "heading": "PLOTS",
+          "leftHeading": "PLOTS",
+          "rightLines": [
+            "CLICK",
+            "TO",
+            "MANAGE"
+          ]
+        }
+      ]
+    },
+    "plot_manage": {
+      "contentSlots": [
+        13,
+        14
+      ],
+      "buttons": [
+        {
+          "id": "preview",
+          "sourceSlot": 11,
+          "slots": [
+            0,
+            1,
+            2
+          ],
+          "label": "Toggle Preview",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "TOGGLE",
+            "PREVIEW"
+          ]
+        },
+        {
+          "id": "rename",
+          "sourceSlot": 12,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Rename",
+          "role": "action",
+          "style": "secondary"
+        },
+        {
+          "id": "close",
+          "sourceSlot": 8,
+          "slots": [
+            6,
+            7,
+            8
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger"
+        },
+        {
+          "id": "teleport",
+          "sourceSlot": 10,
+          "slots": [
+            9,
+            10,
+            11,
+            12,
+            18,
+            19,
+            20,
+            21
+          ],
+          "label": "Teleport",
+          "role": "action",
+          "style": "primary"
+        },
+        {
+          "id": "destroy",
+          "sourceSlot": 16,
+          "slots": [
+            15,
+            16,
+            17,
+            24,
+            25,
+            26
+          ],
+          "label": "Destroy",
+          "role": "action",
+          "style": "danger"
+        }
+      ],
+      "note": "Cells 13 and 14 stay native: their item, name and lore change with the plot state (Sell / For Sale, Lease Out / For Rent / Rented) or are absent, so no painted label could stay truthful. Teleport renders disabled without the tp permission.",
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured",
+          "height": 184,
+          "heading": "MANAGE PLOT",
+          "leftHeading": "PLOT",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ]
+        }
+      ]
     }
   },
   "animation": {
