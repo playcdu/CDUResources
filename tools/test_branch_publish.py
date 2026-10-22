@@ -20,7 +20,8 @@ def fixture(extra=None):
             info.filename = name  # Preserve deliberately unsafe backslashes on Windows too.
             archive.writestr(info, data)
     raw = output.getvalue()
-    layout = publish.encoded({'schemaVersion': 1, 'packSha1': hashlib.sha1(raw).hexdigest(), 'skins': {}})
+    layout = publish.encoded({'schemaVersion': 1, 'packSha1': hashlib.sha1(raw).hexdigest(),
+        'registry': {'schemaVersion': 1, 'font': 'quasar_gui:menu', 'skins': {'auction_house': {}}}})
     return raw, layout
 
 

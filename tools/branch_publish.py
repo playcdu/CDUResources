@@ -115,7 +115,9 @@ def validate_pair(raw, sidecar, variant):
         raise ValueError('Layout exceeds publication limit')
     layout = json.loads(sidecar)
     sha = hashlib.sha1(raw).hexdigest()
-    if layout.get('schemaVersion') != 1 or layout.get('packSha1') != sha or not isinstance(layout.get('skins'), dict):
+    registry = layout.get('registry', {})
+    if layout.get('schemaVersion') != 1 or layout.get('packSha1') != sha or registry.get('schemaVersion') != 1 or \
+            registry.get('font') != 'quasar_gui:menu' or not isinstance(registry.get('skins'), dict) or not registry['skins']:
         raise ValueError('Layout SHA binding invalid')
     return files, layout
 
