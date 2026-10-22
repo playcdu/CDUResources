@@ -26,6 +26,8 @@ import argparse
 import sys
 from pathlib import Path
 
+from PIL import Image
+
 _HERE = Path(__file__).resolve().parent
 if str(_HERE) not in sys.path:
     sys.path.insert(0, str(_HERE))
@@ -225,6 +227,21 @@ LENS_BIG = [
     '.oboooooooao.',
     '..oobaaaaoo..',
     '....ooooo....',
+]
+
+# the scrying lens as a hanging lamp: a bezel with a hanging loop, deep
+# soul_0 glass with a soul_2 / soul_1 glint top-left, an iron collar below
+LENS_HUNG = [
+    '...ooo...',
+    '..oocoo..',
+    '.ocdccbo.',
+    'odLlkkkao',
+    'oclkkkkao',
+    'ockkkkkao',
+    'obkkkkbao',
+    '.obbbbao.',
+    '..ooaoo..',
+    '...ooo...',
 ]
 
 CRATE_PLATE = [
@@ -477,7 +494,7 @@ def paint_bg_chest6(key):
     balance pillar (left) and a masonry pier (right); an emblem sign hangs
     from the keystone, lanterns from the voussoirs; crates and a sack are
     stacked at the foot of the pier. Ads pins a sealed notice to the pier;
-    search sets a scrying lens on it and hangs another in the arch."""
+    search hangs a scrying lens from a wrought arm on it."""
     seed = SEED[key]
     s = geo.skin(key)
     img = C.base_background(key, seed=seed)
@@ -537,16 +554,22 @@ def paint_bg_chest6(key):
 
     # The right column's props are scene pieces, never item-shaped sprites
     # centred in an 18 px static cell: the notice straddles the cell seams,
-    # the sconce bridges two cells and the sack slumps on the crate stack.
+    # the sconce bridges two cells, the search lens hangs across the 17/26
+    # seam and the sack slumps on the crate stack.
     if ads:
         notice(img, 156, 32, 15, 24, seed=seed)
         P.crack(img, 168, 62, 5, seed=seed, colour=STONE[0], light=STONE[3])
     else:
-        # light first, so the glass itself stays deep soul_0 (a spice, not a fill)
-        P.glow(img, 162, 41, 10, 'soul')
-        P.sprite(img, 156, 34, LENS_BIG)
-        P.sprite(img, 161, 47, ['oco', 'obo', 'oco', 'obo'])
-        ledge(img, 157, 51, 14, seed, brackets=False)
+        # The scrying lens hangs like a lamp from a wrought arm bolted to the
+        # pier, low across the 17/26 cell seam: a fitting of the stall, never
+        # an orb set centred in a static cell like an item. Light first, so
+        # the glass keeps its deep soul_0 (a spice, not a fill).
+        arm = C.new(18, 14)
+        wall_arm(arm, 0, 4, 12, brace=5)
+        img.alpha_composite(arm.transpose(Image.FLIP_LEFT_RIGHT), (153, 33))   # plate on the pier, arm reaching left
+        P.glow(img, 160, 50, 8, 'soul')
+        short_chain(img, 160, 39, 42)
+        P.sprite(img, 156, 43, LENS_HUNG)
     candle_sconce(img, 163, 63, seed=seed, glow_r=9)
     crate(img, 155, 95, 17, 11, seed)
     crate(img, 157, 85, 13, 9, seed + 1)

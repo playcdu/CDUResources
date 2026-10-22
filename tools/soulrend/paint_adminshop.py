@@ -20,8 +20,10 @@ banner and an ash-pit brazier. Right panel: a hanging lantern, the
 per-screen piece, a ledge with the quartermaster's ledger and its seal, hammer
 and tongs on pegs and the iron-bound requisition chest. Frames carry no
 words. Backgrounds keep the shared base (vellum bands, iron-framed sockets)
-with tarnished-gold seam rivets on the native grid, armoury hasps on the
-bands and a pale per-screen watermark at the far end of the inventory band.
+with tarnished-gold seam rivets on the native grid and armoury hasps on the
+bands. The inventory band stays plain vellum: no motif enters the inventory
+text rows (a pale icon after a ruled line there read as a search field or a
+UI control the screen does not have).
 
 Licence: code MIT; artwork CC0-1.0.
 """
@@ -180,15 +182,6 @@ INKWELL = [
     '.ooooooo.',
 ]
 
-# pale watermarks for the inventory band (vellum_0 lines, vellum_1 fill)
-WATERMARKS = {
-    'admin_shop_categories': ['vvvvvvv', 'v.....v', 'v.www.v', 'v.....v', 'vvvvvvv', 'v..w..v', 'vvvvvvv'],
-    'admin_shop_listings':   ['vvvvvvv', 'vv...vv', 'v.v.v.v', 'v..v..v', 'v.v.v.v', 'vv...vv', 'vvvvvvv'],
-    'admin_shop_search':     ['.vvv...', 'v.w.v..', 'vw..v..', 'v...v..', '.vvvw..', '....wv.', '.....wv'],
-    'admin_shop_configured': ['..vvv..', '.vwwwv.', 'vwwvwwv', 'vwvvvwv', '.vwwwv.', '.vvvvv.', 'v.....v'],
-}
-WM_KEY = {'v': VELLUM[0], 'w': VELLUM[1]}
-
 
 def _rows_fill(rows, ch_from, ch_to):
     return [r.replace(ch_from, ch_to) for r in rows]
@@ -205,7 +198,7 @@ def paint_background(key):
     s = geo.skin(key)
     seed = SEEDS[key]
     img = C.base_background(key, seed=seed)
-    tband, iband = C.bands(key)
+    tband, _ = C.bands(key)
     # tarnished-gold seam rivets on the native grid's iron ring: the
     # quartermaster's brass studs (only where the base put an iron_3 rivet)
     cb = s.content_bbox
@@ -217,12 +210,6 @@ def paint_background(key):
     # armoury hasps with a keyhole replace the plain clasps on the title band
     for x in (tband.x, tband.right - 4):
         P.sprite(img, x, tband.y, HASP[:tband.h - 1] + ['oooo'])
-    # a pale watermark at the far end of the inventory band (always light)
-    wm = WATERMARKS[key]
-    wx, wy = iband.right - 6 - 9, iband.y + 1
-    P.sprite(img, wx, wy, wm, WM_KEY)
-    P.hline(img, wx - 14, wx - 3, wy + 3, VELLUM[1])
-    P.put(img, wx - 15, wy + 3, VELLUM[0])
     C.finish_background(img, key)
     return img
 

@@ -192,6 +192,24 @@ HAMMER_LOW = [
     'o3322221bbao',
     'ooooooooooo.',
 ]
+# a tall wall lantern hung from a bracket: peaked iron hood, ember glass
+# with a flame, iron base and a drop finial (13 rows; taller than wide, so it
+# never reads as the squat lantern item)
+WALL_LANTERN = [
+    '...o...',
+    '..odo..',
+    '.odcbo.',
+    'odccbao',
+    'ooooooO',
+    'ocfFfaO',
+    'ocFFfaO',
+    'ocfFeaO',
+    'obffeaO',
+    'ooooooO',
+    '.obbaO.',
+    '..oaO..',
+    '...O...',
+]
 # the iron lantern, unlit: glass dark, no flame
 LANTERN_UNLIT_KEY = {'F': IRON[1], 'f': INK[2], 'e': INK[2]}
 
@@ -498,10 +516,19 @@ def scene_trade(bg, key, seed, buying):
     x, y, w, h = box
     P.stone_blocks(layer, box, seed + 3, STONE, course=6, moss=0.0)
     P.ink_outline(layer, box, 'ink_1', radius=0, heavy='br')
-    wall_bracket(layer, x + 1, y + 4, 11)
-    lx, ly = lantern(layer, x + 8, y + 7, lit=True)
-    P.put(layer, x + 12, y + 5, 'ink_1'); P.put(layer, x + 12, y + 6, IRON[2])
-    lamp_glow(layer, lx, ly, 10)
+    # a tall bracket lantern (peaked iron hood, finial below; not the squat
+    # cage of the lantern motif) hangs off-centre from the wall bracket and
+    # throws a cast shadow down and right onto the masonry, so the cell reads
+    # as a lit stretch of wall rather than an item icon in a framed slot; the
+    # light pools only round the glass
+    lamp_glow(layer, x + 12, y + 10, 6)
+    wall_bracket(layer, x + 1, y + 3, 11)
+    lx, ly = x + 9, y + 4
+    for (i, j) in [(i, j) for j, row in enumerate(WALL_LANTERN) for i, ch in enumerate(row) if ch != '.']:
+        sx, sy = lx + i + 1, ly + j + 1
+        if x < sx < x + w - 1 and y < sy < y + h - 1:
+            P.put(layer, sx, sy, INK[2])
+    sprite(layer, lx, ly, WALL_LANTERN)
     paste(bg, layer, box)
 
     # --- slot 20: pillar foot with sacks slumped against it -----------------
@@ -666,6 +693,11 @@ TAG_IDS = ('preset_1', 'preset_2', 'preset_3', 'preset_4', 'tier_1', 'tier_2', '
            'sell_price', 'buy_price')
 
 
+def _is_ink(p):
+    """True for an opaque ink pixel."""
+    return p[3] and tuple(p[:3]) in (INK[0], INK[1], INK[2])
+
+
 def tag_face(img, b, seed):
     """A vellum merchant's tag: the left end clipped at 45 degrees, an iron
     eyelet with a twine loop; lettering to the right of the eyelet."""
@@ -704,7 +736,19 @@ def paint_one_button(key, b, seed):
     mood = MOOD[key]
     if b.id in TAG_IDS:
         img = C.new(b.w, b.h)
-        C.letter(img, b, tag_face(img, b, seed), 'ink_0')
+        box = tag_face(img, b, seed)
+        C.letter(img, b, box, 'ink_0')
+        # a descender (the y of Buy Price) hangs close to the deckled bottom
+        # edge; where a deckle notch rises under it the pulse ring would run
+        # right beneath the tail, so the cut is left straight under the
+        # descender (the caps stay on the same rows as the neighbouring tags)
+        tail = [x for (x, y) in C.label_pixels(C.label_layout(b, box)) if y >= b.h - 4]
+        for x in range(min(tail, default=0) - 4, max(tail, default=-9) + 5):
+            if img.getpixel((x, b.h - 1))[3] == 0:
+                P.put(img, x, b.h - 1, 'ink_0')
+                P.put(img, x, b.h - 2, VELLUM[1])
+                if _is_ink(img.getpixel((x, b.h - 3))):
+                    P.put(img, x, b.h - 3, VELLUM[2])
     elif kind == 'primary' and b.h > 36:
         # the tall Apply plate: an engraved stack of crates above the label
         img = C.new(b.w, b.h)
@@ -749,12 +793,59 @@ def paint_one_button(key, b, seed):
     return img
 
 
+CRACK_CLEAR = 3      # Chebyshev distance a disabled crack pixel keeps from any glyph
+
+
+def disabled_override(normal, b):
+    """The shared disabled frame with its hairline cracks kept 2 clear
+    pixels from the lettering. The shared transform keeps them only 1 px
+    clear, and on the small ink-lettered strips and tags a crack ending
+    diagonally off a glyph read as part of it ("Tier/1", "STOCK" with a long
+    leg, a cedilla under the c of Price, a tail on the Y of QUANTITY). Crack
+    pixels nearer than ``CRACK_CLEAR`` are left uncracked and any remnant
+    shorter than 3 px is dropped; everything else (the dimmed face, the
+    dimmed lettering, alpha) is the shared ``make_disabled`` result. Returns
+    None when nothing needs changing."""
+    glyphs = C.lettering_mask(normal, b, halo=False)
+    if not glyphs or C.button_kind(b) == 'close':
+        return None
+    full = P.make_disabled(normal, glyphs)
+    bare = P.make_disabled(normal, glyphs, cracks=False)
+    fp, bp = full.load(), bare.load()
+    crack = {(x, y) for y in range(full.height) for x in range(full.width) if fp[x, y] != bp[x, y]}
+    far = {(x, y) for (x, y) in crack
+           if all(max(abs(x - gx), abs(y - gy)) >= CRACK_CLEAR for (gx, gy) in glyphs)}
+    if far == crack:
+        return None
+    keep, seen = set(), set()
+    for p0 in sorted(far):
+        if p0 in seen:
+            continue
+        comp, todo = set(), [p0]
+        while todo:
+            q = todo.pop()
+            if q in seen:
+                continue
+            seen.add(q)
+            comp.add(q)
+            todo.extend((q[0] + dx, q[1] + dy) for dx in (-1, 0, 1) for dy in (-1, 0, 1)
+                        if (q[0] + dx, q[1] + dy) in far)
+        if len(comp) >= 3:
+            keep |= comp
+    out = bare.copy()
+    for q in keep:
+        out.putpixel(q, fp[q])
+    return out
+
+
 def paint_buttons(key, root=None):
     s = geo.skin(key)
     seed = SEEDS[key]
     for i, b in enumerate(s.buttons):
         normal = paint_one_button(key, b, seed + i)
-        states = C.button_states(normal, key, b.id)   # shared transforms (rim-safe lettering mask)
+        dis = disabled_override(normal, b)
+        states = C.button_states(normal, key, b.id,   # shared transforms (rim-safe lettering mask)
+                                 overrides={'disabled': dis} if dis is not None else None)
         C.save_button_states(states, key, b.id, root=root)
 
 

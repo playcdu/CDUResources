@@ -343,12 +343,24 @@ GEM_BLOOD = ['.ooo.', 'ostso', '.oro.']
 BOSS_COIN = ['.ooo.', 'oHHgo', '.ogo.']
 
 
+# Per-button seeds where the shared one misbehaves:
+# - own_money: YOUR / MONEY in RUNE fills the strip to one ring of air top
+#   and bottom, so a deckle notch under or over the lettering pulled the
+#   pulse ring onto the letters' halo. Seed 68 cuts its notches only beyond
+#   the lettering columns (top x 8-10 / 45-48, bottom x 10-12 / 42-43).
+# - other_money: the shared seed put a tablet chisel mark just left of
+#   THEIR, where it read as a dash ("-THEIR"); seed 115 sets the only
+#   visible mark under the right coin, well clear of the words.
+STRIP_SEED = {'own_money': 68}
+TABLET_SEED = {'other_money': 115}
+
+
 def coin_pinned_strip(key, b):
     """Vellum strip pinned by two gold coins instead of iron rivets."""
     img = C.new(b.w, b.h)
     body = b.body.tuple()
     x, y, w, h = body
-    C.secondary_face(img, body, SEED, rivets=False)
+    C.secondary_face(img, body, STRIP_SEED.get(b.id, SEED), rivets=False)
     box = (x + 6, y + 2, w - 12, h - 4)               # same text box as the riveted strip
     C.letter(img, b, box, 'ink_0')
     cy = y + (h - 5) // 2
@@ -365,7 +377,8 @@ def paint_buttons(key):
         if b.id in ('own_money', 'return', 'decrease'):
             img = coin_pinned_strip(key, b)
         else:
-            img = C.paint_button(key, b.id, seed=SEED)
+            img = C.paint_button(key, b.id, seed=TABLET_SEED.get(b.id, SEED))
+        disabled_touch = None
         bx, by, bw, bh = b.body.tuple()
         if b.id == 'ready':
             # the handshake knot engraved either side of the word, a blood
@@ -388,6 +401,13 @@ def paint_buttons(key):
             def selected_touch(im, spots=spots):
                 for (ex, ey) in spots:
                     P.sprite(im, ex, ey, COIN_CARVED, {'n': SOUL[0], 'p': SOUL[1]})
+
+            def disabled_touch(im, spots=spots):
+                # the dead-stone mapping sends the lit lip to the face tone,
+                # leaving half rings that read as stray "C" marks: re-cut
+                # both roundels whole in the cold disabled register
+                for (ex, ey) in spots:
+                    P.sprite(im, ex, ey, COIN_CARVED, {'n': IRON[1], 'p': IRON[1]})
         elif b.id == 'increase':
             P.sprite(img, bx + bw // 2 - 3, by, BOSS_COIN)
         C.finish_button(img, key, b.id)
@@ -396,6 +416,10 @@ def paint_buttons(key):
             sel = states['selected'].copy()
             selected_touch(sel)
             states['selected'] = C.finish_button(sel, key, b.id)
+        if disabled_touch:
+            dis = states['disabled'].copy()
+            disabled_touch(dis)
+            states['disabled'] = C.finish_button(dis, key, b.id)
         out[b.id] = states
     return out
 

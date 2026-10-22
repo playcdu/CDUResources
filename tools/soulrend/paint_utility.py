@@ -94,17 +94,19 @@ def soot(img, cx, y_bottom, y_top, w_bottom, w_top, seed=0):
     """A soot stain rising up masonry from ``y_bottom`` to ``y_top``: a
     tapering, gently wandering band in which stone, moss and iron faces step
     one shade darker (mortar is already darkest and stays); its ragged edge
-    and its top quarter thin out to a 50 % checker, so the stain fades the
-    way light falls off (ordered, never noise)."""
+    and its last few rows under the flue thin out to a 1 px checker, so the
+    stain fades the way light falls off (ordered, never noise) without
+    leaving a dithered block on the wall."""
     r = P._rng(seed, 'soot', cx, y_bottom)
     span = max(1, y_bottom - y_top)
+    fade_from = 1 - min(0.12, 5 / span)             # about five rows of fade
     wob = 0
     for y in range(y_bottom, y_top - 1, -1):
         t = (y_bottom - y) / span                   # 0 at the bottom, 1 at the top
         half = (w_bottom + (w_top - w_bottom) * t) / 2
         if r.random() < 0.18:
             wob = max(-2, min(2, wob + r.choice((-1, 1))))
-        fading = t > 0.88
+        fading = t > fade_from
         for x in range(int(cx + wob - half - 1), int(cx + wob + half + 2)):
             p = P.get(img, x, y)
             if p[3] == 0:
@@ -153,6 +155,25 @@ def rune(img, x, y, kind=0):
             if nj >= 5 or ni >= 5 or rows[nj][ni] == '.':
                 P.put(img, x + ni, y + nj, SOUL[0])
     spr(img, x, y, rows)
+
+
+def carved_rune(img, x, y, kind=0):
+    """A dormant rune cut into obsidian masonry, 5x5: the same abstract
+    marks as ``rune`` but barely lit (a deep soul_0 cut with an ink_0 shadow
+    below right and a single soul_1 spark at its heart), so the bright
+    soul-cyan stays a spice on the stele, the niche and the crystals."""
+    rows = RUNES[kind % len(RUNES)]
+    for j, row in enumerate(rows):
+        for i, ch in enumerate(row):
+            if ch == '.':
+                continue
+            nj, ni = j + 1, i + 1
+            if nj >= 5 or ni >= 5 or rows[nj][ni] == '.':
+                P.put(img, x + ni, y + nj, INK[0])
+    for j, row in enumerate(rows):
+        for i, ch in enumerate(row):
+            if ch != '.':
+                P.put(img, x + i, y + j, SOUL[1] if ch == 'L' else SOUL[0])
 
 
 def ledge(img, x, y, w, ramp=STONE):
@@ -509,14 +530,14 @@ def paint_ender_frame(seed=33):
     P.glow(img, nx + 11, ny + 13, 9, 'soul')
     P.chain(img, rp.x + 19, 58, rp.x + 19, 76, seed=seed + 2)
     spr(img, rp.x + 16, 77, GOLD_KEY)
-    rune(img, rp.x + 5, 98, 1)
-    rune(img, rp.x + 27, 108, 3)
+    carved_rune(img, rp.x + 5, 98, 3)
+    carved_rune(img, rp.x + 27, 108, 4)
     lx, ly = rp.x + 5, 136
     ledge(img, lx, ly, 27, ramp=OBSIDIAN)
     spr(img, lx + 6, ly - 9, CRYSTALS, VOID_KEY)
     P.glow(img, lx + 13, ly - 5, 8, 'soul')
     P.crack(img, rp.x + 30, 150, 10, seed=seed, colour=INK[0], light=VOID[1])
-    rune(img, rp.x + 10, 156, 2)
+    carved_rune(img, rp.x + 10, 156, 2)
 
     # --- strips ---
     top_chains(img, a, seed)

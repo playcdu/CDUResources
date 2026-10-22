@@ -17,7 +17,7 @@ seal, iron-banded coffers, stacked coin columns (never numbers), torches.
 * economy_log (chest_6, 28 listing wells): the ledger vault. The static top
   row and side columns are one recessed stone alcove round the iron listing
   cabinet: a shelf of coffers, coin columns, the sealed ledger and the scales
-  across the top, a coin banner and stacked coffers on the left, a torch, a
+  across the top, a coin banner and an arched strongroom door on the left, a torch, a
   chained ledger and coin columns on the right. Every prop straddles a cell
   boundary; every listing well stays an empty framed socket. The frame is the
   archive: shelves of ledger spines, a quill and inkwell, a candle clock.
@@ -109,6 +109,56 @@ def coffer(img, x, y, w, h, seed=0, lid=None):
     # a scuff on the lid
     sx = x + 5 + r.randint(0, max(0, w - 12))
     P.put(img, sx, y + 2, UMBER[1]); P.put(img, sx + 1, y + 3, UMBER[1])
+
+
+def vault_door(img, x, y, w=15, h=30, seed=0):
+    """The strongroom door set into the back of the vault alcove: an arched
+    door of umber planks hung on two iron straps with rivets, a gold lock
+    plate and an iron ring pull, standing on a stone sill. It is two cells
+    tall and stands on the alcove floor, so it reads as architecture and
+    never as a chest or a door item lying in one slot."""
+    r = random.Random(f'door:{seed}:{x}:{y}')
+    # the dressed-stone jamb and arch round the doorway, keystone on top
+    P.ink_outline(img, (x - 2, y - 3, w + 4, h + 3), 'ink_1', radius=3, heavy='br', fill_colour=STONE[2])
+    P.hline(img, x + 1, x + w - 2, y - 2, STONE[3])
+    P.vline(img, x - 1, y + 1, y + h - 1, STONE[3])
+    P.vline(img, x + w, y + 1, y + h - 1, STONE[1])
+    for jy in (y + 6, y + 14, y + 22):                       # jamb block joints
+        P.put(img, x - 1, jy, STONE[1]); P.put(img, x + w, jy + 3, STONE[0])
+    P.sprite(img, x + w // 2 - 1, y - 3, ['ooo', 'oqo', 'opo'])  # keystone
+    under = img.copy()
+    P.ink_outline(img, (x, y, w, h), 'ink_1', radius=1, heavy='br', fill_colour=UMBER[2])
+    # the arch: corners give back the masonry, the ink follows the curve
+    for row, cut in ((0, 4), (1, 2), (2, 1)):
+        for i in range(cut):
+            for xx in (x + i, x + w - 1 - i):
+                img.putpixel((xx, y + row), under.getpixel((xx, y + row)))
+    P.hline(img, x + 4, x + w - 5, y, INK[1])
+    for xx in (x + 2, x + 3):
+        P.put(img, xx, y + 1, INK[1])
+    for xx in (x + w - 4, x + w - 3):
+        P.put(img, xx, y + 1, INK[0])
+    P.put(img, x + 1, y + 2, INK[1]); P.put(img, x + w - 2, y + 2, INK[0])
+    P.hline(img, x + 4, x + w - 5, y + 1, UMBER[3])          # lit head of the arch
+    P.put(img, x + 2, y + 2, UMBER[3]); P.put(img, x + 3, y + 2, UMBER[3])
+    P.vline(img, x + 1, y + 3, y + h - 3, UMBER[3])          # lit left stile
+    for sx in range(x + 4, x + w - 3, 4):                    # plank seams
+        P.vline(img, sx + r.choice((0, 0, 1)), y + 2, y + h - 3, UMBER[1])
+    P.vline(img, x + w - 2, y + 3, y + h - 2, UMBER[1])
+    P.hline(img, x + 1, x + w - 2, y + h - 2, UMBER[0])
+    for sy in (y + 7, y + h - 9):                            # iron straps
+        P.hline(img, x + 1, x + w - 2, sy, IRON[2])
+        P.hline(img, x + 1, x + w - 2, sy + 1, IRON[0])
+        for rx in (x + 2, x + 6, x + w - 3):
+            P.put(img, rx, sy, IRON[3])
+    cy = y + h // 2 - 2
+    P.sprite(img, x + w // 2 - 2, cy, LOCK)
+    P.sprite(img, x + w - 5, cy + 1, ['.c.', 'c.a', '.a.'])   # ring pull
+    for _ in range(2):                                       # scuffs in the planks
+        sx = r.randint(x + 2, x + w - 4); sy = r.randint(y + 10, y + h - 12)
+        P.put(img, sx, sy, UMBER[1])
+    P.hline(img, x - 1, x + w, y + h, STONE[2])              # stone sill
+    P.put(img, x - 1, y + h, STONE[3]); P.put(img, x, y + h, STONE[3])
 
 
 def coin_column(img, x, bottom, n, seed=0):
@@ -351,10 +401,26 @@ def ledger_bookmark(img, x):
     P.sprite(img, x, 0, ['oso', 'oso', 'oso', 'oso', 'oto', 'r.r'])
 
 
+def privacy_strip(key, b, seed):
+    """The 36 px Privacy strip. Its label only fits in GRAVEN mixed case
+    without rivets, and the 'y' descender hangs two rows below the cap
+    height; ``compose.letter`` centres the caps, which leaves the descender
+    one row off the bottom deckle so every pulse ring ran against it. The
+    same strip and label, lettered one row higher: caps rows 5-11 and the
+    descender on 12-13, centred on the strip with clear air for the rings."""
+    img = C.new(b.w, b.h)
+    x, y, w, h = C.secondary_face(img, b.body.tuple(), seed, rivets=False)
+    C.letter(img, b, (x, y - 1, w, h), 'ink_0')
+    return img
+
+
 def paint_buttons(key, out, seed):
     s = geo.skin(key)
     for b in s.buttons:
-        img = C.paint_button(key, b.id, seed=seed)
+        if key == 'economy_hub' and b.id == 'privacy':
+            img = privacy_strip(key, b, seed)
+        else:
+            img = C.paint_button(key, b.id, seed=seed)
         if key == 'economy_hub':
             if b.id == 'auction':
                 plate_touches(img, b, GAVEL)
@@ -510,12 +576,11 @@ def log_background(key, seed):
     coin_column(img, 151, 27, 5, seed + 5)                  # across x 151
     fx3, fy3 = P.candle(img, 164, 20, height=5, lit=True, holder='iron', seed=seed + 2)
 
-    # ---- left column: coin banner, stacked coffers ----
+    # ---- left column: coin banner, the strongroom door ----
     P.chain(img, 7, 32, 7, 35, seed=seed, shadow=None)
     coin_banner(img, 5, 36, 11, 34, BLOOD, seed)            # spans cells 9 .. 27
-    coffer(img, 5, 79, 12, 9, seed + 2)                     # across y 88
-    coffer(img, 3, 88, 17, 18, seed + 3, lid=6)
-    P.moss_tuft(img, 16, 77, 3, seed=seed)
+    vault_door(img, 5, 76, 13, 30, seed + 2)                # spans cells 27 and 36
+    P.moss_tuft(img, 16, 73, 3, seed=seed)
 
     # ---- right column: torch, chained ledger, coin columns ----
     tx, ty = torch(img, 164, 32)

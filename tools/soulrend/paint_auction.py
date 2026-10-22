@@ -199,6 +199,28 @@ SEALED_WRIT = [
     '.....r..r...',
 ]
 
+# The niche props lie flat on the lower ledge, low and as wide as the niche,
+# so they read as things set down on a shelf and never as a pale square
+# centred in a cell like an item icon (13 x 7 / 13 x 5).
+# a closed ledger lying flat: tooled cover, gold clasp, page block, ribbon
+FLAT_LEDGER = [
+    '.ooooooooooo.',
+    'o33332222221o',
+    'oooooohoooooo',
+    'oyxxxxHxxxxwo',
+    'oxwxwxgxwxwvo',
+    'o11111g11100o',
+    '.oooooooosoo.',
+]
+# a rolled writ lying on the ledge, bound with a blood cord
+ROLLED_WRIT = [
+    '.ooooooooooo.',
+    'oywyyysyyyyxo',
+    'oxvxxxsxxxxwo',
+    'owowwwswwwwvo',
+    '.ooooooooooo.',
+]
+
 # open ledger on a lectern (house), umber boards, two vellum pages, blood ribbon
 OPEN_LEDGER = [
     '.oooooo.oooooo.',
@@ -494,7 +516,8 @@ def niche_market(img, key, seed):
     ledge(img, x + 1, 90, w - 2, brackets=False)
     prop = PROP[key]
     if prop == 'ledger':
-        icons.draw_motif(img, 'ledger', x + 1, 79)
+        P.sprite(img, x + 1, 82, FLAT_LEDGER)                  # rests on the ledge (top row 89)
+        P.sprite(img, x + 10, 89, ['s', 'r', 'r'])           # ribbon over the ledge front
     elif prop == 'lens':
         # the scrying lens hangs on a short chain from the ledge above, its
         # glass deep soul_0 with one glint, painted over its own soul-light so
@@ -504,7 +527,9 @@ def niche_market(img, key, seed):
         P.chain(img, x + 7, 72, x + 7, 75, seed=seed + 2, shadow=None)
         P.sprite(img, x + 3, 76, LENS_HUNG)
     else:
-        icons.draw_motif(img, 'writ', x + 1, 81)
+        P.sprite(img, x + 1, 84, ROLLED_WRIT)
+        P.sprite(img, x + 7, 89, ['s', 'r'])                   # cord over the ledge front
+        P.sprite(img, x + 5, 91, ['oto', 'oso', '.o.'])        # its wax seal hanging
     P.chain(img, x + 10, 95, x + 10, 95, seed=seed + 3, shadow=None)
     tag(img, x + 7, 96, 'blood', short=True)
     P.moss_tuft(img, x + 2, 94, 3, seed=seed)

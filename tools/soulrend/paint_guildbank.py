@@ -412,6 +412,9 @@ KEY_CORE = {
     'short': ['HHh', 'H+g', 'hgg', '.h.', '.h.', '.hH', '.h.', '.hH'],
     # hanging askew to the lower left from a bow at the top right
     'askew': ['....HHh', '....H+g', '....hgg', '...h...', '..h....', '.h.....', 'hhH....', '.H.....'],
+    # hanging from the ring and leaning a pixel outward (left; flip for
+    # right), its bit on the outer side, so the bunch fans gently downward
+    'lean':  ['.HHh', '.H+g', '.hgg', '..h.', '..h.', '.h..', 'Hh..', '.h..', 'Hh..'],
 }
 
 
@@ -438,23 +441,33 @@ def draw_key(img, x, y, core, ramp, flip=False):
 
 
 def key_ring(img, cx, y, seed):
-    """A wall staple at row ``y`` holding a forged iron ring with a bunch of
-    three keys hanging from it (tarnished gold in the middle). 25 rows."""
-    rcx, rcy, rr = cx, y + 11, 6
+    """A wall staple at row ``y`` holding a small forged iron ring with a
+    bunch of three keys hanging from its lower arc, bows threaded on the ring
+    and bits pointing down (tarnished gold in the middle): read at 1x as keys
+    on a ring, never as a claw. 25 rows."""
+    rcx, rcy, rr = cx, y + 8, 4
     gold = (GOLD[2], GOLD[1], GOLD[0])
     iron = (IRON[3], IRON[2], IRON[0])
-    # ring first, keys threaded over its lower arc
-    for yy in range(rcy - rr - 2, rcy + rr + 3):
-        for xx in range(rcx - rr - 2, rcx + rr + 3):
-            d = math.hypot(xx - rcx, yy - rcy)
-            t = (xx - rcx) + (yy - rcy)
-            if rr - 0.6 < d <= rr + 0.6:
-                P.put(img, xx, yy, IRON[3] if t < -3 else IRON[0] if t > 3 else IRON[2])
-            elif rr + 0.6 < d <= rr + 1.5 or rr - 1.5 < d <= rr - 0.6:
-                P.put(img, xx, yy, INK[0] if t > 0 else INK[1])
-    draw_key(img, rcx - 9, rcy + 3, 'askew', iron)
-    draw_key(img, rcx + 2, rcy + 3, 'askew', iron, flip=True)
-    draw_key(img, rcx - 1, rcy + 5, 'long', gold)
+
+    def ring_px(yy_min=-99):
+        for yy in range(max(rcy - rr - 2, yy_min), rcy + rr + 3):
+            for xx in range(rcx - rr - 2, rcx + rr + 3):
+                d = math.hypot(xx - rcx, yy - rcy)
+                t = (xx - rcx) + (yy - rcy)
+                if rr - 0.6 < d <= rr + 0.6:
+                    yield xx, yy, IRON[3] if t < -3 else IRON[0] if t > 3 else IRON[2]
+                elif yy_min < 0 and (rr + 0.6 < d <= rr + 1.5 or rr - 1.5 < d <= rr - 0.6):
+                    yield xx, yy, INK[0] if t > 0 else INK[1]
+
+    for xx, yy, col in ring_px():
+        P.put(img, xx, yy, col)
+    # keys hang below the ring, bows hooked over its lower arc ...
+    draw_key(img, rcx - 6, rcy + 4, 'lean', iron)
+    draw_key(img, rcx + 3, rcy + 4, 'lean', iron, flip=True)
+    draw_key(img, rcx - 1, rcy + 6, 'long', gold)
+    # ... and the ring passes back over the top of each bow (threaded)
+    for xx, yy, col in ring_px(rcy + 2):
+        P.put(img, xx, yy, col)
     P.sprite(img, cx - 2, y, ['ooooo', 'odcbo', 'obbao', '.oco.', '.oco.'])
     return y + 28
 
