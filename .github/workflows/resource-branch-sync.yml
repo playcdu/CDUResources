@@ -1,0 +1,23 @@
+name: Publish GitHub branch packs
+
+on:
+  push:
+    branches: ['**']
+  create:
+  delete:
+  schedule:
+    - cron: '3-59/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-resource-branches
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.repository == 'playcdu/CDUResources'
+    uses: playcdu/CDUResources/.github/workflows/publish-resource-branches.yml@main
