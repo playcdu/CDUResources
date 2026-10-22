@@ -13,7 +13,8 @@ edges       highlight_edge, shadow_edge, ink_outline
 materials   plank, parchment_panel, brass_plate, linen_tag, wax_seal, page_curl
 wells       well_frame, stitched_well, wood_well  (never paint inside the hole)
 details     tack, leaf, mug, lantern, lantern_glow_ring, dither_patch
-states      make_disabled, make_selected, make_pulse  (alpha is never changed)
+states      make_disabled, make_disabled_seal, make_selected, make_pulse,
+            pulse_depths, make_state  (alpha is never changed)
 
 Licence: MIT.
 """
@@ -981,52 +982,106 @@ def make_selected(img, sparkle=True):
     return out
 
 
-_PULSE = {1: (3, None, True), 2: (2, 3, False), 3: (1, 2, False)}
+_PULSE_DEPTHS = (3, 2, 1)   # designed ring depth (px in from the edge) for pulse_1..3
 
 
-def make_pulse(img, n):
+def pulse_depths(dist, protect=None):
+    """Ring depths (pulse_1, pulse_2, pulse_3) that stay clear of ``protect``.
+
+    The designed rings sit 3, 2 and 1 px in from the edge. When protected
+    pixels (lettering and its 1 px halo) come closer to the edge than that -
+    typical on 18 px tall buttons - the ring is compressed into the free band
+    between the edge and the lettering, so it can never cross a glyph."""
+    if not protect:
+        return _PULSE_DEPTHS
+    near = min((dist[y][x] for (x, y) in protect if 0 <= y < len(dist) and 0 <= x < len(dist[0])
+                and dist[y][x] is not None), default=99)
+    room = max(1, min(3, near - 1))
+    return {3: (3, 2, 1), 2: (2, 1, 1), 1: (1, 1, 1)}[room]
+
+
+def make_pulse(img, n, protect=None):
     """Lantern-glow ring, frame ``n`` of 3, expanding outward then fading:
 
-    pulse_1  bright ring 3 px in from the edge; the core warms one ramp step
+    pulse_1  bright ring 3 px in from the edge; on unlettered faces the core
+             also warms one ramp step
     pulse_2  ring 2 px in; afterglow (one step lighter) where the ring was
     pulse_3  faint checker-dithered ring 1 px in, afterglow at 2 px; next
              frame the server shows the resting state
 
-    Ring colour is ember_2 on light surfaces, ember_1 on mid, ember_0 on dark.
-    Ink pixels (outline, lettering) never change. Alpha unchanged."""
-    if n not in _PULSE:
+    ``protect`` is a set of (x, y) pixels that must not change - pass the
+    lettering mask (``compose.lettering_mask``), which includes a 1 px halo so
+    letters keep their shadow and contrast. Rings are compressed toward the
+    edge when lettering is closer than 4 px (``pulse_depths``). The pulse_1
+    core warm-up only happens on unlettered faces, so the area round the
+    letters keeps its normal contrast. Ring colour is ember_1 on light
+    paper and on dark wood/wax, ember_2 on brass and mid wood. Ink pixels and
+    alpha never change."""
+    if n not in (1, 2, 3):
         raise ValueError('pulse frame must be 1, 2 or 3')
-    ring_d, after_d, warm_core = _PULSE[n]
+    protect = protect or set()
     out = img.copy()
     px = out.load()
     dist = edge_distance(out, 6)
+    depths = pulse_depths(dist, protect)
+    ring_d = depths[n - 1]
+    after_d = None if n == 1 else depths[n - 2]
+    if after_d == ring_d:
+        after_d = None
+    faint = n == 3
     for y in range(out.height):
         for x in range(out.width):
             p = px[x, y]
-            if p[3] == 0 or _is_ink(p):
+            if p[3] == 0 or _is_ink(p) or (x, y) in protect:
                 continue
             d = dist[y][x]
             c = None
             if d == ring_d:
-                if n != 3 or (x + y) % 2 == 0:
+                if not faint or (x + y) % 2 == 0:
                     c = _glow_colour(p)
             elif after_d is not None and d == after_d:
                 c = step(p, 1)
-            elif warm_core and d > ring_d:
-                c = step(p, 1)
+            elif n == 1 and d > ring_d and not protect:
+                c = step(p, 1)          # unlettered faces (icons, seals): the core warms
             if c is not None:
                 px[x, y] = c + (p[3],)
     return out
 
 
-def make_state(img, state):
-    """Apply the shared transform for a state name to a painted normal frame."""
+_WAX_TO_ASH = {BERRY[0]: ASH[0], BERRY[1]: ASH[1], BERRY[2]: ASH[2]}
+
+
+def make_disabled_seal(img):
+    """Disabled state for wax seals (the 18x18 close control). The plain
+    luminance map turns berry_1 wax into ink_2, as dark as the pressed X, so
+    the seal read as a slashed brown disc. Here the wax cools to grey
+    (berry_0/1/2 -> ash_0/1/2), the X and the deepest outline keep ink_0, and
+    every other colour follows ``make_disabled``. Alpha unchanged."""
+    out = make_disabled(img)
+    src, px = img.load(), out.load()
+    for y in range(out.height):
+        for x in range(out.width):
+            p = src[x, y]
+            if not p[3]:
+                continue
+            rgb = tuple(p[:3])
+            if rgb in _WAX_TO_ASH:
+                px[x, y] = _WAX_TO_ASH[rgb] + (p[3],)
+            elif rgb == INK[0]:
+                px[x, y] = INK[0] + (p[3],)
+    return out
+
+
+def make_state(img, state, protect=None, seal=False):
+    """Apply the shared transform for a state name to a painted normal frame.
+    ``protect``: lettering pixels pulses must not touch. ``seal``: the image is
+    a wax-seal control (disabled uses ``make_disabled_seal``)."""
     if state == 'normal':
         return img.copy()
     if state == 'disabled':
-        return make_disabled(img)
+        return make_disabled_seal(img) if seal else make_disabled(img)
     if state == 'selected':
         return make_selected(img)
     if state.startswith('pulse_'):
-        return make_pulse(img, int(state[-1]))
+        return make_pulse(img, int(state[-1]), protect)
     raise ValueError(f'unknown state {state!r}')

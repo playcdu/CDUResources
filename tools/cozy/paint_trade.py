@@ -394,10 +394,17 @@ def paint_other_money(key):
     P.tack(rest, x + w - 5, y + h // 2 - 1)                       # normal: tacked
     # confirmed (their side is ready): a small sage wax seal pressed with a check
     conf = img.copy()
-    sx, sy = x + w - 9, y + h // 2 - 3
-    sprite(conf, sx, sy, ['.oooo.', 'o2221o', 'o2ss1o', 'o2s11O', 'o111OO', '.OOOO.'],
-           {'o': INK[1], 'O': INK[0], '2': SAGE[2], '1': SAGE[1], 's': SAGE[0]})
-    P.put(conf, sx + 4, sy + 1, PARCHMENT[3])
+    # (7 x 7, replacing the right tack; the inked check survives every state
+    # transform because ink never changes)
+    sx, sy = x + w - 10, y + h // 2 - 4
+    sprite(conf, sx, sy, ['.ooooo.',
+                          'o3222Ko',
+                          'o222K1o',
+                          'oK2K11o',
+                          'o1K111O',
+                          'o1111OO',
+                          '.OOOOO.'],
+           {'o': INK[1], 'O': INK[0], 'K': INK[0], '3': PARCHMENT[3], '2': SAGE[2], '1': SAGE[1]})
     for im in (rest, conf):
         geo.finish_button(im, key, 'other_money')
     selected = geo.finish_button(P.make_selected(conf), key, 'other_money')

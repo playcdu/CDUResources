@@ -19,7 +19,7 @@ Run everything from the repository root.
 | `geometry.py` | `skin(key)` with masks, buttons, pins and art layers computed by the builder's own code; mask clearing and pin stamping |
 | `primitives.py` | hand-drawn helpers (plank, parchment, brass, linen, wax, page curl, wells, tack, rope, leaf, mug, lantern glow, dither) and the shared state transforms |
 | `icons.py` | icon sprites (close seal, purse, lens, cog, rosette), seal emblems and frame motifs |
-| `compose.py` | the shared base look: `base_background`, `base_frame`, `paint_button`, `button_states`, `save_png` |
+| `compose.py` | the shared base look: `base_background`, `base_frame`, `paint_button`, `button_states` (pulses spare the lettering found by `lettering_mask`; close seals get grey-wax disabled frames), `save_png` |
 | `validate.py` | runs the builder's validators on pack-source PNGs; `--isolated-build` runs the real build in a temp copy |
 | `preview.py` | composites a skin as the client layers it and writes 3x PNGs under `evidence/cozy-previews/` |
 | `paint_example.py` | the worked example and quality bar (writes only to `evidence/cozy/example/`) |

@@ -55,24 +55,25 @@ CORK_SHEET = (WOOD[3], WOOD[2], WOOD[1], WOOD[4])
 CORK_FRAME = (WOOD[2], WOOD[1], WOOD[0], WOOD[3])
 
 # Hand-authored 16x16 cork tile: '.' body, 'd' granule, 'D' deep granule,
-# 'l' light fleck. Sparse clusters, placed by hand, repeated as a tile.
+# 'l' light fleck. Sparse clusters, placed by hand, repeated as a tile. Kept
+# to about one mark in twelve so the board reads as calm cork, not speckle.
 CORK_TILE = [
-    '..d.......l...d.',
-    '.dd...........D.',
-    '.......d..l.....',
-    '..l...dd........',
-    '...........d..l.',
-    'd.....l...dd....',
-    '...D............',
-    '..dd.....l...d..',
-    '.........d...dd.',
-    '.l..d...........',
-    '...dd.....l..D..',
-    '.........dd.....',
-    'l...l...........',
-    '.d........d...l.',
-    '.dd....l..dd....',
+    '................',
+    '.dd.........l...',
+    '..d.............',
+    '..........D.....',
+    '.......l........',
+    '....D.......dd..',
+    '.............d..',
+    '................',
+    '.l.......dd.....',
+    '..........d.....',
     '.....d..........',
+    '....dd.......l..',
+    '................',
+    '.D.........d....',
+    '........l.......',
+    '................',
 ]
 assert all(len(r) == 16 for r in CORK_TILE) and len(CORK_TILE) == 16
 

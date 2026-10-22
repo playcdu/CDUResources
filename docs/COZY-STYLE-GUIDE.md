@@ -188,7 +188,9 @@ berry_0 rim on top/left and ink_0 on bottom/right, and one or two short drips
 that hang into the last two rows. Buttons at least 50 px wide carry a pressed
 round seal (`wax_seal`, r <= 5) at the left. Lettering parch_3 with a berry_0
 shadow. The 18x18 close control is a full round seal pressed with an X
-(`icons.close_seal`).
+(`icons.close_seal`); its disabled frame is grey wax with an ink X
+(`primitives.make_disabled_seal`, applied automatically by
+`compose.button_states`).
 
 ### 4.5 Page-turn controls: curled parchment corner
 
@@ -211,11 +213,25 @@ through `button_states(..., overrides={'selected': img})`.
 | State | Transform | Reads as |
 |---|---|---|
 | normal | as painted | at rest |
-| disabled | `make_disabled`: every pixel mapped by luminance onto ink_1 / ink_2 / ash_0 / ash_1 / ash_2 (thresholds 60 / 95 / 128 / 172). Glints vanish, contrast drops, lettering stays legible | desaturated, dimmed, clearly inert |
+| disabled | `make_disabled`: every pixel mapped by luminance onto ink_1 / ink_2 / ash_0 / ash_1 / ash_2 (thresholds 60 / 95 / 128 / 172). Glints vanish, contrast drops, lettering stays legible. The close seal (`button_kind == 'close'`) uses `make_disabled_seal` instead: the wax cools to grey (berry_0/1/2 to ash_0/1/2) and the X keeps ink_0, so it still reads as close | desaturated, dimmed, clearly inert |
 | selected | `make_selected`: non-ink colours move one ramp step lighter; parchment turns golden (parch_2 to brass_3, parch_1 to brass_2, parch_0 to brass_1); the first interior ring gets ember_2 (ember_1 on pale surfaces) on top/left and one step darker on bottom/right; a 3 px brass_3/ember_2 sparkle sits in the top-right interior | warm highlight, raised |
-| pulse_1 | `make_pulse(img, 1)`: a bright ember ring 3 px inside the edge, the core one step warmer | the lantern flares |
-| pulse_2 | `make_pulse(img, 2)`: the ring moves to 2 px in; afterglow (one step lighter) where it was | the glow spreads |
-| pulse_3 | `make_pulse(img, 3)`: a faint checker-dithered ring 1 px in, afterglow at 2 px | fading; the next frame is the resting state |
+| pulse_1 | `make_pulse(img, 1, protect)`: a bright ember ring 3 px inside the edge; on unlettered faces (icons, seals) the core also warms one step | the lantern flares |
+| pulse_2 | `make_pulse(img, 2, protect)`: the ring moves to 2 px in; afterglow (one step lighter) where it was | the glow spreads |
+| pulse_3 | `make_pulse(img, 3, protect)`: a faint checker-dithered ring 1 px in, afterglow at 2 px | fading; the next frame is the resting state |
+
+**Pulses never touch lettering.** `button_states` finds the button's own
+lettering in the painted normal frame (`compose.lettering_mask`: the
+HEARTH/SPRIG rendering of its lines, label, words and characters, matched by
+shape and single colour) and passes it, grown by a 1 px halo that holds the
+text shadow and the contrast ring round each letter, as `protect`. Protected
+pixels never change. When lettering comes closer than 4 px to the edge, as on
+most 18 px tall buttons, the three ring depths are compressed into the free
+band between edge and letters (`pulse_depths`: 3/2/1 px with room for three,
+2/1/1 with room for two, 1/1/1 with room for one; the last frame is always the
+faint dithered ring), so the glow runs only along the outer edge rows and
+columns. Letter with `lettering.draw_text` or `compose.letter` so the
+detector can find your text; `selftest.py` fails if a lettered button has no
+detectable lettering or if any pulse frame changes a lettering pixel.
 
 Ring colour always contrasts with its surface: ember_1 on paper/linen and
 on dark wood or wax, ember_2 on brass and mid wood. Ink (outlines and

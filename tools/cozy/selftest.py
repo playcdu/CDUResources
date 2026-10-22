@@ -8,7 +8,9 @@
 2. the HEARTH fit requirements hold;
 3. compose.base_background / base_frame / paint_button + button_states produce
    images that pass the builder's own validators for EVERY skin, button and
-   state, and the state transforms leave alpha byte-identical.
+   state, the state transforms leave alpha byte-identical, and pulse frames
+   leave every lettering pixel (and its 1 px halo) untouched;
+4. the same lettering check on the painted pack-source buttons.
 
 Licence: MIT.
 """
@@ -22,6 +24,8 @@ from pathlib import Path
 _HERE = Path(__file__).resolve().parent
 if str(_HERE) not in sys.path:
     sys.path.insert(0, str(_HERE))
+
+from PIL import Image  # noqa: E402
 
 import compose as C  # noqa: E402
 import geometry as geo  # noqa: E402
@@ -68,16 +72,34 @@ def main():
                     button_assets.validate_button(_raw(im), g, sk, bdef, st); n_img += 1
                     if im.getchannel('A').tobytes() != alpha:
                         errors.append(f'{key}/{bdef["id"]}/{st}: transform changed alpha')
+                glyphs = C.lettering_mask(states['normal'], s.button(bdef['id']))
+                for st in ('pulse_1', 'pulse_2', 'pulse_3'):
+                    if any(states[st].getpixel(xy) != states['normal'].getpixel(xy) for xy in glyphs):
+                        errors.append(f'{key}/{bdef["id"]}/{st}: pulse touched lettering')
                 n_btn += 1
         except Exception as exc:  # noqa: BLE001
             errors.append(f'{key}: {exc}')
+    painted = 0
+    for key in geo.all_skins():
+        s = geo.skin(key)
+        for b in s.buttons:
+            normal = Image.open(s.button_path(b.id, 'normal')).convert('RGBA')
+            glyphs = C.lettering_mask(normal, b)
+            if C.button_kind(b) not in ('close', 'icon') and not glyphs:
+                errors.append(f'pack-source {key}/{b.id}: no lettering detected')
+            for st in ('pulse_1', 'pulse_2', 'pulse_3'):
+                im = Image.open(s.button_path(b.id, st)).convert('RGBA')
+                if any(im.getpixel(xy) != normal.getpixel(xy) for xy in glyphs):
+                    errors.append(f'pack-source {key}/{b.id}/{st}: pulse touched lettering')
+            painted += 1
     for text, limit in L.FIT_CHECKS:
         if L.text_width(text) > limit:
             errors.append(f'lettering: {text!r} is {L.text_width(text)} px > {limit}')
     for e in errors:
         print('FAIL', e)
     print(f'SELFTEST {"FAILED" if errors else "PASSED"}: {len(geo.all_skins())} skins, {n_btn} buttons, '
-          f'{n_img} generated images checked with the builder validators')
+          f'{n_img} generated images checked with the builder validators; lettering kept by pulses on '
+          f'{painted} painted pack-source buttons')
     return 1 if errors else 0
 
 

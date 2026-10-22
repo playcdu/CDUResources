@@ -203,6 +203,17 @@ PADLOCK = [
 ]
 K_PADLOCK = {'o': INK[1], 'O': INK[0], 'A': ASH[2], 'a': ASH[1], 'z': ASH[0]}
 
+# Corner cobweb (top-left corner; flip_x for top-right), 6x6: the two
+# anchor strands along the corner, a diagonal and one curved catch thread.
+COBWEB = [
+    'AAAAAA',
+    'AA..A.',
+    'A.A.A.',
+    'A..A..',
+    'AAA...',
+    'A.....',
+]
+
 # Chalk arrow pointing right, 7x5
 ARROW_R = ['...cc..', '....cc.', 'ccccccc', '....cc.', '...cc..']
 
@@ -727,20 +738,24 @@ def tier_cabinet(img, mood):
             P.put(img, sx, sy, EMBER[2]); P.put(img, sx - 1, sy, BRASS[3]); P.put(img, sx + 1, sy, BRASS[3])
             P.put(img, sx, sy - 1, BRASS[3]); P.put(img, sx, sy + 1, BRASS[3])
     elif mood == 'inert':
-        # cooled to moonlight: crates and boards go blue-grey, a cobweb in the corner
+        # cooled to moonlight: the cabinet goes blue-grey. Back boards drop to
+        # the darkest iron so the crates (one step lighter, lit top edge) stay
+        # separate; the shelf lips catch a cold sky_2 glint instead of warm
+        # wood_4, and a small cobweb fills the top-left corner by the post.
+        lum_map = {0: INK[2], 1: ASH[0], 2: ASH[1], 3: ASH[2], 4: ASH[2]}
         for yy in range(y0 - 1, y1 + 1):
             for xx in range(x0, x1):
                 p = P.get(img, xx, yy)
                 rp = ramp_of(p)
                 if p[3] and rp and rp[0] in ('wood', 'brass'):
-                    lum_map = {0: INK[2], 1: ASH[0], 2: ASH[0], 3: ASH[1], 4: ASH[2]}
                     P.put(img, xx, yy, lum_map[rp[1]] if rp[0] == 'wood' else ASH[1])
-        for yy in range(y0, y0 + 22):              # moonlight on the back boards only
+        for k, sy in enumerate(shelves):
             for xx in range(x0 + 1, x1 - 2):
-                if P.get(img, xx, yy)[:3] == ASH[0] and P.BAYER4[yy % 4][xx % 4] < 4                         and (xx - x0) + (yy - y0) < 30:
-                    P.put(img, xx, yy, SKY[0])
-        web = ['AAAAAA', 'A.A..A', 'AA.A..', 'A.AA..', 'A..A..', 'AA....']
-        P.sprite(img, x0 + 3, y0, web, {'A': ASH[2]})
+                if (xx + k) % 7 not in (3, 4):                    # broken, hand-placed glint
+                    P.put(img, xx, sy, SKY[2])
+            for p_ in range(k + 1):                               # pips stay readable
+                P.put(img, x0 + 22 + p_ * 3, sy, ASH[2])
+        P.sprite(img, x0 + 3, y0, COBWEB, {'A': ASH[2]})
 
 
 def bg_upgrade(key):
@@ -870,7 +885,8 @@ def paint_frame(key):
     P.sprite(img, lp.x + 15, H - 28, SLAT11, K_W)
     P.sprite(img, lp.x + 9, H - 37, CRATE9, K_W)
     if not lit:
-        P.sprite(img, lp.x + 2, 40, ['A.A..', '.AA.A', 'AAAA.', '.A.A.'], {'A': ASH[2]})
+        # a cobweb in the corner under the goods shelf, against its left bracket
+        P.sprite(img, lp.x + 8, sy + 4, COBWEB, {'A': ASH[2]})
 
     # --- right panel: hint note, family motifs per screen ---------------------
     hint = list(a.right_lines) or []
@@ -906,7 +922,9 @@ def paint_frame(key):
             icons.draw_motif(img, 'candle', rp.x + 30, ny - 4)
             P.lantern_glow_ring(img, rp.x + 18, ny + 4, 16, strength=1)
         elif mood == 'inert':
-            P.sprite(img, rp.x + 27, ny + 20, ['AAAA', 'A.A.', 'AA..', 'A...'], {'A': ASH[2]})
+            # cobweb under the crate shelf, against its right bracket
+            bx = rp.x + 4 + (rp.w - 8) - 5
+            P.sprite(img, bx - 6, ny + 20, COBWEB, {'A': ASH[2]}, flip_x=True)
     else:
         price_tags(img, rp.x + 3, rp.right - 4, ny + 1, seed,
                    [EMBER, BRASS, SAGE] if lit else [ASH, ASH, ASH])

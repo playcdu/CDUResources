@@ -17,7 +17,7 @@ awning, a leather coin purse and a green-bound account ledger.
   right.
 * economy_log (chest_6, 28 balance-free listing wells): the wells lie on a
   ruled account-ledger page bound in green cloth with brass corner guards, a
-  ruled header row, red margin rules and a bookmark ribbon. The frame is a
+  double heading rule, red margin rules and a bookmark ribbon. The frame is a
   counting house: receipts on a spike, shelved ledgers, an hourglass, an
   abacus and ribbon bookmarks.
 
@@ -580,14 +580,11 @@ def log_background():
                            ('br', (cover[0] + cover[2] - 5, cover[1] + cover[3] - 5))):
         brass_corner_guard(img, x, y, corner)
     px0, py0, pw, ph = page
-    # header row: empty ruled column heads aligned with the 7 listing columns
-    hy0, hy1 = py0 + 3, grid.y - 5           # rows of the header box
-    P.hline(img, grid.x, grid.right - 1, hy0, SKY[1])
-    P.hline(img, grid.x, grid.right - 1, hy1, SKY[1])
-    P.hline(img, grid.x, grid.right - 1, hy1 - 1, SKY[2])
-    for k in range(8):
-        cx = grid.x + k * 18 if k < 7 else grid.right - 1
-        P.vline(img, cx, hy0, hy1, SKY[1])
+    # page head: a ledger's double heading rule running edge to edge across
+    # the page (no column boxes, so nothing reads as a slot or an empty field)
+    hy = grid.y - 5
+    for yy, c in ((hy - 3, SKY[2]), (hy - 1, SKY[1]), (hy, SKY[2])):
+        P.hline(img, px0 + 2, px0 + pw - 3, yy, c)
     # red double margin rules down both margins
     for mx in (px0 + 12, px0 + 14):
         P.vline(img, mx, py0 + 1, py0 + ph - 2, BERRY[2])

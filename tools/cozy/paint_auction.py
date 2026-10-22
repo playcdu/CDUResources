@@ -925,6 +925,7 @@ def paint_skin(key, tex_root):
     written['background'] += 1
     for b in s.buttons:
         normal = paint_auction_button(key, b.id, SEED[key])
+        # close seals get grey-wax disabled frames from the shared button_states
         states = C.button_states(normal, key, b.id)
         C.save_button_states(states, key, b.id, root=tex_root)
         written['button'] += len(states)

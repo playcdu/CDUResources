@@ -334,12 +334,92 @@ def paint_button(key, button_id, seed=0):
     return img
 
 
+def _label_strings(button):
+    """Every spelling a painter may legitimately letter: lines, label, their
+    upper/mixed case, and the individual words of each."""
+    out = []
+    for t in list(button.text_lines) + [button.label, button.label.upper()]:
+        for v in (t, t.upper(), t.title()):
+            if v and v not in out:
+                out.append(v)
+            for word in v.split():
+                if word not in out:
+                    out.append(word)
+    return out
+
+
+def _templates(strings):
+    """(pixel list, bbox w, bbox h) for each string in each face, plus the
+    single characters those strings use (both faces)."""
+    seen = set()
+    out = []
+    chars = sorted({ch for t in strings for ch in t if not ch.isspace()})
+    for face in ('hearth', 'sprig'):
+        for t in list(strings) + chars:
+            pts = tuple(sorted(L._pixels(t, face)))
+            if len(pts) < 4 or (face, pts) in seen:
+                continue
+            seen.add((face, pts))
+            w = max(x for x, _ in pts) + 1
+            h = max(y for _, y in pts) + 1
+            out.append((pts, w, h, len(t) == 1))
+    return out
+
+
+def lettering_mask(img, button, halo=True):
+    """Find the button's own lettering in a painted image and return the set of
+    its pixels (plus a 1 px 8-neighbour halo, which holds the text shadow and
+    the contrast ring around each letter).
+
+    Detection matches the HEARTH/SPRIG rendering of the label, its lines, their
+    words and their single characters at every offset: a hit needs every glyph
+    pixel to share one opaque colour while at least 75 % (whole strings) or
+    100 % (single characters) of the other pixels in the glyph box differ from
+    it, so flat fills never match. Icons and unlettered faces return an empty
+    set (the transforms then only spare ink)."""
+    if button.icon or button_kind(button) in ('close', 'icon'):
+        return set()
+    W, H = img.size
+    px = img.load()
+    found = set()
+    for pts, w, h, single in _templates(_label_strings(button)):
+        glyph = set(pts)
+        others = [(x, y) for y in range(h) for x in range(w) if (x, y) not in glyph]
+        first = pts[0]
+        for oy in range(0, H - h + 1):
+            for ox in range(0, W - w + 1):
+                c = px[ox + first[0], oy + first[1]]
+                if c[3] == 0:
+                    continue
+                if any(px[ox + x, oy + y] != c for x, y in pts):
+                    continue
+                same = sum(1 for x, y in others if px[ox + x, oy + y] == c)
+                if (same == 0) if single else (same <= len(others) // 4):
+                    found.update((ox + x, oy + y) for x, y in pts)
+    if halo and found:
+        grown = set(found)
+        for (x, y) in found:
+            for dx in (-1, 0, 1):
+                for dy in (-1, 0, 1):
+                    if 0 <= x + dx < W and 0 <= y + dy < H:
+                        grown.add((x + dx, y + dy))
+        found = grown
+    return found
+
+
 def button_states(normal, key, button_id, overrides=None):
     """Six finished state images from one painted normal frame using the
-    shared transforms; ``overrides`` maps state -> hand-adjusted image."""
+    shared transforms; ``overrides`` maps state -> hand-adjusted image.
+
+    Pulses never touch the button's lettering (``lettering_mask``); the close
+    seal (``button_kind == 'close'``) uses ``primitives.make_disabled_seal`` so
+    its disabled frame is grey wax with an ink X."""
+    b = geo.skin(key).button(button_id)
+    protect = lettering_mask(normal, b)
+    seal = button_kind(b) == 'close'
     out = {}
     for st in geo.STATES:
-        img = (overrides or {}).get(st) or P.make_state(normal, st)
+        img = (overrides or {}).get(st) or P.make_state(normal, st, protect=protect, seal=seal)
         out[st] = geo.finish_button(img, key, button_id)
     return out
 
