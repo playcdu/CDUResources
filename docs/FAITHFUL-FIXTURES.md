@@ -121,7 +121,7 @@ the table below.
 | Guild bank | `family-guild_bank.html` | Faithful Guild Bank Family | 8 skins, native content | `https://claude.ai/artifact/Fth3fysTK5EePNdzJzGiER` |
 | Prefixes | `family-prefixes.html` | Faithful Prefixes Family | 6 skins, native content | `https://claude.ai/artifact/M6snLaH182JM85BJxiaJji` |
 | Invsee | `family-invsee.html` | Faithful Invsee Family | 2 skins, native content | `https://claude.ai/artifact/EdBveipCD3f2U9vaoJHsm2` |
-| Plot | `family-plot.html` | Faithful Plot Family | 4 skins, 12 buttons | `{{URL:family-plot}}` |
+| Plot | `family-plot.html` | Faithful Plot Family | 4 skins, 12 buttons | `https://claude.ai/artifact/2fBPVrXN788KMbamErF5Nh` |
 | Utility | `family-utility.html` | Faithful Utility Family | 9 skins, native content | `https://claude.ai/artifact/TsFW2NNM6dnoRSdjaMwWs4` |
 | Before / after | `before-after.html` | Midnight vs Faithful | 21 screens, baseline `037c5ef` (plot_manage `a137c28`) vs Faithful | `https://claude.ai/artifact/YYvUNcJz3RHG2cKoVCGEKX` |
 
