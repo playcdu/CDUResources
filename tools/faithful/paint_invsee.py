@@ -17,8 +17,8 @@ carries the whole look:
   6 x 9 content clearances, the main 3x9 and hotbar 1x9 player trays, the
   title zone (rows 5-14) and "Inventory" rows left as plain light panel for
   the live text, and the family accent on the trays' top/left inner-shadow
-  walls (``compose.draw_accent_line``). There are no static cells, so no
-  pictogram tile on the background.
+  walls (``compose.draw_accent_line``). There are no static cells and no
+  pictogram on the background.
 * frame: the lean docked-tab frame, the eye on each tab, grips at mid-height.
 
 The only difference between the two skins is the family whisper, so the
@@ -58,20 +58,21 @@ SEED = {'invsee_online': 81, 'invsee_offline': 82}
 
 # what each skin must show (style guide section 5); checked, never invented
 EXPECT = {
-    'invsee_online': {'line': rgba('blue_1')[:3], 'pictogram': 'eye', 'dash': 0},
-    'invsee_offline': {'line': rgba('blue_1')[:3], 'pictogram': 'eye_closed', 'dash': 2},
+    'invsee_online': {'wall': rgba('blue_1')[:3], 'pictogram': 'eye', 'dash': 0},
+    'invsee_offline': {'wall': rgba('blue_1')[:3], 'pictogram': 'eye_closed', 'dash': 2},
 }
 
 
 def _check_identity(key):
-    """The accent line colour and pictogram the palette assigns must be the
-    ones the design calls for, so online and offline always differ."""
+    """The tray-wall tint, dash and pictogram the palette assigns must be
+    the ones the design calls for, so online and offline always differ."""
     acc = accent_for(key)
-    line = tuple(C.accent_colour(key) or ())
+    wall = tuple(C.wall_colour(C.accent_colour(key)) or ())[:3]
     want = EXPECT[key]
-    if line != tuple(want['line']) or acc.get('pictogram') != want['pictogram'] or             acc.get('dash', 0) != want['dash']:
-        raise SystemExit(f'{key}: palette identity changed (line {line}, pictogram {acc.get("pictogram")}); '
-                         f'expected {want}')
+    if (wall != tuple(want['wall']) or acc.get('pictogram') != want['pictogram']
+            or acc.get('dash', 0) != want['dash']):
+        raise SystemExit(f'{key}: palette identity changed (wall {wall}, pictogram {acc.get("pictogram")}, '
+                         f'dash {acc.get("dash", 0)}); expected {want}')
 
 
 def _check_size(img, path):
@@ -85,15 +86,15 @@ def _check_size(img, path):
 
 
 def paint_background(key):
-    """Panel, full inset tray over every content well, player trays, the
-    family accent line. Nothing else."""
+    """Panel, full inset tray over every content well, player trays, their
+    top/left walls in the family tint (dashed when offline). Nothing else."""
     bg = C.base_background(key, seed=SEED[key])
     C.finish_background(bg, key)                    # clear masks + stamp pin, always last
     return bg
 
 
 def paint_frames(key):
-    """The base side-panel frame with the (open or closed) eye tile on each side."""
+    """The base lean frame: the open or closed eye on each docked tab, mirrored grips."""
     s = geo.skin(key)
     out = {}
     for a in s.art_layers:

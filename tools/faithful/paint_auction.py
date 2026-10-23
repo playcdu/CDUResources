@@ -12,10 +12,10 @@ every button region in all six states and the outer frame(s), deterministically
 
 The look is the shared Faithful grammar (docs/FAITHFUL-STYLE-GUIDE.md) and
 nothing more: the light grey vanilla-style panel, inset trays round the native
-wells, stone buttons, a red_1 accent line under the title band and one gavel
-pictogram tile in the largest static region; the frames are the docked
-side-panel treatment with the gavel tile. Restraint is the craft: no scenes,
-no props, no baked prices, names or page numbers.
+wells with their top/left walls tinted red_1, plain panel in the title zone and
+every static cell, stone buttons; the frames are the lean docked tabs (the gavel
+pictogram on each) and the two mirrored grips. Restraint is the craft: no
+scenes, no props, no baked prices, names or page numbers.
 
 ``--out-root DIR`` writes the same layout as pack-source's textures directory
 (DIR/menu/<asset>.png, DIR/buttons/<key>/<id>/<state>.png,
@@ -87,8 +87,8 @@ def paint_buttons(key):
 # ---------------------------------------------------------------------------
 
 def paint_frames(key):
-    """Docked side panels in the vanilla bevel language, one gavel tile on
-    each; no words, no click targets."""
+    """Lean frame: one docked tab per side with the gavel pictogram and the
+    two mirrored grips, everything else alpha 0; no words, no click targets."""
     s = geo.skin(key)
     out = {}
     for a in s.art_layers:

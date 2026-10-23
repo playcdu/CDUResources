@@ -16,15 +16,18 @@ and no pictogram:
 * background: the light grey bevelled panel, one merged inset tray round all
   N x 9 content clearances, the main 3x9 and hotbar 1x9 player trays, the
   title and "Inventory" rows left as plain light panel for the live text.
-  No accent line: the utility entry has ``line: False``. A neutral grey_5
-  hairline on row 14 was tried (``--hairline`` still paints it for
-  comparison) and dropped: in every chest layout row 15 is the content
-  tray's grey_0 shadow run, so a grey row 14 directly above it reads as a
-  2 px soft gradient on the tray edge, 1 px short of the tray at each end,
-  i.e. a mistake rather than an accent. The tray's own shadow already
-  separates title from contents, exactly as in vanilla.
-* frame: the docked side-panel extension at each of the six heights, with
-  the side panels left empty (templates get no pictogram tile).
+  No family colour: the tray walls keep the neutral grey_0 inner shadow
+  (``accent=False``; the utility entry's accent ramp is grey anyway, and a
+  grey gives no tint, ``line: False``). A
+  neutral grey_5 hairline on row 14 was tried in the first toolkit and
+  dropped: row 15 is the content tray's shadow run, so a grey row 14 above
+  it read as a soft 2 px gradient on the tray edge. The tray's own shadow
+  separates title from contents, exactly as in vanilla. ``--hairline`` is
+  kept only so old command lines still run: the shared accent now tints
+  tray walls and a grey colour gives no tint, so it paints nothing.
+* frame: the lean frame at each of the six heights: only the two mirrored
+  grips at mid-height (templates get no tab and no pictogram), everything
+  else alpha 0.
 
 No words, no item icons, no counts, no tiles. Restraint is the design.
 
@@ -49,7 +52,7 @@ from palette import GREY, accent_for  # noqa: E402
 
 SKINS = tuple(f'template_chest_{n}' for n in range(1, 7))
 SEED = {k: 90 + n for n, k in enumerate(SKINS, start=1)}
-HAIRLINE = GREY[5]           # the rejected neutral grey accent (see module docstring)
+HAIRLINE = GREY[5]           # the retired grey row-14 hairline; a no-op now (see module docstring)
 
 
 def _check_contract(key):
@@ -64,8 +67,9 @@ def _check_contract(key):
 
 
 def paint_background(key, hairline=False):
-    """Panel, full inset tray over every content well, player trays. Nothing
-    else (``hairline`` adds the rejected grey row-14 line, comparison only)."""
+    """Panel, full inset tray over every content well, player trays, neutral
+    grey walls. Nothing else (``hairline`` is the retired grey accent: a grey
+    colour gives no wall tint, so it changes no pixel)."""
     bg = C.base_background(key, seed=SEED[key], accent=False, pictograms=False)
     if hairline:
         C.draw_accent_line(bg, key, colour=HAIRLINE)
@@ -74,7 +78,7 @@ def paint_background(key, hairline=False):
 
 
 def paint_frames(key):
-    """The base side-panel frame; the side panels stay empty (no tile)."""
+    """The base lean frame: the two mirrored grips only (no tabs on templates)."""
     s = geo.skin(key)
     out = {}
     for a in s.art_layers:
@@ -97,7 +101,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--skin', choices=SKINS, action='append', help='paint only this skin (repeatable)')
     ap.add_argument('--out-root', help='write under DIR (menu/, frames/) instead of pack-source')
-    ap.add_argument('--hairline', action='store_true', help='add the rejected grey row-14 hairline (comparison only)')
+    ap.add_argument('--hairline', action='store_true', help='retired grey row-14 hairline; no effect (kept for old command lines)')
     args = ap.parse_args(argv)
     for key in args.skin or SKINS:
         paths = paint(key, args.out_root, hairline=args.hairline)

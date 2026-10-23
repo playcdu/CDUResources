@@ -14,11 +14,12 @@ every button region in all six states and the outer frame. Without
 it they go to DIR laid out the same way (menu/, buttons/, frames/).
 
 Design (docs/FAITHFUL-STYLE-GUIDE.md, section 5, chest_shop): the shared
-base carries the whole look. Family identity is the green_1 accent line
-under the title band, one recessed chest tile in the largest static region
-of the background (the chest_6 top row; the chest_3 screens have no static
-cells, so none) and one chest tile on each docked side panel of the frame.
-No scenes, no props, no words beyond the buttons' own labels.
+base carries the whole look. Family identity is only the green_1 tint on the
+top/left walls of the inset trays (listing and player wells) and the chest
+pictogram on each of the frame's two docked tabs, beside a ribbed grip on
+each side. Static cells (the chest_6 top row and right column) stay plain
+panel: backgrounds carry no pictogram tile. No scenes, no props, no words
+beyond the buttons' own labels.
 
 Licence: MIT.
 """
@@ -63,10 +64,10 @@ def paint_background(key):
 def _paint_info_label(key, b):
     """A lettered read-only plate (chest_6 'Create'). The shared info grammar
     letters inside the plate minus its 1 px rim; CREATE in PLAIN capitals is
-    34 px, exactly that box, so the C would sit on the dark rim. Narrowing the
-    box by 1 px each side makes compose's own fit order choose the label's
-    mixed case (Create, 32 px; style guide 9), leaving 1 px of air at both
-    ends. Same words, same face, same ink_1."""
+    34 px, exactly that box, so the C and the final E would touch the dark
+    rim with no air. Narrowing the box by 1 px each side makes compose's own
+    fit order choose the label's mixed case (Create, 32 px; style guide 9),
+    leaving 1 px of air at both ends. Same words, same face, same ink_1."""
     img = C.new(b.w, b.h)
     x, y, w, h = C.info_face(img, b.body.tuple(), seed=SEED[key])
     lines, face = C.letter(img, b, (x + 1, y, w - 2, h), C.LABEL_DARK)

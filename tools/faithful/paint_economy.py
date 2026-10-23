@@ -9,10 +9,11 @@ every button region in all six states and the outer frame. Without
 with it they go to DIR laid out the same way (menu/, buttons/, frames/).
 
 Design (docs/FAITHFUL-STYLE-GUIDE.md, section 5, economy): the shared base
-carries the whole look. The only family identity is the gold_1 accent line
-under the title band, one recessed coin tile in the largest static region of
-the background (economy_log's static top row; economy_hub has no static
-cells, so none) and one coin tile on each docked side panel of the frame.
+carries the whole look. The only family identity is the gold_0 tint on the
+top/left walls of the inset trays (economy_log's listing wells and both
+skins' player wells) and the coin pictogram on each of the frame's two docked
+tabs, beside a ribbed grip on each side. Static cells (economy_log's top row
+and left column) stay plain panel: backgrounds carry no pictogram tile.
 Restraint is the point: no scenes, no props, no words beyond button labels.
 
 Licence: MIT.

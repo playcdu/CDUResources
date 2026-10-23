@@ -11,9 +11,9 @@ skins; trade_money is a dispenser screen and has none). Without
 it they go to DIR laid out the same way (menu/, buttons/, frames/).
 
 Design (docs/FAITHFUL-STYLE-GUIDE.md, section 5, trade): the shared base
-carries the whole look. The family identity is the blue_1 accent line under
-the title band and the two-arrows pictogram (a recessed tile in the divider,
-one tile on each docked side panel of the frame).
+carries the whole look. The family identity is the blue_1 tint on the
+trays' top/left walls and the two-arrows pictogram on the frame's two docked
+tabs; the background carries no pictogram.
 
 The one thing this family needs (docs/PAINTED-BUTTONS.md): the centre
 divider column of the four chest skins (cells 4, 13, 22, 31, 40 at x 79..96,
@@ -22,7 +22,7 @@ independent, wordless readiness lamps, a recessed socket holding a small
 black-outlined lamp:
 
     cell 13  YOU   (upper)   grey lamp = not ready, green lamp + white check = ready
-    cell 22  plain panel (the background carries no pictogram tile; the arrows are on the frame tabs)
+    cell 22  plain panel
     cell 31  THEM  (lower)   same lamp
 
 so idle / self_ready / other_ready / both_ready differ only in which lamps
@@ -68,7 +68,7 @@ READY = {                       # (you ready, them ready)
 # Divider geometry (chest_6): native cells at x 80 (column 4), pitch 18 from y 18.
 DIVIDER_X = 80                  # native 16 px footprint x of the centre column
 CELL_Y = {4: 18, 13: 36, 22: 54, 31: 72, 40: 90}
-YOU_CELL, PICTO_CELL, THEM_CELL = 13, 22, 31
+YOU_CELL, THEM_CELL = 13, 31    # 13 is staticProtected, 31 a removed decoration
 
 
 # ---------------------------------------------------------------------------
@@ -90,12 +90,10 @@ LAMP = [
     'sOLffffffdOh',
     'sOLffffffdOh',
     'sOLffffffdOh',
-    'sOLddddddddh',
+    'sOLdddddddOh',
     's.OOOOOOOO.h',
     'mhhhhhhhhhhh',
 ]
-# The 'd' in column 10 of row 9 is the outline position; fixed below.
-LAMP[9] = 'sOLdddddddOh'
 
 CHECK = [                       # 6x5 bold check, drawn on the face at (x+3, y+4)
     '.....W',

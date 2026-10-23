@@ -15,11 +15,11 @@ added:
 
 * background: the light grey bevelled panel, one merged inset tray round all
   N x 9 content clearances, the main 3x9 and hotbar 1x9 player trays, the
-  title and "Inventory" rows left as plain light panel for the live text,
-  and the 1 px blue_1 prefixes accent line on row 14 under the title. There
-  are no static cells, so no pictogram tile on the background.
-* frame: the docked side-panel extension at each of the six heights, with
-  one recessed 24x24 tile holding the name-tag pictogram on each side panel.
+  title zone (rows 5-14) and "Inventory" rows left as plain light panel for
+  the live text, and the trays' top/left walls tinted blue_1 (the family
+  accent). There are no static cells and no pictogram on the background.
+* frame: the lean docked-tab frame at each of the six heights: the name-tag
+  pictogram on each docked tab, a ribbed grip at mid-height on each side.
 
 No words, no item icons, no counts. Restraint is the design.
 
@@ -46,15 +46,15 @@ SEED = {k: 60 + n for n, k in enumerate(SKINS, start=1)}
 
 
 def paint_background(key):
-    """Panel, full inset tray over every content well, player trays, the
-    blue prefixes accent line. Nothing else."""
+    """Panel, full inset tray over every content well, player trays, their
+    top/left walls tinted blue_1. Nothing else."""
     bg = C.base_background(key, seed=SEED[key])
     C.finish_background(bg, key)                    # clear masks + stamp pin, always last
     return bg
 
 
 def paint_frames(key):
-    """The base side-panel frame with the name-tag tile on each side."""
+    """The base lean frame: the name-tag on each docked tab, mirrored grips."""
     s = geo.skin(key)
     out = {}
     for a in s.art_layers:

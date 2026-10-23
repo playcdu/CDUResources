@@ -17,15 +17,18 @@ whole look and nothing is added on top:
 * the light grey bevelled panel with the full inset tray round every vault
   slot and the two player trays (main 3x9 and hotbar), title and
   "Inventory" rows left as plain light panel for the live vanilla text;
-* the 1 px gold_1 guild bank accent line on row 14 under the title band;
-* no static decorative cells exist, so the background carries no tile;
-* the frame is the docked side-panel extension with one 24x24 recessed tile
-  per side panel holding the banner pictogram (a blue banner on a rod with a
-  gold coin device), composed by the base for each of the six heights.
+* the family identity on the trays' top/left walls, tinted gold_0 (the
+  title zone, rows 5-14, stays plain panel);
+* no static decorative cells exist, and backgrounds carry no pictogram;
+* the frame is the lean docked-tab treatment, composed by the base for each
+  of the six heights: one 16x20 tab per side docked to the container with
+  the banner pictogram (a blue banner on a rod with a gold coin device) on
+  its face, the two mirrored grips at mid-height, everything else alpha 0.
 
 The vault selection screens are identical to the vault content screens. The
 guide's icon set (icons.PICTOGRAMS, section 4.8) has no key glyph and
-section 5 limits a family to exactly two identity marks (line + pictogram),
+section 5 limits a family to exactly two identity marks (the tray-wall
+tint and the tab pictogram),
 so no select-only key mark is drawn: which screen is which is told by the
 live title and the native items, never by baked art.
 
@@ -70,7 +73,7 @@ def _check_existing(path, size):
 
 def paint_background(key):
     s = geo.skin(key)
-    bg = C.base_background(key, seed=SEED[key])     # panel, inset trays, gold accent line
+    bg = C.base_background(key, seed=SEED[key])     # panel, inset trays, gold_0 tray walls
     C.finish_background(bg, key)                    # clear masks + stamp pin, always last
     assert bg.size == (s.width, s.height) and bg.mode == 'RGBA'
     return bg
@@ -80,7 +83,7 @@ def paint_frames(key):
     s = geo.skin(key)
     out = {}
     for a in s.art_layers:
-        fr = C.base_frame(key, a.id, seed=SEED[key])   # docked side panels, banner tiles
+        fr = C.base_frame(key, a.id, seed=SEED[key])   # banner tabs + mirrored grips
         C.finish_frame(fr, key, a.id)
         assert fr.size == (a.w, a.h) and fr.mode == 'RGBA'
         out[a.id] = fr

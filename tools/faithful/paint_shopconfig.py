@@ -24,13 +24,14 @@ Design (docs/FAITHFUL-STYLE-GUIDE.md, sections 1, 5, 8): vanilla Minecraft
 with painted buttons. The shared base carries the whole look; the chest-shop
 family adds only
 
-* the 1 px accent line under the title band: green_1 on every screen, red_1
-  on the two "off" variants (chest_shop_upgrade_disabled,
-  chest_shop_listing_disabled). The paired variants therefore differ only by
-  that line and by the authored button states/labels, never by painted words;
-* one recessed 16x16 chest pictogram tile in the largest static region of
-  each background (every other static cell stays plain panel);
-* one chest tile on each docked side panel of the frame.
+* the tint on the top/left walls of the player trays (these screens have no
+  content wells): green_1 on every screen, red_1 on the two "off" variants
+  (chest_shop_upgrade_disabled, chest_shop_listing_disabled). The paired
+  variants therefore differ only by that wall colour and by the authored
+  button states/labels, never by painted words;
+* the chest pictogram on each of the frame's two docked tabs (plus the
+  shared ribbed grips). Backgrounds carry no pictogram tile: every static
+  cell stays plain panel.
 
 Every control uses the shared grammar through ``compose.paint_button``: the
 digits on Option 1 .. Option 4 and Tier 1 .. Tier 3 are their authored
@@ -58,10 +59,10 @@ import compose as C  # noqa: E402  (tools/faithful/compose.py; must precede geom
 import geometry as geo  # noqa: E402
 from palette import GREEN, RED  # noqa: E402
 
-ACCENT_ON = GREEN[1]          # family accent: active / ready
-ACCENT_OFF = RED[1]           # the "off" variant of a paired screen
+ACCENT_ON = GREEN[1]          # tray-wall tint: active / ready
+ACCENT_OFF = RED[1]           # tray-wall tint of the "off" variant of a paired screen
 
-# key -> (screen family, seed, accent line colour)
+# key -> (screen family, seed, tray-wall tint)
 SCREENS = {
     'chest_shop_settings':         ('settings', 41, ACCENT_ON),
     'chest_shop_buy':              ('amount',   43, ACCENT_ON),
@@ -119,8 +120,9 @@ def check_kinds(key):
 
 
 def background(key):
-    """The base panel (no wells on these screens), the chest tile in the
-    largest static region, then the accent line in the screen's colour."""
+    """The base panel with the player trays (no content wells on these
+    screens) and their top/left walls tinted in the screen's colour. Static
+    cells stay plain panel (no pictogram tile)."""
     _, seed, accent = SCREENS[key]
     img = C.base_background(key, seed=seed, accent=False)
     C.draw_accent_line(img, key, colour=accent)
@@ -161,7 +163,8 @@ def buttons(key):
 
 
 def frames(key):
-    """Docked side panels carrying the chest tile only."""
+    """The lean frame: a docked tab carrying the chest pictogram and a
+    ribbed grip on each side, everything else transparent."""
     seed = SCREENS[key][1]
     out = {}
     for a in geo.skin(key).art_layers:
@@ -177,27 +180,27 @@ def frames(key):
 
 def paint_settings(key):
     """Back / Stats plate / Upgrade primary on the top row, the two tall
-    secondary buttons either side of the static block that holds the tile."""
+    secondary buttons either side of a plain static block."""
     return background(key), buttons(key), frames(key)
 
 
 def paint_amount(key):
     """Buy and sell share one layout: the primary BUY NOW / SELL NOW in the
     middle row, More / Less on the left, the four option presets on plain
-    stone. The tile sits in the static cells under Back."""
+    stone. The static cells between them stay plain panel."""
     return background(key), buttons(key), frames(key)
 
 
 def paint_upgrade(key):
     """Three variants of one screen. The Apply column is the tall primary;
     on _disabled the server shows its disabled frame by default, and the
-    accent line turns red. Button PNGs are identical across the three."""
+    tray walls turn red. Button PNGs are identical across the three."""
     return background(key), buttons(key), frames(key)
 
 
 def paint_listing(key):
     """Three columns of Sell / Qty / Buy controls under three info plates,
-    the wide toggle below. The tile sits in the static cells left of it."""
+    the wide toggle below. The static cells left of it stay plain panel."""
     return background(key), buttons(key), frames(key)
 
 

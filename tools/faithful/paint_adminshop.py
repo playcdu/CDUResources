@@ -9,14 +9,16 @@ and the outer frame (none of them has painted buttons). Without
 ``--out-root`` the PNGs go to pack-source/assets/quasar_gui/textures/; with
 it they go to DIR laid out the same way (menu/, frames/).
 
-Design (docs/FAITHFUL-STYLE-GUIDE.md, section 5, admin_shop): all four are
-chest_6 screens whose 54 top cells are native content wells, so there is no
-static region for a pictogram on the background. The shared base carries the
-whole look: the light panel, one merged inset tray round the 6x9 grid, the
-player trays, and the family identity as a whisper: the blue_1 accent line
-on row 14 under the live title, and one recessed shield tile on each docked
-side panel of the frame. The four screens are deliberately identical: the
-live title is what tells them apart. No words, no scenes, no props.
+Design (docs/FAITHFUL-STYLE-GUIDE.md, sections 5-7, admin_shop): all four
+are chest_6 screens whose 54 top cells are native content wells, with no
+static cells and no buttons. The shared base carries the whole look: the
+light panel, one merged inset tray round the 6x9 grid, the main and hotbar
+player trays, and the family identity as a whisper: the top/left walls of
+every tray tinted blue_1, and on the lean frame one docked tab per side
+carrying the shield pictogram, plus the two mirrored grips. The title zone
+(rows 5-14) and the "Inventory" row stay plain panel; the background carries
+no pictogram. The four screens are deliberately identical: the live title is
+what tells them apart. No words, no scenes, no props.
 
 Licence: MIT.
 """
@@ -52,7 +54,7 @@ def _expected_size(path, fallback):
 
 
 def paint_background(key):
-    bg = C.base_background(key, seed=SEED)          # panel, inset trays, blue accent line
+    bg = C.base_background(key, seed=SEED)          # panel, inset trays, blue_1 tray walls
     C.finish_background(bg, key)                    # clear masks + stamp pin, always last
     return bg
 
@@ -61,7 +63,7 @@ def paint_frames(key):
     s = geo.skin(key)
     out = {}
     for a in s.art_layers:
-        fr = C.base_frame(key, a.id, seed=SEED)     # docked side panels with the shield tile
+        fr = C.base_frame(key, a.id, seed=SEED)     # shield tabs + mirrored grips, rest alpha 0
         C.finish_frame(fr, key, a.id)
         out[a.id] = fr
     return out

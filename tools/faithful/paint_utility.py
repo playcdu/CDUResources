@@ -14,21 +14,23 @@ these are vanilla storage and crafting screens, so the shared base carries
 the whole look.
 
 * trashcan (chest_6, 54 wells): the plain light grey panel with one merged
-  inset tray round the 6x9 grid, the red_1 utility accent line on row 14
-  and the bin pictogram in one recessed tile on each docked side panel of
-  the frame. Nothing else: the background has no static cell for a tile.
+  inset tray round the 6x9 grid and the player trays, their top/left walls
+  tinted red_1 (the family accent). The bin pictogram sits on the frame's
+  two docked tabs; the background has no static cell and carries no tile.
 * ender_chest (chest_3, 27 wells): the same anatomy on the purple-tinted
-  panel (ENDER_PANEL_RAMP: purple_1 panel, purple_0 bottom/right bevel), a
-  purple_0 accent line and the ender orb tile on the frame's side panels.
-  purple_1 (luminance 187) keeps the live title and "Inventory" rows light.
+  panel (ENDER_PANEL_RAMP: purple_1 panel, purple_0 bottom/right bevel),
+  purple_0 tray walls, and the ender orb on the frame's tabs (tabs and
+  grips in the same purple ramp). purple_1 (luminance 187) keeps the live
+  title and "Inventory" rows light.
 * crafting (176x166, no frame, live title at x=29): the plain vanilla
-  crafting look. The 3x3 grid is one inset tray; the result slot is a
-  larger 26x26 recessed square (a 2 px slot-grey margin round its
-  transparent clearance inside one inset ring) so it reads as the output.
-  The recipe-book toggle [4,33,22,20] and the arrow / recipe-ghost rect
-  [88,30,28,24] stay fully transparent with nothing drawn round them, so
-  the client's own toggle and arrow show unchanged. No accent line, no
-  pictogram, no painted title.
+  crafting look. The 3x3 grid is one inset tray with neutral grey_0 walls
+  (its top wall would fall on row 14, inside the title zone, so it is not
+  drawn); the result slot is a larger 26x26 recessed square (a 2 px
+  slot-grey margin round its transparent clearance inside one inset ring)
+  so it reads as the output. The recipe-book toggle [4,33,22,20] and the
+  arrow / recipe-ghost rect [88,30,28,24] stay fully transparent with
+  nothing drawn round them, so the client's own toggle and arrow show
+  unchanged. No tray tint, no pictogram, no painted title.
 
 Licence: MIT (tooling). The pixels it paints are CC0-1.0.
 """
@@ -90,7 +92,7 @@ def paint_crafting(key='crafting'):
 def paint_background(key):
     if key == 'crafting':
         return paint_crafting(key)
-    bg = C.base_background(key, seed=SEED[key])     # panel, trays, accent line (no static cells)
+    bg = C.base_background(key, seed=SEED[key])     # panel, trays with tinted walls (no static cells)
     C.finish_background(bg, key)
     return bg
 
@@ -100,8 +102,9 @@ def paint_background(key):
 # ---------------------------------------------------------------------------
 
 def paint_frames(key):
-    """The base side-panel extension: one recessed pictogram tile per side
-    panel (bin / ender orb), nothing else. Crafting has no art layer."""
+    """The base lean frame: a docked tab on each side carrying the pictogram
+    (bin / ender orb) and a ribbed grip at mid-height, nothing else.
+    Crafting has no art layer."""
     s = geo.skin(key)
     out = {}
     for a in s.art_layers:

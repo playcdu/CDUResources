@@ -12,12 +12,12 @@ same way (menu/, buttons/, frames/).
 Design (docs/FAITHFUL-STYLE-GUIDE.md, section 5, ticket): the shared base
 carries the whole look. Both screens are chest_6 with one native display
 item (slot 22) and two 54x36 buttons. The family identity is exactly two
-things: the 1 px accent line under the title band (green_1 on valid, red_1
-on invalid) and the ticket-stub pictogram (green stripe on valid, red stripe
-on invalid) in one recessed tile in the largest static region and one tile
-on each docked side panel of the frame. Validity is told by that colour and
-by the Redeem button's default state (normal on valid, disabled on invalid);
-never by words.
+things: the top/left walls of the display well and the player trays, tinted
+green_1 on valid and red_1 on invalid, and the ticket-stub pictogram (green
+stripe on valid, red stripe on invalid) on the frame's two docked tabs. The
+static cells stay plain panel. Validity is told by that colour and by the
+Redeem button's default state (normal on valid, disabled on invalid); never
+by words.
 
 Licence: MIT (tooling). The pixels it paints are CC0-1.0.
 """
@@ -44,8 +44,6 @@ SEED = {'ticket_valid': 31, 'ticket_invalid': 37}
 # ---------------------------------------------------------------------------
 # Backgrounds
 # ---------------------------------------------------------------------------
-
-
 
 def paint_background(key):
     """Shared base: panel, the one inset display well, the player trays and
