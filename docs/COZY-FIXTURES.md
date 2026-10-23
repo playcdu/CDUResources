@@ -91,6 +91,7 @@ followed by `#<skin>`) and resolved at build time from the tracked map
 | Guild bank | `family-guild_bank.html` | Cozy Guild Bank Family | 8 skins, native content | https://claude.ai/artifact/TnHUiJ6Qoy5Vv3Nn51A1pB |
 | Prefixes | `family-prefixes.html` | Cozy Prefixes Family | 6 skins, native content | https://claude.ai/artifact/MBaREmwq5ap4XURfRPJ3b2 |
 | Invsee | `family-invsee.html` | Cozy Invsee Family | 2 skins, native content | https://claude.ai/artifact/4qiY57GadNg4HdvRbCocdr |
+| Plot | `family-plot.html` | Cozy Plot Family | 4 skins, 12 buttons | https://claude.ai/artifact/B7rkxL1HmL8KgY7y3yu6u1 |
 | Utility | `family-utility.html` | Cozy Utility Family | 9 skins, native content | https://claude.ai/artifact/LgnXGZBFdcbFcKQ7LVN8uv |
 | Before / after | `before-after.html` | Midnight vs Cozy | 20 screens, baseline `037c5ef` vs cozy | https://claude.ai/artifact/ABYSgTTGoYNZLX472EBAvn |
 
