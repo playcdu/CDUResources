@@ -25,9 +25,11 @@ evidence/. See docs/COZY-FIXTURES.md.
 ``--theme {cozy,soulrend,faithful}`` (default: $QUASAR_GUI_THEME, else cozy; the
 flag wins) switches the page titles ("Cozy GUI Fixtures" / "Soulrend GUI
 Fixtures" / "Faithful GUI Fixtures",
-"<Theme> <Family> Family", "Midnight vs <Theme>"), the palette swatches, the
-typeface specimen, the schematic lettering, the page colour tokens, the output
-directory (``evidence/<theme>-fixtures/``) and the URL map
+"<Theme> <Family> Family", "Midnight vs <Theme>"), the palette swatches and
+aliases, the typeface specimen, a theme provenance note (Faithful: "No Mojang
+pixels", under the schematic caveat on every page), the schematic lettering,
+the page colour tokens, the output directory (``evidence/<theme>-fixtures/``)
+and the URL map
 (``tools/<theme>/fixture_urls.json``). The textures shown are always the ones
 in pack-source on the current checkout. The Soulrend gallery is described in
 docs/SOULREND-FIXTURES.md, the Faithful one in docs/FAITHFUL-FIXTURES.md.
@@ -109,6 +111,14 @@ THEME_CONFIG = {
         'faces': (('PLAIN', 'PLAIN', 'an original 5-wide face in mixed case that sits beside the game font, the main face'),
                   ('TINY', 'TINY', 'compact capitals for tight two-line labels and stack counts')),
         'pure_bw': True,
+        # one sentence, shown in its own note under the schematic caveat on every page
+        'provenance': ('<strong>No Mojang pixels.</strong> Every texture, sprite and PLAIN / TINY glyph shown here '
+                       'was drawn from scratch for this pack, and no Minecraft jar, vanilla resource pack, font '
+                       'bitmap or screenshot was opened, sampled or traced to make them.'),
+        # the palette aliases the index lists (docs/FAITHFUL-STYLE-GUIDE.md section 2)
+        'aliases': ('OUTLINE', 'TEXT_DARK', 'TEXT_LIGHT', 'SHADOW', 'TEXT_DISABLED', 'GLOW', 'TITLE_BAND', 'SHEET',
+                    'PANEL', 'BEVEL_LIGHT', 'BEVEL_DARK', 'SLOT_FILL', 'SLOT_SHADOW', 'BUTTON_FACE', 'BUTTON_LIT',
+                    'DISABLED_FACE'),
         # page colour tokens: (light mode, dark mode), a neutral grey scheme
         'tokens': ({'--bg': '#e4e4e4', '--surface': '#f2f2f2', '--surface-2': '#d2d2d2', '--fg': '#1c1c1c',
                     '--muted': '#555555', '--line': '#bdbdbd', '--accent': '#3a6a2c', '--link': '#2c4f8c',
@@ -421,7 +431,11 @@ def page(title, body, swatches=False):
 
 
 def note():
-    return f'<div class="note" role="note"><p><strong>Schematic composite, not a gameplay screenshot.</strong> {SCHEMATIC_NOTE[len("Schematic composite, not a gameplay screenshot. "):]}</p></div>'
+    caveat = (f'<div class="note" role="note"><p><strong>Schematic composite, not a gameplay screenshot.</strong> '
+              f'{SCHEMATIC_NOTE[len("Schematic composite, not a gameplay screenshot. "):]}</p></div>')
+    if THEME.get('provenance'):         # a theme's own provenance statement (Faithful: no Mojang pixels)
+        caveat += f'<div class="note" role="note"><p>{THEME["provenance"]}</p></div>'
+    return caveat
 
 
 def esc(s):
@@ -673,8 +687,9 @@ def index_page(by_family, all_parts, sha):
         ramps.append(f'<div class="ramp"><h3>{esc(rname)} <span class="muted small">({len(cols)}, dark to light)</span></h3>'
                      f'<ul class="chips">{chips}</ul></div>')
     # every single-colour alias the active palette defines (cozy has the first seven only)
-    aliases = [(a, getattr(pal, a)) for a in ('OUTLINE', 'OUTLINE_DEEP', 'TEXT_DARK', 'TEXT_LIGHT', 'TEXT_GOLD',
-                                              'SHADOW', 'GLOW', 'SOUL_GLOW', 'TITLE_BAND', 'SHEET')
+    aliases = [(a, getattr(pal, a)) for a in THEME.get('aliases') or
+               ('OUTLINE', 'OUTLINE_DEEP', 'TEXT_DARK', 'TEXT_LIGHT', 'TEXT_GOLD',
+                'SHADOW', 'GLOW', 'SOUL_GLOW', 'TITLE_BAND', 'SHEET')
                if hasattr(pal, a)]
     alias_txt = ', '.join(f'<code>{a}</code> = <code>{pal.name_of(c)}</code>' for a, c in aliases)
     spec = L.specimen(scale=1)
