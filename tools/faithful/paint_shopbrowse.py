@@ -38,10 +38,8 @@ for _p in (str(_HERE.parent), str(_HERE.parent / 'cozy')):
 import compose as C  # noqa: E402
 import geometry as geo  # noqa: E402
 import lettering as L  # noqa: E402
-from palette import accent_for  # noqa: E402
 
 SKINS = ('chest_shop', 'chest_shop_owner', 'chest_shop_ads', 'chest_shop_search')
-TILE = 16                                           # background pictogram tile (style guide 5)
 SEED = {'chest_shop': 31, 'chest_shop_owner': 37, 'chest_shop_ads': 41, 'chest_shop_search': 43}
 
 
@@ -49,37 +47,11 @@ SEED = {'chest_shop': 31, 'chest_shop_owner': 37, 'chest_shop_ads': 41, 'chest_s
 # Backgrounds
 # ---------------------------------------------------------------------------
 
-def _tile_box(key):
-    """The one 16x16 chest tile, or None. compose.base_background would centre
-    it in the largest static region (the chest_6 top row, rows 18-33), but
-    there its bottom rim lands on the tray's dark top wall (row 33) and the
-    tile reads as a tab growing out of the tray. Instead it floats in the
-    free band between the accent line (row 14) and that wall (rows 15-32,
-    1 px of panel above and below), centred over the listing tray."""
-    s = geo.skin(key)
-    regions = C.static_regions(key)
-    if not regions or not accent_for(key).get('pictogram'):
-        return None                                 # chest_3 screens: no static cells, no tile
-    top_wall = min(sl.clearance.y for sl in s.content_slots) - 1
-    left = min(sl.clearance.x for sl in s.content_slots) - 1
-    right = max(sl.clearance.right for sl in s.content_slots)
-    band = (C.ACCENT_Y + 1, top_wall - 1)           # free rows, inclusive
-    y = band[0] + (band[1] - band[0] + 1 - TILE) // 2
-    x = left + (right - left + 1 - TILE) // 2
-    r = regions[0]
-    assert r.x <= x and x + TILE <= r.right, (key, x, r)
-    return geo.Rect(x, y, TILE, TILE)
-
-
 def paint_background(key):
-    """Panel, inset trays round every listing and player clearance, the green
-    accent line on row 14 and (chest_6 only) the chest tile above the listing
-    tray. Everything under a button and the static right column stay plain
-    panel."""
+    """Panel, inset trays round every listing and player clearance with the
+    green family tint on their walls. Everything under a button and every
+    static cell stay plain panel (no background pictogram tile)."""
     img = C.base_background(key, seed=SEED[key], pictograms=False)
-    box = _tile_box(key)
-    if box is not None:
-        C.pictogram_tile(img, box, accent_for(key)['pictogram'], C.sheet_for(key))
     C.finish_background(img, key)                   # clear masks + stamp pin, always last
     return img
 

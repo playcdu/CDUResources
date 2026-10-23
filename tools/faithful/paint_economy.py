@@ -32,7 +32,6 @@ for _p in (str(_HERE.parent), str(_HERE.parent / 'cozy')):
 
 import compose as C  # noqa: E402
 import geometry as geo  # noqa: E402
-from palette import accent_for  # noqa: E402
 
 SKINS = ('economy_hub', 'economy_log')
 SEED = {'economy_hub': 11, 'economy_log': 23}
@@ -42,33 +41,8 @@ SEED = {'economy_hub': 11, 'economy_log': 23}
 # Backgrounds
 # ---------------------------------------------------------------------------
 
-def coin_tile_rect(key):
-    """Where the one coin tile goes, or None (economy_hub has no static cells).
-
-    ``base_background`` centres the tile on the largest static region, but a
-    static cell is 16 px tall and the neighbouring tray's top wall (row 33 on
-    economy_log) lands on its last row, so the tile's light bottom edge would
-    fuse with the tray's dark wall. Instead centre it, horizontally on that
-    region and vertically in the free panel rows between the accent line and
-    the tray wall: one plain panel row above and below, so it reads as a
-    separate recessed tile, not a tab stuck to the tray."""
-    s = geo.skin(key)
-    regions = C.static_regions(key)
-    if not regions:
-        return None
-    r = regions[0]
-    top = C.ACCENT_Y + 1                             # first free row under the accent line
-    walls = [m.y - 1 for m in s.masks if m.y - 1 > top and m.x < r.right and m.right > r.x]
-    bottom = min(walls + [r.bottom])                 # exclusive: the first tray wall row
-    y = top + (bottom - top - 16) // 2
-    return geo.Rect(r.x + (r.w - 16) // 2, y, 16, 16)
-
-
 def paint_background(key):
-    bg = C.base_background(key, seed=SEED[key], pictograms=False)
-    rect = coin_tile_rect(key)
-    if rect is not None:
-        C.pictogram_tile(bg, rect, accent_for(key)['pictogram'], C.sheet_for(key))
+    bg = C.base_background(key, seed=SEED[key], pictograms=False)   # no background tile (guide 5)
     return bg
 
 

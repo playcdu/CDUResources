@@ -212,7 +212,8 @@ def primitives_sheet(scale=4):
     cell('stone_button red', 36, 18, lambda im: P.stone_button(im, (0, 0, 36, 18), 'red', 1))
     cell('flat_plate (info)', 36, 18, lambda im: P.flat_plate(im, (1, 1, 34, 16)))
     cell('inset_box', 24, 24, lambda im: P.inset_box(im, (2, 2, 20, 20)))
-    cell('pictogram_tile', 24, 24, lambda im: P.pictogram_tile(im, (0, 0, 24, 24), 'chest', PAL.PANEL))
+    cell('pictogram_tile (reference only, never on a background)', 24, 24,
+         lambda im: P.pictogram_tile(im, (0, 0, 24, 24), 'chest', PAL.PANEL))
     cell('arrow_glyph l/r/u/d', 40, 12, lambda im: [P.arrow_glyph(im, x, 2 if d in ('left', 'right') else 4, d)
                                                     for x, d in ((2, 'left'), (9, 'right'), (16, 'up'), (26, 'down'))])
     cell('accent_line (gold, red, green, blue)', 40, 12,
@@ -257,6 +258,7 @@ def background_anatomy():
          'tray top/left wall: family tint (plain here)'),
         (s.player_bbox.tuple(), (255, 0, 255), '36 player wells (alpha 0)'),
         ((s.width - 2, 0, 2, s.height), (120, 220, 120), 'dark grey bottom/right bevel'),
+        (None, (200, 200, 200), 'static cells (none on this skin): plain panel, no tile'),
         (s.advance_pin.tuple(), (255, 60, 60), 'advance pin [175,0,1,3] alpha 255'),
     ]
     return _annotate(img, 4, notes)

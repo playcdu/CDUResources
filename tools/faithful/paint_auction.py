@@ -53,43 +53,12 @@ SEED = 23
 PAGED = ('auction_house', 'auction_search', 'auction_mine', 'auction_watchlist')
 
 
-def _tile_rect(key):
-    """Where the one gavel tile goes (16x16, recessed).
-
-    * Paged screens: the static right column (slots 17/26/35/44). The column
-      of plain panel between the listing tray's white edge (x152) and the
-      panel bevel (x174) is 21 px wide, so the tile sits at x155 (centred in
-      that visible column, two panel pixels clear of the tray instead of
-      sharing its edge) and vertically centred on the four rows. The
-      watchlist uses the same spot rather than its top static row: that row
-      is only 18 px between the accent line and the tray, so a tile there
-      would touch both, and keeping the gavel in one place across all four
-      paged screens reads as one family.
-    * Confirm and duration: the static run left of the long Close button
-      (x8-59), centred, so both screens end on the same [tile][Close] row.
-    """
-    s = geo.skin(key)
-    if key in PAGED:
-        col = [sl for sl in s.all_slots if sl.index in (17, 26, 35, 44)]
-        y0, y1 = min(sl.y for sl in col), max(sl.y for sl in col) + 16
-        return geo.Rect(155, y0 + (y1 - y0 - 16) // 2, 16, 16)
-    close = s.button('close').rect
-    r = geo.Rect(8, close.y + 1, close.x - 1 - 8, 16)
-    return geo.Rect(r.x + (r.w - 16) // 2, r.y, 16, 16)
-
-
 def paint_background(key):
     """The shared base background: panel, inset trays (28 listing wells on the
     paged screens, the single display well on confirm, none on duration),
-    the red accent line under the title band and one gavel tile (see
-    ``_tile_rect``). Every other static cell stays plain panel."""
-    s = geo.skin(key)
+    the red family tint on the tray walls. Static cells stay plain panel
+    (backgrounds carry no pictogram tile; the gavel is on the frame tabs)."""
     bg = C.base_background(key, seed=SEED, pictograms=False)
-    rect = _tile_rect(key)
-    holes = [m for m in s.masks if m.intersect(rect)]
-    assert not holes, f'{key}: tile {rect} overlaps clearance {holes}'
-    assert not any(b.rect.intersect(rect) for b in s.buttons), f'{key}: tile under a button'
-    C.pictogram_tile(bg, rect, accent_for(key)['pictogram'])
     C.finish_background(bg, key)                       # clear masks + stamp pin, always last
     return bg
 

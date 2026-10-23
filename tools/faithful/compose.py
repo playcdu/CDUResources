@@ -8,8 +8,8 @@ the painter workflow is identical:
     base_background(key, seed)        light grey bevelled panel in a black
                                       outline, inset slot trays round every
                                       clearance (its top wall tinted in the
-                                      family colour), one family pictogram
-                                      tile in the largest static region
+                                      family colour); static cells stay
+                                      plain panel (no pictogram tile)
     base_frame(key, layer_id, seed)   lean docked tabs: a small pictogram tab
                                       and a grip bar on each side of the
                                       container, everything else alpha 0
@@ -236,7 +236,8 @@ def static_regions(key):
 
 def pictogram_tile(img, rect, name, ramp=None):
     """A recessed panel-coloured tile on ``rect`` with pictogram ``name``
-    centred (or nothing when ``name`` is None)."""
+    centred (or nothing when ``name`` is None). Reference sheets only: Faithful
+    backgrounds carry no pictogram tile (style guide section 5)."""
     ramp = ramp or PANEL_RAMP
     return P.pictogram_tile(img, rect.tuple() if hasattr(rect, 'tuple') else rect, name, fill_colour=ramp[2])
 
@@ -247,10 +248,11 @@ def base_background(key, seed=0, wells='inset', title=True, inventory=True, ramp
     black outline with notched corners, white top/left bevel, dark grey
     bottom/right bevel), the vanilla-style inset tray round every native
     clearance with its top wall tinted in the family colour (``accent``;
-    ``draw_accent_line``), nothing but panel in the title zone (rows 5-14),
-    and one 16x16 recessed tile with the family pictogram centred in the
-    largest static decorative region (``pictograms``; other static cells
-    stay plain panel). On the dispenser (trade_money) ``label='auto'``
+    ``draw_accent_line``) and nothing but panel in the title zone (rows
+    5-14). Static decorative cells stay plain panel: backgrounds carry NO
+    pictogram tile (a recessed icon box in a static cell reads like an item
+    in a slot; the pictogram lives on the frame's tabs). ``pictograms`` is
+    accepted for API parity and ignored. On the dispenser (trade_money) ``label='auto'``
     letters the static OFFERED MONEY label in PLAIN ink_1, centred on x=88.
     ``title`` / ``inventory`` are accepted for API parity: the panel is light
     everywhere, so both bands are always light. Masks are cleared and the
@@ -259,11 +261,6 @@ def base_background(key, seed=0, wells='inset', title=True, inventory=True, ramp
     ramp = ramp or sheet_for(key)
     img = new(s.width, s.height)
     P.bevel_panel(img, (0, 0, s.width, s.height), ramp, radius=2)
-    acc = accent_for(key)
-    regions = static_regions(key)
-    if pictograms and acc.get('pictogram') and regions:
-        r = regions[0]                                   # one small tile, in the largest region
-        pictogram_tile(img, geo.Rect(r.x + (r.w - 16) // 2, r.y + (r.h - 16) // 2, 16, 16), acc['pictogram'], ramp)
     if s.is_dispenser and label == 'auto':
         L.draw_text_centered(img, 88, s.title_anchor[1], DISPENSER_LABEL, LABEL_DARK)
     if wells:

@@ -18,7 +18,10 @@
    button and state; every pixel is on the Faithful palette with alpha 0 or
    255; the live title and inventory glyph rows are light, and the title
    zone (rows 5-14, x 4-171) holds nothing but panel colour (the dispenser's
-   OFFERED MONEY label excepted); every skin with a family accent has a tray
+   OFFERED MONEY label excepted); static decorative cells are plain panel
+   (backgrounds carry no pictogram tile; the trade readiness lamps in cells
+   13 and 31 are the only functional exception); every skin with a family
+   accent has a tray
    wall to tint, and invsee_online / invsee_offline differ; frames are lean
    docked tabs: opaque only inside ``compose.frame_parts`` (tabs and grips),
    nothing in the container, the right grip on the pin, left and right
@@ -35,7 +38,7 @@
    disabled state is a flat face.)
 4. pack-source: by default every skin whose background is already entirely
    on the Faithful palette (painted in this theme) gets the title-zone,
-   lean-frame, lettering, distinct-state and state-preservation checks on
+   plain-static-cell, lean-frame, lettering, distinct-state and state-preservation checks on
    its PNGs; other skins are
    counted as "not yet Faithful" and skipped. ``--pack-source`` checks every
    skin regardless; ``--skip-pack-source`` checks none.
@@ -137,6 +140,35 @@ def frame_errors(key, layer_id, img, label):
     return errs
 
 
+# Static cells that may hold a functional mark (not decoration): the trade
+# divider's YOU / THEM readiness lamps.
+FUNCTIONAL_CELLS = {k: (13, 31) for k in ('trade_idle', 'trade_self_ready', 'trade_other_ready',
+                                          'trade_both_ready')}
+
+
+def static_cell_errors(key, img, label):
+    """Backgrounds carry no pictogram tile: the inner 14x14 of every static
+    decorative cell (the slot's 16 px footprint inset by 1 px, clear of any
+    neighbouring tray ring) is panel colour only. The trade readiness lamps
+    are functional marks and are exempt."""
+    s = geo.skin(key)
+    panel = tuple(C.sheet_for(key)[2])
+    skip = FUNCTIONAL_CELLS.get(key, ())
+    bad = []
+    for sl in s.all_slots:
+        if sl.index not in s.static_slots or sl.index in skip:
+            continue
+        for y in range(sl.y + 1, sl.y + 15):
+            for x in range(sl.x + 1, sl.x + 15):
+                q = img.getpixel((x, y))
+                if q[3] != 255 or tuple(q[:3]) != panel:
+                    bad.append((sl.index, x, y))
+    if bad:
+        cells = sorted({b[0] for b in bad})
+        return [f'{label}: static cell(s) {cells} hold non-panel pixels (a tile or motif), e.g. {bad[:2]}']
+    return []
+
+
 def title_zone_errors(key, img, label):
     """Rows 5-14 across x 4-171 hold nothing but panel colour (the dispenser
     may also hold its static OFFERED MONEY label in ink_1)."""
@@ -231,6 +263,7 @@ def main(argv=None):
             errors += palette_errors(bg, f'{key} background')
             errors += band_errors(key, bg)
             errors += title_zone_errors(key, bg, f'{key} background')
+            errors += static_cell_errors(key, bg, f'{key} background')
             probe = C.base_background(key, seed=1, accent=False)
             tinted = C.draw_accent_line(probe, key)
             if C.accent_colour(key) is not None and C.wall_colour(C.accent_colour(key)) and not tinted:
@@ -283,7 +316,9 @@ def main(argv=None):
             if not a.pack_source and not on_palette(Image.open(s.background_path).convert('RGBA')):
                 skipped += 1
                 continue
-            errors += title_zone_errors(key, Image.open(s.background_path).convert('RGBA'), f'pack-source {key}')
+            painted_bg = Image.open(s.background_path).convert('RGBA')
+            errors += title_zone_errors(key, painted_bg, f'pack-source {key}')
+            errors += static_cell_errors(key, painted_bg, f'pack-source {key}')
             for la in s.art_layers:
                 errors += frame_errors(key, la.id, Image.open(s.frame_path(la.id)).convert('RGBA'),
                                        f'pack-source {key}/{la.id} frame')
@@ -300,7 +335,7 @@ def main(argv=None):
         print('FAIL', e)
     print(f'SELFTEST {"FAILED" if errors else "PASSED"}: {len(geo.all_skins())} skins, {n_btn} buttons, '
           f'{n_img} generated images checked with the builder validators, palette, light text rows, title zone, '
-          f'family tray tint, lean frames, '
+          f'plain static cells, family tray tint, lean frames, '
           f'glyph preservation and distinct states'
           + (f', mask coverage min {min(covered):.0%} over {len(covered)} lettered buttons' if covered else '')
           + ('' if a.skip_pack_source else

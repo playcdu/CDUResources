@@ -36,7 +36,6 @@ for _p in (str(_HERE.parent), str(_HERE.parent / 'cozy')):
 
 import compose as C  # noqa: E402
 import geometry as geo  # noqa: E402
-from palette import accent_for  # noqa: E402
 
 SKINS = ('ticket_valid', 'ticket_invalid')
 SEED = {'ticket_valid': 31, 'ticket_invalid': 37}
@@ -46,32 +45,13 @@ SEED = {'ticket_valid': 31, 'ticket_invalid': 37}
 # Backgrounds
 # ---------------------------------------------------------------------------
 
-TILE = 16
-
-
-def _tile_rect(key):
-    """The pictogram tile, centred over the display well and vertically
-    centred in the free panel between the accent line (row 14) and the
-    well tray's top shadow row. The base would put it in the 16 px static
-    row directly above the well, where its bottom edge fuses with the
-    well's shadow and the pair reads as one stacked block; slots 0-8 are
-    removed decorations (no native items), so the tile may float higher."""
-    s = geo.skin(key)
-    well = s.content_slots[0].clearance            # 20x20 clearance of slot 22
-    top = C.ACCENT_Y + 1                           # first free row under the line
-    bottom = well.y - 1                            # the tray's dark top run (exclusive)
-    y = top + (bottom - top - TILE) // 2
-    x = well.x + (well.w - TILE) // 2
-    return geo.Rect(x, y, TILE, TILE)
 
 
 def paint_background(key):
-    """Shared base (panel, the one inset display well, the player trays, the
-    family accent line) without its automatic tile, plus one recessed
-    ticket-stub tile placed by ``_tile_rect``."""
+    """Shared base: panel, the one inset display well, the player trays and
+    the family tint on their walls. Static cells stay plain panel (no
+    background pictogram tile; the ticket stub is on the frame tabs)."""
     bg = C.base_background(key, seed=SEED[key], pictograms=False)
-    name = accent_for(key)['pictogram']
-    C.pictogram_tile(bg, _tile_rect(key), name, C.sheet_for(key))
     C.finish_background(bg, key)                    # clear masks + stamp pin, always last
     return bg
 

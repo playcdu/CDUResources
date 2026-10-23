@@ -59,13 +59,13 @@ any Quasar screen should feel this is vanilla Minecraft with painted buttons:
 the same calm grey panel, the same inset slots, the same stone buttons.
 Restraint is the point. Family identity is a whisper: the inset trays' own
 inner-shadow walls take the family colour, and one small flat pictogram sits
-in a static cell and on the frame's two docked tabs.
+on each of the frame's two docked tabs. Backgrounds carry no pictogram.
 
 Rules of thumb:
 
 - Light comes from the top-left. Raised things (panels, buttons) are white or
   light on their top/left edge and dark grey on their bottom/right edge;
-  recessed things (slots, info plates, tiles) are the reverse.
+  recessed things (slots, info plates) are the reverse.
 - Outlines are pure black (`ink_0`), 1 px, with notched (rounded) corners:
   radius 2 on panels, radius 1 on buttons.
 - Surfaces are flat. The only texture in the whole theme is the sparse stone
@@ -98,11 +98,11 @@ Jobs:
 |---|---|
 | `ink_0` | every outline (panels, buttons, sprites); the pin colour |
 | `ink_1` | dark text on light plates and the panel (vanilla-style #404040); the (+1, +1) shadow under white lettering |
-| `grey_0` | slot / tile inner shadow (top/left); the flat disabled face |
+| `grey_0` | slot inner shadow (top/left) on neutral trays; the flat disabled face |
 | `grey_1` | panel and button bottom/right bevel (also on the frame's tabs and grips); info plate top/left rim; grip ribs |
 | `grey_2`, `grey_4` | dark and light stone flecks on button faces |
 | `grey_3` | the stone button face |
-| `grey_4` | slot-grey mixed corners of insets, tile fill on frames |
+| `grey_4` | slot-grey mixed corners of insets |
 | `grey_5` | button top/left bevel; info plate face; disabled lettering |
 | `grey_6` | **the panel**: the title and inventory text sit on it |
 | `grey_7` | panel top/left bevel, inset bottom/right highlight, button lettering, pulse highlight |
@@ -136,8 +136,8 @@ Do:
 - **Sparse stone on button faces only.** `stone_texture` places 1-3 px
   `grey_2` flecks, each with an occasional `grey_4` pixel above-left, on a
   jittered 7x4 grid with about half the cells empty. Seeded, so it is the
-  same every run. Never on panels, plates or tiles.
-- **Insets read as holes.** Wells, info plates and pictogram tiles are
+  same every run. Never on panels, plates or frame tabs.
+- **Insets read as holes.** Wells and info plates are
   recessed: dark top/left, light bottom/right, mid-grey on the two mixed
   corners (`inset`, `well_frame`, `flat_plate`, `inset_box`).
 - **Pictograms are flat.** Black outline, one light and one dark step of a
@@ -303,8 +303,8 @@ grey silhouettes when disabled.
 ## 5. Per-family identity
 
 The base (panel, wells, stone buttons) is identical everywhere. Each family
-adds exactly two things, both decorative and never in wells, the title zone,
-text rows or lettering areas (`palette.FAMILY_ACCENT`, sub-skins in
+adds exactly two things, both decorative and never in wells, static cells,
+the title zone, text rows or lettering areas (`palette.FAMILY_ACCENT`, sub-skins in
 `SKIN_ACCENT`, lookup with `accent_for(key)`):
 
 1. **The tray wall tint.** The top and left walls of every inset tray (the
@@ -322,16 +322,23 @@ text rows or lettering areas (`palette.FAMILY_ACCENT`, sub-skins in
    breaks the wall into alternate 2 px runs of colour and grey: a broken
    wall reads as offline / inactive. Nothing of the accent ever lands in the
    title zone (rows 5-14), where trays draw no wall.
-2. **The pictogram**: one 16x16 recessed tile with the family pictogram
-   centred in the largest static decorative region of the background
-   (`compose.static_regions`, `pictogram_tile`; painters may move it to a
-   better free cell, clear of the title zone and the tray walls), and the
-   same pictogram on each of the frame's two docked tabs (section 7).
+2. **The pictogram**, on each of the frame's two docked tabs (section 7)
+   and nowhere else. **Backgrounds carry no pictogram tile**: static
+   decorative cells stay plain panel. An earlier draft put a 16x16 recessed
+   tile with the pictogram in the largest static region; with the tray tint
+   and the frame tabs it was redundant, and a recessed icon box in a static
+   cell reads like an item sitting in a slot, so it was removed
+   (`base_background` ignores its old `pictograms` argument;
+   `compose.pictogram_tile` survives only for the reference sheets). The
+   trade divider's YOU / THEM readiness lamps (cells 13 and 31) are
+   functional marks, not decoration, and stay.
 
 The first toolkit drew a 1 px accent line on row 14. It was removed: row 14
 is the live title's descender row (g j p q y hit it), it sat directly on the
 content tray's top wall on every chest layout (reading as a coloured lip
-3 px short of the tray), and its grey variants were invisible.
+3 px short of the tray), and its grey variants were invisible. No family
+needs the background tile either: the walls carry the colour on every screen
+and the tabs carry the picture.
 `compose.ACCENT_Y` (14) survives only as the last reserved row: `ACCENT_Y + 1`
 is the first row free for art under the title.
 
@@ -378,7 +385,7 @@ Backgrounds are 176 wide (chest heights 132-222; dispenser and crafting
 | well trays | round content clearances | the inset of section 4.1, top/left walls in the family tint (section 5) |
 | inventory rows | label_y-1 .. label_y+7 | plain panel: the live "Inventory" label; the player tray's dark top run sits below it |
 | player trays | 36 player clearances | main 3x9 and hotbar 1x9 framed separately (the 4 px seam between them is panel), walls tinted like the content trays |
-| static cells | `staticProtectedSlots` | plain panel, plus one pictogram tile in the largest region |
+| static cells | `staticProtectedSlots` | plain panel: no tile, no pictogram, no motif (selftest checks the inner 14x14 of each cell). Only functional marks belong here: the trade divider's readiness lamps |
 | under buttons | button rects | plain panel |
 | pin | x 175, rows 0-2 | alpha 255 (the outline / bevel pixels; `compose.finish_background` stamps `ink_0` if needed) |
 
@@ -458,9 +465,10 @@ Textures are static; game state is live. Never bake in:
   `button-layouts.json` `lines` (preferred) or `label`
   (`geometry.Button.text_lines`); `compose.letter` will not render anything
   else. Mixed case of the label (e.g. "Previous") is allowed for fit;
-- controls that are not controls: no fake tabs, fake buttons or fake slots
-  on frames or static cells (a pictogram tile is recessed and has no label,
-  so it never reads as pressable).
+- controls or items that are not there: no fake buttons or fake slots on
+  frames or static cells, and no recessed icon box in a static cell (it
+  reads like an item in a slot). The frame tabs carry a pictogram but no
+  label and sit outside the container, so they never read as pressable.
 
 A coin is a pictogram, never a balance.
 

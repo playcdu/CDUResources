@@ -22,7 +22,7 @@ independent, wordless readiness lamps, a recessed socket holding a small
 black-outlined lamp:
 
     cell 13  YOU   (upper)   grey lamp = not ready, green lamp + white check = ready
-    cell 22  the two-arrows pictogram tile (your offer goes right, theirs comes left)
+    cell 22  plain panel (the background carries no pictogram tile; the arrows are on the frame tabs)
     cell 31  THEM  (lower)   same lamp
 
 so idle / self_ready / other_ready / both_ready differ only in which lamps
@@ -124,11 +124,6 @@ def lamp_box(cell):
     return (DIVIDER_X + 2, CELL_Y[cell] + 2, 12, 12)
 
 
-def picto_box(cell):
-    """14x16 recessed tile across the divider's free columns (x 81..94)."""
-    return (DIVIDER_X + 1, CELL_Y[cell], 14, 16)
-
-
 # ---------------------------------------------------------------------------
 # Backgrounds
 # ---------------------------------------------------------------------------
@@ -138,7 +133,6 @@ def paint_background(key):
         return C.base_background(key, seed=SEED[key])      # OFFERED MONEY label, plain panel
     bg = C.base_background(key, seed=SEED[key], pictograms=False)
     you, them = READY[key]
-    C.pictogram_tile(bg, picto_box(PICTO_CELL), 'arrows')
     draw_lamp(bg, *lamp_box(YOU_CELL)[:2], you)
     draw_lamp(bg, *lamp_box(THEM_CELL)[:2], them)
     return bg
