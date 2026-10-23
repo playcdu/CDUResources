@@ -87,6 +87,7 @@ FAMILY_ACCENT = {
     'prefixes':   {'accent': PLUM,  'secondary': EMBER, 'motif': 'name tags pinned to a corkboard'},
     'invsee':     {'accent': SKY,   'secondary': BRASS, 'motif': 'magnifying glass over a satchel'},
     'utility':    {'accent': WOOD,  'secondary': BRASS, 'motif': 'plain warm wood framing'},
+    'plot':       {'accent': SAGE,  'secondary': SKY,   'motif': "surveyor's deed, boundary stakes on twine, signpost, brass key"},
 }
 # Utility sub-skins and state variants that override the family entry.
 SKIN_ACCENT = {
