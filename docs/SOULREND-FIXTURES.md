@@ -121,6 +121,7 @@ URLs there and rebuild.
 | Guild bank | `family-guild_bank.html` | Soulrend Guild Bank Family | 8 skins, native content | https://claude.ai/artifact/VbzChSy9EEYjuTxjC1MzbN |
 | Prefixes | `family-prefixes.html` | Soulrend Prefixes Family | 6 skins, native content | https://claude.ai/artifact/3b75iry1F1yetZRoMp6eJr |
 | Invsee | `family-invsee.html` | Soulrend Invsee Family | 2 skins, native content | https://claude.ai/artifact/WXnHBUYkRZC52g9ixkDYtt |
+| Plot | `family-plot.html` | Soulrend Plot Family | 4 skins, 12 buttons | https://claude.ai/artifact/TwgJwfNPyVpVyFqtGTNCC4 |
 | Utility | `family-utility.html` | Soulrend Utility Family | 9 skins, native content | https://claude.ai/artifact/QCyANRvoW1jokmJREQbSK5 |
 | Before / after | `before-after.html` | Midnight vs Soulrend | 20 screens, baseline `037c5ef` vs Soulrend | https://claude.ai/artifact/UGq4vU4SEvKPxpiHrjuUy1 |
 

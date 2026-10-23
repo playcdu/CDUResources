@@ -4,6 +4,7 @@
     python tools/cozy/build_fixtures.py            # build every page, then check them
     python tools/cozy/build_fixtures.py --check    # only re-check pages already built
     python tools/cozy/build_fixtures.py --theme soulrend   # the Soulrend gallery
+    python tools/cozy/build_fixtures.py --theme faithful   # the Faithful gallery
 
 Writes under ``evidence/cozy-fixtures/`` (gitignored):
 
@@ -11,7 +12,8 @@ Writes under ``evidence/cozy-fixtures/`` (gitignored):
 * ``family-<family>.html`` per family (split into ``-1``, ``-2`` ... when a page
   would pass the size budget): composites, every button in all six states,
   frames alone, raw backgrounds with clearances outlined
-* ``before-after.html``    baseline midnight artwork (commit ``BASELINE``) beside cozy
+* ``before-after.html``    baseline midnight artwork (commit ``BASELINE``; skins added
+  later, from the commit that introduced them, ``BASELINE_FOR``) beside cozy
 
 Every image is a PNG data URI produced by ``preview.py``; pages carry no
 external resources. Cross-page links are literal ``{{URL:<page>}}`` tokens that
@@ -21,15 +23,17 @@ taken from the game. Output is deterministic for a given checkout (no clock,
 no randomness). Reads pack-source and ``git show`` only; never writes outside
 evidence/. See docs/COZY-FIXTURES.md.
 
-``--theme {cozy,soulrend}`` (default: $QUASAR_GUI_THEME, else cozy; the flag
-wins) switches the page titles ("Cozy GUI Fixtures" / "Soulrend GUI Fixtures",
-"<Theme> <Family> Family", "Midnight vs <Theme>"), the palette swatches, the
-typeface specimen, the schematic lettering, the page colour tokens, the output
-directory (``evidence/cozy-fixtures/`` or ``evidence/soulrend-fixtures/``) and
-the URL map (``tools/cozy/fixture_urls.json`` or
-``tools/soulrend/fixture_urls.json``). The textures shown are always the ones
+``--theme {cozy,soulrend,faithful}`` (default: $QUASAR_GUI_THEME, else cozy; the
+flag wins) switches the page titles ("Cozy GUI Fixtures" / "Soulrend GUI
+Fixtures" / "Faithful GUI Fixtures",
+"<Theme> <Family> Family", "Midnight vs <Theme>"), the palette swatches and
+aliases, the typeface specimen, a theme provenance note (Faithful: "No Mojang
+pixels", under the schematic caveat on every page), the schematic lettering,
+the page colour tokens, the output directory (``evidence/<theme>-fixtures/``)
+and the URL map
+(``tools/<theme>/fixture_urls.json``). The textures shown are always the ones
 in pack-source on the current checkout. The Soulrend gallery is described in
-docs/SOULREND-FIXTURES.md.
+docs/SOULREND-FIXTURES.md, the Faithful one in docs/FAITHFUL-FIXTURES.md.
 
 Licence: MIT.
 """
@@ -63,6 +67,11 @@ import preview as pv  # noqa: E402
 ROOT = geo.ROOT
 OUT = ROOT / 'evidence' / 'cozy-fixtures'
 BASELINE = '037c5ef7cb5dbe6fe5ab04dadcb2d2c44cd0372e'
+# Skins added after BASELINE: their midnight placeholders come from the commit
+# that introduced them (a137c28 added the four plot skins), so each pair still
+# shows one skin's own midnight artwork, never a mix.
+PLOT_BASELINE = 'a137c28f6e9a1ce072892d671588587c0993ea1b'
+BASELINE_FOR = {k: PLOT_BASELINE for k in ('plot_buy', 'plot_rent', 'plot_list', 'plot_manage')}
 HARD_LIMIT = 16 * 1000 * 1000          # publisher limit (16 MB, decimal to be safe)
 URL_MAP_PATH = ROOT / 'tools' / 'cozy' / 'fixture_urls.json'   # published artifact URLs, tracked
 ARTIFACT_PREFIX = 'https://claude.ai/artifact/'
@@ -98,6 +107,33 @@ THEME_CONFIG = {
                     '--muted': '#b9ab96', '--line': '#3e3430', '--accent': '#e07a68', '--link': '#d8b464',
                     '--link-hover': '#f0cf86', '--eyebrow': '#7fc9cf', '--note-bg': '#2a201c',
                     '--note-line': '#98763a', '--code-bg': '#2e2522'}),
+    },
+    'faithful': {
+        'name': 'Faithful', 'branch': 'art/faithful',
+        'out': ROOT / 'evidence' / 'faithful-fixtures',
+        'urls': ROOT / 'tools' / 'faithful' / 'fixture_urls.json',
+        'doc': 'docs/FAITHFUL-FIXTURES.md',
+        'blurb': 'Faithful vanilla-style pixel-art replacement',
+        'faces': (('PLAIN', 'PLAIN', 'an original 5-wide face in mixed case that sits beside the game font, the main face'),
+                  ('TINY', 'TINY', 'compact capitals for tight two-line labels and stack counts')),
+        'pure_bw': True,
+        # one sentence, shown in its own note under the schematic caveat on every page
+        'provenance': ('<strong>No Mojang pixels.</strong> Every texture, sprite and PLAIN / TINY glyph shown here '
+                       'was drawn from scratch for this pack, and no Minecraft jar, vanilla resource pack, font '
+                       'bitmap or screenshot was opened, sampled or traced to make them.'),
+        # the palette aliases the index lists (docs/FAITHFUL-STYLE-GUIDE.md section 2)
+        'aliases': ('OUTLINE', 'TEXT_DARK', 'TEXT_LIGHT', 'SHADOW', 'TEXT_DISABLED', 'GLOW', 'TITLE_BAND', 'SHEET',
+                    'PANEL', 'BEVEL_LIGHT', 'BEVEL_DARK', 'SLOT_FILL', 'SLOT_SHADOW', 'BUTTON_FACE', 'BUTTON_LIT',
+                    'DISABLED_FACE'),
+        # page colour tokens: (light mode, dark mode), a neutral grey scheme
+        'tokens': ({'--bg': '#e4e4e4', '--surface': '#f2f2f2', '--surface-2': '#d2d2d2', '--fg': '#1c1c1c',
+                    '--muted': '#555555', '--line': '#bdbdbd', '--accent': '#3a6a2c', '--link': '#2c4f8c',
+                    '--link-hover': '#1e3a6e', '--eyebrow': '#5a5a5a', '--note-bg': '#ececd8',
+                    '--note-line': '#a08a3a', '--code-bg': '#dadada'},
+                   {'--bg': '#181818', '--surface': '#232323', '--surface-2': '#2e2e2e', '--fg': '#ececec',
+                    '--muted': '#a8a8a8', '--line': '#3c3c3c', '--accent': '#8fce6c', '--link': '#8eb4ec',
+                    '--link-hover': '#b6d0f6', '--eyebrow': '#c6c6c6', '--note-bg': '#2a2a22',
+                    '--note-line': '#a08a3a', '--code-bg': '#2e2e2e'}),
     },
 }
 THEME = dict(THEME_CONFIG['cozy'], key='cozy')
@@ -140,10 +176,10 @@ def resolve_links(text, urls):
 PAGE_BUDGET = 14 * 1000 * 1000         # split a family page before it passes this
 
 FAMILY_ORDER = ['economy', 'auction', 'chest_shop', 'trade', 'ticket', 'admin_shop',
-                'guild_bank', 'prefixes', 'invsee', 'utility']
+                'guild_bank', 'prefixes', 'invsee', 'plot', 'utility']
 FAMILY_NAME = {'economy': 'Economy', 'auction': 'Auction', 'chest_shop': 'Chest Shop', 'trade': 'Trade',
                'ticket': 'Ticket', 'admin_shop': 'Admin Shop', 'guild_bank': 'Guild Bank',
-               'prefixes': 'Prefixes', 'invsee': 'Invsee', 'utility': 'Utility'}
+               'prefixes': 'Prefixes', 'invsee': 'Invsee', 'plot': 'Plot', 'utility': 'Utility'}
 # Sensible sub-groups, used only when a family must be split (adjacent groups are
 # packed together while they fit the budget).
 SPLIT_GROUPS = {
@@ -159,7 +195,7 @@ SPLIT_GROUPS = {
 BEFORE_AFTER = ['economy_hub', 'economy_log', 'auction_house', 'auction_confirm', 'auction_duration',
                 'chest_shop', 'chest_shop_listing_enabled', 'chest_shop_buy', 'trade_self_ready', 'trade_money',
                 'ticket_valid', 'ticket_invalid', 'admin_shop_categories', 'guild_bank_3', 'prefixes_6',
-                'invsee_offline', 'trashcan', 'ender_chest', 'crafting', 'template_chest_6']
+                'invsee_offline', 'plot_manage', 'trashcan', 'ender_chest', 'crafting', 'template_chest_6']
 CELL_BACKDROP = (90, 84, 88, 255)      # same backdrop preview.buttons_sheet uses under a button crop
 SCHEMATIC_NOTE = ('Schematic composite, not a gameplay screenshot. Every picture is drawn by '
                   '<code>tools/cozy/preview.py</code> from the pack-source PNGs: the grey item squares, '
@@ -401,7 +437,11 @@ def page(title, body, swatches=False):
 
 
 def note():
-    return f'<div class="note" role="note"><p><strong>Schematic composite, not a gameplay screenshot.</strong> {SCHEMATIC_NOTE[len("Schematic composite, not a gameplay screenshot. "):]}</p></div>'
+    caveat = (f'<div class="note" role="note"><p><strong>Schematic composite, not a gameplay screenshot.</strong> '
+              f'{SCHEMATIC_NOTE[len("Schematic composite, not a gameplay screenshot. "):]}</p></div>')
+    if THEME.get('provenance'):         # a theme's own provenance statement (Faithful: no Mojang pixels)
+        caveat += f'<div class="note" role="note"><p>{THEME["provenance"]}</p></div>'
+    return caveat
 
 
 def esc(s):
@@ -653,8 +693,9 @@ def index_page(by_family, all_parts, sha):
         ramps.append(f'<div class="ramp"><h3>{esc(rname)} <span class="muted small">({len(cols)}, dark to light)</span></h3>'
                      f'<ul class="chips">{chips}</ul></div>')
     # every single-colour alias the active palette defines (cozy has the first seven only)
-    aliases = [(a, getattr(pal, a)) for a in ('OUTLINE', 'OUTLINE_DEEP', 'TEXT_DARK', 'TEXT_LIGHT', 'TEXT_GOLD',
-                                              'SHADOW', 'GLOW', 'SOUL_GLOW', 'TITLE_BAND', 'SHEET')
+    aliases = [(a, getattr(pal, a)) for a in THEME.get('aliases') or
+               ('OUTLINE', 'OUTLINE_DEEP', 'TEXT_DARK', 'TEXT_LIGHT', 'TEXT_GOLD',
+                'SHADOW', 'GLOW', 'SOUL_GLOW', 'TITLE_BAND', 'SHEET')
                if hasattr(pal, a)]
     alias_txt = ', '.join(f'<code>{a}</code> = <code>{pal.name_of(c)}</code>' for a, c in aliases)
     spec = L.specimen(scale=1)
@@ -682,8 +723,8 @@ def index_page(by_family, all_parts, sha):
               f'<li><a href="{{{{URL:before-after}}}}">Midnight vs {THEME["name"]}</a> <span class="muted small">(before / after)</span></li></ul>'
             + f'<div id="families">{"".join(groups)}</div>'
             + f'<h2 id="palette">Master palette</h2>'
-              f'<p>{len(pal.NAMED)} named colours in {len(pal.RAMPS)} ramps, each ordered dark to light; no pure black '
-              f'or white. Textures use only these colours, at alpha 0 or 255. Aliases: {alias_txt}.</p>'
+              f'<p>{len(pal.NAMED)} named colours in {len(pal.RAMPS)} ramps, each ordered dark to light; {"pure black and white allowed (the vanilla language uses them)" if THEME.get("pure_bw") else "no pure black or white"}. '
+              f'Textures use only these colours, at alpha 0 or 255. Aliases: {alias_txt}.</p>'
               f'<div class="ramps">{"".join(ramps)}</div>'
             + f'<h2 id="typeface">Bespoke pixel typeface</h2>'
               '<p>Two original faces drawn for the pack (CC0-1.0), used for every painted label.</p>'
@@ -701,8 +742,13 @@ def index_page(by_family, all_parts, sha):
 # Before / after
 # ---------------------------------------------------------------------------
 
-def _git_blob(path):
-    r = subprocess.run(['git', 'show', f'{BASELINE}:{path}'], cwd=ROOT, capture_output=True)
+def baseline_of(key):
+    """The commit whose midnight artwork is the 'before' picture of ``key``."""
+    return BASELINE_FOR.get(key, BASELINE)
+
+
+def _git_blob(path, commit=BASELINE):
+    r = subprocess.run(['git', 'show', f'{commit}:{path}'], cwd=ROOT, capture_output=True)
     return r.stdout if r.returncode == 0 else None
 
 
@@ -714,7 +760,7 @@ def extract_baseline(keys, dest):
     for k in keys:
         for p in geo.asset_paths(k):
             rel = p.resolve().relative_to(ROOT.resolve()).as_posix()
-            blob = _git_blob(rel)
+            blob = _git_blob(rel, baseline_of(k))
             if blob is None:
                 missing.setdefault(k, []).append(rel)
                 continue
@@ -743,7 +789,7 @@ def before_after_page(all_parts):
                 f'<div class="pair">'
                 f'<figure><span class="tag base">Baseline &middot; midnight</span>'
                 f'<div class="art">{img_tag(before, f"{k} baseline midnight artwork composite, 3x")}</div>'
-                f'<figcaption>Before: midnight artwork from commit <code>{BASELINE[:7]}</code>.</figcaption></figure>'
+                f'<figcaption>Before: midnight artwork from commit <code>{baseline_of(k)[:7]}</code>.</figcaption></figure>'
                 f'<figure><span class="tag {THEME["key"]}">{THEME["name"]} &middot; replacement</span>'
                 f'<div class="art">{img_tag(after, after_alt)}</div>'
                 f'<figcaption>After: {THEME["name"].lower()} artwork on <code>{THEME["branch"]}</code>.</figcaption></figure></div>'
@@ -751,12 +797,16 @@ def before_after_page(all_parts):
                 '</section>')
     toc = ''.join(f'<li><a href="#{esc(k)}">{esc(k)}</a></li>' for k in BEFORE_AFTER)
     fams = sorted({geo.skin(k).family for k in BEFORE_AFTER}, key=FAMILY_ORDER.index)
+    later = sorted({baseline_of(k) for k in BEFORE_AFTER} - {BASELINE})
+    later_note = ''.join(f' ({", ".join(k for k in BEFORE_AFTER if baseline_of(k) == c)}: commit '
+                         f'<code>{c}</code>, which added {"it" if sum(baseline_of(k) == c for k in BEFORE_AFTER) == 1 else "them"})'
+                         for c in later)
     body = (f'<nav class="topnav" aria-label="Gallery"><a href="{{{{URL:index}}}}">Back to index</a></nav>'
             f'<header id="top"><p class="eyebrow">CDUResources {THEME["name"].lower()} theme &middot; before and after</p>'
             f'<h1>Midnight vs {THEME["name"]}</h1>'
             f'<p class="lede">{len(BEFORE_AFTER)} representative screens covering all {len(fams)} families. '
             f'The left (or upper) picture of each pair is the <strong>baseline midnight</strong> artwork from commit '
-            f'<code>{BASELINE}</code>; the right (or lower) one is the <strong>{THEME["name"].lower()} replacement</strong>.</p></header>'
+            f'<code>{BASELINE}</code>{later_note}; the right (or lower) one is the <strong>{THEME["name"].lower()} replacement</strong>.</p></header>'
             + note()
             + '<p class="small muted">Both sides use the same schematic items, title and default button states, so '
               'only the texture PNGs differ.</p>'
@@ -887,7 +937,7 @@ def build():
     sha = head_sha()
     by_family = geo.skins_by_family()
     assert set(by_family) == set(FAMILY_ORDER), sorted(by_family)
-    assert len(geo.all_skins()) == 56
+    assert sum(len(v) for v in by_family.values()) == len(geo.all_skins())
     for f in OUT.glob('*.html'):           # drop pages from an earlier split plan
         f.unlink()
     all_parts, names = {}, []
