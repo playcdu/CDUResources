@@ -1256,6 +1256,102 @@
       "pulse_1": "U+E7AB",
       "pulse_2": "U+E7AC",
       "pulse_3": "U+E7AD"
+    },
+    "plot_buy/cancel": {
+      "normal": "U+E7AE",
+      "disabled": "U+E7AF",
+      "selected": "U+E7B0",
+      "pulse_1": "U+E7B1",
+      "pulse_2": "U+E7B2",
+      "pulse_3": "U+E7B3"
+    },
+    "plot_buy/confirm": {
+      "normal": "U+E7B4",
+      "disabled": "U+E7B5",
+      "selected": "U+E7B6",
+      "pulse_1": "U+E7B7",
+      "pulse_2": "U+E7B8",
+      "pulse_3": "U+E7B9"
+    },
+    "plot_rent/cancel": {
+      "normal": "U+E7BA",
+      "disabled": "U+E7BB",
+      "selected": "U+E7BC",
+      "pulse_1": "U+E7BD",
+      "pulse_2": "U+E7BE",
+      "pulse_3": "U+E7BF"
+    },
+    "plot_rent/confirm": {
+      "normal": "U+E7C0",
+      "disabled": "U+E7C1",
+      "selected": "U+E7C2",
+      "pulse_1": "U+E7C3",
+      "pulse_2": "U+E7C4",
+      "pulse_3": "U+E7C5"
+    },
+    "plot_list/previous": {
+      "normal": "U+E7C6",
+      "disabled": "U+E7C7",
+      "selected": "U+E7C8",
+      "pulse_1": "U+E7C9",
+      "pulse_2": "U+E7CA",
+      "pulse_3": "U+E7CB"
+    },
+    "plot_list/close": {
+      "normal": "U+E7CC",
+      "disabled": "U+E7CD",
+      "selected": "U+E7CE",
+      "pulse_1": "U+E7CF",
+      "pulse_2": "U+E7D0",
+      "pulse_3": "U+E7D1"
+    },
+    "plot_list/next": {
+      "normal": "U+E7D2",
+      "disabled": "U+E7D3",
+      "selected": "U+E7D4",
+      "pulse_1": "U+E7D5",
+      "pulse_2": "U+E7D6",
+      "pulse_3": "U+E7D7"
+    },
+    "plot_manage/preview": {
+      "normal": "U+E7D8",
+      "disabled": "U+E7D9",
+      "selected": "U+E7DA",
+      "pulse_1": "U+E7DB",
+      "pulse_2": "U+E7DC",
+      "pulse_3": "U+E7DD"
+    },
+    "plot_manage/rename": {
+      "normal": "U+E7DE",
+      "disabled": "U+E7DF",
+      "selected": "U+E7E0",
+      "pulse_1": "U+E7E1",
+      "pulse_2": "U+E7E2",
+      "pulse_3": "U+E7E3"
+    },
+    "plot_manage/close": {
+      "normal": "U+E7E4",
+      "disabled": "U+E7E5",
+      "selected": "U+E7E6",
+      "pulse_1": "U+E7E7",
+      "pulse_2": "U+E7E8",
+      "pulse_3": "U+E7E9"
+    },
+    "plot_manage/teleport": {
+      "normal": "U+E7EA",
+      "disabled": "U+E7EB",
+      "selected": "U+E7EC",
+      "pulse_1": "U+E7ED",
+      "pulse_2": "U+E7EE",
+      "pulse_3": "U+E7EF"
+    },
+    "plot_manage/destroy": {
+      "normal": "U+E7F0",
+      "disabled": "U+E7F1",
+      "selected": "U+E7F2",
+      "pulse_1": "U+E7F3",
+      "pulse_2": "U+E7F4",
+      "pulse_3": "U+E7F5"
     }
   }
 }

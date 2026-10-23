@@ -54,6 +54,10 @@
     "template_chest_3/menu_frame": "U+E232",
     "template_chest_4/menu_frame": "U+E233",
     "template_chest_5/menu_frame": "U+E234",
-    "template_chest_6/menu_frame": "U+E235"
+    "template_chest_6/menu_frame": "U+E235",
+    "plot_buy/menu_frame": "U+E236",
+    "plot_rent/menu_frame": "U+E237",
+    "plot_list/menu_frame": "U+E238",
+    "plot_manage/menu_frame": "U+E239"
   }
 }
