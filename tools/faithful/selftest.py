@@ -8,7 +8,7 @@
 1. geometry (tools/cozy/geometry.py, shared) matches manifests/runtime-registry.json
    (button rects, pins, default states, frame pins) and resolved-layouts.json
    (background masks);
-2. the palette has 24 unique colours; the PLAIN fit requirements hold
+2. the palette has 25 unique colours; the PLAIN fit requirements hold
    (LISTINGS 50, DISABLE LISTING 104, PURCHASE 50, 12 DAYS 68); every
    kerning pair of PLAIN and TINY passes ``lettering.audit_kerning`` (no two
    glyphs touch at 1x); every one of the button labels fits its grammar's
@@ -34,7 +34,8 @@
    ``compose.extras_mask`` run on a COPY of the normal frame (so they must
    find the glyphs geometrically, not from the paint registry) cover at
    least 90 % of what was drawn; the six state images of every button are
-   pairwise different. (Disabled cracks: not applicable, the Faithful
+   pairwise different; no glyph sits on a button's outline or bevel; the
+   buttons of one row paint on the same rows (``compose.aligned_body``). (Disabled cracks: not applicable, the Faithful
    disabled state is a flat face.)
 4. pack-source: by default every skin whose background is already entirely
    on the Faithful palette (painted in this theme) gets the title-zone,
@@ -64,6 +65,7 @@ import geometry as geo  # noqa: E402
 from faithful import compose as C  # noqa: E402
 from faithful import lettering as L  # noqa: E402
 from faithful import palette as PAL  # noqa: E402
+from faithful import primitives as P  # noqa: E402
 
 import build_pack  # noqa: E402
 import button_assets  # noqa: E402
@@ -169,6 +171,40 @@ def static_cell_errors(key, img, label):
     return []
 
 
+def glyph_box_errors(normal, button, label):
+    """Lettering never spills into the outline or bevel: every glyph pixel is
+    at least 2 px in from the shape edge on outlined (stone) buttons and at
+    least 1 px in on un-outlined plates."""
+    glyphs = C.lettering_mask(normal, button, halo=False)
+    if not glyphs:
+        return []
+    dist = P.edge_distance(normal, 2)
+    w, h = normal.size
+    edge = [(x, y) for y in range(h) for x in range(w) if dist[y][x] == 0]
+    outlined = any(P._is_ink(normal.getpixel(q)) for q in edge)
+    need = 2 if outlined else 1
+    bad = sorted(q for q in glyphs if dist[q[1]][q[0]] < need)
+    return [f'{label}: {len(bad)} glyph pixel(s) on the outline or bevel, e.g. {bad[:3]}'] if bad else []
+
+
+def row_alignment_errors(key, images, label):
+    """Buttons sharing a region top and height start and end their painted
+    body on the same rows (``compose.aligned_body``)."""
+    s = geo.skin(key)
+    errs = []
+    rows = {}
+    for b in s.buttons:
+        rows.setdefault((b.y, b.h), []).append(b)
+    for (y, h), bs in rows.items():
+        spans = {}
+        for b in bs:
+            bbox = images[b.id].getchannel('A').getbbox()
+            spans[b.id] = (bbox[1], bbox[3]) if bbox else None
+        if len(set(spans.values())) > 1:
+            errs.append(f'{label}: button row y={y} paints on different rows {spans}')
+    return errs
+
+
 def title_zone_errors(key, img, label):
     """Rows 5-14 across x 4-171 hold nothing but panel colour (the dispenser
     may also hold its static OFFERED MONEY label in ink_1)."""
@@ -205,9 +241,10 @@ def state_errors(normal, states, button, label):
     bad = [xy for xy in footprint if spx[xy] != npx[xy]]
     if bad:
         errs.append(f'{label}/selected: changed {len(bad)} glyph/shadow pixel(s), e.g. {sorted(bad)[:3]}')
+    held = P.pulse_protect(normal, protect, footprint) | footprint
     for st in ('pulse_1', 'pulse_2', 'pulse_3'):
         ppx = states[st].load()
-        bad = [xy for xy in protect if ppx[xy] != npx[xy]]
+        bad = [xy for xy in held if ppx[xy] != npx[xy]]
         if bad:
             errs.append(f'{label}/{st}: changed {len(bad)} pixel(s) of the glyphs, shadow or 1 px halo, '
                         f'e.g. {sorted(bad)[:3]}')
@@ -233,8 +270,8 @@ def main(argv=None):
     reg = json.loads((geo.ROOT / 'manifests/runtime-registry.json').read_text(encoding='utf-8'))
     res = json.loads((geo.ROOT / 'manifests/resolved-layouts.json').read_text(encoding='utf-8'))
     layouts, skins, config = geo.raw_manifests()
-    if len(PAL.MASTER) != 24 or len(set(PAL.MASTER)) != 24:
-        errors.append('palette: expected 24 unique colours')
+    if len(PAL.MASTER) != 25 or len(set(PAL.MASTER)) != 25:
+        errors.append('palette: expected 25 unique colours')
     for text, limit in L.FIT_CHECKS:
         if L.text_width(text) > limit:
             errors.append(f'lettering: {text!r} is {L.text_width(text)} px > {limit}')
@@ -273,6 +310,7 @@ def main(argv=None):
                 decorative_assets.validate(_raw(fr), layer, g); n_img += 1
                 errors += palette_errors(fr, f'{key}/{layer["id"]} frame')
                 errors += frame_errors(key, layer['id'], fr, f'{key}/{layer["id"]} frame')
+            normals = {}
             for bdef in config['screens'].get(key, {}).get('buttons', []):
                 b = s.button(bdef['id'])
                 normal = C.paint_button(key, bdef['id'], seed=1)
@@ -303,7 +341,10 @@ def main(argv=None):
                 errors += distinct_errors(states, f'{key}/{b.id}')
                 errs, _, _ = state_errors(normal, states, b, f'{key}/{b.id}')
                 errors += errs
+                errors += glyph_box_errors(normal, b, f'{key}/{b.id}')
+                normals[b.id] = normal
                 n_btn += 1
+            errors += row_alignment_errors(key, normals, key)
         except Exception as exc:  # noqa: BLE001
             errors.append(f'{key}: {type(exc).__name__}: {exc}')
     on, off = C.base_background('invsee_online', 1), C.base_background('invsee_offline', 1)
@@ -322,8 +363,11 @@ def main(argv=None):
             for la in s.art_layers:
                 errors += frame_errors(key, la.id, Image.open(s.frame_path(la.id)).convert('RGBA'),
                                        f'pack-source {key}/{la.id} frame')
+            painted_normals = {b.id: Image.open(s.button_path(b.id, 'normal')).convert('RGBA') for b in s.buttons}
+            errors += row_alignment_errors(key, painted_normals, f'pack-source {key}')
             for b in s.buttons:
-                normal = Image.open(s.button_path(b.id, 'normal')).convert('RGBA')
+                normal = painted_normals[b.id]
+                errors += glyph_box_errors(normal, b, f'pack-source {key}/{b.id}')
                 states = {st: Image.open(s.button_path(b.id, st)).convert('RGBA') for st in geo.STATES}
                 if C.button_kind(b) not in ('close', 'icon') and not C.lettering_mask(normal, b):
                     errors.append(f'pack-source {key}/{b.id}: no Faithful lettering detected')

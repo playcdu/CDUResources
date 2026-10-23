@@ -1,4 +1,4 @@
-"""Faithful master palette: 24 named colours in seven ramps.
+"""Faithful master palette: 25 named colours in eight ramps.
 
 Every ramp is ordered dark -> light. Unlike the cozy and Soulrend themes,
 pure black (the panel and button outline) and pure white (the top-left bevel,
@@ -18,6 +18,7 @@ red     danger buttons, invalid marks, the bin
 gold    primary bevel, coins, the star, emphasis
 blue    information accents: the lens, the eye, trade arrows
 purple  the ender chest panel and its trim only
+rust    the stone fleck on red (danger) button faces only
 
 Licence: MIT (tooling). Colour choices are original.
 """
@@ -78,9 +79,14 @@ PURPLE = [
     (70, 52, 98),     # purple_0 ender chest bottom/right bevel and trim
     (190, 182, 206),  # purple_1 ender chest panel (still light: live text sits on it)
 ]
+RUST = [
+    (134, 48, 44),    # rust_0 stone fleck on the red_1 danger face: 13 luminance below it,
+                      #        the same step as grey_2 flecks below the grey_3 face
+]
 
 RAMPS = {
     'ink': INK, 'grey': GREY, 'green': GREEN, 'red': RED, 'gold': GOLD, 'blue': BLUE, 'purple': PURPLE,
+    'rust': RUST,
 }
 
 NAMED = {}
@@ -88,7 +94,7 @@ for _ramp, _colours in RAMPS.items():
     for _i, _c in enumerate(_colours):
         NAMED[f'{_ramp}_{_i}'] = _c
 MASTER = list(NAMED.values())
-assert len(MASTER) == len(set(MASTER)) == 24
+assert len(MASTER) == len(set(MASTER)) == 25
 
 # Semantic aliases used throughout the guide and primitives.
 OUTLINE = INK[0]

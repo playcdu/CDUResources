@@ -48,7 +48,7 @@ _TOOLS = _Path(__file__).resolve().parents[1]
 if str(_TOOLS) not in _sys.path:
     _sys.path.append(str(_TOOLS))
 
-from faithful.palette import (BLUE, GOLD, GREEN, GREY, INK, PANEL_RAMP, PURPLE, RED,  # noqa: E402
+from faithful.palette import (BLUE, GOLD, GREEN, GREY, INK, PANEL_RAMP, PURPLE, RED, RUST,  # noqa: E402
                               luminance, ramp_of, rgba, step)
 
 # One colour key shared by every ASCII sprite in the theme (primitives, icons,
@@ -62,6 +62,7 @@ SK = {
     'h': GOLD[0], 'H': GOLD[1], 'Y': GOLD[2],
     'm': BLUE[0], 'n': BLUE[1], 'N': BLUE[2],
     'p': PURPLE[0], 'P': PURPLE[1],
+    'R': RUST[0],
 }
 
 # ---------------------------------------------------------------------------
@@ -271,41 +272,51 @@ def bevel_panel(img, box, ramp=None, radius=2, corner_pixels=True):
     return (x + 2, y + 2, w - 4, h - 4)
 
 
+FLECK_AREA = 50              # one fleck per this many face pixels, on every button
+
+
 def stone_texture(img, box, seed=0, face=GREY[3], dark=GREY[2], light=GREY[4], density=1.0):
-    """Sparse stone flecks on a flat button face: short (1-3 px) horizontal
-    runs of ``dark`` with an occasional ``light`` pixel above-left, placed on
-    a jittered grid so they never clump into noise. Only pixels that still
-    hold ``face`` change, so lettering and bevels are never touched."""
+    """Sparse stone flecks on a flat button face: short horizontal runs of
+    ``dark`` (lengths cycle 1, 2, 2, 3) with a single ``light`` pixel
+    above-left of every other fleck (none when ``light`` is None). The fleck
+    COUNT is fixed by area, ``round(w * h / FLECK_AREA * density)``, and only
+    their placement depends on ``seed``: the cells of a 7 x 4 jittered grid
+    are shuffled and the first ``count`` used, so two buttons of one size
+    are equally textured whatever their seed. Only pixels that still hold
+    ``face`` change, so lettering and bevels are never touched."""
     x, y, w, h = box
     r = _rng(seed, 'stone', box)
     face = tuple(face[:3])
-    step_x, step_y = 7, 4
-    for gy in range(y + 1, y + h - 1, step_y):
-        for gx in range(x + 1 + (gy // step_y % 2) * 3, x + w - 1, step_x):
-            if r.random() > 0.55 * density:
-                continue
-            px = gx + r.randint(0, 3)
-            py = gy + r.randint(0, 2)
-            ln = r.choice((1, 2, 2, 3))
-            for k in range(ln):
-                if x <= px + k < x + w and y <= py < y + h and get(img, px + k, py)[:3] == face:
-                    put(img, px + k, py, dark)
-            if r.random() < 0.5 and get(img, px - 1, py - 1)[:3] == face and x <= px - 1 and y <= py - 1:
-                put(img, px - 1, py - 1, light)
+    cells = [(gx, gy) for gy in range(y + 1, y + h - 1, 4)
+             for gx in range(x + 1 + (gy // 4 % 2) * 3, x + w - 1, 7)]
+    r.shuffle(cells)
+    count = min(len(cells), round(w * h / FLECK_AREA * density))
+    for i, (gx, gy) in enumerate(cells[:count]):
+        px = gx + r.randint(0, 3)
+        py = gy + r.randint(0, 2)
+        ln = (1, 2, 2, 3)[i % 4]
+        for k in range(ln):
+            if x <= px + k < x + w and y <= py < y + h and get(img, px + k, py)[:3] == face:
+                put(img, px + k, py, dark)
+        if light is not None and i % 2 == 0 and x <= px - 1 and y <= py - 1 \
+                and get(img, px - 1, py - 1)[:3] == face:
+            put(img, px - 1, py - 1, light)
 
 
 STONE_KINDS = {
     #          outline   top/left light  bottom/right dark  face     fleck dark  fleck light
     'plain':  (INK[0],   GREY[5],        GREY[1],           GREY[3], GREY[2],    GREY[4]),
     'gold':   (INK[0],   GOLD[2],        GREY[1],           GREY[3], GREY[2],    GREY[4]),
-    'red':    (INK[0],   RED[2],         RED[0],            RED[1],  RED[0],     RED[2]),
+    'red':    (INK[0],   RED[2],         RED[0],            RED[1],  RUST[0],    None),
 }
 
 
 def stone_button(img, box, kind='plain', seed=0, radius=1, texture=True):
     """A vanilla-style grey stone button: black outline (radius-1 corners),
     a 1 px raised bevel (light top/left, dark bottom/right), a flat face with
-    sparse stone flecks. ``kind`` 'plain' (secondary), 'gold' (primary: the
+    sparse stone flecks (the same count per area on every kind; on red the
+    fleck is ``rust_0``, as far below the face as grey_2 is below grey_3, and
+    there is no light fleck). ``kind`` 'plain' (secondary), 'gold' (primary: the
     top/left bevel is gold and a second gold row sits under the top edge on
     plates at least 26 px wide) or 'red' (danger: red face, red bevel).
     Returns the face box (inside the bevel)."""
@@ -321,7 +332,7 @@ def stone_button(img, box, kind='plain', seed=0, radius=1, texture=True):
         put(img, x + 2, y + 3, GOLD[1])
     if texture and w >= 10 and h >= 10:
         stone_texture(img, (x + 2, y + (3 if kind == 'gold' and w >= 26 and h >= 12 else 2), w - 4, h - 4),
-                      seed, face, fd, fl, density=0.8 if kind == 'red' else 1.0)
+                      seed, face, fd, fl)
     return (x + 2, y + 2, w - 4, h - 4)
 
 
@@ -790,7 +801,26 @@ def _brighten(rgb):
     return step(rgb, 2)
 
 
-def make_pulse(img, n, protect=None):
+def pulse_protect(img, protect=None, keep=None):
+    """The pixels a pulse must leave alone. Normally ``protect`` (glyphs,
+    shadow and their 1 px halo). On an un-outlined shape (the recessed info
+    plate, whose outer ring is not black ink) the halo is NOT applied on the
+    first interior ring, so the white ring stays continuous where a label's
+    halo crosses it; there only ``keep`` (the glyph and shadow footprint,
+    default: ``protect``) is respected, so lettering is still untouched."""
+    protect = set(protect or ())
+    keep = protect if keep is None else set(keep)
+    dist = edge_distance(img, 1)
+    w, h = img.size
+    px = img.load()
+    edge = [(x, y) for y in range(h) for x in range(w) if dist[y][x] == 0]
+    if edge and not any(_is_ink(px[x, y]) for (x, y) in edge):
+        ring1 = {(x, y) for y in range(h) for x in range(w) if dist[y][x] == 1}
+        return (protect - ring1) | (keep & ring1)
+    return protect
+
+
+def make_pulse(img, n, protect=None, keep=None):
     """Pulse feedback, frame ``n`` of 3: the bevel brightens, the light
     spreads onto the face, then it fades back to rest.
 
@@ -802,13 +832,16 @@ def make_pulse(img, n, protect=None):
              resting state
 
     ``protect`` (lettering glyphs, shadow and their 1 px halo, from
-    ``compose.lettering_mask``) never changes; ink and alpha never change.
+    ``compose.state_masks``) never changes, except that on an un-outlined
+    plate the halo does not interrupt the first ring (``pulse_protect``;
+    ``keep``, the glyph and shadow footprint, always holds); ink and alpha
+    never change.
     When nothing on the face ring can brighten (all protected), pulse_2
     paints its bottom/right bevel run grey_6 instead of white so the three
     frames always differ."""
     if n not in (1, 2, 3):
         raise ValueError('pulse frame must be 1, 2 or 3')
-    protect = protect or set()
+    protect = pulse_protect(img, protect, keep)
     out = img.copy()
     px = out.load()
     dist = edge_distance(out, 3)
@@ -864,5 +897,5 @@ def make_state(img, state, protect=None, seal=False, glyphs=None, footprint=None
     if state == 'selected':
         return make_selected(img, footprint)
     if state.startswith('pulse_'):
-        return make_pulse(img, int(state[-1]), protect)
+        return make_pulse(img, int(state[-1]), protect, keep=footprint)
     raise ValueError(f'unknown state {state!r}')

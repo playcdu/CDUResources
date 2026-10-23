@@ -443,9 +443,14 @@ def _label_plan(button, box, tiny=True):
     raise ValueError(f'label {button.text_lines} does not fit {box} for {button.id}')
 
 
-def _layout_offsets(lines, face, gap):
+def _layout_offsets(lines, face, gap, parity=0):
+    """Per-line (dx, dy) relative to the label block, for a box whose width
+    has ``parity`` (w % 2): line left = box.x + (w - parity) // 2 + dx with
+    dx = (parity - text_width) // 2, i.e. exactly box.x + (w - tw) // 2.
+    Never spills past the box; centred exactly when w - tw is even, else
+    left-biased by half a pixel."""
     f = L.FACES[face]
-    return [(-(L.text_width(t, face) // 2), i * (f.cap_height + gap)) for i, t in enumerate(lines)]
+    return [((parity - L.text_width(t, face)) // 2, i * (f.cap_height + gap)) for i, t in enumerate(lines)]
 
 
 def label_layout(button, box):
@@ -455,8 +460,8 @@ def label_layout(button, box):
     x, y, w, h = box
     total = _label_height(lines, face, gap)
     top = y + (h - total + 1) // 2
-    cx = x + (w + 1) // 2
-    return [(cx + dx, top + dy, t, face) for (dx, dy), t in zip(_layout_offsets(lines, face, gap), lines)]
+    cx = x + (w - w % 2) // 2
+    return [(cx + dx, top + dy, t, face) for (dx, dy), t in zip(_layout_offsets(lines, face, gap, w % 2), lines)]
 
 
 def label_pixels(layout):
@@ -590,13 +595,31 @@ def icon_face(img, button, body, seed=0):
     return pixels
 
 
+def aligned_body(button):
+    """The button's drawable body, aligned with its row: buttons of one skin
+    that share a region top and height form a row, and every member is drawn
+    between the row's common top and bottom body edges. When the content
+    clearance of the wells above (or below) trims row 0 of some buttons,
+    their untrimmed neighbours (an 18x18 close beside 36x18 footer buttons)
+    drop to the same row, so the row reads as one line. x and width are the
+    button's own; pins are untouched (``finish_button`` stamps them)."""
+    s = geo.skin(button.skin_key)
+    row = [o for o in s.buttons if o.y == button.y and o.h == button.h]
+    top = max(o.body.y for o in row)
+    bottom = min(o.body.bottom for o in row)
+    b = button.body
+    top, bottom = max(b.y, top), min(b.bottom, bottom)
+    return geo.Rect(b.x, top, b.w, bottom - top)
+
+
 def paint_button(key, button_id, seed=0):
-    """Normal state for one button region in the shared grammar. The result is
-    finished (masks cleared, pin stamped) and ready for ``button_states``."""
+    """Normal state for one button region in the shared grammar, drawn on
+    ``aligned_body``. The result is finished (masks cleared, pin stamped)
+    and ready for ``button_states``."""
     s = geo.skin(key)
     b = s.button(button_id)
     img = new(b.w, b.h)
-    body = b.body.tuple()
+    body = aligned_body(b).tuple()
     kind = button_kind(b)
     if kind == 'close':
         face = P.stone_button(img, body, 'red', seed, texture=False)
@@ -702,14 +725,15 @@ def _search_label(img, button):
     button's own label, at every offset). Returns the best hit's pixels."""
     best, best_score = set(), 0.0
     for lines, face, gap in _label_options(button):
-        rel = []
-        for (dx, dy), t in zip(_layout_offsets(lines, face, gap), lines):
-            rel += [(dx + gx, dy + gy) for gx, gy in L._pixels(t, face)]
-        if len(rel) < 6:
-            continue
-        hit, score = _match(img, rel)
-        if score > best_score:
-            best, best_score = hit, score
+        for parity in ((0,) if len(lines) == 1 else (0, 1)):     # line offsets depend on the box parity
+            rel = []
+            for (dx, dy), t in zip(_layout_offsets(lines, face, gap, parity), lines):
+                rel += [(dx + gx, dy + gy) for gx, gy in L._pixels(t, face)]
+            if len(rel) < 6:
+                continue
+            hit, score = _match(img, rel)
+            if score > best_score:
+                best, best_score = hit, score
     return best
 
 

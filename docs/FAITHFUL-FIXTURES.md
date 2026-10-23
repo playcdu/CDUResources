@@ -41,7 +41,7 @@ embeds only PNG data URIs, keeps colour literals inside the token blocks at the
 top of `<style>`, and links only to in-page anchors or `{{URL:…}}` tokens.
 
 Under `--theme faithful` the builder swaps in the Faithful palette
-(`tools/faithful/palette.py`, 24 colours in 7 ramps; the palette note says
+(`tools/faithful/palette.py`, 25 colours in 8 ramps; the palette note says
 pure black and white are allowed), lettering (`tools/faithful/lettering.py`),
 schematic title lettering, page colour tokens (a neutral grey scheme: light
 `#e4e4e4` page / `#f2f2f2` surface, dark `#181818` / `#232323`, green accent,
@@ -53,9 +53,9 @@ every page under 1 MB; no family page comes near the 14 MB split budget.
 
 - **Index** (`index.html`, "Faithful GUI Fixtures"): the schematic note;
   links to every family page and the before/after page; all 56 skins as cards
-  grouped by family with the family motif (pictogram); the 24-colour master
-  palette as swatches grouped by its 7 ramps (ink, grey, green, red, gold,
-  blue, purple) with names, RGB values and the semantic aliases; the PLAIN /
+  grouped by family with the family motif (pictogram); the 25-colour master
+  palette as swatches grouped by its 8 ramps (ink, grey, green, red, gold,
+  blue, purple, rust) with names, RGB values and the semantic aliases; the PLAIN /
   TINY typeface specimen with its spec (PLAIN cap 7 / x 5 / desc 2 / track 1;
   TINY cap 5 / track 1) and the `lettering.specimen()` image at 3x.
 - **Family pages** (`family-<family>.html`, "Faithful <Family> Family"): for

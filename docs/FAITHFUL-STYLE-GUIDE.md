@@ -76,7 +76,7 @@ Rules of thumb:
 
 ## 2. Master palette
 
-One palette of 24 colours in seven ramps, every ramp dark to light. Pure
+One palette of 25 colours in eight ramps, every ramp dark to light. Pure
 black and pure white **are** allowed (the vanilla language is built on them;
 `palette.ALLOW_PURE_BW = True`, so `validate.py --style --theme faithful`
 does not flag them). Source of truth: `tools/faithful/palette.py` (`NAMED`,
@@ -91,6 +91,7 @@ does not flag them). Source of truth: `tools/faithful/palette.py` (`NAMED`,
 | gold | `gold_0` 140,102,22 | `gold_1` 204,162,44 | `gold_2` 252,222,100 | | | | | |
 | blue | `blue_0` 40,64,128 | `blue_1` 72,112,184 | `blue_2` 136,172,228 | | | | | |
 | purple | `purple_0` 70,52,98 | `purple_1` 190,182,206 | | | | | | |
+| rust | `rust_0` 134,48,44 | | | | | | | |
 
 Jobs:
 
@@ -111,6 +112,7 @@ Jobs:
 | `gold_*` | primary bevel, coins, the star; `gold_0` tray walls (economy, guild bank) |
 | `blue_*` | lens, eye, arrows, shield, banner; `blue_1` tray walls (trade, admin shop, prefixes, invsee) |
 | `purple_*` | the ender chest panel ramp; `purple_0` tray walls there |
+| `rust_0` | the stone fleck on red danger faces only: 13 luminance below `red_1`, the same step as `grey_2` below `grey_3` (`red_0` flecks were 32 below, 2.5x noisier) |
 
 Semantic aliases: `OUTLINE = ink_0`, `TEXT_DARK = ink_1`, `TEXT_LIGHT =
 grey_7`, `SHADOW = ink_1`, `TEXT_DISABLED = grey_5`, `GLOW = grey_7`,
@@ -133,10 +135,15 @@ Do:
   (`bevel_panel`, `stone_button`). Corners are notched, never square:
   `rounded_mask` radius 2 for panels (3 pixels cut per corner, plus the inner
   bevel corner pixel for a chunky turn), radius 1 for buttons.
-- **Sparse stone on button faces only.** `stone_texture` places 1-3 px
-  `grey_2` flecks, each with an occasional `grey_4` pixel above-left, on a
-  jittered 7x4 grid with about half the cells empty. Seeded, so it is the
-  same every run. Never on panels, plates or frame tabs.
+- **Sparse stone on button faces only.** `stone_texture` places short
+  `grey_2` flecks (run lengths cycling 1, 2, 2, 3), every other one with a
+  `grey_4` pixel above-left. Their **count is fixed by area**: one per
+  `FLECK_AREA` (50) face pixels, so two buttons of one size are equally
+  textured whatever their seed; the seed only shuffles which cells of a
+  jittered 7x4 grid are used. On red faces the fleck is `rust_0` (as far
+  below `red_1` as `grey_2` is below `grey_3`) with no light pixel, so a red
+  button is no noisier than a grey one. Never on panels, plates or frame
+  tabs.
 - **Insets read as holes.** Wells and info plates are
   recessed: dark top/left, light bottom/right, mid-grey on the two mixed
   corners (`inset`, `well_frame`, `flat_plate`, `inset_box`).
@@ -207,11 +214,19 @@ Lettering: PLAIN `grey_7` with an `ink_1` shadow. Text box `(x+2, y+2, w-5,
 h-5)`. Fit order: PLAIN capitals, PLAIN mixed case of the label, TINY
 capitals (`compose._label_plan`).
 
+**Rows line up.** Buttons of one skin that share a region top and height
+form a row, and `compose.aligned_body` draws every member between the row's
+common top and bottom body edges. When the clearance of the wells above
+trims row 0 of some buttons (the 36x18 footer buttons under the listing grid
+on auction_house / search / mine and chest_shop_ads / search), their untrimmed
+neighbour (the 18x18 close in column 9) drops to the same rows, so the
+footer reads as one line. Pins are unaffected.
+
 ### 4.4 Danger button: red stone
 
 `compose.danger_face` / `stone_button(kind='red')`: `ink_0` outline, `red_2`
-top/left and `red_0` bottom/right bevel, a `red_1` face with sparse `red_0`
-flecks. Lettering: `grey_7` with an `ink_1` shadow. Muted, never gory. The
+top/left and `red_0` bottom/right bevel, a `red_1` face with sparse `rust_0`
+flecks (same count per area as the grey faces, no light fleck). Lettering: `grey_7` with an `ink_1` shadow. Muted, never gory. The
 18x18 close control is the same red stone (no flecks) with a 2 px white **X**
 with an `ink_1` shadow (`icons.draw_x`).
 
@@ -247,7 +262,7 @@ through `button_states(..., overrides={'selected': img})`.
 | normal | as painted | at rest |
 | disabled | `make_disabled`: vanilla's flat disabled button. The black outline (and any black sprite outline) stays; every glyph-like pixel (label, page arrow, close X, icon) keeps its position and alpha and becomes **`grey_5`**, so labels read mid grey and icons become grey silhouettes inside their black outline; label shadows stay `ink_1`; an un-outlined rim (the info plate) becomes `grey_1`; every other pixel becomes the flat **`grey_0`** face (stray whites `grey_5`). Bevels, gold, red, green and flecks all go flat. No cracks (the Soulrend crack rule does not apply). | flat dark grey, mid-grey label: clearly inert |
 | selected | `make_selected`: a **green-tinted face with a brighter bevel**. Stone face, flecks and plate face turn green (`grey_2/3/4/5` -> `green_0/1/2/2`); on the bevel ring the top/left turns `grey_7` and the bottom/right `green_0`; an un-outlined dark rim turns `green_0`; other colours (gold, red, blue) move one step lighter. Glyph-like pixels and the shadow drawn under them never change. | chosen, lit, vanilla's "ready" green |
-| pulse_1 | `make_pulse(img, 1, protect)`: the bevel ring (first interior ring) turns `grey_7` all round | the bevel flashes |
+| pulse_1 | `make_pulse(img, 1, protect)`: the bevel ring (first interior ring) turns `grey_7` all round. On an un-outlined info plate that ring is the face's outer ring, and the lettering halo is not applied on it (`primitives.pulse_protect`; only the glyph and shadow footprint holds there), so the white ring stays continuous where a label like THEIR / MONEY comes close | the bevel flashes |
 | pulse_2 | `make_pulse(img, 2, protect)`: the bevel stays white and the next ring (the outer face ring) moves **two** steps lighter on its own ramp: the face highlight. If nothing on that ring can brighten (all protected), the bottom/right bevel run turns `grey_6` instead of white, so the frames still differ | the light spreads onto the face |
 | pulse_3 | `make_pulse(img, 3, protect)`: the bevel ring is white on alternate pixels only (a checker), the face is back at rest | fading; the next frame is the resting state |
 
@@ -508,12 +523,24 @@ aliases: 'hearth' and 'graven' -> 'plain', 'sprig' and 'rune' -> 'tiny'.
 Required fits (checked by `selftest.py`): LISTINGS 43/50, DISABLE LISTING
 81/104, PURCHASE 47/50, 12 DAYS 39/68. `compose.letter` tries PLAIN capitals,
 then PLAIN mixed case of the label, then TINY capitals. Every one of the 157
-labels fits: 126 regions use PLAIN capitals, 4 PLAIN mixed case (Previous,
-Sell Price), 10 TINY (PRIVACY on its 36 px button and the two-line labels on
-18 px buttons: CHEST / SHOPS, YOUR / MONEY, THEIR / MONEY), and 17 are icons.
+labels fits. With `paint_button` alone, 126 regions use PLAIN capitals, 4
+PLAIN mixed case because the capitals are too wide (Previous on
+auction_watchlist and economy_log: 45 px in a 41 px page-button box; Sell
+Price on both listing editors: 55 px in 49), 10 TINY (PRIVACY on its 36 px
+button and the two-line labels on 18 px buttons: CHEST / SHOPS, YOUR /
+MONEY, THEIR / MONEY, where two PLAIN lines are too tall), and 17 are icons.
+In the painted pack-source, painters chose mixed case on 13 more labels
+whose capitals would fit with no spare pixel (Buy Price x2 and Tier 1-3 x9
+in shop configuration, Create x2 on the shop pages, where the box is
+deliberately narrowed to keep air at the plate rim): 113 capitals, 17 mixed
+case, 10 TINY, 17 icons.
 
 Labels are centred on their full glyph extent: a mixed-case label with a
 descender sits one row higher, so the descender clears the bottom bevel.
+Horizontally each line starts at `box.x + (box.w - text_width) // 2`
+(`compose.label_layout`): exactly centred when the difference is even,
+half a pixel left otherwise, and never past the box edge (selftest checks
+no glyph touches a button's outline or bevel).
 
 Colours: `grey_7` with an `ink_1` shadow on stone (primary, secondary,
 danger, page); `ink_1` without shadow on info plates and the panel; `grey_5`
