@@ -28,7 +28,8 @@ typeface specimen, the schematic lettering, the page colour tokens, the output
 directory (``evidence/cozy-fixtures/`` or ``evidence/soulrend-fixtures/``) and
 the URL map (``tools/cozy/fixture_urls.json`` or
 ``tools/soulrend/fixture_urls.json``). The textures shown are always the ones
-in pack-source on the current checkout.
+in pack-source on the current checkout. The Soulrend gallery is described in
+docs/SOULREND-FIXTURES.md.
 
 Licence: MIT.
 """
@@ -84,7 +85,7 @@ THEME_CONFIG = {
         'name': 'Soulrend', 'branch': 'art/soulrend-theme',
         'out': ROOT / 'evidence' / 'soulrend-fixtures',
         'urls': ROOT / 'tools' / 'soulrend' / 'fixture_urls.json',
-        'doc': 'docs/SOULREND-STYLE-GUIDE.md',
+        'doc': 'docs/SOULREND-FIXTURES.md',
         'blurb': 'Soulrend dark-fantasy pixel-art replacement',
         'faces': (('GRAVEN', 'GRAVEN', 'a thin medieval serif in mixed case, the main face'),
                   ('RUNE', 'RUNE', 'carved capitals for tight labels, banners and stack counts')),
@@ -379,7 +380,8 @@ def _themed_css():
     if not THEME['tokens']:
         return CSS
     light, dark = THEME['tokens']
-    head, sep, tail = CSS.partition('@media')
+    css = CSS.replace('.tag.cozy {', f'.tag.{THEME["key"]} {{')   # the replacement-side tag
+    head, sep, tail = css.partition('@media')
 
     def sub(part, values):
         for k, v in values.items():
@@ -650,8 +652,10 @@ def index_page(by_family, all_parts, sha):
                         for c in cols)
         ramps.append(f'<div class="ramp"><h3>{esc(rname)} <span class="muted small">({len(cols)}, dark to light)</span></h3>'
                      f'<ul class="chips">{chips}</ul></div>')
-    aliases = [('OUTLINE', pal.OUTLINE), ('OUTLINE_DEEP', pal.OUTLINE_DEEP), ('TEXT_DARK', pal.TEXT_DARK),
-               ('TEXT_LIGHT', pal.TEXT_LIGHT), ('SHADOW', pal.SHADOW), ('GLOW', pal.GLOW), ('TITLE_BAND', pal.TITLE_BAND)]
+    # every single-colour alias the active palette defines (cozy has the first seven only)
+    aliases = [(a, getattr(pal, a)) for a in ('OUTLINE', 'OUTLINE_DEEP', 'TEXT_DARK', 'TEXT_LIGHT', 'TEXT_GOLD',
+                                              'SHADOW', 'GLOW', 'SOUL_GLOW', 'TITLE_BAND', 'SHEET')
+               if hasattr(pal, a)]
     alias_txt = ', '.join(f'<code>{a}</code> = <code>{pal.name_of(c)}</code>' for a, c in aliases)
     spec = L.specimen(scale=1)
     (h_attr, h_name, h_desc), (s_attr, s_name, s_desc) = THEME['faces']
@@ -740,7 +744,7 @@ def before_after_page(all_parts):
                 f'<figure><span class="tag base">Baseline &middot; midnight</span>'
                 f'<div class="art">{img_tag(before, f"{k} baseline midnight artwork composite, 3x")}</div>'
                 f'<figcaption>Before: midnight artwork from commit <code>{BASELINE[:7]}</code>.</figcaption></figure>'
-                f'<figure><span class="tag cozy">{THEME["name"]} &middot; replacement</span>'
+                f'<figure><span class="tag {THEME["key"]}">{THEME["name"]} &middot; replacement</span>'
                 f'<div class="art">{img_tag(after, after_alt)}</div>'
                 f'<figcaption>After: {THEME["name"].lower()} artwork on <code>{THEME["branch"]}</code>.</figcaption></figure></div>'
                 f'<p class="small"><a href="{fam}">Every texture of {esc(k)}</a> &middot; <a href="#top">Back to top</a></p>'
