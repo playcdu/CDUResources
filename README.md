@@ -2,7 +2,7 @@
 
 Canonical editable resource-pack assets and artist tooling for CDU's Quasar GUI redesign.
 
-**Status: implemented design; client validation pending.** All 50 audited skins and six chest templates use dark framing. Twenty-seven have painted control regions; seven paged layouts use 28 native content cells. Storage, selectors, configured shops and crafting preserve protected native positions. See docs/DESIGN-COVERAGE.md for every skin. Static validation does not prove gameplay or client rendering.
+**Status: implemented design; client validation pending.** All 54 audited skins and six chest templates use dark framing. Thirty-one have painted control regions; seven paged layouts use 28 native content cells. Storage, selectors, configured shops and crafting preserve protected native positions. See docs/DESIGN-COVERAGE.md for every skin. Static validation does not prove gameplay or client rendering.
 
 Edit background, button-state and decorative PNGs in `pack-source/assets/quasar_gui/textures/`. Normal builds preserve those source images and optional Aseprite documents. Geometry, fonts and audited control meaning are in `manifests/`; the implemented interaction contract is `manifests/button-layouts.json`. This repository contains no Quasar gameplay source or compiled mods.
 
