@@ -31,7 +31,10 @@ native container); ``--strict-style`` makes those lint findings fatal.
 checks against (tools/cozy/palette.py, tools/soulrend/palette.py or
 tools/faithful/palette.py). A palette that sets ``ALLOW_PURE_BW = True``
 (Faithful: the vanilla language uses pure black and white) is not flagged
-for pure black/white pixels. Default: the
+for pure black/white pixels, and one that sets ``LEAN_FRAMES = True``
+(Faithful's lean docked-tab frames) is not flagged for transparency outside
+the frame's container: only opaque pixels inside the container and
+semi-transparent pixels are reported. Default: the
 QUASAR_GUI_THEME environment variable, else cozy; the flag takes precedence.
 The contract checks (the builder's validators) are identical for every theme.
 
@@ -218,14 +221,38 @@ def stray_frame_holes(key, img, layer_id=None):
     return out
 
 
+def opaque_in_container(key, img, layer_id=None):
+    """Pixels of a frame with alpha > 0 inside the native container rectangle."""
+    c = geometry.skin(key).layer(layer_id).container
+    a = img.getchannel('A').load()
+    return [(x, y) for y in range(max(0, c.y), min(img.height, c.bottom))
+            for x in range(max(0, c.x), min(img.width, c.right)) if a[x, y]]
+
+
 def style_lint(key, img, kind, label, pal=None, layer_id=None):
     """Style checks against ``pal`` (a theme palette module, default cozy).
     Returns (ok, path, message) tuples tagged 'STYLE'. Frames (``kind``
     'frame', ``layer_id`` their artLayers id) are also checked for stray
-    transparent holes outside the native container."""
+    transparent holes outside the native container; a palette that sets
+    ``LEAN_FRAMES = True`` (Faithful: lean docked tabs, transparent
+    elsewhere) instead gets warnings only for opaque pixels inside the
+    container and semi-transparent pixels."""
     pal = pal or palette_for('cozy')
     out = []
-    if kind == 'frame':
+    if kind == 'frame' and getattr(pal, 'LEAN_FRAMES', False):
+        # lean-frame themes (Faithful): transparency outside the container is
+        # the design, so only an opaque pixel inside the native container and
+        # a semi-transparent pixel anywhere are findings
+        inside = opaque_in_container(key, img, layer_id)
+        if inside:
+            sample = ', '.join(f'({x},{y})' for x, y in inside[:6])
+            out.append((None, label, f'STYLE frame has {len(inside)} opaque pixel(s) inside the native '
+                                     f'container, e.g. {sample}'))
+        semi = [(x, y) for y in range(img.height) for x in range(img.width) if 0 < img.getpixel((x, y))[3] < 255]
+        if semi:
+            sample = ', '.join(f'({x},{y})' for x, y in semi[:6])
+            out.append((None, label, f'STYLE frame has {len(semi)} semi-transparent pixel(s), e.g. {sample}'))
+    elif kind == 'frame':
         holes = stray_frame_holes(key, img, layer_id)
         if holes:
             sample = ', '.join(f'({x},{y})' for x, y in holes[:6])

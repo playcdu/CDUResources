@@ -7,13 +7,12 @@ the painter workflow is identical:
 
     base_background(key, seed)        light grey bevelled panel in a black
                                       outline, inset slot trays round every
-                                      clearance, the family accent line under
-                                      the title band, one family pictogram
+                                      clearance (its top wall tinted in the
+                                      family colour), one family pictogram
                                       tile in the largest static region
-    base_frame(key, layer_id, seed)   a bevelled side-panel extension round
-                                      the container (40 px each side, 8 px
-                                      strips) carrying only the family
-                                      pictogram
+    base_frame(key, layer_id, seed)   lean docked tabs: a small pictogram tab
+                                      and a grip bar on each side of the
+                                      container, everything else alpha 0
     paint_button(key, button_id, seed)  normal state in the right grammar
                                       (primary gold-bevel stone / secondary
                                       stone / danger red stone / info recessed
@@ -55,7 +54,16 @@ from faithful.palette import (ENDER_PANEL_RAMP, GREY, INK, PANEL_RAMP,  # noqa: 
 
 PIN = rgba('ink_0')          # pin colour passed explicitly: geometry's own default is not ours
 DISPENSER_LABEL = 'OFFERED MONEY'
-ACCENT_Y = 14                # the family accent line: the free row under the title glyph rows (5-13)
+# The title zone: rows 5-14 (title glyph rows 5-13 plus the live title's
+# descender row 14) across x 4-171 hold nothing but panel colour on every
+# background. ACCENT_Y is kept for painter scripts written against the first
+# toolkit: it is the LAST reserved row, so ``ACCENT_Y + 1`` is still the first
+# row free for art under the title. (The family accent itself now lives on
+# the tray walls: see ``draw_accent_line``.)
+TITLE_ZONE = geo.Rect(4, 5, 168, 10)
+WALL_SIDES = 'tl'             # the accent tints the tray's whole top/left inner shadow
+TITLE_ZONE_BOTTOM = TITLE_ZONE.bottom - 1      # 14
+ACCENT_Y = TITLE_ZONE_BOTTOM
 LABEL_LIGHT = 'grey_7'       # white button lettering ...
 LABEL_SHADOW = 'ink_1'       # ... with a dark (+1, +1) shadow
 LABEL_DARK = 'ink_1'         # dark text on info plates and the panel
@@ -141,8 +149,9 @@ def text_rows(key):
 
 
 def accent_colour(key):
-    """The family accent line colour (accent ramp step 1), or None when the
-    skin is plain (templates, crafting)."""
+    """The family's named accent colour (accent ramp step 1), or None when
+    the skin is plain (templates, crafting). Used in legends and as the key
+    colour painters pass around; the pixels themselves use ``wall_colour``."""
     acc = accent_for(key)
     if not acc.get('line'):
         return None
@@ -150,22 +159,49 @@ def accent_colour(key):
     return ramp[min(1, len(ramp) - 1)] if len(ramp) > 2 else ramp[0]
 
 
-def draw_accent_line(img, key, y=ACCENT_Y, colour=None):
-    """The 1 px family accent line under the title band, over the text-safe
-    columns, drawn only on plain panel pixels (it breaks round an inset tray
-    or a button that reaches that row). Returns the pixels drawn."""
-    s = geo.skin(key)
-    colour = colour or accent_colour(key)
+WALL_LUMINANCE = 105          # target weight of a tinted wall: as dark as a shadow, still clearly coloured
+
+
+def wall_colour(colour):
+    """The tray-wall tint for an accent colour: the step of its own ramp
+    whose luminance is nearest ``WALL_LUMINANCE`` (gold_0, red_1, green_1,
+    blue_1, purple_0), so every family's wall has the weight of the inner
+    shadow it replaces yet reads as colour at 1x. A grey or ink colour gives
+    None (no tint: templates and crafting stay neutral)."""
     if colour is None:
+        return None
+    from faithful.palette import RAMPS, luminance, nearest, ramp_of
+    ramp, _ = ramp_of(colour) or ramp_of(nearest(colour))
+    if ramp in ('grey', 'ink'):
+        return None
+    return min(RAMPS[ramp], key=lambda c: abs(luminance(c) - WALL_LUMINANCE))
+
+
+def tray_holes(key):
+    """Merged content and player clearances: the holes the inset trays frame."""
+    s = geo.skin(key)
+    return P.merge_holes(s.content_slots) + P.merge_holes(s.player_slots)
+
+
+def draw_accent_line(img, key, y=None, colour=None, dash=None):
+    """The family accent: the top wall (inner-shadow run) of every inset tray
+    round the native and player wells (the whole top/left inner shadow,
+    ``WALL_SIDES``), tinted in the shadow-weight step of the family colour
+    (``wall_colour``): gold_0 economy, red_1 auction, green_1 chest shop,
+    blue_1 trade, purple_0 ender chest ... Every screen has player trays, so the identity shows on every
+    screen at 1x, and nothing is drawn in the title zone (rows 5-14), where
+    the trays draw no wall. ``colour`` overrides the family colour (any step
+    of a ramp; ``wall_colour`` picks the step; a grey gives no tint). ``dash``
+    (default: the palette's ``dash`` entry, 2 on invsee_offline) tints only
+    alternate 2 px runs: a broken wall reads as offline / inactive. ``y`` is
+    accepted for compatibility with the first toolkit's row-14 line and
+    ignored. Call after the wells are drawn. Returns the pixels tinted."""
+    tint = wall_colour(colour if colour is not None else accent_colour(key))
+    if tint is None:
         return set()
-    panel = tuple(sheet_for(key)[2])
-    drawn = set()
-    x0, x1 = s.text_safe.x, s.text_safe.right - 1
-    for x in range(x0, x1 + 1):
-        if P.get(img, x, y)[3] and tuple(P.get(img, x, y)[:3]) == panel:
-            P.put(img, x, y, colour)
-            drawn.add((x, y))
-    return drawn
+    if dash is None:
+        dash = accent_for(key).get('dash', 0)
+    return set(P.tint_tray_walls(img, tray_holes(key), tint, dash=dash, sides=WALL_SIDES))
 
 
 def static_regions(key):
@@ -210,7 +246,8 @@ def base_background(key, seed=0, wells='inset', title=True, inventory=True, ramp
     """Canonical background for ``key``: the light grey panel (``bevel_panel``:
     black outline with notched corners, white top/left bevel, dark grey
     bottom/right bevel), the vanilla-style inset tray round every native
-    clearance, the family accent line under the title band (``accent``),
+    clearance with its top wall tinted in the family colour (``accent``;
+    ``draw_accent_line``), nothing but panel in the title zone (rows 5-14),
     and one 16x16 recessed tile with the family pictogram centred in the
     largest static decorative region (``pictograms``; other static cells
     stay plain panel). On the dispenser (trade_money) ``label='auto'``
@@ -229,9 +266,8 @@ def base_background(key, seed=0, wells='inset', title=True, inventory=True, ramp
         pictogram_tile(img, geo.Rect(r.x + (r.w - 16) // 2, r.y + (r.h - 16) // 2, 16, 16), acc['pictogram'], ramp)
     if s.is_dispenser and label == 'auto':
         L.draw_text_centered(img, 88, s.title_anchor[1], DISPENSER_LABEL, LABEL_DARK)
-    holes = P.merge_holes(s.content_slots) + P.merge_holes(s.player_slots)
     if wells:
-        P.inset_well(img, holes, protect=text_rows(key))
+        P.inset_well(img, tray_holes(key), protect=text_rows(key), clear=[TITLE_ZONE])
     if accent:
         draw_accent_line(img, key)
     finish_background(img, key)
@@ -287,36 +323,78 @@ def heading_plaque(img, cx, y, text=None, width=None, name=None):
 heading_ribbon = heading_plaque       # cozy-compatible name
 
 
+TAB_W = 16                   # docked tab: visible width (outline, bevel, 14 px face)
+TAB_H = 20                   # docked tab height: room for a 14 px tall pictogram
+TAB_DROP = 4                 # tab top sits this far below the container top
+GRIP_W = 40                  # grip bar: container edge to frame edge (x 0-39 / 216-255)
+GRIP_H = 6
+
+
+def frame_parts(key, layer_id=None):
+    """The only opaque parts of a Faithful frame, as visible Rects in layer
+    coordinates: {'tabs': [left, right] or [] (plain skins), 'grips': [left,
+    right]}. Everything else, including the 8 px top and bottom strips, is
+    alpha 0. The right grip ends at x = w - 1 on row h // 2 (the advance pin)."""
+    a = geo.skin(key).layer(layer_id)
+    c = a.container
+    gy = a.h // 2 - GRIP_H // 2
+    grips = [geo.Rect(c.x - GRIP_W, gy, GRIP_W, GRIP_H), geo.Rect(c.right, gy, a.w - c.right, GRIP_H)]
+    tabs = []
+    if accent_for(key).get('pictogram'):
+        ty = c.y + TAB_DROP
+        tabs = [geo.Rect(c.x - TAB_W, ty, TAB_W, TAB_H), geo.Rect(c.right, ty, TAB_W, TAB_H)]
+    return {'tabs': tabs, 'grips': grips}
+
+
+def _docked(img, rect, side, ramp):
+    """A raised vanilla-bevel piece docked to the container: drawn as a
+    radius-1 outlined, bevelled box that runs 2 px into the container on
+    its ``side`` ('l' = docked on its left, 'r' = on its right), so after
+    ``finish_frame`` clears the container the docked edge is open and the
+    piece reads as attached. Returns the face box (visible part)."""
+    x, y, w, h = rect.tuple()
+    box = (x - 2, y, w + 2, h) if side == 'l' else (x, y, w + 2, h)
+    inside = P.ink_outline(img, box, ramp[0], radius=1, fill_colour=ramp[2])
+    P._shape_bevel(img, box, inside, ramp[3], ramp[1])
+    return (x, y + 2, w - 2, h - 4) if side == 'l' else (x + 2, y + 2, w - 2, h - 4)
+
+
 def base_frame(key, layer_id=None, seed=0, heading=False, ramp=None):
-    """Canonical outer frame: a side-panel extension in the vanilla bevel
-    language. The whole 256-wide layer is one light grey panel
-    (``bevel_panel``: black outline, radius-2 notched corners, white
-    top/left and dark grey bottom/right bevel) round the transparent
-    container; a 1 px dark grey drop shadow runs down the container's right
-    side and along its bottom; each 40 px side panel carries one recessed
-    tile with the family pictogram near its top (plain skins: no tile). The
-    8 px top and bottom strips carry only the bevel. ``heading`` is accepted
-    for API parity and ignored unless it is a string (then a TINY plaque).
-    The native container is cleared and the advance pin stamped."""
+    """Canonical outer frame: LEAN DOCKED TABS. Vanilla screens have no outer
+    frame, so the Faithful frame adds almost nothing round the container:
+
+    * tabs: on each side a 16 x 20 px tab in the panel's bevel (black
+      outline, white top/outer bevel, dark grey bottom bevel, panel face),
+      docked to the container edge 4 px below its top and open on the
+      docked side, carrying the family pictogram on its face like a
+      creative-inventory tab (plain skins, i.e. templates: no tab);
+    * grips: a 40 x 6 px bevelled bar at mid-height on BOTH sides, from the
+      container edge to the frame edge, with three ribs near its outer end,
+      mirrored left and right; the right one ends on x = 255 at row h // 2,
+      which is the contract's advance pin (bbox right == w);
+    * everything else, including the 8 px top and bottom strips and the
+      native container, is alpha 0.
+
+    ``seed`` and ``heading`` are accepted for API parity and ignored (frames
+    carry no words). The container is cleared and the pin stamped."""
     s = geo.skin(key)
     a = s.layer(layer_id)
     ramp = ramp or sheet_for(key)
     img = new(a.w, a.h)
-    P.bevel_panel(img, (0, 0, a.w, a.h), ramp, radius=2)
-    c = a.container
-    P.vline(img, c.right, c.y + 2, c.bottom, ramp[1])
-    P.hline(img, c.x + 2, c.right, c.bottom, ramp[1])
-    # side panels: a recessed groove (dark then white) sets each 40 px panel
-    # apart from the rim, like a separate panel docked to the container
-    for gx in (c.x - 6, c.right + 4):
-        P.vline(img, gx, 4, a.h - 5, ramp[1])
-        P.vline(img, gx + 1, 4, a.h - 5, ramp[3])
+    parts = frame_parts(key, layer_id)
     name = accent_for(key).get('pictogram')
-    if name:
-        for panel in (geo.Rect(0, 0, c.x - 6, a.h), geo.Rect(c.right + 6, 0, a.w - c.right - 6, a.h)):
-            side_tile(img, panel, name, y=c.y + 4, ramp=ramp)
-    if isinstance(heading, str) and c.y >= 8:
-        heading_plaque(img, a.w // 2, 0, heading)
+    for tab, side in zip(parts['tabs'], ('r', 'l')):
+        fx, fy, fw, fh = _docked(img, tab, side, ramp)
+        pw, ph = icons.pictogram_size(name)
+        icons.draw_pictogram(img, name, fx + (fw - pw) // 2, fy + (fh - ph) // 2)
+    for grip, side in zip(parts['grips'], ('r', 'l')):
+        fx, fy, fw, fh = _docked(img, grip, side, ramp)
+        # three ribs near the outer end: a dark groove with a white lip to its right
+        outer = grip.x + 3 if side == 'r' else grip.right - 4
+        for k in range(3):
+            gx = outer + (k * 3 if side == 'r' else -k * 3)
+            P.vline(img, gx, fy, fy + fh - 1, ramp[1])
+            P.vline(img, gx + 1, fy, fy + fh - 1, ramp[3])
     finish_frame(img, key, a.id)
     return img
 

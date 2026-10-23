@@ -12,7 +12,7 @@ textures/ (NEVER into pack-source):
   wells, the plain utility look),
 
 validates every image with the builder's own validators plus the palette,
-light-band and frame-hole checks, and renders
+light-band and lean-frame checks, and renders
 evidence/faithful/example/preview.png (both composites at 3x, the six states
 of economy_hub/auction at 4x, and the template frame alone). It exercises the
 helpers a painter needs, so copy its structure for a real
@@ -59,12 +59,12 @@ SEED = 7
 def paint_hub():
     """economy_hub: base background, every button through the shared grammar,
     the base frame. Restraint is the point: the only family identity is the
-    gold accent line under the title band and the coin tile on each docked
-    side panel. (An earlier draft added a coin cell to the BALANCE plate; it
+    gold tint on the inset trays' top/left walls and the coin on each docked
+    tab of the lean frame. (An earlier draft added a coin cell to the BALANCE plate; it
     forced the label into TINY and was dropped: never shrink a label for
     decoration.)"""
     s = geo.skin(HUB)
-    bg = C.base_background(HUB, seed=SEED)        # panel, inset trays, gold accent line
+    bg = C.base_background(HUB, seed=SEED)        # panel, inset trays with gold-tinted walls
     C.finish_background(bg, HUB)                  # clear masks + stamp pin, always last
     buttons = {}
     for b in s.buttons:
@@ -72,7 +72,7 @@ def paint_hub():
         # hand touches go here, outside the label box; then re-finish
         C.finish_button(normal, HUB, b.id)
         buttons[b.id] = C.button_states(normal, HUB, b.id)
-    frame = C.base_frame(HUB, seed=SEED)          # docked side panels with the coin tile
+    frame = C.base_frame(HUB, seed=SEED)          # lean frame: coin tabs and grips
     return bg, buttons, frame
 
 
@@ -91,14 +91,13 @@ def _raw(img):
     return out.getvalue()
 
 
-def _holes(key, img):
-    c = geo.skin(key).layer().container
+def _stray(key, img):
+    """Opaque frame pixels outside the lean tabs and grips (must be none)."""
+    parts = C.frame_parts(key)
+    boxes = parts['tabs'] + parts['grips']
     a = img.getchannel('A').load()
-    corners = {(0, 0), (1, 0), (0, 1)}
-    corners = {(x if i == 0 else img.width - 1 - x, y if j == 0 else img.height - 1 - y)
-               for (x, y) in corners for i in (0, 1) for j in (0, 1)}
     return [(x, y) for y in range(img.height) for x in range(img.width)
-            if a[x, y] < 255 and not c.contains(x, y) and (x, y) not in corners]
+            if a[x, y] and not any(r.contains(x, y) for r in boxes)]
 
 
 def _pixels(img):
@@ -122,7 +121,7 @@ def validate(hub, tpl):
         _bands_light(key, bg)
         layer = config['screens'][key]['artLayers'][0]
         decorative_assets.validate(_raw(frame), layer, g)
-        assert not _holes(key, frame), f'{key}: frame has holes'
+        assert not _stray(key, frame), f'{key}: frame paints outside its tabs and grips'
         for bid, states in buttons.items():
             bdef = next(b for b in config['screens'][key]['buttons'] if b['id'] == bid)
             for st, im in states.items():
@@ -132,7 +131,7 @@ def validate(hub, tpl):
         for name, im in (('background', bg), ('frame', frame)):
             assert PAL.off_palette(im) == 0, f'{key} {name}: off-palette pixels'
     print('PASS example: economy_hub background, 8 buttons x 6 states, frame; template_chest_3 background '
-          'and frame (builder validators, palette, light text rows, no frame holes)')
+          'and frame (builder validators, palette, light text rows, lean frame parts only)')
 
 
 # ---------------------------------------------------------------------------

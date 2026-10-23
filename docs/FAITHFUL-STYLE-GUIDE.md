@@ -56,9 +56,10 @@ If you are unsure whether something is a copy, draw it differently.
 
 **The game's own inventory language, clean and familiar.** A player opening
 any Quasar screen should feel this is vanilla Minecraft with painted buttons:
-the same calm grey panel, the same inset slots, the same stone buttons. Restraint
-is the point. Family identity is a whisper: one 1 px coloured line under the
-title, one small flat pictogram in a static cell or on the docked side panels.
+the same calm grey panel, the same inset slots, the same stone buttons.
+Restraint is the point. Family identity is a whisper: the inset trays' own
+inner-shadow walls take the family colour, and one small flat pictogram sits
+in a static cell and on the frame's two docked tabs.
 
 Rules of thumb:
 
@@ -98,18 +99,18 @@ Jobs:
 | `ink_0` | every outline (panels, buttons, sprites); the pin colour |
 | `ink_1` | dark text on light plates and the panel (vanilla-style #404040); the (+1, +1) shadow under white lettering |
 | `grey_0` | slot / tile inner shadow (top/left); the flat disabled face |
-| `grey_1` | panel and button bottom/right bevel; info plate top/left rim; frame grooves and drop shadow |
+| `grey_1` | panel and button bottom/right bevel (also on the frame's tabs and grips); info plate top/left rim; grip ribs |
 | `grey_2`, `grey_4` | dark and light stone flecks on button faces |
 | `grey_3` | the stone button face |
 | `grey_4` | slot-grey mixed corners of insets, tile fill on frames |
 | `grey_5` | button top/left bevel; info plate face; disabled lettering |
 | `grey_6` | **the panel**: the title and inventory text sit on it |
 | `grey_7` | panel top/left bevel, inset bottom/right highlight, button lettering, pulse highlight |
-| `green_*` | selected face / bevel, valid stripe, family accent (chest shop, ticket) |
-| `red_*` | danger face and bevel, close button, invalid stripe, auction / trashcan accent |
-| `gold_*` | primary bevel, coins, the star, economy / guild bank accent |
-| `blue_*` | lens, eye, arrows, shield, banner; trade / admin / prefixes / invsee accent |
-| `purple_*` | the ender chest panel ramp and its accent only |
+| `green_*` | selected face / bevel, valid stripe; `green_1` tray walls (chest shop, ticket valid) |
+| `red_*` | danger face and bevel, close button, invalid stripe; `red_1` tray walls (auction, ticket invalid, trashcan) |
+| `gold_*` | primary bevel, coins, the star; `gold_0` tray walls (economy, guild bank) |
+| `blue_*` | lens, eye, arrows, shield, banner; `blue_1` tray walls (trade, admin shop, prefixes, invsee) |
+| `purple_*` | the ender chest panel ramp; `purple_0` tray walls there |
 
 Semantic aliases: `OUTLINE = ink_0`, `TEXT_DARK = ink_1`, `TEXT_LIGHT =
 grey_7`, `SHADOW = ink_1`, `TEXT_DISABLED = grey_5`, `GLOW = grey_7`,
@@ -179,7 +180,11 @@ edge is framed (`primitives.well_frame` / `inset_well`):
 | bottom-right outer corner | `grey_7` (continues the highlight) |
 
 Pass the live text rows as `protect` (`compose.text_rows(key)`): inside them
-the dark run is not drawn, so the glyph rows stay light. Build hole lists with
+the dark run is not drawn, so the glyph rows stay light; pass
+`clear=[compose.TITLE_ZONE]` and nothing at all is drawn in rows 5-14 (on
+crafting the 3x3 grid's top wall would otherwise land on row 14). On every
+family skin the top and left walls are then tinted in the family colour
+(section 5); the bottom/right highlight and mixed corners never change. Build hole lists with
 `P.merge_holes(skin.content_slots)` and `P.merge_holes(skin.player_slots)`.
 Fake items, shading or patterns inside a well are forbidden.
 
@@ -298,43 +303,65 @@ grey silhouettes when disabled.
 ## 5. Per-family identity
 
 The base (panel, wells, stone buttons) is identical everywhere. Each family
-adds exactly two things, both decorative and never in wells, text rows or
-lettering areas (`palette.FAMILY_ACCENT`, sub-skins in `SKIN_ACCENT`, lookup
-with `accent_for(key)`):
+adds exactly two things, both decorative and never in wells, the title zone,
+text rows or lettering areas (`palette.FAMILY_ACCENT`, sub-skins in
+`SKIN_ACCENT`, lookup with `accent_for(key)`):
 
-1. **The accent line**: a 1 px line in the accent ramp's middle step on row
-   14 (the free row under the title glyph rows 5-13), over the text-safe
-   columns 8-167, drawn only on plain panel pixels so it breaks round a
-   tray or a button that reaches that row (`compose.draw_accent_line`,
-   `compose.ACCENT_Y`). Plain skins have none.
+1. **The tray wall tint.** The top and left walls of every inset tray (the
+   1 px inner-shadow run `well_frame` draws in `grey_0` round the native and
+   player wells, plus each tray's top-left outer corner) are recoloured in
+   the family colour (`compose.draw_accent_line`, `primitives.tint_tray_walls`,
+   `compose.WALL_SIDES = 'tl'`). The tint is the step of the family ramp whose
+   luminance is nearest 105 (`compose.wall_colour`): `gold_0`, `red_1`,
+   `green_1`, `blue_1`, `purple_0`. It keeps the weight of the shadow it
+   replaces, so the tray still reads as recessed, yet it reads as colour at
+   1x. Every screen has player trays, so every family skin shows its colour,
+   including the screens without static cells (admin shop, prefixes, guild
+   bank, invsee, trashcan) and the all-button screens (economy hub, shop
+   configuration), whose identity sits on the player trays. A `dash` entry
+   breaks the wall into alternate 2 px runs of colour and grey: a broken
+   wall reads as offline / inactive. Nothing of the accent ever lands in the
+   title zone (rows 5-14), where trays draw no wall.
 2. **The pictogram**: one 16x16 recessed tile with the family pictogram
    centred in the largest static decorative region of the background
-   (`compose.static_regions`, `pictogram_tile`), and one 24x24 tile on each
-   docked side panel of the frame (section 7).
+   (`compose.static_regions`, `pictogram_tile`; painters may move it to a
+   better free cell, clear of the title zone and the tray walls), and the
+   same pictogram on each of the frame's two docked tabs (section 7).
 
-| Family / sub-skin | Accent line | Pictogram |
+The first toolkit drew a 1 px accent line on row 14. It was removed: row 14
+is the live title's descender row (g j p q y hit it), it sat directly on the
+content tray's top wall on every chest layout (reading as a coloured lip
+3 px short of the tray), and its grey variants were invisible.
+`compose.ACCENT_Y` (14) survives only as the last reserved row: `ACCENT_Y + 1`
+is the first row free for art under the title.
+
+| Family / sub-skin | Tray walls | Pictogram |
 |---|---|---|
-| economy | gold_1 | `coin`: gold coin disc with a stamped centre mark |
-| auction | red_1 | `gavel`: gold-wood gavel standing on a grey sound block |
-| chest_shop | green_1 | `chest`: a chest from the front, lid edge and latch |
-| trade | blue_1 | `arrows`: two opposed blue arrows |
-| ticket | green_1 | `ticket`: a stub with side notches and a perforated end |
-| ticket_valid | green_1 | `ticket_valid`: the stub with a green stripe |
-| ticket_invalid | red_1 | `ticket_invalid`: the stub with a red stripe |
-| admin_shop | blue_1 | `shield`: a blue shield with a white chevron |
-| guild_bank | gold_1 | `banner`: a blue banner on a rod with a gold coin device |
-| prefixes | blue_1 | `nametag`: a name-tag shape with a hole and a string |
-| invsee | blue_1 | `eye`: an open eye, blue iris |
-| invsee_offline | grey_1 | `eye_closed`: a closed eye with lashes |
-| trashcan | red_1 | `bin`: a grey waste bin with a lid |
-| ender_chest | purple_1 line on the **purple-tinted panel** (`ENDER_PANEL_RAMP`: purple_1 panel, purple_0 dark bevel) | `ender`: a purple orb with a green core |
-| crafting | none | none: the plain vanilla crafting look |
-| template_chest_1..6 | none | none: plain |
+| economy | `gold_0` | `coin`: gold coin disc with a stamped centre mark |
+| auction | `red_1` | `gavel`: gold-wood gavel standing on a grey sound block |
+| chest_shop | `green_1` (shop configuration: `red_1` while a listing is disabled) | `chest`: a chest from the front, lid edge and latch |
+| trade | `blue_1` | `arrows`: two opposed blue arrows |
+| ticket | `green_1` | `ticket`: a stub with side notches and a perforated end |
+| ticket_valid | `green_1` | `ticket_valid`: the stub with a green stripe |
+| ticket_invalid | `red_1` | `ticket_invalid`: the stub with a red stripe |
+| admin_shop | `blue_1` | `shield`: a blue shield with a white chevron |
+| guild_bank | `gold_0` | `banner`: a blue banner on a rod with a gold coin device |
+| prefixes | `blue_1` | `nametag`: a name-tag shape with a hole and a string |
+| invsee / invsee_online | `blue_1`, solid | `eye`: an open eye, blue iris |
+| invsee_offline | `blue_1` **broken into 2 px dashes** (`dash: 2`) | `eye_closed`: a closed eye with lashes |
+| trashcan | `red_1` | `bin`: a grey waste bin with a lid |
+| ender_chest | `purple_0` on the **purple-tinted panel** (`ENDER_PANEL_RAMP`: purple_1 panel, purple_0 dark bevel) | `ender`: a purple orb with a green core |
+| crafting | none (neutral `grey_0`) | none: the plain vanilla crafting look |
+| template_chest_1..6 | none (neutral `grey_0`) | none: plain |
+
+invsee_online and invsee_offline differ without a word: solid against broken
+walls, open against closed eye. `selftest.py` fails if the two backgrounds
+are identical.
 
 The ender chest panel is a *tint*, not a dark sheet: the live title and
 "Inventory" text must sit on light art, so `purple_1` (luminance 187) is the
 darkest panel that still passes the light-band rule; the dark purple lives in
-the bevel, the accent and the pictogram.
+the bevel, the tray walls and the pictogram.
 
 ## 6. Background anatomy
 
@@ -347,11 +374,10 @@ Backgrounds are 176 wide (chest heights 132-222; dispenser and crafting
 | outline | outer 1 px | `ink_0`, radius-2 notched corners |
 | bevel | 1 px inside the outline | `grey_7` on the top and left, `grey_1` on the bottom and right, plus the inner corner pixel of each (white top-left, dark bottom-right) |
 | panel | everything else | flat `grey_6` (`purple_1` on the ender chest) |
-| title rows | x 8-167, rows 5-13 | plain panel: the live title (vanilla dark grey #404040) lands here |
-| accent line | row 14, x 8-167 | the family accent (section 5), plain panel pixels only |
-| well trays | round content clearances | the inset of section 4.1 |
+| title zone | x 4-171, rows 5-14 | **panel colour only**: the live title (vanilla dark grey #404040) lands on rows 5-13 and its descenders on row 14. No tray wall, accent, tile or motif |
+| well trays | round content clearances | the inset of section 4.1, top/left walls in the family tint (section 5) |
 | inventory rows | label_y-1 .. label_y+7 | plain panel: the live "Inventory" label; the player tray's dark top run sits below it |
-| player trays | 36 player clearances | main 3x9 and hotbar 1x9 framed separately (the 4 px seam between them is panel) |
+| player trays | 36 player clearances | main 3x9 and hotbar 1x9 framed separately (the 4 px seam between them is panel), walls tinted like the content trays |
 | static cells | `staticProtectedSlots` | plain panel, plus one pictogram tile in the largest region |
 | under buttons | button rects | plain panel |
 | pin | x 175, rows 0-2 | alpha 255 (the outline / bevel pixels; `compose.finish_background` stamps `ink_0` if needed) |
@@ -361,8 +387,11 @@ title anchor (x=8, y=6; crafting x=29) and the live "Inventory" label must
 sit on light art: on the glyph rows the mean luminance must be at least 180
 with at most 8 % dark pixels (luminance < 120). The Faithful panel (198)
 satisfies this by construction; never put a dark motif, a tray edge or an
-accent line on those rows. `validate.py --style --theme faithful` and
-`selftest.py` check exactly this.
+accent on those rows. `validate.py --style --theme faithful` checks the
+luminance rule; `selftest.py` is stricter: every pixel of the title zone
+(rows 5-14, x 4-171) must be exactly the panel colour (on the dispenser the
+static OFFERED MONEY glyphs in `ink_1` are the only exception), on the
+generated bases and on every Faithful-painted pack-source background.
 
 trade_money is the dispenser exception: its centred title contains only the
 art, so the background carries the static label OFFERED MONEY in PLAIN
@@ -378,30 +407,43 @@ arrow show unchanged (the plain vanilla crafting look).
 Vanilla has no outer frame, but the contract requires 54 frame textures
 (256 wide, at artLayers x=-40, y=-8, height = container + 16) that are opaque
 at the pin (w-1, h//2), end at x = w and keep the native container
-transparent. The Faithful treatment is a **side-panel extension in the vanilla
-bevel language**, like panels docked to the sides of a container screen.
-`compose.base_frame(key, layer_id, seed)` paints it;
-`evidence/faithful/reference/frame-anatomy.png` labels it.
+transparent. A full 40 px side-panel extension would max out that allowance
+for no purpose, so the Faithful treatment is **lean docked tabs**: almost
+nothing round the container, and everything else alpha 0.
+`compose.base_frame(key, layer_id, seed)` paints it, `compose.frame_parts`
+returns its rectangles, `evidence/faithful/reference/frame-anatomy.png`
+labels it.
 
-| Zone | Size | Content |
+| Part | Rectangle (layer coordinates) | Content |
 |---|---|---|
-| panel | the whole 256 x h layer | one `bevel_panel`: `ink_0` outline with radius-2 notched corners, `grey_7` top/left bevel, `grey_1` bottom/right bevel, flat `grey_6` (`ENDER_PANEL_RAMP` on the ender chest) |
+| left tab | x 24-39, rows c.y+4 .. c.y+23 (16 x 20) | a raised piece in the panel's bevel (radius-1 `ink_0` outline, `grey_7` top and outer bevel, `grey_1` bottom bevel, `grey_6` face), docked to the container's left edge and open on that side, with the family pictogram centred on its face like a creative-inventory tab. Plain skins (templates; crafting has no frame) get no tab |
+| right tab | x 216-231, same rows | its mirror image, docked to the container's right edge |
+| left grip | x 0-39, rows h//2-3 .. h//2+2 (40 x 6) | a bevelled bar in the same register from the frame edge to the container, with three ribs (`grey_1` groove, `grey_7` lip) at its outer end: a deliberate handle |
+| right grip | x 216-255, same rows | its mirror image; its black outline column x=255 on row h//2 is the contract's advance pin, so the opaque bbox ends at x = w |
 | container | x 40-215, y 8 .. h-9 | fully alpha 0 (`geometry.clear_frame_container`) |
-| drop shadow | 1 px right of and below the container | `grey_1` |
-| grooves | columns 34-35 and 220-221, rows 4 .. h-5 | a recessed groove (`grey_1` then `grey_7`) that sets each side panel apart from the rim round the container: the panels read as docked |
-| side panels | x 0-33 and 222-255 | one 24x24 recessed tile (`inset_box`, panel fill) centred, its top 4 px below the container top, holding the family pictogram; nothing else. Plain skins (templates) carry no tile |
-| top / bottom strips | 8 px each | the bevel only |
-| pin | (255, h//2) | alpha 255 on the outline (`compose.finish_frame`) |
+| everything else | the 8 px top and bottom strips, the rest of the side areas | alpha 0 |
 
-Outside the container a frame is opaque everywhere except the 3 notched
-pixels in each corner. A transparent pixel anywhere else is a hole through
-which the game world shows; `validate.py --style` reports it.
+On the ender chest the tabs and grips use `ENDER_PANEL_RAMP`. The left and
+right halves are exact mirror images in alpha. Pieces are drawn 2 px into
+the container and the container is cleared afterwards, which is what opens
+their docked edge.
+
+The tabs are 16 px rather than 12 px wide: a 12 px pictogram needs a 14 px
+face, plus the outer outline and bevel. The pictogram goes on the tab face
+(as on the game's creative tabs) instead of a recessed tile, which would not
+fit at this width.
+
+Transparency outside the container is the design here, so the Faithful
+palette sets `LEAN_FRAMES = True`: `validate.py --style --theme faithful`
+reports only opaque pixels inside the container and semi-transparent
+pixels (cozy and Soulrend keep the "no stray holes" rule). `selftest.py`
+checks that a frame is opaque only inside `frame_parts`, nothing inside the
+container, the right grip on the pin, and the halves mirrored.
 
 **Frames carry no words.** The only painted title in the pack is OFFERED
 MONEY, so the artLayers `heading`, `leftHeading` and `rightLines` are design
-notes only. `side_tile(text=...)` and `heading_plaque(text)` can letter TINY
-`ink_1` if the art director ever asks; nobody should use them otherwise.
-Frames have no click targets. Crafting and trade_money have no frame.
+notes only (`base_frame` ignores `heading`). Frames have no click targets.
+Crafting and trade_money have no frame.
 
 ## 8. The "no lies" rule
 
@@ -475,14 +517,14 @@ when disabled.
 `evidence/faithful/example/` (never pack-source): the whole economy_hub
 screen (background, all 8 buttons in six states, frame) and a
 template_chest_3 background and frame, validates them with the builder's own
-validators plus the palette, light-row and frame-hole checks, and writes
+validators plus the palette, light-row and lean-frame checks, and writes
 `evidence/faithful/example/preview.png`. Match it: a calm light grey panel
 with crisp black notched outline and 1 px bevels, inset trays that frame the
 vanilla slots, stone buttons whose white shadowed labels read at a glance, a
-gold-edged primary, a muted red danger, recessed read-only plates, one thin
-gold line under the title, and docked side panels carrying one small coin
-tile each. If your screen looks busier, darker, more colourful or more
-textured than the example, it is not done: take something away. Open your
+gold-edged primary, a muted red danger, recessed read-only plates, the
+gold tint on the trays' top/left walls, and a lean frame: a coin tab and a
+ribbed grip on each side, nothing else. If your screen looks busier, darker,
+more colourful or more textured than the example, it is not done: take something away. Open your
 preview PNG next to it before you hand in.
 
 ## 11. Validator rules (plain language)
@@ -519,7 +561,8 @@ Style lint (`--style --theme faithful`, non-fatal unless `--strict-style`):
 Faithful palette only (pure black and white allowed), no semi-transparent
 pixels (alpha strictly between 0 and 255) in any texture, light title /
 inventory glyph rows (mean luminance >= 180, <= 8 % dark pixels), and, for
-every frame, no pixel with alpha < 255 outside the native container rectangle
-and the rounded rim corners. Until the Faithful art is painted, pack-source
+every frame (the Faithful palette sets `LEAN_FRAMES`), no opaque pixel
+inside the native container and no semi-transparent pixel; transparency
+elsewhere is the lean-tab design. Until the Faithful art is painted, pack-source
 still holds the Soulrend textures, so off-palette warnings are expected; the
 contract checks must pass regardless.

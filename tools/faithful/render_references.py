@@ -9,7 +9,7 @@ buttons.png             every button grammar in all six states, at 4x
 icons.png               icons and family pictograms at 8x
 primitives.png          panel, stone buttons, plate, inset tile, arrows, accent line at 4x
 background-anatomy.png  base_background(template_chest_3) with labelled zones
-frame-anatomy.png       base_frame(economy_hub) with labelled zones
+frame-anatomy.png       base_frame(economy_hub): lean docked tabs and grips, labelled
 typeface-specimen.png   (in evidence/faithful/) via lettering.specimen()
 
 Nothing here writes to pack-source. Licence: MIT.
@@ -250,9 +250,11 @@ def background_anatomy():
     notes = [
         ((0, 0, s.width, 2), (240, 170, 60), 'outline (black, notched corners) + white top/left bevel'),
         (s.text_safe.tuple(), (170, 80, 200), 'text-safe [8,5,160,11]: live title on the panel'),
-        ((s.text_safe.x, C.ACCENT_Y, s.text_safe.w, 1), (230, 200, 60), f'family accent line, row {C.ACCENT_Y}'),
+        (C.TITLE_ZONE.tuple(), (230, 200, 60), 'title zone rows 5-14: panel colour only'),
         (inv.tuple(), (90, 170, 230), 'inventory band (live "Inventory")'),
         (s.content_bbox.tuple(), (255, 0, 255), 'native well grid (alpha 0) in an inset tray'),
+        ((s.content_bbox.x - 1, s.content_bbox.y - 1, s.content_bbox.w + 1, 1), (90, 200, 120),
+         'tray top/left wall: family tint (plain here)'),
         (s.player_bbox.tuple(), (255, 0, 255), '36 player wells (alpha 0)'),
         ((s.width - 2, 0, 2, s.height), (120, 220, 120), 'dark grey bottom/right bevel'),
         (s.advance_pin.tuple(), (255, 60, 60), 'advance pin [175,0,1,3] alpha 255'),
@@ -265,16 +267,19 @@ def frame_anatomy():
     s = geo.skin(key)
     a = s.layer()
     img = C.base_frame(key, seed=4)
-    c = a.container
+    parts = C.frame_parts(key)
+    lt, rt = parts['tabs']
+    lg, rg = parts['grips']
     notes = [
-        (a.top_strip.tuple(), (240, 170, 60), 'top strip 8 px: bevel only'),
-        (a.bottom_strip.tuple(), (240, 170, 60), 'bottom strip 8 px: bevel only'),
-        ((0, 0, c.x - 6, a.h), (120, 220, 120), 'left side panel: one pictogram tile'),
-        ((c.right + 6, 0, a.w - c.right - 6, a.h), (120, 220, 120), 'right side panel: the same tile'),
-        ((c.x - 6, 4, 2, a.h - 8), (90, 170, 230), 'grooves (grey_1 + white) dock the panels'),
-        (c.tuple(), (255, 0, 255), 'native container: fully alpha 0'),
-        ((c.right, c.y + 2, 1, c.h), (200, 200, 200), 'drop shadow right of / below the container'),
+        (a.top_strip.tuple(), (240, 170, 60), 'top strip 8 px: alpha 0'),
+        (a.bottom_strip.tuple(), (240, 170, 60), 'bottom strip 8 px: alpha 0'),
+        (lt.tuple(), (120, 220, 120), f'docked tab {lt.w}x{lt.h}: pictogram on its face'),
+        (rt.tuple(), (120, 220, 120), 'mirrored tab on the right'),
+        (lg.tuple(), (90, 170, 230), f'grip {lg.w}x{lg.h} at mid-height, ribbed outer end'),
+        (rg.tuple(), (90, 170, 230), 'mirrored grip, reaches x=255'),
+        (a.container.tuple(), (255, 0, 255), 'native container: fully alpha 0'),
         ((a.pin[0], a.pin[1], 1, 1), (255, 60, 60), f'advance pin {a.pin} alpha 255'),
+        (None, (128, 128, 128), 'everything else: alpha 0'),
     ]
     bg = Image.new('RGBA', img.size, (128, 128, 128, 255))
     bg.alpha_composite(img)

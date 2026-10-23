@@ -503,7 +503,7 @@ def _as_rects(holes):
     return out
 
 
-def well_frame(img, holes, dark=GREY[0], light=GREY[7], mid=GREY[4], protect=(), protect_colour=None):
+def well_frame(img, holes, dark=GREY[0], light=GREY[7], mid=GREY[4], protect=(), protect_colour=None, clear=()):
     """Frame the transparent ``holes`` (Rects, Slots or (x,y,w,h) tuples) as a
     vanilla-style inset slot: the 1 px ring just outside the hole is ``dark``
     where the hole lies below or right of it (the top and left walls: the
@@ -513,7 +513,8 @@ def well_frame(img, holes, dark=GREY[0], light=GREY[7], mid=GREY[4], protect=(),
     bottom-right outer corner the highlight. Adjacent clearances overlap (18
     px pitch, 20 px clearance), so a grid becomes one merged inset tray.
     Inside ``protect`` rects the dark run is drawn in ``protect_colour``
-    (default: left as it was), so live text rows stay light. Pixels inside
+    (default: left as it was), so live text rows stay light; inside ``clear``
+    rects nothing at all is drawn (the title zone, rows 5-14). Pixels inside
     any hole are never touched. Returns the ring pixel set."""
     rects = _as_rects(holes)
     W, H = img.size
@@ -523,6 +524,7 @@ def well_frame(img, holes, dark=GREY[0], light=GREY[7], mid=GREY[4], protect=(),
             for xx in range(max(0, x), min(W, x + w)):
                 hole[yy * W + xx] = 1
     prot = _as_rects(protect)
+    clr = _as_rects(clear)
 
     def is_hole(px, py):
         return 0 <= px < W and 0 <= py < H and hole[py * W + px]
@@ -552,6 +554,8 @@ def well_frame(img, holes, dark=GREY[0], light=GREY[7], mid=GREY[4], protect=(),
                     colour = light
                 else:
                     colour = mid
+                if any(qx <= px < qx + qw and qy <= py < qy + qh for (qx, qy, qw, qh) in clr):
+                    continue
                 if colour == dark and any(qx <= px < qx + qw and qy <= py < qy + qh for (qx, qy, qw, qh) in prot):
                     if protect_colour is None:
                         continue
@@ -561,9 +565,50 @@ def well_frame(img, holes, dark=GREY[0], light=GREY[7], mid=GREY[4], protect=(),
     return ring
 
 
-def inset_well(img, holes, protect=(), protect_colour=None):
+def inset_well(img, holes, protect=(), protect_colour=None, clear=()):
     """The Faithful item well (see ``well_frame``)."""
-    return well_frame(img, holes, protect=protect, protect_colour=protect_colour)
+    return well_frame(img, holes, protect=protect, protect_colour=protect_colour, clear=clear)
+
+
+def tray_top_walls(img, holes, dark=GREY[0], sides='t'):
+    """The shadow-wall pixels of the inset trays round ``holes`` that
+    currently hold ``dark`` (the inner shadow ``well_frame`` drew): with
+    ``sides`` 't' every pixel directly above a hole plus the top-left outer
+    corner of each tray; 'tl' adds every pixel directly left of a hole (the
+    whole L-shaped inner shadow). Returns them sorted by (y, x)."""
+    rects = _as_rects(holes)
+    W, H = img.size
+    hole = set()
+    for (x, y, w, h) in rects:
+        hole |= {(xx, yy) for yy in range(max(0, y), min(H, y + h)) for xx in range(max(0, x), min(W, x + w))}
+    dark = tuple(dark[:3])
+    out = set()
+    for (hx, hy) in hole:
+        for q in ((hx, hy - 1), (hx - 1, hy - 1)) + (((hx - 1, hy),) if 'l' in sides else ()):
+            if q in hole or not (0 <= q[0] < W and 0 <= q[1] < H):
+                continue
+            if q == (hx - 1, hy - 1) and ((hx - 1, hy) in hole or (hx, hy - 1) in hole):
+                continue                       # only the true outer corner, not an inner step
+            p = img.getpixel(q)
+            if p[3] and tuple(p[:3]) == dark:
+                out.add(q)
+    return sorted(out, key=lambda q: (q[1], q[0]))
+
+
+def tint_tray_walls(img, holes, colour, dash=0, dark=GREY[0], sides='t'):
+    """The family accent: recolour the top wall of every inset tray (see
+    ``tray_top_walls``) in ``colour``; with ``dash`` > 0 only alternate runs
+    of ``dash`` px take the colour and the rest keep the grey shadow (a
+    broken wall: offline / inactive). Only pixels that still hold the
+    ``dark`` shadow change, so tiles, buttons and the clear title zone are
+    never touched. Returns the pixels recoloured."""
+    done = []
+    for (x, y) in tray_top_walls(img, holes, dark, sides):
+        if dash and ((x + y) // dash) % 2:
+            continue
+        put(img, x, y, colour)
+        done.append((x, y))
+    return done
 
 
 socket_well = inset_well        # Soulrend-compatible name

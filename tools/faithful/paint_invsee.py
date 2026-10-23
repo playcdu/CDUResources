@@ -15,17 +15,18 @@ carries the whole look:
 
 * background: the light grey bevelled panel, one merged inset tray round all
   6 x 9 content clearances, the main 3x9 and hotbar 1x9 player trays, the
-  title and "Inventory" rows left as plain light panel for the live text,
-  and one 1 px accent line on row 14 under the title. There are no static
-  cells, so no pictogram tile on the background.
-* frame: the docked side-panel extension with one recessed 24x24 tile on
-  each side panel.
+  title zone (rows 5-14) and "Inventory" rows left as plain light panel for
+  the live text, and the family accent on the trays' top/left inner-shadow
+  walls (``compose.draw_accent_line``). There are no static cells, so no
+  pictogram tile on the background.
+* frame: the lean docked-tab frame, the eye on each tab, grips at mid-height.
 
 The only difference between the two skins is the family whisper, so the
 online / offline state reads at a glance without a single word:
 
-* invsee_online: blue_1 accent line, the open eye (blue iris) on the tiles.
-* invsee_offline: grey_1 accent line, the closed eye (grey, lashes down).
+* invsee_online: solid blue_1 tray walls, the open eye (blue iris) on the tabs.
+* invsee_offline: the same blue walls broken into 2 px dashes (``dash``),
+  the closed eye (lashes down) on the tabs.
 
 Both come from ``palette.accent_for``; this script asserts them so a palette
 change that made the two skins identical fails loudly instead of shipping.
@@ -57,8 +58,8 @@ SEED = {'invsee_online': 81, 'invsee_offline': 82}
 
 # what each skin must show (style guide section 5); checked, never invented
 EXPECT = {
-    'invsee_online': {'line': rgba('blue_1')[:3], 'pictogram': 'eye'},
-    'invsee_offline': {'line': rgba('grey_1')[:3], 'pictogram': 'eye_closed'},
+    'invsee_online': {'line': rgba('blue_1')[:3], 'pictogram': 'eye', 'dash': 0},
+    'invsee_offline': {'line': rgba('blue_1')[:3], 'pictogram': 'eye_closed', 'dash': 2},
 }
 
 
@@ -68,7 +69,7 @@ def _check_identity(key):
     acc = accent_for(key)
     line = tuple(C.accent_colour(key) or ())
     want = EXPECT[key]
-    if line != tuple(want['line']) or acc.get('pictogram') != want['pictogram']:
+    if line != tuple(want['line']) or acc.get('pictogram') != want['pictogram'] or             acc.get('dash', 0) != want['dash']:
         raise SystemExit(f'{key}: palette identity changed (line {line}, pictogram {acc.get("pictogram")}); '
                          f'expected {want}')
 

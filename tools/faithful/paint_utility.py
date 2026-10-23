@@ -77,7 +77,7 @@ def paint_crafting(key='crafting'):
     result = next(sl for sl in s.content_slots if sl.index == 0)
     grid = [sl for sl in s.content_slots if sl.index != 0]
     holes = P.merge_holes(grid) + P.merge_holes(s.player_slots)
-    P.inset_well(bg, holes, protect=C.text_rows(key))
+    P.inset_well(bg, holes, protect=C.text_rows(key), clear=[C.TITLE_ZONE])   # rows 5-14 stay panel
     box = _result_box(key)
     # recessed square: slot-grey margin, dark top/left and white bottom/right
     # ring, mid-grey mixed corners; the 20x20 centre is cleared by finish

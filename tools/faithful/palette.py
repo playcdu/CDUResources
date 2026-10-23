@@ -37,6 +37,7 @@ if __name__ == 'palette':                 # imported by its plain name from tool
 
 THEME = 'faithful'
 ALLOW_PURE_BW = True        # the style lint must not flag (0,0,0) / (255,255,255)
+LEAN_FRAMES = True          # frames are lean docked tabs: transparency outside the container is expected
 
 # --- Ramps (dark -> light) ----------------------------------------------------
 INK = [
@@ -109,8 +110,10 @@ BUTTON_LIT = GREY[5]
 DISABLED_FACE = GREY[0]
 TRANSPARENT = (0, 0, 0, 0)
 
-# Family identity: accent ramp (the 1 px line under the title band uses
-# accent[1]; ``line`` False = plain), secondary ramp, pictogram, motif summary.
+# Family identity: accent ramp (``compose.draw_accent_line`` tints the top
+# wall of every inset tray in accent[0], the ramp's dark step; ``line`` False
+# = plain, no tint; ``dash`` > 0 = a broken wall), secondary ramp, pictogram,
+# motif summary.
 # Accents are decorative only; item wells and button grammar never change
 # per family.
 FAMILY_ACCENT = {
@@ -141,8 +144,8 @@ SKIN_ACCENT = {
                        'motif': 'a ticket stub with a green (valid) stripe'},
     'ticket_invalid': {'accent': RED,    'secondary': GREY, 'pictogram': 'ticket_invalid', 'line': True,
                        'motif': 'a ticket stub with a red (invalid) stripe'},
-    'invsee_offline': {'accent': GREY,   'secondary': BLUE, 'pictogram': 'eye_closed', 'line': True,
-                       'motif': 'a closed eye (offline)'},
+    'invsee_offline': {'accent': BLUE,   'secondary': GREY, 'pictogram': 'eye_closed', 'line': True,
+                       'dash': 2, 'motif': 'a closed eye; the blue tray wall broken into 2 px dashes (offline)'},
     'trashcan':       {'accent': RED,    'secondary': GREY, 'pictogram': 'bin', 'line': True,
                        'motif': 'a waste bin'},
     'ender_chest':    {'accent': PURPLE, 'secondary': GREY, 'pictogram': 'ender', 'line': True,

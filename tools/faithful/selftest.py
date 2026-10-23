@@ -16,9 +16,13 @@
 3. compose.base_background / base_frame / paint_button + button_states
    produce images that pass the builder's own validators for EVERY skin,
    button and state; every pixel is on the Faithful palette with alpha 0 or
-   255; the live title and inventory glyph rows are light; frames have no
-   transparent pixel outside the native container and the rounded rim
-   corners; the state transforms leave alpha byte-identical; selected never
+   255; the live title and inventory glyph rows are light, and the title
+   zone (rows 5-14, x 4-171) holds nothing but panel colour (the dispenser's
+   OFFERED MONEY label excepted); every skin with a family accent has a tray
+   wall to tint, and invsee_online / invsee_offline differ; frames are lean
+   docked tabs: opaque only inside ``compose.frame_parts`` (tabs and grips),
+   nothing in the container, the right grip on the pin, left and right
+   mirrored; the state transforms leave alpha byte-identical; selected never
    changes a glyph-like pixel (lettering, page arrow, close X, icon) or the
    shadow drawn under it; no pulse changes those pixels or their 1 px halo;
    disabled keeps every glyph-like pixel in place, at the same alpha, in the
@@ -30,8 +34,9 @@
    pairwise different. (Disabled cracks: not applicable, the Faithful
    disabled state is a flat face.)
 4. pack-source: by default every skin whose background is already entirely
-   on the Faithful palette (painted in this theme) gets the same lettering,
-   distinct-state and state-preservation checks on its PNGs; other skins are
+   on the Faithful palette (painted in this theme) gets the title-zone,
+   lean-frame, lettering, distinct-state and state-preservation checks on
+   its PNGs; other skins are
    counted as "not yet Faithful" and skipped. ``--pack-source`` checks every
    skin regardless; ``--skip-pack-source`` checks none.
 
@@ -61,7 +66,6 @@ import build_pack  # noqa: E402
 import button_assets  # noqa: E402
 import decorative_assets  # noqa: E402
 
-CORNER_CUT = ((0, 0), (1, 0), (2, 0), (0, 1), (0, 2), (1, 1))   # validate.py's allowed rim corner pixels
 
 
 def _raw(img):
@@ -104,16 +108,45 @@ def distinct_errors(states, label):
     return errs
 
 
-def frame_hole_errors(key, layer_id, img, label):
-    c = geo.skin(key).layer(layer_id).container
+def frame_errors(key, layer_id, img, label):
+    """Lean docked-tab frames: opaque pixels only inside the tabs and grips
+    of ``compose.frame_parts`` (alpha 0 everywhere else, the 8 px strips and
+    the container included), the right grip reaching the pin at (w-1, h//2),
+    and the left and right halves mirror images in alpha."""
+    a = geo.skin(key).layer(layer_id)
+    parts = C.frame_parts(key, layer_id)
+    boxes = parts['tabs'] + parts['grips']
+    al = img.getchannel('A').load()
     w, h = img.size
-    corners = set()
-    for (i, j) in CORNER_CUT:
-        corners |= {(i, j), (w - 1 - i, j), (i, h - 1 - j), (w - 1 - i, h - 1 - j)}
-    a = img.getchannel('A').load()
-    holes = [(x, y) for y in range(h) for x in range(w)
-             if a[x, y] < 255 and not c.contains(x, y) and (x, y) not in corners]
-    return [f'{label}: {len(holes)} stray transparent pixel(s), e.g. {holes[:3]}'] if holes else []
+    errs = []
+    stray = [(x, y) for y in range(h) for x in range(w)
+             if al[x, y] and not any(r.contains(x, y) for r in boxes)]
+    if stray:
+        errs.append(f'{label}: {len(stray)} opaque pixel(s) outside the tabs and grips, e.g. {stray[:3]}')
+    inside = [(x, y) for y in range(a.container.y, a.container.bottom)
+              for x in range(a.container.x, a.container.right) if al[x, y]]
+    if inside:
+        errs.append(f'{label}: {len(inside)} opaque pixel(s) inside the container')
+    if al[w - 1, h // 2] != 255 or img.getchannel('A').getbbox()[2] != w:
+        errs.append(f'{label}: right grip does not reach the pin ({w - 1}, {h // 2})')
+    if any(bool(al[x, y]) != bool(al[w - 1 - x, y]) for y in range(h) for x in range(w // 2)):
+        errs.append(f'{label}: left and right halves are not mirror images')
+    for r in parts['grips']:
+        if any(al[x, y] != 255 for y in range(r.y + 1, r.bottom - 1) for x in range(r.x + 1, r.right - 1)):
+            errs.append(f'{label}: grip {r.tuple()} not solid')
+    return errs
+
+
+def title_zone_errors(key, img, label):
+    """Rows 5-14 across x 4-171 hold nothing but panel colour (the dispenser
+    may also hold its static OFFERED MONEY label in ink_1)."""
+    s = geo.skin(key)
+    panel = tuple(C.sheet_for(key)[2])
+    ok = {panel} | ({PAL.INK[1]} if s.is_dispenser else set())
+    z = C.TITLE_ZONE
+    bad = [(x, y) for y in range(z.y, z.bottom) for x in range(z.x, z.right)
+           if tuple(img.getpixel((x, y))[:3]) not in ok or img.getpixel((x, y))[3] != 255]
+    return [f'{label}: {len(bad)} non-panel pixel(s) in the title zone rows 5-14, e.g. {bad[:3]}'] if bad else []
 
 
 def band_errors(key, img):
@@ -197,11 +230,16 @@ def main(argv=None):
             build_pack.validate_png(_raw(bg), g, sk, key); n_img += 1
             errors += palette_errors(bg, f'{key} background')
             errors += band_errors(key, bg)
+            errors += title_zone_errors(key, bg, f'{key} background')
+            probe = C.base_background(key, seed=1, accent=False)
+            tinted = C.draw_accent_line(probe, key)
+            if C.accent_colour(key) is not None and C.wall_colour(C.accent_colour(key)) and not tinted:
+                errors.append(f'{key}: family accent has no tray wall to tint')
             for layer in config['screens'].get(key, {}).get('artLayers', []):
                 fr = C.base_frame(key, layer['id'], seed=1)
                 decorative_assets.validate(_raw(fr), layer, g); n_img += 1
                 errors += palette_errors(fr, f'{key}/{layer["id"]} frame')
-                errors += frame_hole_errors(key, layer['id'], fr, f'{key}/{layer["id"]} frame')
+                errors += frame_errors(key, layer['id'], fr, f'{key}/{layer["id"]} frame')
             for bdef in config['screens'].get(key, {}).get('buttons', []):
                 b = s.button(bdef['id'])
                 normal = C.paint_button(key, bdef['id'], seed=1)
@@ -235,6 +273,9 @@ def main(argv=None):
                 n_btn += 1
         except Exception as exc:  # noqa: BLE001
             errors.append(f'{key}: {type(exc).__name__}: {exc}')
+    on, off = C.base_background('invsee_online', 1), C.base_background('invsee_offline', 1)
+    if on.tobytes() == off.tobytes():
+        errors.append('invsee_online and invsee_offline backgrounds are identical')
     painted = skipped = 0
     if not a.skip_pack_source:
         for key in geo.all_skins():
@@ -242,6 +283,10 @@ def main(argv=None):
             if not a.pack_source and not on_palette(Image.open(s.background_path).convert('RGBA')):
                 skipped += 1
                 continue
+            errors += title_zone_errors(key, Image.open(s.background_path).convert('RGBA'), f'pack-source {key}')
+            for la in s.art_layers:
+                errors += frame_errors(key, la.id, Image.open(s.frame_path(la.id)).convert('RGBA'),
+                                       f'pack-source {key}/{la.id} frame')
             for b in s.buttons:
                 normal = Image.open(s.button_path(b.id, 'normal')).convert('RGBA')
                 states = {st: Image.open(s.button_path(b.id, st)).convert('RGBA') for st in geo.STATES}
@@ -254,7 +299,8 @@ def main(argv=None):
     for e in errors:
         print('FAIL', e)
     print(f'SELFTEST {"FAILED" if errors else "PASSED"}: {len(geo.all_skins())} skins, {n_btn} buttons, '
-          f'{n_img} generated images checked with the builder validators, palette, light text rows, frame holes, '
+          f'{n_img} generated images checked with the builder validators, palette, light text rows, title zone, '
+          f'family tray tint, lean frames, '
           f'glyph preservation and distinct states'
           + (f', mask coverage min {min(covered):.0%} over {len(covered)} lettered buttons' if covered else '')
           + ('' if a.skip_pack_source else
