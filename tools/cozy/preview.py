@@ -10,17 +10,19 @@
     python tools/cozy/preview.py economy_hub --frame-alone | --background-alone
     python tools/cozy/preview.py --all            # every skin, default options
     python tools/cozy/preview.py economy_hub --theme soulrend
+    python tools/cozy/preview.py economy_hub --theme faithful
 
 Output: a nearest-neighbour PNG (``--scale``, default 3) at ``--out`` or
 ``evidence/cozy-previews/<key>[-<variant>].png`` (``--theme soulrend``:
-``evidence/soulrend-previews/``). Importable API: ``render``,
+``evidence/soulrend-previews/``; ``--theme faithful``:
+``evidence/faithful-previews/``). Importable API: ``render``,
 ``render_frame_alone``, ``render_background_alone``, ``buttons_sheet``,
 ``export``, ``set_theme``, ``lettering_for``.
 
-``--theme {cozy,soulrend}`` (default: the QUASAR_GUI_THEME environment
+``--theme {cozy,soulrend,faithful}`` (default: the QUASAR_GUI_THEME environment
 variable, else cozy; the flag wins) selects the face used for the schematic
-title, "Inventory" label and item counts (cozy HEARTH/SPRIG or Soulrend
-GRAVEN/RUNE) and the default output directory. The textures previewed are
+title, "Inventory" label and item counts (cozy HEARTH/SPRIG, Soulrend
+GRAVEN/RUNE or Faithful PLAIN/TINY) and the default output directory. The textures previewed are
 always the ones in pack-source (or the overrides given).
 
 Composition order (bottom to top), matching the client: dimmed world, a
@@ -55,9 +57,10 @@ import lettering as L  # noqa: E402
 
 ROOT = geo.ROOT
 OUT_DIR = ROOT / 'evidence' / 'cozy-previews'
-THEMES = ('cozy', 'soulrend')
+THEMES = ('cozy', 'soulrend', 'faithful')
 THEME_ENV = 'QUASAR_GUI_THEME'
-OUT_DIRS = {'cozy': OUT_DIR, 'soulrend': ROOT / 'evidence' / 'soulrend-previews'}
+OUT_DIRS = {'cozy': OUT_DIR, 'soulrend': ROOT / 'evidence' / 'soulrend-previews',
+            'faithful': ROOT / 'evidence' / 'faithful-previews'}
 _THEME = [None]
 
 
@@ -80,11 +83,12 @@ def current_theme():
 
 
 def lettering_for(theme=None):
-    """Lettering module for the schematic text: cozy HEARTH/SPRIG or Soulrend
-    GRAVEN/RUNE (both accept the 'sprig' face name used for counts)."""
+    """Lettering module for the schematic text: cozy HEARTH/SPRIG, Soulrend
+    GRAVEN/RUNE or Faithful PLAIN/TINY (all accept the 'sprig' face name used
+    for counts)."""
     theme = resolve_theme(theme) if theme else current_theme()
-    if theme == 'soulrend':
-        return importlib.import_module('soulrend.lettering')
+    if theme != 'cozy':
+        return importlib.import_module(f'{theme}.lettering')
     if Path(getattr(L, '__file__', '')).resolve().parent == _HERE:
         return L
     # another theme's module shadows the plain name: load the cozy one by path

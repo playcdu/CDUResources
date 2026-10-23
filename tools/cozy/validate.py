@@ -6,6 +6,7 @@
     python tools/cozy/validate.py economy_hub --style          # + cozy style lint
     python tools/cozy/validate.py --all --isolated-build       # + full build in a temp copy
     python tools/cozy/validate.py --all --theme soulrend --style   # lint against the Soulrend palette
+    python tools/cozy/validate.py --all --theme faithful --style   # lint against the Faithful palette
 
 Default mode reads the pack-source PNGs of the named skins and runs, in-process,
 exactly the functions ``tools/build_pack.py`` uses:
@@ -26,8 +27,11 @@ lint (palette conformance, light title / inventory bands, no pure black/white,
 no semi-transparent pixels, no stray transparent holes in a frame outside the
 native container); ``--strict-style`` makes those lint findings fatal.
 
-``--theme {cozy,soulrend}`` selects the palette module the style lint checks
-against (tools/cozy/palette.py or tools/soulrend/palette.py). Default: the
+``--theme {cozy,soulrend,faithful}`` selects the palette module the style lint
+checks against (tools/cozy/palette.py, tools/soulrend/palette.py or
+tools/faithful/palette.py). A palette that sets ``ALLOW_PURE_BW = True``
+(Faithful: the vanilla language uses pure black and white) is not flagged
+for pure black/white pixels. Default: the
 QUASAR_GUI_THEME environment variable, else cozy; the flag takes precedence.
 The contract checks (the builder's validators) are identical for every theme.
 
@@ -61,7 +65,7 @@ from PIL import Image  # noqa: E402
 
 TEX = 'assets/quasar_gui/textures'
 HINT = chr(10) + '     hint: '
-THEMES = ('cozy', 'soulrend')
+THEMES = ('cozy', 'soulrend', 'faithful')
 THEME_ENV = 'QUASAR_GUI_THEME'
 
 
@@ -76,8 +80,8 @@ def resolve_theme(name=None):
 def palette_for(theme=None):
     """The palette module whose MASTER / luminance the style lint uses."""
     theme = resolve_theme(theme)
-    if theme == 'soulrend':
-        return importlib.import_module('soulrend.palette')
+    if theme != 'cozy':
+        return importlib.import_module(f'{theme}.palette')
     if Path(getattr(palette, '__file__', '')).resolve().parent == _HERE:
         return palette
     # another theme's module shadows the plain name: load the cozy one by path
@@ -234,7 +238,9 @@ def style_lint(key, img, kind, label, pal=None, layer_id=None):
         if off:
             out.append((None, label, f'STYLE {off}/{len(pixels)} opaque pixels are off the '
                                      f'{getattr(pal, "THEME", "cozy")} master palette'))
-        extremes = sum(1 for p in pixels if tuple(p[:3]) in ((0, 0, 0), (255, 255, 255)))
+        extremes = 0
+        if not getattr(pal, 'ALLOW_PURE_BW', False):     # Faithful allows pure black/white
+            extremes = sum(1 for p in pixels if tuple(p[:3]) in ((0, 0, 0), (255, 255, 255)))
         if extremes:
             out.append((None, label, f'STYLE {extremes} pure black/white pixels'))
         partial = sum(1 for p in pixels if p[3] != 255)

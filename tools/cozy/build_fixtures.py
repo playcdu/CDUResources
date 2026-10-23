@@ -4,6 +4,7 @@
     python tools/cozy/build_fixtures.py            # build every page, then check them
     python tools/cozy/build_fixtures.py --check    # only re-check pages already built
     python tools/cozy/build_fixtures.py --theme soulrend   # the Soulrend gallery
+    python tools/cozy/build_fixtures.py --theme faithful   # the Faithful gallery
 
 Writes under ``evidence/cozy-fixtures/`` (gitignored):
 
@@ -21,15 +22,15 @@ taken from the game. Output is deterministic for a given checkout (no clock,
 no randomness). Reads pack-source and ``git show`` only; never writes outside
 evidence/. See docs/COZY-FIXTURES.md.
 
-``--theme {cozy,soulrend}`` (default: $QUASAR_GUI_THEME, else cozy; the flag
-wins) switches the page titles ("Cozy GUI Fixtures" / "Soulrend GUI Fixtures",
+``--theme {cozy,soulrend,faithful}`` (default: $QUASAR_GUI_THEME, else cozy; the
+flag wins) switches the page titles ("Cozy GUI Fixtures" / "Soulrend GUI
+Fixtures" / "Faithful GUI Fixtures",
 "<Theme> <Family> Family", "Midnight vs <Theme>"), the palette swatches, the
 typeface specimen, the schematic lettering, the page colour tokens, the output
-directory (``evidence/cozy-fixtures/`` or ``evidence/soulrend-fixtures/``) and
-the URL map (``tools/cozy/fixture_urls.json`` or
-``tools/soulrend/fixture_urls.json``). The textures shown are always the ones
+directory (``evidence/<theme>-fixtures/``) and the URL map
+(``tools/<theme>/fixture_urls.json``). The textures shown are always the ones
 in pack-source on the current checkout. The Soulrend gallery is described in
-docs/SOULREND-FIXTURES.md.
+docs/SOULREND-FIXTURES.md, the Faithful one in docs/FAITHFUL-FIXTURES.md.
 
 Licence: MIT.
 """
@@ -98,6 +99,25 @@ THEME_CONFIG = {
                     '--muted': '#b9ab96', '--line': '#3e3430', '--accent': '#e07a68', '--link': '#d8b464',
                     '--link-hover': '#f0cf86', '--eyebrow': '#7fc9cf', '--note-bg': '#2a201c',
                     '--note-line': '#98763a', '--code-bg': '#2e2522'}),
+    },
+    'faithful': {
+        'name': 'Faithful', 'branch': 'art/faithful',
+        'out': ROOT / 'evidence' / 'faithful-fixtures',
+        'urls': ROOT / 'tools' / 'faithful' / 'fixture_urls.json',
+        'doc': 'docs/FAITHFUL-FIXTURES.md',
+        'blurb': 'Faithful vanilla-style pixel-art replacement',
+        'faces': (('PLAIN', 'PLAIN', 'an original 5-wide face in mixed case that sits beside the game font, the main face'),
+                  ('TINY', 'TINY', 'compact capitals for tight two-line labels and stack counts')),
+        'pure_bw': True,
+        # page colour tokens: (light mode, dark mode), a neutral grey scheme
+        'tokens': ({'--bg': '#e4e4e4', '--surface': '#f2f2f2', '--surface-2': '#d2d2d2', '--fg': '#1c1c1c',
+                    '--muted': '#555555', '--line': '#bdbdbd', '--accent': '#3a6a2c', '--link': '#2c4f8c',
+                    '--link-hover': '#1e3a6e', '--eyebrow': '#5a5a5a', '--note-bg': '#ececd8',
+                    '--note-line': '#a08a3a', '--code-bg': '#dadada'},
+                   {'--bg': '#181818', '--surface': '#232323', '--surface-2': '#2e2e2e', '--fg': '#ececec',
+                    '--muted': '#a8a8a8', '--line': '#3c3c3c', '--accent': '#8fce6c', '--link': '#8eb4ec',
+                    '--link-hover': '#b6d0f6', '--eyebrow': '#c6c6c6', '--note-bg': '#2a2a22',
+                    '--note-line': '#a08a3a', '--code-bg': '#2e2e2e'}),
     },
 }
 THEME = dict(THEME_CONFIG['cozy'], key='cozy')
@@ -682,8 +702,8 @@ def index_page(by_family, all_parts, sha):
               f'<li><a href="{{{{URL:before-after}}}}">Midnight vs {THEME["name"]}</a> <span class="muted small">(before / after)</span></li></ul>'
             + f'<div id="families">{"".join(groups)}</div>'
             + f'<h2 id="palette">Master palette</h2>'
-              f'<p>{len(pal.NAMED)} named colours in {len(pal.RAMPS)} ramps, each ordered dark to light; no pure black '
-              f'or white. Textures use only these colours, at alpha 0 or 255. Aliases: {alias_txt}.</p>'
+              f'<p>{len(pal.NAMED)} named colours in {len(pal.RAMPS)} ramps, each ordered dark to light; {"pure black and white allowed (the vanilla language uses them)" if THEME.get("pure_bw") else "no pure black or white"}. '
+              f'Textures use only these colours, at alpha 0 or 255. Aliases: {alias_txt}.</p>'
               f'<div class="ramps">{"".join(ramps)}</div>'
             + f'<h2 id="typeface">Bespoke pixel typeface</h2>'
               '<p>Two original faces drawn for the pack (CC0-1.0), used for every painted label.</p>'
