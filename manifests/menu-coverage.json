@@ -16,7 +16,8 @@
   "source_only_limitations": [
     "Source and API-model tests do not establish production transaction behavior. Server builds and actual rendering are recorded separately in QuasarGUIPatches/docs/VERIFICATION.md",
     "Configured admin-shop pages use arbitrary operator-authored slots: four independent layout families; dynamic individual pages share configured family by default.",
-    "Auction, watchlist, advertisements and history use fixed-capacity navigation contexts; transaction handlers remain unchanged."
+    "Auction, watchlist, advertisements and history use fixed-capacity navigation contexts; transaction handlers remain unchanged.",
+    "Plot screens (plot_buy, plot_rent, plot_list, plot_manage) were audited on the read-only Quasar 1.21 checkout; their QuasarGUIPatches title composition and InventoryDebug fixtures are not implemented yet."
   ],
   "automated_evidence": {
     "shared_presentation_contract": "QuasarGUIPatches/evidence/redesigned-menu-tests.json",
@@ -3123,6 +3124,154 @@
             625
           ],
           "constructor_count": 0
+        }
+      },
+      "verification_reference": "QuasarGUIPatches/docs/VERIFICATION.md"
+    },
+    {
+      "skin_key": "plot_buy",
+      "source": "common/src/main/java/anar4732/quasar/sgui/PlotBuySGui.java",
+      "entry_point": "open",
+      "title_pattern": "Buy Plot - <plot name>",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "22": "Plot preview: grass block (command block for server plots) named after the plot; owner, bounds, volume, chunk count and price lore",
+        "29": "Cancel: click sound and close",
+        "0-9,17,18,26,27,35,36,44,45-53": "Decorative border: alternating blue/yellow glass panes with no callback; themed mode replaces them with protected empty elements",
+        "33": "Confirm Purchase: cooldown check, close, then the original buy transaction"
+      },
+      "states": [
+        "plot for sale",
+        "insufficient balance (message after confirm)",
+        "plot no longer for sale / invalid bounds / chunks not owned (message after confirm)"
+      ],
+      "dynamic_content": "Plot name, owner, bounds, volume, chunk count and price remain in the original title, item and lore.",
+      "asset_path": "assets/quasar_gui/textures/menu/plot_buy.png",
+      "implementation_status": "contract-authored; QuasarGUIPatches title composition pending",
+      "source_evidence": {
+        "1.21": {
+          "source": "../Quasar/common/src/main/java/anar4732/quasar/sgui/PlotBuySGui.java",
+          "branch": "1.21",
+          "title_lines": [
+            72
+          ],
+          "constructor_count": 1,
+          "note": "Audited directly on the read-only Quasar checkout; no 1.19/1.20.1 patch-source copies exist yet"
+        }
+      },
+      "verification_reference": "QuasarGUIPatches/docs/VERIFICATION.md"
+    },
+    {
+      "skin_key": "plot_rent",
+      "source": "common/src/main/java/anar4732/quasar/sgui/PlotBuySGui.java",
+      "entry_point": "open",
+      "title_pattern": "Rent Plot - <plot name>",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "22": "Plot preview: grass block (command block for server plots) named after the plot; owner, bounds, volume, chunk count and price lore",
+        "29": "Cancel: click sound and close",
+        "0-9,17,18,26,27,35,36,44,45-53": "Decorative border: alternating blue/yellow glass panes with no callback; themed mode replaces them with protected empty elements",
+        "33": "Confirm Rental: cooldown check, close, then the original rent transaction"
+      },
+      "states": [
+        "plot for rent and not rented out",
+        "insufficient balance (message after confirm)",
+        "plot no longer for rent / invalid bounds / chunks not owned (message after confirm)"
+      ],
+      "dynamic_content": "Plot name, owner, bounds, volume, chunk count, price per period and contents (with blocks / empty) remain in the original title, item and lore.",
+      "asset_path": "assets/quasar_gui/textures/menu/plot_rent.png",
+      "implementation_status": "contract-authored; QuasarGUIPatches title composition pending",
+      "source_evidence": {
+        "1.21": {
+          "source": "../Quasar/common/src/main/java/anar4732/quasar/sgui/PlotBuySGui.java",
+          "branch": "1.21",
+          "title_lines": [
+            72
+          ],
+          "constructor_count": 1,
+          "note": "Audited directly on the read-only Quasar checkout; no 1.19/1.20.1 patch-source copies exist yet"
+        }
+      },
+      "verification_reference": "QuasarGUIPatches/docs/VERIFICATION.md"
+    },
+    {
+      "skin_key": "plot_list",
+      "source": "common/src/main/java/anar4732/quasar/sgui/PlotListSGui.java",
+      "entry_point": "open",
+      "title_pattern": "Plots - Page <n>",
+      "container_type": "GENERIC_9x6",
+      "rows": 6,
+      "slot_roles": {
+        "0-44": "Plot entries added sequentially (45 per page): grass block or command block named after the plot; LEFT click opens plot_manage",
+        "45": "Previous Page when page > 0",
+        "49": "Close",
+        "53": "Next Page when a later page exists",
+        "46-48,50-52": "Empty: no item and no callback"
+      },
+      "states": [
+        "empty/full page",
+        "first/middle/last page",
+        "player/moderator (moderator sees every plot plus owner and state lore)",
+        "own plot (green name) / other plot (gold name)",
+        "incomplete bounds"
+      ],
+      "dynamic_content": "Page number, plot names, dimension, ID, bounds, volume, chunk count, owner and state remain original title/items/lore.",
+      "asset_path": "assets/quasar_gui/textures/menu/plot_list.png",
+      "implementation_status": "contract-authored; QuasarGUIPatches title composition pending",
+      "page_capacity": {
+        "themed_initial": 45,
+        "standard_initial": 45,
+        "fixed_for_navigation_flow": true,
+        "note": "No content redirect: all 45 entries keep their native positions"
+      },
+      "source_evidence": {
+        "1.21": {
+          "source": "../Quasar/common/src/main/java/anar4732/quasar/sgui/PlotListSGui.java",
+          "branch": "1.21",
+          "title_lines": [
+            54
+          ],
+          "constructor_count": 1,
+          "note": "Audited directly on the read-only Quasar checkout; no 1.19/1.20.1 patch-source copies exist yet"
+        }
+      },
+      "verification_reference": "QuasarGUIPatches/docs/VERIFICATION.md"
+    },
+    {
+      "skin_key": "plot_manage",
+      "source": "common/src/main/java/anar4732/quasar/sgui/PlotManageSGui.java",
+      "entry_point": "open",
+      "title_pattern": "Manage Plot - <plot name>",
+      "container_type": "GENERIC_9x3",
+      "rows": 3,
+      "slot_roles": {
+        "8": "Close",
+        "10": "Teleport when the viewer has the TP_POS permission; absent otherwise",
+        "11": "Toggle Preview: toggle the plot border preview and close",
+        "12": "Rename: chat command suggestion and close",
+        "13": "Sell (state NONE) or read-only For Sale status (FOR_SALE); absent while FOR_RENT",
+        "14": "Lease Out (state NONE) or read-only For Rent / Rented status (FOR_RENT); absent while FOR_SALE",
+        "16": "Destroy: chat confirmation link and close"
+      },
+      "states": [
+        "plot state NONE / FOR_SALE / FOR_RENT (available) / FOR_RENT (rented)",
+        "with/without TP_POS permission",
+        "server plot / player plot"
+      ],
+      "dynamic_content": "Plot name in the title; sale price, rent price, duration, contents, renter and tips remain in the native 13/14 items and lore.",
+      "asset_path": "assets/quasar_gui/textures/menu/plot_manage.png",
+      "implementation_status": "contract-authored; QuasarGUIPatches title composition pending",
+      "source_evidence": {
+        "1.21": {
+          "source": "../Quasar/common/src/main/java/anar4732/quasar/sgui/PlotManageSGui.java",
+          "branch": "1.21",
+          "title_lines": [
+            145
+          ],
+          "constructor_count": 1,
+          "note": "Audited directly on the read-only Quasar checkout; no 1.19/1.20.1 patch-source copies exist yet"
         }
       },
       "verification_reference": "QuasarGUIPatches/docs/VERIFICATION.md"
