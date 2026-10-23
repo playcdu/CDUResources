@@ -344,6 +344,24 @@ PICTOGRAMS = {
         '.OffOfOeeO.',
         '..OOOOOOO..',
     ],
+    # plots: a wooden signpost (an arrow board pointing right on a post)
+    # standing on a grass plot
+    'signpost': [
+        '..OOOO......',
+        '..OYhO......',
+        'OOOOOOOOOO..',
+        'OYYYYYYYYHO.',
+        'OYHHHHHHHHhO',
+        'OHhhhhhhhhO.',
+        'OOOOOOOOOO..',
+        '..OYhO......',
+        '..OYhO......',
+        '..OYhO......',
+        '.OOOOOOOOOO.',
+        'OVVVVVVVVVvO',
+        'OvvvvvvvvvuO',
+        '.OOOOOOOOOO.',
+    ],
     # ender chest: a purple orb with a light core (our own mark)
     'ender': shaded(disc_mask(10), 10, 10, 'P', 'p', 'p',
                     extra={(4, 4): 'V', (5, 4): 'v', (4, 5): 'v', (5, 5): 'u', (3, 3): 'P'}),

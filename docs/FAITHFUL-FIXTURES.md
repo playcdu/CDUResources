@@ -1,8 +1,8 @@
 # Faithful fixture gallery
 
-The fixture gallery is a set of 12 self-contained HTML pages that show every
-texture of the Faithful vanilla-style replacement (56 menu backgrounds, 157
-painted buttons in six states each = 942 state PNGs, 54 outer frames) so the
+The fixture gallery is a set of 13 self-contained HTML pages that show every
+texture of the Faithful vanilla-style replacement (60 menu backgrounds, 169
+painted buttons in six states each = 1014 state PNGs, 58 outer frames) so the
 artwork can be reviewed in claude.ai without checking out the `art/faithful`
 branch. Each page is one HTML file with every image embedded as a PNG data URI
 and no external resources. It is the Faithful counterpart of the cozy and
@@ -64,7 +64,7 @@ page comes near the 14 MB split budget, so every family is one page.
 
 - **Index** (`index.html`, "Faithful GUI Fixtures"): the schematic and
   no-Mojang-pixels notes; the commit the pages were built from; links to
-  every family page and the before/after page; all 56 skins as cards grouped
+  every family page and the before/after page; all 60 skins as cards grouped
   by family (2x thumbnail of the 1x composite, geometry, button count, frame,
   content mode) with each family's motif; the 25-colour master palette as
   swatches grouped by its 8 ramps (ink 2, grey 8, green 3, red 3, gold 3,
@@ -81,27 +81,29 @@ page comes near the 14 MB split budget, so every family is one page.
   and the raw background with every alpha-zero clearance outlined in magenta.
   Skins without painted buttons (admin shop, guild bank, prefixes, invsee,
   utility) say so and show their native-content presentation.
-- **Before / after** (`before-after.html`, "Midnight vs Faithful"): 20
-  representative screens covering all 10 families, each a pair of
+- **Before / after** (`before-after.html`, "Midnight vs Faithful"): 21
+  representative screens covering all 11 families, each a pair of
   composites at 3x in clearly labelled columns: left (or upper, on a narrow
   screen) tagged **Baseline · midnight**, the midnight artwork from commit
-  `037c5ef7cb5dbe6fe5ab04dadcb2d2c44cd0372e` (read with `git show`); right
+  `037c5ef7cb5dbe6fe5ab04dadcb2d2c44cd0372e` (plot_manage, added later: from
+  `a137c28f6e9a1ce072892d671588587c0993ea1b`, the commit that introduced the
+  plot skins; `BASELINE_FOR` in the builder), read with `git show`; right
   (or lower) tagged **Faithful · replacement**, the current pack-source.
   Both sides use the same schematic items, title and default button states,
   so only the textures differ. The screens are economy_hub, economy_log,
   auction_house, auction_confirm, auction_duration, chest_shop,
   chest_shop_listing_enabled, chest_shop_buy, trade_self_ready, trade_money,
   ticket_valid, ticket_invalid, admin_shop_categories, guild_bank_3,
-  prefixes_6, invsee_offline, trashcan, ender_chest, crafting,
-  template_chest_6. The build refuses to run if the baseline commit lacks any
+  prefixes_6, invsee_offline, plot_manage, trashcan, ender_chest, crafting,
+  template_chest_6. The build refuses to run if a baseline commit lacks any
   of their textures, so the two sides are never mixed.
 
 Cross-page links are generated as `{{URL:<page>}}` placeholders (optionally
 followed by `#<skin>`) and resolved at build time from the tracked map
 `tools/faithful/fixture_urls.json` (`{"index": "https://claude.ai/artifact/…",
 "family-economy": "…", …}`, keyed by the token names in the table below).
-Tokens missing from the map stay literal; the map is currently `{}`, so every
-link is still a placeholder. After publishing, record the URLs there,
+Tokens missing from the map stay literal; `family-plot` is not in the map
+yet, so links to it are still placeholders. After publishing, record the URLs there,
 rebuild, republish the pages to the same URLs, and replace the placeholders in
 the table below.
 
@@ -109,7 +111,7 @@ the table below.
 
 | Page | File | Title | Contents | URL |
 |---|---|---|---|---|
-| Index | `index.html` | Faithful GUI Fixtures | 56 skin cards, palette, typeface | `https://claude.ai/artifact/GBW1e8ifngmGsjzjfuCbnz` |
+| Index | `index.html` | Faithful GUI Fixtures | 60 skin cards, palette, typeface | `https://claude.ai/artifact/GBW1e8ifngmGsjzjfuCbnz` |
 | Economy | `family-economy.html` | Faithful Economy Family | 2 skins, 11 buttons | `https://claude.ai/artifact/RxJevFSwW8nEt7RrBdTR5V` |
 | Auction | `family-auction.html` | Faithful Auction Family | 6 skins, 38 buttons | `https://claude.ai/artifact/XzjkCKFeD7RDVXmoXLbbLi` |
 | Chest shop | `family-chest_shop.html` | Faithful Chest Shop Family | 12 skins, 89 buttons | `https://claude.ai/artifact/679ffEgdPi77AkwZsFDfgb` |
@@ -119,7 +121,8 @@ the table below.
 | Guild bank | `family-guild_bank.html` | Faithful Guild Bank Family | 8 skins, native content | `https://claude.ai/artifact/Fth3fysTK5EePNdzJzGiER` |
 | Prefixes | `family-prefixes.html` | Faithful Prefixes Family | 6 skins, native content | `https://claude.ai/artifact/M6snLaH182JM85BJxiaJji` |
 | Invsee | `family-invsee.html` | Faithful Invsee Family | 2 skins, native content | `https://claude.ai/artifact/EdBveipCD3f2U9vaoJHsm2` |
+| Plot | `family-plot.html` | Faithful Plot Family | 4 skins, 12 buttons | `{{URL:family-plot}}` |
 | Utility | `family-utility.html` | Faithful Utility Family | 9 skins, native content | `https://claude.ai/artifact/TsFW2NNM6dnoRSdjaMwWs4` |
-| Before / after | `before-after.html` | Midnight vs Faithful | 20 screens, baseline `037c5ef` vs Faithful | `https://claude.ai/artifact/YYvUNcJz3RHG2cKoVCGEKX` |
+| Before / after | `before-after.html` | Midnight vs Faithful | 21 screens, baseline `037c5ef` (plot_manage `a137c28`) vs Faithful | `https://claude.ai/artifact/YYvUNcJz3RHG2cKoVCGEKX` |
 
 Licence: generator code MIT; artwork as in the rest of the repository.

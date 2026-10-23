@@ -4,7 +4,7 @@ This guide defines the Faithful theme: a vanilla-faithful replacement for
 every texture in the pack that looks like Minecraft's own container GUIs
 (light grey bevelled panels, inset slot wells, grey stone buttons, white
 button lettering with a dark shadow) while being 100 % original artwork. It
-covers 56 backgrounds, 942 button-state PNGs (157 regions x 6 states) and 54
+covers 60 backgrounds, 1014 button-state PNGs (169 regions x 6 states) and 58
 outer frames. Geometry, codepoints and interaction contracts are frozen; only
 the pixels change. The shared tooling lives in
 [tools/faithful/](../tools/faithful/README.md), and every rule below names the
@@ -107,7 +107,7 @@ Jobs:
 | `grey_5` | button top/left bevel; info plate face; disabled lettering |
 | `grey_6` | **the panel**: the title and inventory text sit on it |
 | `grey_7` | panel top/left bevel, inset bottom/right highlight, button lettering, pulse highlight |
-| `green_*` | selected face / bevel, valid stripe; `green_1` tray walls (chest shop, ticket valid) |
+| `green_*` | selected face / bevel, valid stripe, the signpost's grass; `green_1` tray walls (chest shop, ticket valid, plots) |
 | `red_*` | danger face and bevel, close button, invalid stripe; `red_1` tray walls (auction, ticket invalid, trashcan) |
 | `gold_*` | primary bevel, coins, the star; `gold_0` tray walls (economy, guild bank) |
 | `blue_*` | lens, eye, arrows, shield, banner; `blue_1` tray walls (trade, admin shop, prefixes, invsee) |
@@ -372,6 +372,7 @@ is the first row free for art under the title.
 | invsee / invsee_online | `blue_1`, solid | `eye`: an open eye, blue iris |
 | invsee_offline | `blue_1` **broken into 2 px dashes** (`dash: 2`) | `eye_closed`: a closed eye with lashes |
 | trashcan | `red_1` | `bin`: a grey waste bin with a lid |
+| plot (plot_buy, plot_rent, plot_list, plot_manage) | `green_1` | `signpost`: a gold-wood arrow board on a post, standing on a green grass plot |
 | ender_chest | `purple_0` on the **purple-tinted panel** (`ENDER_PANEL_RAMP`: purple_1 panel, purple_0 dark bevel) | `ender`: a purple orb with a green core |
 | crafting | none (neutral `grey_0`) | none: the plain vanilla crafting look |
 | template_chest_1..6 | none (neutral `grey_0`) | none: plain |
@@ -426,7 +427,7 @@ arrow show unchanged (the plain vanilla crafting look).
 
 ## 7. Frame anatomy
 
-Vanilla has no outer frame, but the contract requires 54 frame textures
+Vanilla has no outer frame, but the contract requires 58 frame textures
 (256 wide, at artLayers x=-40, y=-8, height = container + 16) that are opaque
 at the pin (w-1, h//2), end at x = w and keep the native container
 transparent. A full 40 px side-panel extension would max out that allowance
@@ -522,18 +523,21 @@ aliases: 'hearth' and 'graven' -> 'plain', 'sprig' and 'rune' -> 'tiny'.
 
 Required fits (checked by `selftest.py`): LISTINGS 43/50, DISABLE LISTING
 81/104, PURCHASE 47/50, 12 DAYS 39/68. `compose.letter` tries PLAIN capitals,
-then PLAIN mixed case of the label, then TINY capitals. Every one of the 157
-labels fits. With `paint_button` alone, 126 regions use PLAIN capitals, 4
+then PLAIN mixed case of the label, then TINY capitals. Every one of the 169
+labels fits. With `paint_button` alone, 136 regions use PLAIN capitals, 4
 PLAIN mixed case because the capitals are too wide (Previous on
 auction_watchlist and economy_log: 45 px in a 41 px page-button box; Sell
-Price on both listing editors: 55 px in 49), 10 TINY (PRIVACY on its 36 px
-button and the two-line labels on 18 px buttons: CHEST / SHOPS, YOUR /
-MONEY, THEIR / MONEY, where two PLAIN lines are too tall), and 17 are icons.
+Price on both listing editors: 55 px in 49), 12 TINY (PRIVACY on its 36 px
+button, PREVIOUS on the plot list's page button, and the two-line labels on
+18 px buttons: CHEST / SHOPS, YOUR / MONEY, THEIR / MONEY, TOGGLE / PREVIEW,
+where two PLAIN lines are too tall), and 17 are icons.
 In the painted pack-source, painters chose mixed case on 13 more labels
 whose capitals would fit with no spare pixel (Buy Price x2 and Tier 1-3 x9
 in shop configuration, Create x2 on the shop pages, where the box is
-deliberately narrowed to keep air at the plate rim): 113 capitals, 17 mixed
-case, 10 TINY, 17 icons.
+deliberately narrowed to keep air at the plate rim), and the plot list's
+Previous is lettered as the mixed case of its own line PREVIOUS (41 px in the
+42 px page box) so the footer keeps one face, as on the auction watchlist:
+123 capitals, 18 mixed case, 11 TINY, 17 icons.
 
 Labels are centred on their full glyph extent: a mixed-case label with a
 descender sits one row higher, so the descender clears the bottom bevel.

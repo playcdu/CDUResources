@@ -141,6 +141,8 @@ FAMILY_ACCENT = {
                    'motif': 'a name-tag shape'},
     'invsee':     {'accent': BLUE,  'secondary': GREEN, 'pictogram': 'eye',     'line': True,
                    'motif': 'an eye'},
+    'plot':       {'accent': GREEN, 'secondary': GOLD,  'pictogram': 'signpost', 'line': True,
+                   'motif': 'a wooden signpost on a grass plot'},
     'utility':    {'accent': GREY,  'secondary': GREY,  'pictogram': None,      'line': False,
                    'motif': 'plain vanilla panel, no story'},
 }

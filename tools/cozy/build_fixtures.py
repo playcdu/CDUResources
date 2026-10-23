@@ -12,7 +12,8 @@ Writes under ``evidence/cozy-fixtures/`` (gitignored):
 * ``family-<family>.html`` per family (split into ``-1``, ``-2`` ... when a page
   would pass the size budget): composites, every button in all six states,
   frames alone, raw backgrounds with clearances outlined
-* ``before-after.html``    baseline midnight artwork (commit ``BASELINE``) beside cozy
+* ``before-after.html``    baseline midnight artwork (commit ``BASELINE``; skins added
+  later, from the commit that introduced them, ``BASELINE_FOR``) beside cozy
 
 Every image is a PNG data URI produced by ``preview.py``; pages carry no
 external resources. Cross-page links are literal ``{{URL:<page>}}`` tokens that
@@ -66,6 +67,11 @@ import preview as pv  # noqa: E402
 ROOT = geo.ROOT
 OUT = ROOT / 'evidence' / 'cozy-fixtures'
 BASELINE = '037c5ef7cb5dbe6fe5ab04dadcb2d2c44cd0372e'
+# Skins added after BASELINE: their midnight placeholders come from the commit
+# that introduced them (a137c28 added the four plot skins), so each pair still
+# shows one skin's own midnight artwork, never a mix.
+PLOT_BASELINE = 'a137c28f6e9a1ce072892d671588587c0993ea1b'
+BASELINE_FOR = {k: PLOT_BASELINE for k in ('plot_buy', 'plot_rent', 'plot_list', 'plot_manage')}
 HARD_LIMIT = 16 * 1000 * 1000          # publisher limit (16 MB, decimal to be safe)
 URL_MAP_PATH = ROOT / 'tools' / 'cozy' / 'fixture_urls.json'   # published artifact URLs, tracked
 ARTIFACT_PREFIX = 'https://claude.ai/artifact/'
@@ -170,10 +176,10 @@ def resolve_links(text, urls):
 PAGE_BUDGET = 14 * 1000 * 1000         # split a family page before it passes this
 
 FAMILY_ORDER = ['economy', 'auction', 'chest_shop', 'trade', 'ticket', 'admin_shop',
-                'guild_bank', 'prefixes', 'invsee', 'utility']
+                'guild_bank', 'prefixes', 'invsee', 'plot', 'utility']
 FAMILY_NAME = {'economy': 'Economy', 'auction': 'Auction', 'chest_shop': 'Chest Shop', 'trade': 'Trade',
                'ticket': 'Ticket', 'admin_shop': 'Admin Shop', 'guild_bank': 'Guild Bank',
-               'prefixes': 'Prefixes', 'invsee': 'Invsee', 'utility': 'Utility'}
+               'prefixes': 'Prefixes', 'invsee': 'Invsee', 'plot': 'Plot', 'utility': 'Utility'}
 # Sensible sub-groups, used only when a family must be split (adjacent groups are
 # packed together while they fit the budget).
 SPLIT_GROUPS = {
@@ -189,7 +195,7 @@ SPLIT_GROUPS = {
 BEFORE_AFTER = ['economy_hub', 'economy_log', 'auction_house', 'auction_confirm', 'auction_duration',
                 'chest_shop', 'chest_shop_listing_enabled', 'chest_shop_buy', 'trade_self_ready', 'trade_money',
                 'ticket_valid', 'ticket_invalid', 'admin_shop_categories', 'guild_bank_3', 'prefixes_6',
-                'invsee_offline', 'trashcan', 'ender_chest', 'crafting', 'template_chest_6']
+                'invsee_offline', 'plot_manage', 'trashcan', 'ender_chest', 'crafting', 'template_chest_6']
 CELL_BACKDROP = (90, 84, 88, 255)      # same backdrop preview.buttons_sheet uses under a button crop
 SCHEMATIC_NOTE = ('Schematic composite, not a gameplay screenshot. Every picture is drawn by '
                   '<code>tools/cozy/preview.py</code> from the pack-source PNGs: the grey item squares, '
@@ -736,8 +742,13 @@ def index_page(by_family, all_parts, sha):
 # Before / after
 # ---------------------------------------------------------------------------
 
-def _git_blob(path):
-    r = subprocess.run(['git', 'show', f'{BASELINE}:{path}'], cwd=ROOT, capture_output=True)
+def baseline_of(key):
+    """The commit whose midnight artwork is the 'before' picture of ``key``."""
+    return BASELINE_FOR.get(key, BASELINE)
+
+
+def _git_blob(path, commit=BASELINE):
+    r = subprocess.run(['git', 'show', f'{commit}:{path}'], cwd=ROOT, capture_output=True)
     return r.stdout if r.returncode == 0 else None
 
 
@@ -749,7 +760,7 @@ def extract_baseline(keys, dest):
     for k in keys:
         for p in geo.asset_paths(k):
             rel = p.resolve().relative_to(ROOT.resolve()).as_posix()
-            blob = _git_blob(rel)
+            blob = _git_blob(rel, baseline_of(k))
             if blob is None:
                 missing.setdefault(k, []).append(rel)
                 continue
@@ -778,7 +789,7 @@ def before_after_page(all_parts):
                 f'<div class="pair">'
                 f'<figure><span class="tag base">Baseline &middot; midnight</span>'
                 f'<div class="art">{img_tag(before, f"{k} baseline midnight artwork composite, 3x")}</div>'
-                f'<figcaption>Before: midnight artwork from commit <code>{BASELINE[:7]}</code>.</figcaption></figure>'
+                f'<figcaption>Before: midnight artwork from commit <code>{baseline_of(k)[:7]}</code>.</figcaption></figure>'
                 f'<figure><span class="tag {THEME["key"]}">{THEME["name"]} &middot; replacement</span>'
                 f'<div class="art">{img_tag(after, after_alt)}</div>'
                 f'<figcaption>After: {THEME["name"].lower()} artwork on <code>{THEME["branch"]}</code>.</figcaption></figure></div>'
@@ -786,12 +797,16 @@ def before_after_page(all_parts):
                 '</section>')
     toc = ''.join(f'<li><a href="#{esc(k)}">{esc(k)}</a></li>' for k in BEFORE_AFTER)
     fams = sorted({geo.skin(k).family for k in BEFORE_AFTER}, key=FAMILY_ORDER.index)
+    later = sorted({baseline_of(k) for k in BEFORE_AFTER} - {BASELINE})
+    later_note = ''.join(f' ({", ".join(k for k in BEFORE_AFTER if baseline_of(k) == c)}: commit '
+                         f'<code>{c}</code>, which added {"it" if sum(baseline_of(k) == c for k in BEFORE_AFTER) == 1 else "them"})'
+                         for c in later)
     body = (f'<nav class="topnav" aria-label="Gallery"><a href="{{{{URL:index}}}}">Back to index</a></nav>'
             f'<header id="top"><p class="eyebrow">CDUResources {THEME["name"].lower()} theme &middot; before and after</p>'
             f'<h1>Midnight vs {THEME["name"]}</h1>'
             f'<p class="lede">{len(BEFORE_AFTER)} representative screens covering all {len(fams)} families. '
             f'The left (or upper) picture of each pair is the <strong>baseline midnight</strong> artwork from commit '
-            f'<code>{BASELINE}</code>; the right (or lower) one is the <strong>{THEME["name"].lower()} replacement</strong>.</p></header>'
+            f'<code>{BASELINE}</code>{later_note}; the right (or lower) one is the <strong>{THEME["name"].lower()} replacement</strong>.</p></header>'
             + note()
             + '<p class="small muted">Both sides use the same schematic items, title and default button states, so '
               'only the texture PNGs differ.</p>'
@@ -922,7 +937,7 @@ def build():
     sha = head_sha()
     by_family = geo.skins_by_family()
     assert set(by_family) == set(FAMILY_ORDER), sorted(by_family)
-    assert len(geo.all_skins()) == 56
+    assert sum(len(v) for v in by_family.values()) == len(geo.all_skins())
     for f in OUT.glob('*.html'):           # drop pages from an earlier split plan
         f.unlink()
     all_parts, names = {}, []
