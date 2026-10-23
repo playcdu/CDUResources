@@ -1,6 +1,6 @@
 # Design coverage
 
-All 50 audited skins and six generic chest templates use the dark visual language. Painted controls are used where audited action slots permit them. Native selection, storage, inspection, crafting and configuration-defined content remain visible and keep their original slot positions.
+All 54 audited skins and six generic chest templates use the dark visual language. Painted controls are used where audited action slots permit them. Native selection, storage, inspection, crafting and configuration-defined content remain visible and keep their original slot positions.
 
 Crafting preserves its recipe controls and uses no outside frame. Chest frames add only noninteractive decoration outside the container. A generated guide proves layout composition, not live game interaction.
 
@@ -62,3 +62,7 @@ Crafting preserves its recipe controls and uses no outside frame. Chest frames a
 | template_chest_4 | 0 | 36 | 1 | Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented. |
 | template_chest_5 | 0 | 45 | 1 | Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented. |
 | template_chest_6 | 0 | 54 | 1 | Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented. |
+| plot_buy | 2 | 1 | 1 | Fixed native plot preview at 22 keeps its live owner, bounds, volume, chunk-count and price lore. The 26 border panes are decorative and become protected empty elements; no pagination. |
+| plot_rent | 2 | 1 | 1 | Fixed native plot preview at 22 keeps its live owner, bounds, volume, chunk-count and price lore. The 26 border panes are decorative and become protected empty elements; no pagination. |
+| plot_list | 3 | 45 | 1 | All 45 plot entries stay native in their original positions (45 per page, no content redirect and no capacity change). Only the empty bottom row carries painted controls. |
+| plot_manage | 5 | 2 | 1 | Cells 13 and 14 stay native: their item, name and lore change with the plot state (Sell / For Sale, Lease Out / For Rent / Rented) or are absent, so no painted label could stay truthful. Teleport renders disabled without the tp permission. |

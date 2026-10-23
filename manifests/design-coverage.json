@@ -448,6 +448,38 @@
       "outsideArtLayers": 1,
       "constraints": "Native content and configuration-defined selection/storage slots are preserved. Only framing changes; no callback is invented.",
       "genericTemplate": true
+    },
+    "plot_buy": {
+      "presentation": "painted_controls",
+      "buttonRegions": 2,
+      "nativeContentCells": 1,
+      "outsideArtLayers": 1,
+      "constraints": "Fixed native plot preview at 22 keeps its live owner, bounds, volume, chunk-count and price lore. The 26 border panes are decorative and become protected empty elements; no pagination.",
+      "genericTemplate": false
+    },
+    "plot_rent": {
+      "presentation": "painted_controls",
+      "buttonRegions": 2,
+      "nativeContentCells": 1,
+      "outsideArtLayers": 1,
+      "constraints": "Fixed native plot preview at 22 keeps its live owner, bounds, volume, chunk-count and price lore. The 26 border panes are decorative and become protected empty elements; no pagination.",
+      "genericTemplate": false
+    },
+    "plot_list": {
+      "presentation": "painted_controls",
+      "buttonRegions": 3,
+      "nativeContentCells": 45,
+      "outsideArtLayers": 1,
+      "constraints": "All 45 plot entries stay native in their original positions (45 per page, no content redirect and no capacity change). Only the empty bottom row carries painted controls.",
+      "genericTemplate": false
+    },
+    "plot_manage": {
+      "presentation": "painted_controls",
+      "buttonRegions": 5,
+      "nativeContentCells": 2,
+      "outsideArtLayers": 1,
+      "constraints": "Cells 13 and 14 stay native: their item, name and lore change with the plot state (Sell / For Sale, Lease Out / For Rent / Rented) or are absent, so no painted label could stay truthful. Teleport renders disabled without the tp permission.",
+      "genericTemplate": false
     }
   }
 }

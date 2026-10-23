@@ -24721,6 +24721,1881 @@
       "paintedControlSlots": [],
       "presentation": "native_content_preserved"
     },
+    "plot_buy": {
+      "glyph": "\ue132",
+      "prefix": "\uf00c",
+      "suffix": "\uf010\uf00e\uf00c\uf009",
+      "font": "quasar_gui:menu",
+      "centered": false,
+      "textWidth": 160,
+      "geometry": "chest_6",
+      "rows": 6,
+      "menuType": "GENERIC_9x6",
+      "width": 176,
+      "height": 222,
+      "ascent": 13,
+      "advance": 177,
+      "asset": "assets/quasar_gui/textures/menu/plot_buy.png",
+      "liveSlots": [
+        22,
+        27,
+        28,
+        29,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        42,
+        43,
+        44
+      ],
+      "staticProtectedSlots": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        30,
+        31,
+        32,
+        39,
+        40,
+        41
+      ],
+      "buttonRegions": [
+        {
+          "id": "cancel",
+          "sourceSlot": 29,
+          "slots": [
+            27,
+            28,
+            29,
+            36,
+            37,
+            38
+          ],
+          "label": "Cancel",
+          "role": "action",
+          "style": "danger",
+          "x": 7,
+          "y": 71,
+          "width": 54,
+          "height": 36,
+          "states": {
+            "normal": {
+              "glyph": "\ue7ae",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_buy/cancel/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue7af",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_buy/cancel/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue7b0",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_buy/cancel/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue7b1",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_buy/cancel/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue7b2",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_buy/cancel/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue7b3",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_buy/cancel/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 4,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "confirm",
+          "sourceSlot": 33,
+          "slots": [
+            33,
+            34,
+            35,
+            42,
+            43,
+            44
+          ],
+          "label": "Confirm Purchase",
+          "role": "action",
+          "style": "primary",
+          "lines": [
+            "CONFIRM",
+            "PURCHASE"
+          ],
+          "x": 115,
+          "y": 71,
+          "width": 54,
+          "height": 36,
+          "states": {
+            "normal": {
+              "glyph": "\ue7b4",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_buy/confirm/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue7b5",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_buy/confirm/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue7b6",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_buy/confirm/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue7b7",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_buy/confirm/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue7b8",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_buy/confirm/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue7b9",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_buy/confirm/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 4,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        }
+      ],
+      "visibleContentSlots": [
+        22
+      ],
+      "paintedControlSlots": [
+        27,
+        28,
+        29,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        42,
+        43,
+        44
+      ],
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured",
+          "height": 238,
+          "heading": "BUY PLOT",
+          "leftHeading": "PLOT",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "glyph": "\ue236",
+          "font": "quasar_gui:menu",
+          "prefix": "\uf00e\uf00d",
+          "suffix": "\uf010\uf00f\uf00d\uf009",
+          "advance": 257,
+          "ascent": 21,
+          "asset": "assets/quasar_gui/textures/frames/plot_buy/menu_frame.png",
+          "advancePin": [
+            255,
+            119
+          ]
+        }
+      ]
+    },
+    "plot_rent": {
+      "glyph": "\ue133",
+      "prefix": "\uf00c",
+      "suffix": "\uf010\uf00e\uf00c\uf009",
+      "font": "quasar_gui:menu",
+      "centered": false,
+      "textWidth": 160,
+      "geometry": "chest_6",
+      "rows": 6,
+      "menuType": "GENERIC_9x6",
+      "width": 176,
+      "height": 222,
+      "ascent": 13,
+      "advance": 177,
+      "asset": "assets/quasar_gui/textures/menu/plot_rent.png",
+      "liveSlots": [
+        22,
+        27,
+        28,
+        29,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        42,
+        43,
+        44
+      ],
+      "staticProtectedSlots": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        30,
+        31,
+        32,
+        39,
+        40,
+        41
+      ],
+      "buttonRegions": [
+        {
+          "id": "cancel",
+          "sourceSlot": 29,
+          "slots": [
+            27,
+            28,
+            29,
+            36,
+            37,
+            38
+          ],
+          "label": "Cancel",
+          "role": "action",
+          "style": "danger",
+          "x": 7,
+          "y": 71,
+          "width": 54,
+          "height": 36,
+          "states": {
+            "normal": {
+              "glyph": "\ue7ba",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_rent/cancel/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue7bb",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_rent/cancel/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue7bc",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_rent/cancel/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue7bd",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_rent/cancel/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue7be",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_rent/cancel/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue7bf",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_rent/cancel/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 4,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "confirm",
+          "sourceSlot": 33,
+          "slots": [
+            33,
+            34,
+            35,
+            42,
+            43,
+            44
+          ],
+          "label": "Confirm Rental",
+          "role": "action",
+          "style": "primary",
+          "lines": [
+            "CONFIRM",
+            "RENTAL"
+          ],
+          "x": 115,
+          "y": 71,
+          "width": 54,
+          "height": 36,
+          "states": {
+            "normal": {
+              "glyph": "\ue7c0",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_rent/confirm/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue7c1",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_rent/confirm/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue7c2",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_rent/confirm/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue7c3",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_rent/confirm/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue7c4",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_rent/confirm/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue7c5",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -58,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_rent/confirm/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 4,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        }
+      ],
+      "visibleContentSlots": [
+        22
+      ],
+      "paintedControlSlots": [
+        27,
+        28,
+        29,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        42,
+        43,
+        44
+      ],
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured",
+          "height": 238,
+          "heading": "RENT PLOT",
+          "leftHeading": "PLOT",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "glyph": "\ue237",
+          "font": "quasar_gui:menu",
+          "prefix": "\uf00e\uf00d",
+          "suffix": "\uf010\uf00f\uf00d\uf009",
+          "advance": 257,
+          "ascent": 21,
+          "asset": "assets/quasar_gui/textures/frames/plot_rent/menu_frame.png",
+          "advancePin": [
+            255,
+            119
+          ]
+        }
+      ]
+    },
+    "plot_list": {
+      "glyph": "\ue134",
+      "prefix": "\uf00c",
+      "suffix": "\uf010\uf00e\uf00c\uf009",
+      "font": "quasar_gui:menu",
+      "centered": false,
+      "textWidth": 160,
+      "geometry": "chest_6",
+      "rows": 6,
+      "menuType": "GENERIC_9x6",
+      "width": 176,
+      "height": 222,
+      "ascent": 13,
+      "advance": 177,
+      "asset": "assets/quasar_gui/textures/menu/plot_list.png",
+      "liveSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "staticProtectedSlots": [],
+      "buttonRegions": [
+        {
+          "id": "previous",
+          "sourceSlot": 45,
+          "slots": [
+            45,
+            46,
+            47
+          ],
+          "label": "Previous Page",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "PREVIOUS"
+          ],
+          "x": 7,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue7c6",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/previous/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue7c7",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/previous/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue7c8",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/previous/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue7c9",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/previous/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue7ca",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/previous/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue7cb",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/previous/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 4,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "close",
+          "sourceSlot": 49,
+          "slots": [
+            48,
+            49,
+            50
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger",
+          "x": 61,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue7cc",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/close/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue7cd",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/close/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue7ce",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/close/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue7cf",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/close/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue7d0",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/close/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue7d1",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/close/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 4,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "next",
+          "sourceSlot": 53,
+          "slots": [
+            51,
+            52,
+            53
+          ],
+          "label": "Next Page",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "NEXT"
+          ],
+          "x": 115,
+          "y": 107,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue7d2",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/next/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue7d3",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/next/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue7d4",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/next/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue7d5",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/next/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue7d6",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/next/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue7d7",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -94,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_list/next/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 4,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        }
+      ],
+      "visibleContentSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "paintedControlSlots": [
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured",
+          "height": 238,
+          "heading": "PLOTS",
+          "leftHeading": "PLOTS",
+          "rightLines": [
+            "CLICK",
+            "TO",
+            "MANAGE"
+          ],
+          "glyph": "\ue238",
+          "font": "quasar_gui:menu",
+          "prefix": "\uf00e\uf00d",
+          "suffix": "\uf010\uf00f\uf00d\uf009",
+          "advance": 257,
+          "ascent": 21,
+          "asset": "assets/quasar_gui/textures/frames/plot_list/menu_frame.png",
+          "advancePin": [
+            255,
+            119
+          ]
+        }
+      ]
+    },
+    "plot_manage": {
+      "glyph": "\ue135",
+      "prefix": "\uf00c",
+      "suffix": "\uf010\uf00e\uf00c\uf009",
+      "font": "quasar_gui:menu",
+      "centered": false,
+      "textWidth": 160,
+      "geometry": "chest_3",
+      "rows": 3,
+      "menuType": "GENERIC_9x3",
+      "width": 176,
+      "height": 168,
+      "ascent": 13,
+      "advance": 177,
+      "asset": "assets/quasar_gui/textures/menu/plot_manage.png",
+      "liveSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        24,
+        25,
+        26
+      ],
+      "staticProtectedSlots": [
+        22,
+        23
+      ],
+      "buttonRegions": [
+        {
+          "id": "preview",
+          "sourceSlot": 11,
+          "slots": [
+            0,
+            1,
+            2
+          ],
+          "label": "Toggle Preview",
+          "role": "action",
+          "style": "secondary",
+          "lines": [
+            "TOGGLE",
+            "PREVIEW"
+          ],
+          "x": 7,
+          "y": 17,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue7d8",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/preview/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue7d9",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/preview/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue7da",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/preview/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue7db",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/preview/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue7dc",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/preview/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue7dd",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00e\uf00d\uf00b\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/preview/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 4,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "rename",
+          "sourceSlot": 12,
+          "slots": [
+            3,
+            4,
+            5
+          ],
+          "label": "Rename",
+          "role": "action",
+          "style": "secondary",
+          "x": 61,
+          "y": 17,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue7de",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/rename/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue7df",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/rename/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue7e0",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/rename/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue7e1",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/rename/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue7e2",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/rename/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue7e3",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf005\uf004\uf002\uf000",
+              "suffix": "\uf00f\uf00e\uf00c\uf00b",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/rename/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 4,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "close",
+          "sourceSlot": 8,
+          "slots": [
+            6,
+            7,
+            8
+          ],
+          "label": "Close",
+          "role": "action",
+          "style": "danger",
+          "x": 115,
+          "y": 17,
+          "width": 54,
+          "height": 18,
+          "states": {
+            "normal": {
+              "glyph": "\ue7e4",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/close/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue7e5",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/close/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue7e6",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/close/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue7e7",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/close/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue7e8",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/close/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue7e9",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                9
+              ],
+              "ascent": -4,
+              "height": 18,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/close/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 4,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "teleport",
+          "sourceSlot": 10,
+          "slots": [
+            9,
+            10,
+            11,
+            12,
+            18,
+            19,
+            20,
+            21
+          ],
+          "label": "Teleport",
+          "role": "action",
+          "style": "primary",
+          "x": 7,
+          "y": 35,
+          "width": 72,
+          "height": 36,
+          "states": {
+            "normal": {
+              "glyph": "\ue7ea",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00f\uf00c",
+              "advance": 73,
+              "advancePin": [
+                71,
+                19
+              ],
+              "ascent": -22,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/teleport/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue7eb",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00f\uf00c",
+              "advance": 73,
+              "advancePin": [
+                71,
+                19
+              ],
+              "ascent": -22,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/teleport/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue7ec",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00f\uf00c",
+              "advance": 73,
+              "advancePin": [
+                71,
+                19
+              ],
+              "ascent": -22,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/teleport/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue7ed",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00f\uf00c",
+              "advance": 73,
+              "advancePin": [
+                71,
+                19
+              ],
+              "ascent": -22,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/teleport/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue7ee",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00f\uf00c",
+              "advance": 73,
+              "advancePin": [
+                71,
+                19
+              ],
+              "ascent": -22,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/teleport/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue7ef",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf009",
+              "suffix": "\uf00f\uf00c",
+              "advance": 73,
+              "advancePin": [
+                71,
+                19
+              ],
+              "ascent": -22,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/teleport/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 4,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        },
+        {
+          "id": "destroy",
+          "sourceSlot": 16,
+          "slots": [
+            15,
+            16,
+            17,
+            24,
+            25,
+            26
+          ],
+          "label": "Destroy",
+          "role": "action",
+          "style": "danger",
+          "x": 115,
+          "y": 35,
+          "width": 54,
+          "height": 36,
+          "states": {
+            "normal": {
+              "glyph": "\ue7f0",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -22,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/destroy/normal.png"
+            },
+            "disabled": {
+              "glyph": "\ue7f1",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -22,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/destroy/disabled.png"
+            },
+            "selected": {
+              "glyph": "\ue7f2",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -22,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/destroy/selected.png"
+            },
+            "pulse_1": {
+              "glyph": "\ue7f3",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -22,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/destroy/pulse_1.png"
+            },
+            "pulse_2": {
+              "glyph": "\ue7f4",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -22,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/destroy/pulse_2.png"
+            },
+            "pulse_3": {
+              "glyph": "\ue7f5",
+              "font": "quasar_gui:menu",
+              "prefix": "\uf006\uf005\uf003\uf001\uf000",
+              "suffix": "\uf010\uf00e\uf00a",
+              "advance": 55,
+              "advancePin": [
+                53,
+                18
+              ],
+              "ascent": -22,
+              "height": 36,
+              "asset": "assets/quasar_gui/textures/buttons/plot_manage/destroy/pulse_3.png"
+            }
+          },
+          "defaultState": "normal",
+          "animation": {
+            "frames": [
+              "pulse_1",
+              "pulse_2",
+              "pulse_3"
+            ],
+            "ticksPerFrame": 4,
+            "repeat": false,
+            "trigger": "explicit server action/state feedback; never mouse hover",
+            "note": "Font frames are separate glyphs, not PNG animation metadata. State changes do not authorize actions."
+          }
+        }
+      ],
+      "visibleContentSlots": [
+        13,
+        14
+      ],
+      "paintedControlSlots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        24,
+        25,
+        26
+      ],
+      "presentation": "painted_controls",
+      "artLayers": [
+        {
+          "id": "menu_frame",
+          "x": -40,
+          "y": -8,
+          "width": 256,
+          "purpose": "Noninteractive outer frame; native content, title and inventory remain unobscured",
+          "height": 184,
+          "heading": "MANAGE PLOT",
+          "leftHeading": "PLOT",
+          "rightLines": [
+            "HOVER",
+            "FOR",
+            "DETAILS"
+          ],
+          "glyph": "\ue239",
+          "font": "quasar_gui:menu",
+          "prefix": "\uf00e\uf00d",
+          "suffix": "\uf010\uf00f\uf00d\uf009",
+          "advance": 257,
+          "ascent": 21,
+          "asset": "assets/quasar_gui/textures/frames/plot_manage/menu_frame.png",
+          "advancePin": [
+            255,
+            92
+          ]
+        }
+      ]
+    },
     "template_chest_1": {
       "glyph": "\ue180",
       "prefix": "\uf00c",

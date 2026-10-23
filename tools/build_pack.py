@@ -25,7 +25,7 @@ FONT = 'quasar_gui:menu'
 COLORS = {'auction':(90,98,171), 'admin_shop':(46,130,145), 'chest_shop':(174,119,53),
           'economy':(68,134,103), 'trade':(82,127,162), 'ticket':(152,84,135),
           'prefixes':(133,91,164), 'guild_bank':(112,128,73), 'invsee':(153,100,77),
-          'utility':(91,115,129)}
+          'utility':(91,115,129), 'plot':(96,128,84)}
 ADVANCES = {chr(0xF000+i):2**i for i in range(9)} | {chr(0xF009+i):-(2**i) for i in range(9)}
 
 def read_json(path):
@@ -244,7 +244,7 @@ def build(overrides=None,output=None,kit=True,regenerate_samples=False,regenerat
         'genericTemplate':key.startswith('template_')} for key,screen in buttons['screens'].items()}
     write_json(ROOT/'manifests/design-coverage.json',{'schemaVersion':1,'skins':coverage})
     coverage_text=['# Design coverage','',
-        'All 50 audited skins and six generic chest templates use the dark visual language. Painted controls are used where audited action slots permit them. Native selection, storage, inspection, crafting and configuration-defined content remain visible and keep their original slot positions.',
+        'All 54 audited skins and six generic chest templates use the dark visual language. Painted controls are used where audited action slots permit them. Native selection, storage, inspection, crafting and configuration-defined content remain visible and keep their original slot positions.',
         '', 'Crafting preserves its recipe controls and uses no outside frame. Chest frames add only noninteractive decoration outside the container. A generated guide proves layout composition, not live game interaction.', '',
         '| Skin | Painted regions | Native cells | Outside layers | Constraint |','|---|---:|---:|---:|---|']
     for key,row in coverage.items():

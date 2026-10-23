@@ -39,7 +39,7 @@ def paint(image,layout,skin,key):
     draw=ImageDraw.Draw(image)
     families={'auction':(67,64,115),'admin_shop':(28,86,104),'chest_shop':(97,67,39),
         'economy':(39,89,72),'trade':(37,75,108),'ticket':(98,54,90),'prefixes':(80,54,107),
-        'guild_bank':(59,82,49),'invsee':(99,60,46),'utility':(47,70,88)}
+        'guild_bank':(59,82,49),'invsee':(99,60,46),'utility':(47,70,88),'plot':(52,84,58)}
     base=families[skin['family']];bright=tuple(min(255,v+72) for v in base)
     sparse=len(skin.get('liveSlots',layout['slots'])) < len(layout['slots'])-3
     if sparse:
