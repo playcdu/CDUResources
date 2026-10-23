@@ -1,8 +1,8 @@
 # Soulrend fixture gallery
 
 The fixture gallery is a set of self-contained HTML pages that show every
-texture of the Soulrend dark-fantasy replacement (56 menu backgrounds, 157
-painted buttons in six states each, 54 outer frames) so the artwork can be
+texture of the Soulrend dark-fantasy replacement (60 menu backgrounds, 169
+painted buttons in six states each, 58 outer frames) so the artwork can be
 reviewed in claude.ai without checking out `art/soulrend-theme`. Each page is
 one HTML file with every image embedded as a PNG data URI and no external
 resources. It is the Soulrend counterpart of the cozy gallery described in
@@ -52,8 +52,8 @@ Soulrend family page comes close (the largest, chest_shop, is about 0.95 MB).
 - **Index** (`index.html`, "Soulrend GUI Fixtures"): a "what this is" note
   saying the pictures are schematic composites from the preview tool, not
   gameplay screenshots; links to every family page and the before/after page;
-  all 56 skins as cards grouped by family (economy, auction, chest_shop,
-  trade, ticket, admin_shop, guild_bank, prefixes, invsee, utility), each with
+  all 60 skins as cards grouped by family (economy, auction, chest_shop,
+  trade, ticket, admin_shop, guild_bank, prefixes, invsee, utility, plot), each with
   a 1x composite scaled 2x nearest-neighbour, the skin key, layout and size,
   button count, frame layer(s) and presentation, plus the family motif; the
   36-colour master palette as swatches grouped by its 11 ramps (ink, iron,
@@ -64,6 +64,13 @@ Soulrend family page comes close (the largest, chest_shop, is about 0.95 MB).
   (GRAVEN cap 7 / x 5 / desc 2 / track 1, a thin medieval serif in mixed case;
   RUNE cap 5 / track 1, carved capitals) and the `lettering.specimen()` image
   at 3x.
+- **Plot family** (plot_buy, plot_rent, plot_list, plot_manage: 4 skins, 12
+  buttons, 72 button states, 4 frames; painted by
+  `tools/soulrend/paint_plots.py`): it arrived with the main merge after the
+  pages below were published. `tools/cozy/build_fixtures.py` still lists ten
+  families and asserts 56 skins, so it has to learn the plot family before a
+  rebuilt gallery shows these screens; the table below lists the published
+  pages only.
 - **Family pages** (`family-<family>.html`, "Soulrend <Family> Family"): a back
   link, a table of contents, and for every skin in the family:
   1. the composite at 3x with schematic sample items and a sample title;

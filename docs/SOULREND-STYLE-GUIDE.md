@@ -1,8 +1,8 @@
 # Soulrend style guide
 
 This guide defines the Soulrend theme: a dark-fantasy, souls-like replacement
-for every texture in the pack, made for the Soulrend modpack. It covers 56
-backgrounds, 942 button-state PNGs (157 regions x 6 states) and 54 outer
+for every texture in the pack, made for the Soulrend modpack. It covers 60
+backgrounds, 1014 button-state PNGs (169 regions x 6 states) and 58 outer
 frames. Geometry, codepoints and interaction contracts are frozen; only the
 pixels change. The shared tooling lives in
 [tools/soulrend/](../tools/soulrend/README.md), and every rule below names the
@@ -328,6 +328,7 @@ sub-skins in `SKIN_ACCENT`, lookup with `accent_for(key)`).
 | trashcan | ember | iron | ash-pit brazier with dying embers (ember_0 stipple) and burnt leaves |
 | ender_chest | void | soul | obsidian sheet (`VOID_SHEET`), void-purple, soul-cyan runes |
 | crafting | iron | ember | blacksmith's anvil and tool rack (anvil, hammer, tongs) |
+| plot (plot_buy, plot_rent, plot_list, plot_manage) | moss | blood | land claimed and recorded: wooden boundary stakes tied with blood rags, a surveyor's chain with brass tallies, a sealed land writ (survey deed with rolled ends, compass rose and a dashed parcel corner; pendant seal pressed with a stake), a carved stone waymarker cut with a benchmark. Buy/rent: the plot preview (slot 22) sits in a socket cut into the waymarker's head; rent alone hangs a brass key from the stone's ring and presses a key into the seal. List: wells stay plain, the frame holds a rack of rolled writs. Manage: a small waymarker between two stakes straddles static cells 22-23 (`tools/soulrend/paint_plots.py`) |
 | template_chest_1..6 | iron | stone | plain dark stone and iron framing: the default look, no story |
 
 Motifs never enter item wells, the title text rows, the inventory text rows or
@@ -461,10 +462,11 @@ accepted as aliases for 'graven' and 'rune'.
 Required fits (checked by `selftest.py`): LISTINGS 41/50, DISABLE LISTING
 78/104, PURCHASE 46/50, 12 DAYS 34/68. `compose.letter` tries GRAVEN capitals,
 then GRAVEN mixed case of the label, then RUNE capitals; secondary strips drop
-their rivets before falling back to RUNE. Every one of the 157 labels fits:
-121 regions use GRAVEN capitals, 10 GRAVEN mixed case (Buy Price, Sell Price,
-Decrease, Privacy, Opt 2, Create), 9 RUNE (only the two-line labels on 18 px
-buttons: CHEST / SHOPS, YOUR / MONEY, THEIR / MONEY), and 17 are icons.
+their rivets before falling back to RUNE. Every one of the 169 labels fits:
+132 regions use GRAVEN capitals, 10 GRAVEN mixed case (Buy Price, Sell Price,
+Decrease, Privacy, Opt 2, Create), 10 RUNE (only the two-line labels on 18 px
+buttons: CHEST / SHOPS, YOUR / MONEY, THEIR / MONEY, TOGGLE / PREVIEW), and 17
+are icons.
 
 Labels are centred on their full glyph extent: a mixed-case label with a
 descender (g j p q y) on an 18 px strip sits one row higher than its caps

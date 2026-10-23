@@ -135,6 +135,7 @@ FAMILY_ACCENT = {
     'guild_bank': {'accent': IRON,  'secondary': MOSS,  'motif': 'iron vault door, chains, guild heraldic banner'},
     'prefixes':   {'accent': GOLD,  'secondary': BLOOD, 'motif': 'heraldic shields and name plates on a stone wall'},
     'invsee':     {'accent': SOUL,  'secondary': UMBER, 'motif': 'scrying mirror / soul-lens over a satchel'},
+    'plot':       {'accent': MOSS,  'secondary': BLOOD, 'motif': "boundary stakes and surveyor's chain, a sealed land writ, a stone waymarker"},
     'utility':    {'accent': IRON,  'secondary': STONE, 'motif': 'plain dark stone and iron framing'},
 }
 # Sub-skins and state variants that override the family entry.
